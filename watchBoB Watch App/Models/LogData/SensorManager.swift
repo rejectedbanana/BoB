@@ -1,0 +1,133 @@
+//
+//  SensorManager.swift
+//  watchBoB Watch App
+//
+//  Created by Kim Martini on 10/25/23.
+//
+
+import Foundation
+import CoreMotion
+import CoreData
+
+func timeStampFormatter(_ date: Date) -> String {
+    let format = ISO8601DateFormatter()
+
+    return format.string(from: date)
+}
+
+func formatElapsedTime(elapsedTime: TimeInterval) -> String {
+    let formatter = DateComponentsFormatter()
+    formatter.unitsStyle = .positional
+    formatter.zeroFormattingBehavior = .pad
+    formatter.allowedUnits = [.hour, .minute, .second]
+    
+    return formatter.string(from: elapsedTime) ?? "00:00:00"
+}
+
+class SensorManager: NSObject, ObservableObject {
+    var motionManager: CMMotionManager? = CMMotionManager()
+    
+    // device motion variables
+    @Published var accX = 0.0
+    @Published var accY = 0.0
+    @Published var accZ = 0.0
+    @Published var gyrX = 0.0
+    @Published var gyrY = 0.0
+    @Published var gyrZ = 0.0
+    @Published var magX = 0.0
+    @Published var magY = 0.0
+    @Published var magZ = 0.0
+    
+    // time stamps
+    @Published var timeStamp = Date()
+    @Published var elapsedTime = "00:00.00"
+    
+    // start the time
+    var timer = Timer()
+    
+    // create a start time variable to calculate elapsed time from
+    var startTime = Date()
+    
+    @objc private func sampleSensors() {
+        // grab the accelerometer data [m/s]
+        if let data = motionManager?.accelerometerData {
+            accX = data.acceleration.x
+            accY = data.acceleration.y
+            accZ = data.acceleration.z
+        } else {
+            accX = Double.nan
+            accY = Double.nan
+            accZ = Double.nan
+        }
+        //grab the rotation rate [radians/sec]
+        if let data = motionManager?.deviceMotion {
+            gyrX = data.rotationRate.x
+            gyrY = data.rotationRate.y
+            gyrZ = data.rotationRate.z
+        } else {
+            gyrX = Double.nan
+            gyrY = Double.nan
+            gyrZ = Double.nan
+        }
+        //grab the magentic field data [microTesla]
+        if let data = motionManager?.deviceMotion {
+            magX = data.magneticField.field.x
+            magY = data.magneticField.field.y
+            magZ = data.magneticField.field.z
+        } else {
+            magX = Double.nan
+            magY = Double.nan
+            magZ = Double.nan
+        }
+        
+        // Get the time stamps
+        timeStamp = Date()
+        // get elapsed time string
+        elapsedTime = String(format: "%.2f", Date().timeIntervalSince(startTime))
+        
+        
+
+    }
+
+    // start getting data from the Motion Sensors
+    func startLogging(_ freq: Double) {
+        // Check if the accelerometer is available. If yes, get updates.
+        if motionManager!.isAccelerometerAvailable {
+            motionManager?.startAccelerometerUpdates()
+        } else {
+            print("Accelerometer is not available")
+        }
+        // check if device motion is available. If yes, get updates.
+        if motionManager!.isDeviceMotionAvailable {
+            motionManager?.startDeviceMotionUpdates(using: CoreMotion.CMAttitudeReferenceFrame.xTrueNorthZVertical)
+        } else {
+            print("Device Motion is not available")
+        }
+        
+        // define the start time
+        startTime = Date()
+        // start the timer to begin sampling on a regular interval
+        timer = Timer.scheduledTimer(timeInterval: 1.0/freq, target: self, selector: #selector(sampleSensors), userInfo: nil, repeats: true)
+    }
+    
+    // Stop getting data from the motion sensors
+    func stopLogging() {
+        // stop the timer
+        timer.invalidate()
+        
+        // Stop getting accelerometer updates.
+        if motionManager!.isAccelerometerActive {
+            motionManager?.stopAccelerometerUpdates()
+        }
+        
+        // stop getting device motion data
+        if motionManager!.isDeviceMotionActive {
+            motionManager?.stopDeviceMotionUpdates()
+        }
+    }
+    
+    // Save the data to CoreData
+    func saveData(timeStamp: Double, accX: Double ) {
+        // figure out how to save data to Core Motion here
+    }
+}
