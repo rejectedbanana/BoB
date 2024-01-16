@@ -13,6 +13,9 @@ struct ContentView: View {
     @StateObject var settings = SettingsManager()
     
     var body: some View {
+        
+        // MARK: - Navigation Flow
+        
         NavigationView {
             ScrollView {
                 

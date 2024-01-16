@@ -9,7 +9,9 @@ import Foundation
 import CoreLocation
 
 struct Entry: Hashable, Codable, Identifiable {
-    // define the easy properties
+    
+    // MARK: - Properties
+    
     var id: String
     var date: String
     var coordinates: Coordinates

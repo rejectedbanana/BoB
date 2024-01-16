@@ -8,6 +8,9 @@
 import SwiftUI
 
 struct RawMotionRow: View {
+    
+    //MARK: - Properties
+    
     var title: String
     var xValue: Double
     var yValue: Double

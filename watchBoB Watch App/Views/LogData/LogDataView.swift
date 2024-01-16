@@ -21,7 +21,7 @@ struct LogDataView: View {
     @State private var startLongitude: CLLocationDegrees? = nil
     
     // create the location manager in ContentView, then pull it in here
-//    @EnvironmentObject var locationDataManager: LocationDataManager
+    // @EnvironmentObject var locationDataManager: LocationDataManager
     // create the location manager here
     @StateObject var locationDataManager = LocationDataManager()
     
