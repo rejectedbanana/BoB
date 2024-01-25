@@ -9,7 +9,7 @@ import SwiftUI
 
 struct LogbookView: View {
     @Environment(\.managedObjectContext) var moc
-    @FetchRequest(sortDescriptors: []) var logBookEntries: FetchedResults<LogBookEntry>
+    @FetchRequest(sortDescriptors: []) var logBookEntries: FetchedResults<LogBookRecord>
     
     var body: some View {
         NavigationStack {
