@@ -8,6 +8,14 @@
 
 /* Begin PBXBuildFile section */
 		97349CEB2AF1679300021CA3 /* RawMotionRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97349CEA2AF1679300021CA3 /* RawMotionRow.swift */; };
+		97364F3C2B64232500FED71B /* RecordData+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97364F382B64232500FED71B /* RecordData+CoreDataClass.swift */; };
+		97364F3D2B64232500FED71B /* RecordData+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97364F382B64232500FED71B /* RecordData+CoreDataClass.swift */; };
+		97364F3E2B64232500FED71B /* RecordData+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97364F392B64232500FED71B /* RecordData+CoreDataProperties.swift */; };
+		97364F3F2B64232500FED71B /* RecordData+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97364F392B64232500FED71B /* RecordData+CoreDataProperties.swift */; };
+		97364F402B64232500FED71B /* LogBookRecord+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97364F3A2B64232500FED71B /* LogBookRecord+CoreDataClass.swift */; };
+		97364F412B64232500FED71B /* LogBookRecord+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97364F3A2B64232500FED71B /* LogBookRecord+CoreDataClass.swift */; };
+		97364F422B64232500FED71B /* LogBookRecord+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97364F3B2B64232500FED71B /* LogBookRecord+CoreDataProperties.swift */; };
+		97364F432B64232500FED71B /* LogBookRecord+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97364F3B2B64232500FED71B /* LogBookRecord+CoreDataProperties.swift */; };
 		973AFCFE2AF15A0100A29AF0 /* RawDataView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 973AFCFD2AF15A0100A29AF0 /* RawDataView.swift */; };
 		973AFD022AF15C3900A29AF0 /* NeatDataView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 973AFD012AF15C3900A29AF0 /* NeatDataView.swift */; };
 		978450C12B462635006C915C /* SettingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 978450C02B462635006C915C /* SettingManager.swift */; };
@@ -66,6 +74,10 @@
 
 /* Begin PBXFileReference section */
 		97349CEA2AF1679300021CA3 /* RawMotionRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RawMotionRow.swift; sourceTree = "<group>"; };
+		97364F382B64232500FED71B /* RecordData+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "RecordData+CoreDataClass.swift"; path = "watchBoB Watch App/Resources/RecordData+CoreDataClass.swift"; sourceTree = "<group>"; };
+		97364F392B64232500FED71B /* RecordData+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "RecordData+CoreDataProperties.swift"; path = "watchBoB Watch App/Resources/RecordData+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		97364F3A2B64232500FED71B /* LogBookRecord+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "LogBookRecord+CoreDataClass.swift"; path = "watchBoB Watch App/Resources/LogBookRecord+CoreDataClass.swift"; sourceTree = "<group>"; };
+		97364F3B2B64232500FED71B /* LogBookRecord+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "LogBookRecord+CoreDataProperties.swift"; path = "watchBoB Watch App/Resources/LogBookRecord+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		973AFCFD2AF15A0100A29AF0 /* RawDataView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RawDataView.swift; sourceTree = "<group>"; };
 		973AFD012AF15C3900A29AF0 /* NeatDataView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NeatDataView.swift; sourceTree = "<group>"; };
 		978450C02B462635006C915C /* SettingManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingManager.swift; sourceTree = "<group>"; };
@@ -218,6 +230,10 @@
 		97DF8E8C2AE195FA00A33A80 = {
 			isa = PBXGroup;
 			children = (
+				97364F382B64232500FED71B /* RecordData+CoreDataClass.swift */,
+				97364F392B64232500FED71B /* RecordData+CoreDataProperties.swift */,
+				97364F3A2B64232500FED71B /* LogBookRecord+CoreDataClass.swift */,
+				97364F3B2B64232500FED71B /* LogBookRecord+CoreDataProperties.swift */,
 				97DF8E972AE195FA00A33A80 /* BoB */,
 				97DF8EAB2AE1968500A33A80 /* watchBoB Watch App */,
 				97DF8E962AE195FA00A33A80 /* Products */,
@@ -412,6 +428,10 @@
 			files = (
 				97E505812B472E8700334D6F /* phoneLogbookRow.swift in Sources */,
 				97E505832B472F9700334D6F /* phoneLogbookDetail.swift in Sources */,
+				97364F3E2B64232500FED71B /* RecordData+CoreDataProperties.swift in Sources */,
+				97364F402B64232500FED71B /* LogBookRecord+CoreDataClass.swift in Sources */,
+				97364F422B64232500FED71B /* LogBookRecord+CoreDataProperties.swift in Sources */,
+				97364F3C2B64232500FED71B /* RecordData+CoreDataClass.swift in Sources */,
 				978D10762AE6E97700310B26 /* Entry.swift in Sources */,
 				978D10732AE6E92300310B26 /* LogbookModel.swift in Sources */,
 				97DF8E9B2AE195FA00A33A80 /* ContentView.swift in Sources */,
@@ -431,14 +451,18 @@
 				978D10692AE304B200310B26 /* SettingsView.swift in Sources */,
 				978D10632AE2FE3D00310B26 /* RectangleDivider.swift in Sources */,
 				97DF8EAD2AE1968500A33A80 /* watchBoBApp.swift in Sources */,
+				97364F432B64232500FED71B /* LogBookRecord+CoreDataProperties.swift in Sources */,
 				978D10672AE3049400310B26 /* LogbookView.swift in Sources */,
 				97DF8EBD2AE1D9AF00A33A80 /* LogDataView.swift in Sources */,
+				97364F3D2B64232500FED71B /* RecordData+CoreDataClass.swift in Sources */,
 				97CE319C2AED6ADE009335C9 /* LocationDataManager.swift in Sources */,
 				97B104AE2AE9778D00FE81DC /* SensorDataModel.swift in Sources */,
 				97B104AA2AE9771700FE81DC /* SensorManager.swift in Sources */,
 				9797363E2AEB15B8009BCFF0 /* Bob.xcdatamodeld in Sources */,
 				978450C12B462635006C915C /* SettingManager.swift in Sources */,
+				97364F3F2B64232500FED71B /* RecordData+CoreDataProperties.swift in Sources */,
 				97DF8EBF2AE1EA8A00A33A80 /* LogDataRow.swift in Sources */,
+				97364F412B64232500FED71B /* LogBookRecord+CoreDataClass.swift in Sources */,
 				979736402AEB1AB4009BCFF0 /* DataController.swift in Sources */,
 				978D107A2AE70F8F00310B26 /* LogbookRow.swift in Sources */,
 				978D10612AE2E82E00310B26 /* HeaderRow.swift in Sources */,
