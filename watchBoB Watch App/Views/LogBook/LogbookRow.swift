@@ -25,7 +25,7 @@ struct LogbookRow: View {
                 .foregroundColor(.fandango)
                 .frame(width: 15, height: 15)
             VStack(alignment: .leading) {
-                Text(dateFormatter( record.startDate ?? Date(timeIntervalSince1970: 0) )) // change this unwrap to something else when I figure out how
+                Text(dateFormatter( record.startDatetime ?? Date(timeIntervalSince1970: 0) )) // change this unwrap to something else when I figure out how
 //                Text(record.name ?? "Name Unknown")
                 Text("\(String(format: "%0.2f", record.startLatitude)), \(String(format: "%0.2f", record.startLongitude))")
             }
