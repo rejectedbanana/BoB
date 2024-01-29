@@ -112,7 +112,7 @@ struct LogDataView: View {
                     endDate = Date()
                     
                     // create a new log entry to save to CoreData
-                    let newEntry = LogBookEntry(context: moc)
+                    let newEntry = LogBookRecord(context: moc)
                     newEntry.id = UUID()
                     newEntry.startDate = startDate
                     newEntry.endDate = endDate

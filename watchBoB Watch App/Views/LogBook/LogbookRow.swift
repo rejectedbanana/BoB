@@ -14,7 +14,7 @@ func dateFormatter(_ date: Date) -> String {
 }
 
 struct LogbookRow: View {
-    let entry: LogBookEntry
+    let record: LogBookRecord
     
     @Environment(\.managedObjectContext) var moc
     
@@ -25,9 +25,9 @@ struct LogbookRow: View {
                 .foregroundColor(.fandango)
                 .frame(width: 15, height: 15)
             VStack(alignment: .leading) {
-                Text(dateFormatter( entry.startDate ?? Date(timeIntervalSince1970: 0) )) // change this unwrap to something else when I figure out how
-//                Text(entry.name ?? "Name Unknown")
-                Text("\(String(format: "%0.2f", entry.startLatitude)), \(String(format: "%0.2f", entry.startLongitude))")
+                Text(dateFormatter( record.startDate ?? Date(timeIntervalSince1970: 0) )) // change this unwrap to something else when I figure out how
+//                Text(record.name ?? "Name Unknown")
+                Text("\(String(format: "%0.2f", record.startLatitude)), \(String(format: "%0.2f", record.startLongitude))")
             }
             .font(.footnote)
         }
