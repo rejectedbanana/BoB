@@ -9,5 +9,22 @@
         <attribute name="stopDatetime" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="stopLatitude" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="stopLongitude" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <relationship name="recordData" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="RecordData" inverseName="logbookRecord" inverseEntity="RecordData"/>
+    </entity>
+    <entity name="RecordData" representedClassName="RecordData" syncable="YES" codeGenerationType="class">
+        <attribute name="accelerationX" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="accelerationY" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="accelerationZ" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="datetimeStamp" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="magneticFluxX" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="magneticFluxY" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="magneticFluxZ" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="rotationRateX" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="rotationRateY" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="rotationRateZ" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="waterDepth" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="waterTemperature" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <relationship name="logbookRecord" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="LogBookRecord" inverseName="recordData" inverseEntity="LogBookRecord"/>
     </entity>
 </model>
