@@ -14,8 +14,8 @@ struct LogDataView: View {
     @Environment(\.dismiss) var dismiss
     
     // create the variables to write to CoreData
-    @State private var startDate: Date = Date()
-    @State private var endDate: Date = Date()
+    @State private var startDatetime: Date = Date()
+    @State private var stopDatetime: Date = Date()
     @State private var name: String = ""
     @State private var startLatitude: CLLocationDegrees? = nil
     @State private var startLongitude: CLLocationDegrees? = nil
@@ -98,8 +98,8 @@ struct LogDataView: View {
                 
                 if isLoggingData {
                     // take some metadata
-                    startDate = Date()
-                    name = timeStampFormatter(startDate)
+                    startDatetime = Date()
+                    name = timeStampFormatter(startDatetime)
                     startLatitude = locationDataManager.locationManager.location?.coordinate.latitude ?? Double.nan
                     startLongitude = locationDataManager.locationManager.location?.coordinate.longitude ?? Double.nan
 
@@ -109,13 +109,13 @@ struct LogDataView: View {
                     // stop taking data
                     sensorManager.stopLogging()
                     // take some more metadata
-                    endDate = Date()
+                    stopDatetime = Date()
                     
                     // create a new log entry to save to CoreData
-                    let newEntry = LogBookEntry(context: moc)
+                    let newEntry = LogBookRecord(context: moc)
                     newEntry.id = UUID()
-                    newEntry.startDate = startDate
-                    newEntry.endDate = endDate
+                    newEntry.startDatetime = startDatetime
+                    newEntry.stopDatetime = stopDatetime
                     newEntry.name = name
                     newEntry.startLatitude = startLatitude ?? 0.0
                     newEntry.startLongitude = startLongitude ?? 0.0

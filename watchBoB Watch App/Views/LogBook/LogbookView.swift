@@ -9,17 +9,17 @@ import SwiftUI
 
 struct LogbookView: View {
     @Environment(\.managedObjectContext) var moc
-    @FetchRequest(sortDescriptors: []) var logBookEntries: FetchedResults<LogBookEntry>
+    @FetchRequest(sortDescriptors: []) var logBookRecords: FetchedResults<LogBookRecord>
     
     var body: some View {
         NavigationStack {
             List {
-                ForEach(logBookEntries) {logBookEntry in
+                ForEach(logBookRecords) {logBookRecord in
                     NavigationLink {
-                        LogbookDetail(entry: logBookEntry)
+                        LogbookDetail(record: logBookRecord)
                     } label: {
-//                        Text(logBookEntry.name ?? "Unknown Name")
-                        LogbookRow(entry: logBookEntry)
+//                        Text(logBookRecord.name ?? "Unknown Name")
+                        LogbookRow(record: logBookRecord)
                     }
                 }
                 .onDelete(perform: deleteBooks)
@@ -31,7 +31,7 @@ struct LogbookView: View {
     // make a function to delete log entries
     func deleteBooks(at offsets: IndexSet) {
         for offset in offsets {
-            let entry = logBookEntries[offset]
+            let entry = logBookRecords[offset]
             moc.delete(entry)
         }
     }

@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct LogbookDetail: View {
-    let entry: LogBookEntry
+    let record: LogBookRecord
     
     @Environment(\.managedObjectContext) var moc
 
@@ -23,10 +23,10 @@ struct LogbookDetail: View {
                 // Average water temperature
                 // maximum depth
                 
-                Text(entry.name ?? "Unknown name")
+                Text(record.name ?? "Unknown name")
                 RectangleDivider()
-                Text(String(format: "%0.3f", entry.startLatitude))
-                Text(String(format: "%0.3f", entry.startLongitude))
+                Text(String(format: "%0.3f", record.startLatitude))
+                Text(String(format: "%0.3f", record.startLongitude))
   
 
             }
