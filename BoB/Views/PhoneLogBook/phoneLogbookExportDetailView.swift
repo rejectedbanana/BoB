@@ -41,15 +41,7 @@ struct phoneLogbookExportDetailView: View {
         
         Spacer()
         
-        Button("Export Records") {
-        
-        }
-        .padding()
-        .frame(maxWidth: .infinity, minHeight: 40)
-        .background(.gray)
-        .foregroundColor(.white)
-        .clipShape(RoundedRectangle(cornerRadius: 8))
-    .padding()
+        ShareLink(Text("Export Records"), item: "String Item")
     }
 }
 
