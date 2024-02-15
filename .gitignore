@@ -1,0 +1,8 @@
+# User settings
+xcuserdata/
+
+# OS Generated files
+*.DS_Store
+
+# For this Swift Project
+.pbxproj
