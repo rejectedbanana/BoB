@@ -2,7 +2,7 @@
 xcuserdata/
 
 # OS Generated files
-*.DS_Store
+.DS_Store
 
 # For this Swift Project
 .pbxproj
