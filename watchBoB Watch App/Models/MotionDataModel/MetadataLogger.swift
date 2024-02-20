@@ -14,8 +14,8 @@ public class SessionMetadata: NSManagedObject {
     @NSManaged public var startTime: Date
     @NSManaged public var endTime: Date
     @NSManaged public var stopTime: Date?
-    @NSManaged public var startCoordinates: String?
-    @NSManaged public var stopCoordinates: String?
+    @NSManaged public var startCoordinates: Double
+    @NSManaged public var stopCoordinates: Double
     @NSManaged public var samplingFrequency: Int16
 }
 
@@ -28,7 +28,6 @@ class MetadataLogger: ObservableObject {
         sessionMetadata = SessionMetadata(context: context)
         sessionMetadata?.sessionID = UUID()
         sessionMetadata?.startTime = Date()
-        sessionMetadata?.startCoordinates = "Start Coordinates" // Replace with actual coordinates
 
         sessionMetadata?.samplingFrequency = 10
 
@@ -45,7 +44,6 @@ class MetadataLogger: ObservableObject {
 
     func stopLogging() {
         sessionMetadata?.stopTime = Date()
-        sessionMetadata?.stopCoordinates = "Stop Coordinates" // Replace with actual coordinates
 
         do {
             try context.save()
