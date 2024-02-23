@@ -45,6 +45,7 @@ class TemperatureDepthLogger: ObservableObject {
         sessionMetadata = SessionMetadata(context: context)
         sessionMetadata?.sessionID = UUID()
         sessionMetadata?.startTime = Date()
+        sessionMetadata?.endTime = Date()
 
         do {
             try context.save()

@@ -20,9 +20,3 @@ public class MotionSample: NSManagedObject {
     @NSManaged public var magnetometerY: Double
     @NSManaged public var magnetometerZ: Double
 }
-
-public class SessionMetadata: NSManagedObject {
-    @NSManaged public var sessionID: UUID
-    @NSManaged public var startTime: Date
-    @NSManaged public var endTime: Date?
-}
