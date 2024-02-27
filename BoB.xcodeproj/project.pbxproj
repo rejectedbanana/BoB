@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3001E6EF2B7BEB44003B09B1 /* MotionSample.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3001E6EE2B7BEB44003B09B1 /* MotionSample.swift */; };
+		3001E6F12B7BF2D6003B09B1 /* MotionDataLogging.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3001E6F02B7BF2D6003B09B1 /* MotionDataLogging.swift */; };
+		3001E6F42B7BF3B9003B09B1 /* LogBookRecordsProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3001E6F32B7BF3B9003B09B1 /* LogBookRecordsProvider.swift */; };
+		3001E6F62B7BF568003B09B1 /* PersistenceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3001E6F52B7BF568003B09B1 /* PersistenceController.swift */; };
+		3001E6F82B7FD6D5003B09B1 /* TemperatureDepthLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3001E6F72B7FD6D5003B09B1 /* TemperatureDepthLogger.swift */; };
+		3001E6FA2B8426E0003B09B1 /* MetadataLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3001E6F92B8426E0003B09B1 /* MetadataLogger.swift */; };
 		97349CEB2AF1679300021CA3 /* RawMotionRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97349CEA2AF1679300021CA3 /* RawMotionRow.swift */; };
 		973AFCFE2AF15A0100A29AF0 /* RawDataView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 973AFCFD2AF15A0100A29AF0 /* RawDataView.swift */; };
 		973AFD022AF15C3900A29AF0 /* NeatDataView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 973AFD012AF15C3900A29AF0 /* NeatDataView.swift */; };
@@ -65,6 +71,12 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		3001E6EE2B7BEB44003B09B1 /* MotionSample.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MotionSample.swift; sourceTree = "<group>"; };
+		3001E6F02B7BF2D6003B09B1 /* MotionDataLogging.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MotionDataLogging.swift; sourceTree = "<group>"; };
+		3001E6F32B7BF3B9003B09B1 /* LogBookRecordsProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogBookRecordsProvider.swift; sourceTree = "<group>"; };
+		3001E6F52B7BF568003B09B1 /* PersistenceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceController.swift; sourceTree = "<group>"; };
+		3001E6F72B7FD6D5003B09B1 /* TemperatureDepthLogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemperatureDepthLogger.swift; sourceTree = "<group>"; };
+		3001E6F92B8426E0003B09B1 /* MetadataLogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetadataLogger.swift; sourceTree = "<group>"; };
 		97349CEA2AF1679300021CA3 /* RawMotionRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RawMotionRow.swift; sourceTree = "<group>"; };
 		973AFCFD2AF15A0100A29AF0 /* RawDataView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RawDataView.swift; sourceTree = "<group>"; };
 		973AFD012AF15C3900A29AF0 /* NeatDataView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NeatDataView.swift; sourceTree = "<group>"; };
@@ -117,6 +129,27 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3001E6ED2B7BEB44003B09B1 /* MotionDataModel */ = {
+			isa = PBXGroup;
+			children = (
+				3001E6EE2B7BEB44003B09B1 /* MotionSample.swift */,
+				3001E6F02B7BF2D6003B09B1 /* MotionDataLogging.swift */,
+				3001E6F52B7BF568003B09B1 /* PersistenceController.swift */,
+				3001E6F72B7FD6D5003B09B1 /* TemperatureDepthLogger.swift */,
+				3001E6F92B8426E0003B09B1 /* MetadataLogger.swift */,
+			);
+			path = MotionDataModel;
+			sourceTree = "<group>";
+		};
+		3001E6F22B7BF3B9003B09B1 /* Provider */ = {
+			isa = PBXGroup;
+			children = (
+				3001E6F32B7BF3B9003B09B1 /* LogBookRecordsProvider.swift */,
+			);
+			name = Provider;
+			path = "watchBoB Watch App/Provider";
+			sourceTree = SOURCE_ROOT;
+		};
 		973AFCFA2AEFEA4B00A29AF0 /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -190,6 +223,7 @@
 		978D106E2AE6E88200310B26 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				3001E6ED2B7BEB44003B09B1 /* MotionDataModel */,
 				97B104AC2AE9777400FE81DC /* LogData */,
 				97B104AB2AE9775E00FE81DC /* LogBook */,
 				978450C22B4626B2006C915C /* Settings */,
@@ -258,6 +292,7 @@
 		97DF8EAB2AE1968500A33A80 /* watchBoB Watch App */ = {
 			isa = PBXGroup;
 			children = (
+				3001E6F22B7BF3B9003B09B1 /* Provider */,
 				97DF8EAC2AE1968500A33A80 /* watchBoBApp.swift */,
 				97DF8EC02AE1EBA300A33A80 /* Views */,
 				978D106E2AE6E88200310B26 /* Models */,
@@ -424,6 +459,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				973AFCFE2AF15A0100A29AF0 /* RawDataView.swift in Sources */,
+				3001E6F62B7BF568003B09B1 /* PersistenceController.swift in Sources */,
+				3001E6F82B7FD6D5003B09B1 /* TemperatureDepthLogger.swift in Sources */,
 				97349CEB2AF1679300021CA3 /* RawMotionRow.swift in Sources */,
 				97B104A32AE7160200FE81DC /* LogbookDetail.swift in Sources */,
 				973AFD022AF15C3900A29AF0 /* NeatDataView.swift in Sources */,
@@ -432,16 +469,20 @@
 				978D10632AE2FE3D00310B26 /* RectangleDivider.swift in Sources */,
 				97DF8EAD2AE1968500A33A80 /* watchBoBApp.swift in Sources */,
 				978D10672AE3049400310B26 /* LogbookView.swift in Sources */,
+				3001E6F42B7BF3B9003B09B1 /* LogBookRecordsProvider.swift in Sources */,
 				97DF8EBD2AE1D9AF00A33A80 /* LogDataView.swift in Sources */,
 				97CE319C2AED6ADE009335C9 /* LocationDataManager.swift in Sources */,
 				97B104AE2AE9778D00FE81DC /* SensorDataModel.swift in Sources */,
+				3001E6F12B7BF2D6003B09B1 /* MotionDataLogging.swift in Sources */,
 				97B104AA2AE9771700FE81DC /* SensorManager.swift in Sources */,
 				9797363E2AEB15B8009BCFF0 /* Bob.xcdatamodeld in Sources */,
 				978450C12B462635006C915C /* SettingManager.swift in Sources */,
 				97DF8EBF2AE1EA8A00A33A80 /* LogDataRow.swift in Sources */,
 				979736402AEB1AB4009BCFF0 /* DataController.swift in Sources */,
+				3001E6EF2B7BEB44003B09B1 /* MotionSample.swift in Sources */,
 				978D107A2AE70F8F00310B26 /* LogbookRow.swift in Sources */,
 				978D10612AE2E82E00310B26 /* HeaderRow.swift in Sources */,
+				3001E6FA2B8426E0003B09B1 /* MetadataLogger.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
