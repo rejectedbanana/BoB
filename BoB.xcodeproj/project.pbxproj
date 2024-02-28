@@ -152,6 +152,13 @@
 			path = "watchBoB Watch App/Provider";
 			sourceTree = SOURCE_ROOT;
 		};
+		970FDF772B8FE0F400D32DE1 /* Bob_UITests */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Bob_UITests;
+			sourceTree = "<group>";
+		};
 		973AFCFA2AEFEA4B00A29AF0 /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -256,6 +263,7 @@
 			children = (
 				97DF8E972AE195FA00A33A80 /* BoB */,
 				97DF8EAB2AE1968500A33A80 /* watchBoB Watch App */,
+				970FDF772B8FE0F400D32DE1 /* Bob_UITests */,
 				97DF8E962AE195FA00A33A80 /* Products */,
 			);
 			sourceTree = "<group>";
