@@ -79,6 +79,8 @@
 		3001E6F72B7FD6D5003B09B1 /* TemperatureDepthLogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemperatureDepthLogger.swift; sourceTree = "<group>"; };
 		3001E6F92B8426E0003B09B1 /* MetadataLogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetadataLogger.swift; sourceTree = "<group>"; };
 		970FDF752B8FBC6000D32DE1 /* phoneLogbookExportDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = phoneLogbookExportDetailView.swift; sourceTree = "<group>"; };
+		970FDF782B8FE1C300D32DE1 /* BoB_UITestsLaunchTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BoB_UITestsLaunchTests.swift; sourceTree = "<group>"; };
+		970FDF792B8FE1C300D32DE1 /* BoB_UITests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BoB_UITests.swift; sourceTree = "<group>"; };
 		97349CEA2AF1679300021CA3 /* RawMotionRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RawMotionRow.swift; sourceTree = "<group>"; };
 		973AFCFD2AF15A0100A29AF0 /* RawDataView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RawDataView.swift; sourceTree = "<group>"; };
 		973AFD012AF15C3900A29AF0 /* NeatDataView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NeatDataView.swift; sourceTree = "<group>"; };
@@ -155,6 +157,8 @@
 		970FDF772B8FE0F400D32DE1 /* Bob_UITests */ = {
 			isa = PBXGroup;
 			children = (
+				970FDF792B8FE1C300D32DE1 /* BoB_UITests.swift */,
+				970FDF782B8FE1C300D32DE1 /* BoB_UITestsLaunchTests.swift */,
 			);
 			path = Bob_UITests;
 			sourceTree = "<group>";
