@@ -9,7 +9,7 @@ import SwiftUI
 
 struct phoneLogbookDetailView: View {
     var body: some View {
-        NavigationView {
+        NavigationStack {
                 List {
                     Section("Sample Details"){
                         phoneLogbookDetailRow(header: "Minimum Water Temperature", content: "7.0 °C")
@@ -28,14 +28,13 @@ struct phoneLogbookDetailView: View {
                         phoneLogbookDetailRow(header: "Hardware Version", content: "Watch6,18")
                         phoneLogbookDetailRow(header: "Software Version", content: "10.3")
                     }
-            }
-            .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
+                }
+                .navigationTitle("Details")
+                .toolbar {
                     NavigationLink(destination: phoneLogbookExportDetailView()) {
-                            Text("Export Data")
+                        Text("Export")
                     }
                 }
-            }
         }
     }
 
