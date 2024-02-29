@@ -11,9 +11,6 @@ struct phoneLogbookDetailView: View {
     var body: some View {
         NavigationView {
             VStack {
-                Text("Lake Washington")
-                    .font(.system(size: 36))
-                
                 List {
                     Section("Sample Details"){
                         phoneLogbookDetailRow(header: "Minimum Water Temperature", content: "7.0 °C")
