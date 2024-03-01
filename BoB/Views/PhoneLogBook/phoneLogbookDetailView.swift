@@ -29,6 +29,7 @@ struct phoneLogbookDetailView: View {
                         phoneLogbookDetailRow(header: "Software Version", content: "10.3")
                     }
                 }
+                .navigationBarTitleDisplayMode(.inline)
                 .navigationTitle("Details")
                 .toolbar {
                     NavigationLink(destination: phoneLogbookExportDetailView()) {
