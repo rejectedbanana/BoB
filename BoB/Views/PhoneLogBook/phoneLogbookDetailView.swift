@@ -9,41 +9,50 @@ import SwiftUI
 
 struct phoneLogbookDetailView: View {
     var body: some View {
-        NavigationView {
-            VStack {
-                Text("Lake Washington")
-                    .font(.system(size: 36))
-                Text("1430 Samples at 10 Hz")
-                
+        NavigationStack {
                 List {
-                    Section{
-                        Text("Item 1")
-                        Text("Item 2")
+                    Section("Sample Details"){
+                        phoneDetailRow(header: "Minimum Water Temperature", content: "7.0 °C")
+                        phoneDetailRow(header: "Maximum Underwater Depth", content: "44.0 m")
+                        phoneDetailRow(header: "Start Time", content: "Oct 17, 2023 at 12:10:39 PM PST")
+                        phoneDetailRow(header: "End Time", content: "Oct 17, 2023 at 12:21:22 PM")
+                        phoneDetailRow(header: "Samples", content: "1430")
+                        phoneDetailRow(header: "Sampling Frequency", content: "10 Hz")
+                        phoneDetailRow(header: "Source", content: "Kim's Apple Watch")
                     }
                     
-                    Section{
-                        Text("Item 1")
-                        Text("Item 2")
-                        Text("Item 3")
-                        Text("Item 4")
-                        Text("Item 5")
+                    Section("Device Details"){
+                        phoneDetailRow(header: "Name", content: "Apple Watch")
+                        phoneDetailRow(header: "Manufacturer", content: "Apple Inc.")
+                        phoneDetailRow(header: "Model", content: "Ultra")
+                        phoneDetailRow(header: "Hardware Version", content: "Watch6,18")
+                        phoneDetailRow(header: "Software Version", content: "10.3")
                     }
                 }
-                
-                Spacer()
-                
-                NavigationLink(destination: phoneLogbookExportDetailView()) {
-                    Button("Export") {
-                    
+                .navigationBarTitleDisplayMode(.inline)
+                .navigationTitle("Details")
+                .toolbar {
+                    NavigationLink(destination: phoneLogbookExportDetailView()) {
+                        Text("Export")
                     }
-                    .padding()
-                    .frame(maxWidth: .infinity, minHeight: 40)
-                    .background(.gray)
-                    .foregroundColor(.white)
-                    .clipShape(RoundedRectangle(cornerRadius: 8))
-                .padding()
                 }
-            }
+        }
+    }
+
+}
+
+
+struct phoneDetailRow: View {
+    let header: String
+    let content: String
+    
+    var body: some View {
+        VStack(alignment: .leading) {
+            Text(header)
+                .font(.callout)
+                .foregroundColor(Color.gray)
+            Text(content)
+                .font(.body)
         }
     }
 }

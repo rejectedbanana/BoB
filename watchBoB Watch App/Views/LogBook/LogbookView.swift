@@ -9,7 +9,7 @@ import SwiftUI
 
 struct LogbookView: View {
     @Environment(\.managedObjectContext) var moc
-    @FetchRequest(sortDescriptors: []) var logBookRecords: FetchedResults<LogBookRecord>
+    @FetchRequest(sortDescriptors: [SortDescriptor(\.startDatetime, order: .reverse)]) var logBookRecords: FetchedResults<LogBookRecord>
     
     var body: some View {
         NavigationStack {
