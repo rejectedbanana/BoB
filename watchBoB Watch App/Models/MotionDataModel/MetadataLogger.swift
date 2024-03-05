@@ -19,10 +19,11 @@ public class SessionMetadata: NSManagedObject {
     @NSManaged public var samplingFrequency: Int16
 }
 
-class MetadataLogger: ObservableObject {
+class MetadataLogger: NSObject, ObservableObject, CLLocationManagerDelegate {
     let context = PersistenceController.shared.container.viewContext
     var sessionMetadata: SessionMetadata?
     var isLogging = false
+    let locationDataManager = LocationDataManager()
 
     func startLogging() {
         sessionMetadata = SessionMetadata(context: context)
@@ -36,6 +37,8 @@ class MetadataLogger: ObservableObject {
         } catch {
             print("Failed to save session metadata: \(error)")
         }
+        
+        locationDataManager.locationManager.startUpdatingLocation()
 
         WKInterfaceDevice.current().enableWaterLock()
         
@@ -50,7 +53,20 @@ class MetadataLogger: ObservableObject {
         } catch {
             print("Failed to save session metadata: \(error)")
         }
+        
+        locationDataManager.locationManager.stopUpdatingLocation()
 
         isLogging = false
     }
-}
+    
+    // MARK: - CLLocationManagerDelegate
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+         guard let location = locations.last else { return }
+         // Handle location update
+     }
+
+     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+         print("Location manager failed with error: \(error.localizedDescription)")
+     }
+ }

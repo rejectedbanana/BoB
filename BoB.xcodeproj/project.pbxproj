@@ -13,6 +13,7 @@
 		3001E6F62B7BF568003B09B1 /* PersistenceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3001E6F52B7BF568003B09B1 /* PersistenceController.swift */; };
 		3001E6F82B7FD6D5003B09B1 /* TemperatureDepthLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3001E6F72B7FD6D5003B09B1 /* TemperatureDepthLogger.swift */; };
 		3001E6FA2B8426E0003B09B1 /* MetadataLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3001E6F92B8426E0003B09B1 /* MetadataLogger.swift */; };
+		3011124E2B96B17E0035D079 /* watchBoB_Watch_AppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3011124D2B96B17E0035D079 /* watchBoB_Watch_AppTests.swift */; };
 		970FDF762B8FBC6000D32DE1 /* phoneLogbookExportDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 970FDF752B8FBC6000D32DE1 /* phoneLogbookExportDetailView.swift */; };
 		97349CEB2AF1679300021CA3 /* RawMotionRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97349CEA2AF1679300021CA3 /* RawMotionRow.swift */; };
 		973AFCFE2AF15A0100A29AF0 /* RawDataView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 973AFCFD2AF15A0100A29AF0 /* RawDataView.swift */; };
@@ -48,6 +49,20 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		301112422B96AEBC0035D079 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 97DF8E8D2AE195FA00A33A80 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 97DF8E942AE195FA00A33A80;
+			remoteInfo = BoB;
+		};
+		3011124F2B96B17E0035D079 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 97DF8E8D2AE195FA00A33A80 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 97DF8EA92AE1968500A33A80;
+			remoteInfo = "watchBoB Watch App";
+		};
 		97DF8EB52AE1968600A33A80 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 97DF8E8D2AE195FA00A33A80 /* Project object */;
@@ -78,6 +93,9 @@
 		3001E6F52B7BF568003B09B1 /* PersistenceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceController.swift; sourceTree = "<group>"; };
 		3001E6F72B7FD6D5003B09B1 /* TemperatureDepthLogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemperatureDepthLogger.swift; sourceTree = "<group>"; };
 		3001E6F92B8426E0003B09B1 /* MetadataLogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetadataLogger.swift; sourceTree = "<group>"; };
+		3011123E2B96AEBC0035D079 /* BoBTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BoBTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		3011124B2B96B17E0035D079 /* watchBoB Watch AppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "watchBoB Watch AppTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		3011124D2B96B17E0035D079 /* watchBoB_Watch_AppTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = watchBoB_Watch_AppTests.swift; sourceTree = "<group>"; };
 		970FDF752B8FBC6000D32DE1 /* phoneLogbookExportDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = phoneLogbookExportDetailView.swift; sourceTree = "<group>"; };
 		970FDF782B8FE1C300D32DE1 /* BoB_UITestsLaunchTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BoB_UITestsLaunchTests.swift; sourceTree = "<group>"; };
 		970FDF792B8FE1C300D32DE1 /* BoB_UITests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BoB_UITests.swift; sourceTree = "<group>"; };
@@ -116,6 +134,20 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		3011123B2B96AEBC0035D079 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		301112482B96B17E0035D079 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		97DF8E922AE195FA00A33A80 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -153,6 +185,14 @@
 			name = Provider;
 			path = "watchBoB Watch App/Provider";
 			sourceTree = SOURCE_ROOT;
+		};
+		3011124C2B96B17E0035D079 /* watchBoB Watch AppTests */ = {
+			isa = PBXGroup;
+			children = (
+				3011124D2B96B17E0035D079 /* watchBoB_Watch_AppTests.swift */,
+			);
+			path = "watchBoB Watch AppTests";
+			sourceTree = "<group>";
 		};
 		970FDF772B8FE0F400D32DE1 /* Bob_UITests */ = {
 			isa = PBXGroup;
@@ -268,6 +308,7 @@
 				97DF8E972AE195FA00A33A80 /* BoB */,
 				97DF8EAB2AE1968500A33A80 /* watchBoB Watch App */,
 				970FDF772B8FE0F400D32DE1 /* Bob_UITests */,
+				3011124C2B96B17E0035D079 /* watchBoB Watch AppTests */,
 				97DF8E962AE195FA00A33A80 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -277,6 +318,8 @@
 			children = (
 				97DF8E952AE195FA00A33A80 /* BoB.app */,
 				97DF8EAA2AE1968500A33A80 /* watchBoB Watch App.app */,
+				3011123E2B96AEBC0035D079 /* BoBTests.xctest */,
+				3011124B2B96B17E0035D079 /* watchBoB Watch AppTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -360,6 +403,42 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		3011123D2B96AEBC0035D079 /* BoBTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 301112442B96AEBC0035D079 /* Build configuration list for PBXNativeTarget "BoBTests" */;
+			buildPhases = (
+				3011123A2B96AEBC0035D079 /* Sources */,
+				3011123B2B96AEBC0035D079 /* Frameworks */,
+				3011123C2B96AEBC0035D079 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				301112432B96AEBC0035D079 /* PBXTargetDependency */,
+			);
+			name = BoBTests;
+			productName = BoBTests;
+			productReference = 3011123E2B96AEBC0035D079 /* BoBTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		3011124A2B96B17E0035D079 /* watchBoB Watch AppTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 301112512B96B17E0035D079 /* Build configuration list for PBXNativeTarget "watchBoB Watch AppTests" */;
+			buildPhases = (
+				301112472B96B17E0035D079 /* Sources */,
+				301112482B96B17E0035D079 /* Frameworks */,
+				301112492B96B17E0035D079 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				301112502B96B17E0035D079 /* PBXTargetDependency */,
+			);
+			name = "watchBoB Watch AppTests";
+			productName = "watchBoB Watch AppTests";
+			productReference = 3011124B2B96B17E0035D079 /* watchBoB Watch AppTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		97DF8E942AE195FA00A33A80 /* BoB */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 97DF8EA32AE195FB00A33A80 /* Build configuration list for PBXNativeTarget "BoB" */;
@@ -403,9 +482,17 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 1500;
+				LastSwiftUpdateCheck = 1520;
 				LastUpgradeCheck = 1500;
 				TargetAttributes = {
+					3011123D2B96AEBC0035D079 = {
+						CreatedOnToolsVersion = 15.2;
+						TestTargetID = 97DF8E942AE195FA00A33A80;
+					};
+					3011124A2B96B17E0035D079 = {
+						CreatedOnToolsVersion = 15.2;
+						TestTargetID = 97DF8EA92AE1968500A33A80;
+					};
 					97DF8E942AE195FA00A33A80 = {
 						CreatedOnToolsVersion = 15.0;
 					};
@@ -429,11 +516,27 @@
 			targets = (
 				97DF8E942AE195FA00A33A80 /* BoB */,
 				97DF8EA92AE1968500A33A80 /* watchBoB Watch App */,
+				3011123D2B96AEBC0035D079 /* BoBTests */,
+				3011124A2B96B17E0035D079 /* watchBoB Watch AppTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		3011123C2B96AEBC0035D079 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		301112492B96B17E0035D079 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		97DF8E932AE195FA00A33A80 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -456,6 +559,21 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		3011123A2B96AEBC0035D079 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		301112472B96B17E0035D079 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3011124E2B96B17E0035D079 /* watchBoB_Watch_AppTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		97DF8E912AE195FA00A33A80 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -505,6 +623,16 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		301112432B96AEBC0035D079 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 97DF8E942AE195FA00A33A80 /* BoB */;
+			targetProxy = 301112422B96AEBC0035D079 /* PBXContainerItemProxy */;
+		};
+		301112502B96B17E0035D079 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 97DF8EA92AE1968500A33A80 /* watchBoB Watch App */;
+			targetProxy = 3011124F2B96B17E0035D079 /* PBXContainerItemProxy */;
+		};
 		97DF8EB62AE1968600A33A80 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 97DF8EA92AE1968500A33A80 /* watchBoB Watch App */;
@@ -513,6 +641,84 @@
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
+		301112452B96AEBC0035D079 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = N3E5MM8C9V;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ramarparham.BoBTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/BoB.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/BoB";
+			};
+			name = Debug;
+		};
+		301112462B96AEBC0035D079 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = N3E5MM8C9V;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ramarparham.BoBTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/BoB.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/BoB";
+			};
+			name = Release;
+		};
+		301112522B96B17E0035D079 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = N3E5MM8C9V;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.ramarparham.watchBoB-Watch-AppTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/watchBoB Watch App.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/watchBoB Watch App";
+				WATCHOS_DEPLOYMENT_TARGET = 10.2;
+			};
+			name = Debug;
+		};
+		301112532B96B17E0035D079 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = N3E5MM8C9V;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.ramarparham.watchBoB-Watch-AppTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/watchBoB Watch App.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/watchBoB Watch App";
+				WATCHOS_DEPLOYMENT_TARGET = 10.2;
+			};
+			name = Release;
+		};
 		97DF8EA12AE195FB00A33A80 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -763,6 +969,24 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		301112442B96AEBC0035D079 /* Build configuration list for PBXNativeTarget "BoBTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				301112452B96AEBC0035D079 /* Debug */,
+				301112462B96AEBC0035D079 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		301112512B96B17E0035D079 /* Build configuration list for PBXNativeTarget "watchBoB Watch AppTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				301112522B96B17E0035D079 /* Debug */,
+				301112532B96B17E0035D079 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		97DF8E902AE195FA00A33A80 /* Build configuration list for PBXProject "BoB" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
