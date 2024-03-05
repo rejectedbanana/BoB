@@ -16,6 +16,10 @@ public class SessionMetadata: NSManagedObject {
     @NSManaged public var stopTime: Date?
     @NSManaged public var startCoordinates: Double
     @NSManaged public var stopCoordinates: Double
+    @NSManaged public var startLatitude: Double
+    @NSManaged public var startLongitude: Double
+    @NSManaged public var stopLatitude: Double
+    @NSManaged public var stopLongitude: Double
     @NSManaged public var samplingFrequency: Int16
 }
 
@@ -23,7 +27,8 @@ class MetadataLogger: NSObject, ObservableObject, CLLocationManagerDelegate {
     let context = PersistenceController.shared.container.viewContext
     var sessionMetadata: SessionMetadata?
     var isLogging = false
-    let locationDataManager = LocationDataManager()
+    let locationManager = CLLocationManager()
+    var currentLocation: CLLocationCoordinate2D?
 
     func startLogging() {
         sessionMetadata = SessionMetadata(context: context)
@@ -38,7 +43,7 @@ class MetadataLogger: NSObject, ObservableObject, CLLocationManagerDelegate {
             print("Failed to save session metadata: \(error)")
         }
         
-        locationDataManager.locationManager.startUpdatingLocation()
+        locationManager.startUpdatingLocation()
 
         WKInterfaceDevice.current().enableWaterLock()
         
@@ -54,7 +59,7 @@ class MetadataLogger: NSObject, ObservableObject, CLLocationManagerDelegate {
             print("Failed to save session metadata: \(error)")
         }
         
-        locationDataManager.locationManager.stopUpdatingLocation()
+        locationManager.stopUpdatingLocation()
 
         isLogging = false
     }
@@ -62,9 +67,9 @@ class MetadataLogger: NSObject, ObservableObject, CLLocationManagerDelegate {
     // MARK: - CLLocationManagerDelegate
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-         guard let location = locations.last else { return }
-         // Handle location update
-     }
+          guard let location = locations.last else { return }
+          currentLocation = location.coordinate
+      }
 
      func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
          print("Location manager failed with error: \(error.localizedDescription)")
