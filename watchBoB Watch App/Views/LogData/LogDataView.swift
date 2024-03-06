@@ -7,6 +7,7 @@
 
 import Foundation
 import SwiftUI
+import CoreLocation
 
 struct LogDataView: View {
     // load the CoreData so you can write to it
@@ -120,7 +121,11 @@ struct LogDataView: View {
                     newEntry.startLatitude = startLatitude ?? 0.0
                     newEntry.startLongitude = startLongitude ?? 0.0
                     // save to CoreData
-                    try? moc.save()
+                    do {
+                        try moc.save()
+                    } catch {
+                        print("Failed to save log entry: \(error)")
+                    }
                     dismiss()
                     
                 }
@@ -138,6 +143,6 @@ struct LogDataView: View {
     }
 }
 
-//#Preview {
-//    LogDataView()
-//}
+#Preview {
+    LogDataView()
+}
