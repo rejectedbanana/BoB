@@ -7,7 +7,7 @@
 
 import Foundation
 import SwiftUI
-import CoreLocation
+
 
 struct LogDataView: View {
     // load the CoreData so you can write to it
