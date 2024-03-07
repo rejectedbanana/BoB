@@ -21,6 +21,8 @@ public class SessionMetadata: NSManagedObject {
     @NSManaged public var stopLatitude: Double
     @NSManaged public var stopLongitude: Double
     @NSManaged public var samplingFrequency: Int16
+    @NSManaged public var stopCoordinatesLatitude: Double
+    @NSManaged public var stopCoordinatesLongitude: Double
 }
 
 class MetadataLogger: NSObject, ObservableObject, CLLocationManagerDelegate {
@@ -50,13 +52,20 @@ class MetadataLogger: NSObject, ObservableObject, CLLocationManagerDelegate {
         isLogging = true
     }
 
-    func stopLogging() {
-        sessionMetadata?.stopTime = Date()
+    func stopLogging(stopCoordinates: CLLocationCoordinate2D) {
+        guard let sessionMetadata = sessionMetadata else {
+                print("Session metadata not found")
+                return
+            }
+        sessionMetadata.stopTime = Date()
+        sessionMetadata.stopCoordinatesLatitude = stopCoordinates.latitude
+        sessionMetadata.stopCoordinatesLongitude = stopCoordinates.longitude
 
         do {
             try context.save()
+            print("Session metadata saved")
         } catch {
-            print("Failed to save session metadata: \(error)")
+            print("Failed to save session metadata: \(error.localizedDescription)")
         }
         
         locationManager.stopUpdatingLocation()
