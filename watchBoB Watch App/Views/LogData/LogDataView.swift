@@ -33,6 +33,7 @@ struct LogDataView: View {
     @State private var isLoggingData = false
     
     @EnvironmentObject var settings: SettingsManager
+    @EnvironmentObject var metadataLogger: MetadataLogger
     
     var body: some View {
         VStack {
@@ -105,10 +106,13 @@ struct LogDataView: View {
                     startLongitude = locationDataManager.locationManager.location?.coordinate.longitude ?? Double.nan
 
                     // start taking data
+                    metadataLogger.startLogging()
                     sensorManager.startLogging(settings.samplingFrequency)
                 } else {
                     // stop taking data
                     sensorManager.stopLogging()
+                    metadataLogger.stopLogging(stopCoordinates: CLLocationCoordinate2D(latitude: startLatitude ?? 0.0, longitude: startLongitude ?? 0.0))
+        
                     // take some more metadata
                     stopDatetime = Date()
                     

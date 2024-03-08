@@ -14,11 +14,13 @@ func degree() -> String {
 @main
 struct watchBoB_Watch_AppApp: App {
     @StateObject private var dataController = DataController()
+    @StateObject private var metadataLogger = MetadataLogger()
     
     var body: some Scene {
         WindowGroup {
             ContentView()
                 .environment(\.managedObjectContext, dataController.container.viewContext)
+                .environmentObject(metadataLogger)
         }
     }
 }
