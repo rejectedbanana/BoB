@@ -50,6 +50,8 @@ class MetadataLogger: NSObject, ObservableObject, CLLocationManagerDelegate {
         WKInterfaceDevice.current().enableWaterLock()
         
         isLogging = true
+        
+        self.sessionMetadata = nil
     }
 
     func stopLogging(stopCoordinates: CLLocationCoordinate2D) {
@@ -71,6 +73,8 @@ class MetadataLogger: NSObject, ObservableObject, CLLocationManagerDelegate {
         locationManager.stopUpdatingLocation()
 
         isLogging = false
+        
+        self.sessionMetadata = nil
     }
     
     // MARK: - CLLocationManagerDelegate
