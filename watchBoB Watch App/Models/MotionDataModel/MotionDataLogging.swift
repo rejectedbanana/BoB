@@ -26,6 +26,9 @@ class MotionLogger: ObservableObject {
             motionSample.accelerometerY = motionData.userAcceleration.y
             motionSample.accelerometerZ = motionData.userAcceleration.z
             
+            motionSample.gyroscopeX = motionData.rotationRate.x
+            motionSample.gyroscopeY = motionData.rotationRate.y
+            motionSample.gyroscopeZ = motionData.rotationRate.z
 
             motionSample.timestamp = Date()
 
