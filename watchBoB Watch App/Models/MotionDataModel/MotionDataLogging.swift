@@ -29,6 +29,10 @@ class MotionLogger: ObservableObject {
             motionSample.gyroscopeX = motionData.rotationRate.x
             motionSample.gyroscopeY = motionData.rotationRate.y
             motionSample.gyroscopeZ = motionData.rotationRate.z
+            
+            motionSample.magnetometerX = motionData.magneticField.field.x
+            motionSample.magnetometerY = motionData.magneticField.field.y
+            motionSample.magnetometerZ = motionData.magneticField.field.z
 
             motionSample.timestamp = Date()
 
