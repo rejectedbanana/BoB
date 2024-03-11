@@ -7,6 +7,7 @@
 
 import Foundation
 import SwiftUI
+import CoreLocation
 
 
 struct LogDataView: View {
@@ -16,7 +17,7 @@ struct LogDataView: View {
     
     // create the variables to write to CoreData
     @State private var startDatetime: Date = Date()
-    @State private var stopDatetime: Date = Date()
+    //@State private var stopDatetime: Date = Date()
     @State private var name: String = ""
     @State private var startLatitude: CLLocationDegrees? = nil
     @State private var startLongitude: CLLocationDegrees? = nil
@@ -114,9 +115,10 @@ struct LogDataView: View {
                     metadataLogger.stopLogging(stopCoordinates: CLLocationCoordinate2D(latitude: startLatitude ?? 0.0, longitude: startLongitude ?? 0.0))
         
                     // take some more metadata
-                    stopDatetime = Date()
+                    //stopDatetime = Date()
                     
                     // create a new log entry to save to CoreData
+                    let stopDatetime = Date()
                     let newEntry = LogBookRecord(context: moc)
                     newEntry.id = UUID()
                     newEntry.startDatetime = startDatetime
