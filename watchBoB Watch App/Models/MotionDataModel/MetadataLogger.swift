@@ -23,6 +23,14 @@ public class SessionMetadata: NSManagedObject {
     @NSManaged public var samplingFrequency: Int16
     @NSManaged public var stopCoordinatesLatitude: Double
     @NSManaged public var stopCoordinatesLongitude: Double
+    
+    var isStopped = false
+    
+    func stop() {
+        guard !isStopped else { return } 
+           isStopped = true
+           endTime = Date()
+      }
 }
 
 class MetadataLogger: NSObject, ObservableObject, CLLocationManagerDelegate {
