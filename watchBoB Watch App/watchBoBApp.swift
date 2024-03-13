@@ -11,10 +11,10 @@ func degree() -> String {
     return "\u{00B0}"
 }
 
-@main
+//@main
 struct watchBoB_Watch_AppApp: App {
     @StateObject private var dataController = DataController()
-    @StateObject private var metadataLogger = MetadataLogger()
+    @StateObject private var metadataLogger = MetadataLogger(settingsManager: SettingsManager())
     
     var body: some Scene {
         WindowGroup {

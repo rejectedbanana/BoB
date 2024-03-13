@@ -40,7 +40,7 @@ class MetadataLogger: NSObject, ObservableObject, CLLocationManagerDelegate {
     let locationManager = CLLocationManager()
     var currentLocation: CLLocationCoordinate2D?
     
-    var settingsManager: SettingsManager // Add a property for SettingsManager
+    var settingsManager = SettingsManager() // Add a property for SettingsManager
 
        init(settingsManager: SettingsManager) { // Modify the initializer to accept SettingsManager
            self.settingsManager = settingsManager

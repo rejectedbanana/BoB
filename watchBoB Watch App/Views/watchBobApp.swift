@@ -8,18 +8,22 @@
 import Foundation
 import SwiftUI
 
+let settingsManager = SettingsManager()
+
 @main
 struct watchBobApp: App {
     
     let persistenceController = PersistenceController.shared
-    let metadataLogger = MetadataLogger() // Create an instance of MetadataLogger
+    @StateObject var metadataLogger = MetadataLogger(settingsManager: settingsManager)
+    
     
     var body: some Scene {
         WindowGroup {
             NavigationView {
                 ContentView()
                     .environment(\.managedObjectContext, persistenceController.container.viewContext)
-                    .environmentObject(MetadataLogger())
+                                    .environmentObject(metadataLogger)
+                                    .environmentObject(settingsManager)
             }
         }
     }
