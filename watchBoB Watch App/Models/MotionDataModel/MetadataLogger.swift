@@ -39,13 +39,20 @@ class MetadataLogger: NSObject, ObservableObject, CLLocationManagerDelegate {
     var isLogging = false
     let locationManager = CLLocationManager()
     var currentLocation: CLLocationCoordinate2D?
+    
+    var settingsManager: SettingsManager // Add a property for SettingsManager
+
+       init(settingsManager: SettingsManager) { // Modify the initializer to accept SettingsManager
+           self.settingsManager = settingsManager
+           super.init()
+       }
 
     func startLogging() {
         sessionMetadata = SessionMetadata(context: context)
         sessionMetadata?.sessionID = UUID()
         sessionMetadata?.startTime = Date()
 
-        sessionMetadata?.samplingFrequency = 10
+        sessionMetadata?.samplingFrequency = Int16(settingsManager.samplingFrequency)
 
         do {
             try context.save()
