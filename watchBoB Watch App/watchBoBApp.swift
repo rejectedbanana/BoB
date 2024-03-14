@@ -12,15 +12,19 @@ func degree() -> String {
 }
 
 @main
-struct watchBoB_Watch_AppApp: App {
-    @StateObject private var dataController = DataController()
-    @StateObject private var metadataLogger = MetadataLogger()
+struct watchBobApp: App {
+    
+    let persistenceController = PersistenceController.shared
+    let metadataLogger = MetadataLogger() // Create an instance of MetadataLogger
     
     var body: some Scene {
         WindowGroup {
-            ContentView()
-                .environment(\.managedObjectContext, dataController.container.viewContext)
-                .environmentObject(metadataLogger)
+            NavigationView {
+                ContentView()
+                    .environment(\.managedObjectContext, persistenceController.container.viewContext)
+                    .environmentObject(MetadataLogger())
+            }
         }
     }
 }
+
