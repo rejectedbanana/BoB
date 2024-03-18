@@ -34,7 +34,9 @@ struct LogDataView: View {
     @State private var isLoggingData = false
     
     @EnvironmentObject var settings: SettingsManager
-    @EnvironmentObject var metadataLogger: MetadataLogger
+    
+    // pull in the metadataLogger to take metadata
+    @ObservedObject private var metadataLogger = MetadataLogger()
     
     var body: some View {
         VStack {
