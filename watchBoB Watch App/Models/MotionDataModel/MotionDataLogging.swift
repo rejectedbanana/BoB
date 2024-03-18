@@ -12,8 +12,6 @@ import CoreMotion
 class MotionLogger: ObservableObject {
     let motionManager = CMMotionManager()
     let context = PersistenceController.shared.container.viewContext
-    
-    var sessionMetadata: SessionMetadata?
 
     func startLogging() {
         
@@ -43,31 +41,11 @@ class MotionLogger: ObservableObject {
                 print("Failed to save motion sample: \(error)")
             }
         }
-
-        
-        sessionMetadata = SessionMetadata(context: context)
-        sessionMetadata?.sessionID = UUID()
-        sessionMetadata?.startTime = Date()
-
-        do {
-            try context.save()
-        } catch {
-            print("Failed to save session metadata: \(error)")
-        }
     }
 
     func stopLogging() {
         
         motionManager.stopDeviceMotionUpdates()
-
-       
-        sessionMetadata?.endTime = Date()
-
-        do {
-            try context.save()
-        } catch {
-            print("Failed to save session metadata: \(error)")
-        }
     }
 }
 
