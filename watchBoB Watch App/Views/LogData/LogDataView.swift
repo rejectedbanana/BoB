@@ -34,7 +34,9 @@ struct LogDataView: View {
     @State private var isLoggingData = false
     
     @EnvironmentObject var settings: SettingsManager
-    @EnvironmentObject var metadataLogger: MetadataLogger
+    
+    // pull in the metadataLogger to take metadata
+    @ObservedObject private var metadataLogger = MetadataLogger()
     
     var body: some View {
         VStack {
@@ -101,31 +103,26 @@ struct LogDataView: View {
                 
                 if isLoggingData {
                     // take some metadata
-                    startDatetime = Date()
-                    name = timeStampFormatter(startDatetime)
-                    startLatitude = locationDataManager.locationManager.location?.coordinate.latitude ?? Double.nan
-                    startLongitude = locationDataManager.locationManager.location?.coordinate.longitude ?? Double.nan
-
-                    // start taking data
                     metadataLogger.startLogging()
+                    // start taking data
                     sensorManager.startLogging(settings.samplingFrequency)
                 } else {
                     // stop taking data
                     sensorManager.stopLogging()
-                    metadataLogger.stopLogging(stopCoordinates: CLLocationCoordinate2D(latitude: startLatitude ?? 0.0, longitude: startLongitude ?? 0.0))
-        
-                    // take some more metadata
-                    //stopDatetime = Date()
-                    
+                    // take more metadata
+                    metadataLogger.stopLogging()
+
                     // create a new log entry to save to CoreData
                     let stopDatetime = Date()
                     let newEntry = LogBookRecord(context: moc)
-                    newEntry.id = UUID()
-                    newEntry.startDatetime = startDatetime
-                    newEntry.stopDatetime = stopDatetime
+                    newEntry.id = metadataLogger.sessionID
+                    newEntry.startDatetime = metadataLogger.startDatetime
+                    newEntry.stopDatetime = metadataLogger.stopDatetime
                     newEntry.name = name
-                    newEntry.startLatitude = startLatitude ?? 0.0
-                    newEntry.startLongitude = startLongitude ?? 0.0
+                    newEntry.startLatitude = metadataLogger.startLatitude
+                    newEntry.startLongitude = metadataLogger.startLongitude
+                    newEntry.stopLatitude = metadataLogger.stopLatitude
+                    newEntry.stopLongitude = metadataLogger.stopLongitude
                     // save to CoreData
                     do {
                         try moc.save()

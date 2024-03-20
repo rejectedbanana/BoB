@@ -12,15 +12,15 @@ func degree() -> String {
 }
 
 @main
-struct watchBoB_Watch_AppApp: App {
-    @StateObject private var dataController = DataController()
-    @StateObject private var metadataLogger = MetadataLogger()
+struct watchBobApp: App {
+    
+    let persistenceController = PersistenceController.shared
     
     var body: some Scene {
         WindowGroup {
             ContentView()
-                .environment(\.managedObjectContext, dataController.container.viewContext)
-                .environmentObject(metadataLogger)
+                .environment(\.managedObjectContext, persistenceController.container.viewContext)
         }
     }
 }
+

@@ -20,7 +20,6 @@ public class WaterDepth: NSManagedObject {
 
 class TemperatureDepthLogger: ObservableObject {
     let context = PersistenceController.shared.container.viewContext
-    var sessionMetadata: SessionMetadata?
 
     func startLogging() {
         let timer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { timer in
@@ -42,11 +41,6 @@ class TemperatureDepthLogger: ObservableObject {
             }
         }
 
-        sessionMetadata = SessionMetadata(context: context)
-        sessionMetadata?.sessionID = UUID()
-        sessionMetadata?.startTime = Date()
-        sessionMetadata?.endTime = Date()
-
         do {
             try context.save()
         } catch {
@@ -55,7 +49,7 @@ class TemperatureDepthLogger: ObservableObject {
     }
 
     func stopLogging() {
-        sessionMetadata?.endTime = Date()
+
 
         do {
             try context.save()
