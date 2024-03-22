@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import WatchConnectivity
 
 struct ContentView: View {
     @Environment(\.managedObjectContext) var moc
@@ -84,10 +85,27 @@ struct ContentView: View {
                 .cornerRadius(10)
                 .buttonStyle(.borderedProminent)
                 
+                Button("Sync with Phone") {
+                    sendMetadataToPhone()
+                }
+                .padding()
+                .foregroundColor(.blue)
+                .buttonStyle(.bordered)
+                
             }
         }
         .navigationTitle("BoB")
         .environmentObject(settings)
+    }
+    
+    private func sendMetadataToPhone() {
+        guard WCSession.default.isReachable else {
+            print("Phone is not reachable")
+            return
+        }
+
+        let metadata: [String: Any] = ["key1": "value1", "key2": "value2"] // Replace with your metadata
+        WCSession.default.sendMessage(metadata, replyHandler: nil, errorHandler: nil)
     }
 }
 

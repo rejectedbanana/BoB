@@ -6,8 +6,28 @@
 //
 
 import SwiftUI
+import WatchConnectivity
+
+class SessionDelegate: NSObject, WCSessionDelegate {
+    func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
+        
+    }
+    
+    func sessionDidBecomeInactive(_ session: WCSession) {
+        
+    }
+    
+    func sessionDidDeactivate(_ session: WCSession) {
+        
+    }
+    
+    func session(_ session: WCSession, didReceiveMessage message: [String : Any]) {
+        
+    }
+}
 
 struct ContentView: View {
+    @State private var metadata: [String: Any]?
     var body: some View {
         NavigationStack {
             // List of Logbook entries. Imported BoBDataList.json for building UI. Will replace with CoreData Metadata
@@ -27,6 +47,11 @@ struct ContentView: View {
                     
                 }
             }
+            .onAppear {
+                let sessionDelegate = SessionDelegate()
+                WCSession.default.delegate = sessionDelegate
+                WCSession.default.activate()
+            }
             
             Button("Sync with Watch", systemImage: "arrow.left.arrow.right") {
                 
@@ -37,6 +62,12 @@ struct ContentView: View {
             .foregroundColor(.black)
         }
     }
+    
+    private func sendMetadataToWatch() {
+        let metadata: [String: Any] = ["key1": "value1", "key2": "value2"]
+        WCSession.default.sendMessage(metadata, replyHandler: nil, errorHandler: nil)
+    }
+
 }
 
 #Preview {
