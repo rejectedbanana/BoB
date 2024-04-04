@@ -29,37 +29,50 @@ import SwiftUI
 struct ContentView: View {
     @State private var metadata: [String: Any]?
     var body: some View {
-        NavigationStack {
-            // List of Logbook entries. Imported BoBDataList.json for building UI. Will replace with CoreData Metadata
-            List(entries) {entry in
-                NavigationLink {
-                    phoneLogbookDetailView()
-                } label: {
-                   phoneLogbookRow(entry: entry)
+        ZStack {
+            NavigationStack {
+                // List of Logbook entries. Imported BoBDataList.json for building UI. Will replace with CoreData Metadata
+                List(entries) {entry in
+                    NavigationLink {
+                        phoneLogbookDetailView()
+                    } label: {
+                        phoneLogbookRow(entry: entry)
+                    }
                 }
-            }
-            .navigationTitle("Logbook")
-            
-            //MARK: - Buttons
-            
-            .toolbar {
-                Button("Edit") {
-                    
-                }
-            }
-//            .onAppear {
-//                let sessionDelegate = SessionDelegate()
-//                WCSession.default.delegate = sessionDelegate
-//                WCSession.default.activate()
-//            }
-            
-            Button("Sync with Watch", systemImage: "arrow.left.arrow.right") {
+                .navigationTitle("Logbook")
                 
+                //MARK: - Buttons
+                
+                .toolbar {
+                    Button("Edit") {
+                        
+                    }
+                }
+                //            .onAppear {
+                //                let sessionDelegate = SessionDelegate()
+                //                WCSession.default.delegate = sessionDelegate
+                //                WCSession.default.activate()
+                //            }
+
             }
-            .padding(.horizontal, 70)
-            .frame(height: 50)
-            .border(Color.black)
-            .foregroundColor(.black)
+            
+            VStack {
+                Spacer()
+                
+                Button(action: {
+                    // insert sync action here
+                }, label: {
+                    Image(systemName: "arrow.down.applewatch")
+                        .font(.largeTitle)
+                        .frame(width: 80, height: 80)
+                        .background(.fandango)
+                        .clipShape(Circle())
+                        .foregroundColor(.white)
+                })
+                .padding()
+                .shadow(radius: 2)
+            }
+            
         }
     }
     
