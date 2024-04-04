@@ -29,51 +29,46 @@ import SwiftUI
 struct ContentView: View {
     @State private var metadata: [String: Any]?
     var body: some View {
-        ZStack {
             NavigationStack {
-                // List of Logbook entries. Imported BoBDataList.json for building UI. Will replace with CoreData Metadata
-                List(entries) {entry in
-                    NavigationLink {
-                        phoneLogbookDetailView()
-                    } label: {
-                        phoneLogbookRow(entry: entry)
+                ZStack {
+                    // List of Logbook entries. Imported BoBDataList.json for building UI. Will replace with CoreData Metadata
+                    List(entries) {entry in
+                        NavigationLink {
+                            LogbookDetail()
+                        } label: {
+                            LogbookRow(entry: entry)
+                        }
                     }
-                }
-                .navigationTitle("Logbook")
-                
-                //MARK: - Buttons
-                
-                .toolbar {
-                    Button("Edit") {
+                    .navigationTitle("Logbook")
+                    .toolbar {
+                        Button("Edit") {
+                            
+                        }
+                    }
+                    //            .onAppear {
+                    //                let sessionDelegate = SessionDelegate()
+                    //                WCSession.default.delegate = sessionDelegate
+                    //                WCSession.default.activate()
+                    //            }
+                    
+                    VStack {
+                        Spacer()
                         
+                        Button(action: {
+                            // insert sync action here
+                        }, label: {
+                            Image(systemName: "arrow.down.applewatch")
+                                .font(.largeTitle)
+                                .frame(width: 80, height: 80)
+                                .background(.fandango)
+                                .clipShape(Circle())
+                                .foregroundColor(.white)
+                        })
+                        .padding()
+                        .shadow(radius: 2)
                     }
                 }
-                //            .onAppear {
-                //                let sessionDelegate = SessionDelegate()
-                //                WCSession.default.delegate = sessionDelegate
-                //                WCSession.default.activate()
-                //            }
-
             }
-            
-            VStack {
-                Spacer()
-                
-                Button(action: {
-                    // insert sync action here
-                }, label: {
-                    Image(systemName: "arrow.down.applewatch")
-                        .font(.largeTitle)
-                        .frame(width: 80, height: 80)
-                        .background(.fandango)
-                        .clipShape(Circle())
-                        .foregroundColor(.white)
-                })
-                .padding()
-                .shadow(radius: 2)
-            }
-            
-        }
     }
     
 //    private func sendMetadataToWatch() {

@@ -1,5 +1,5 @@
 //
-//  phoneLogbookRow.swift
+//  LogbookRow.swift
 //  BoB
 //
 //  Created by Kim Martini on 1/4/24.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct phoneLogbookRow: View {
+struct LogbookRow: View {
     let entry: Entry
     
     var body: some View {
@@ -26,5 +26,5 @@ struct phoneLogbookRow: View {
 }
 
 #Preview {
-    phoneLogbookRow(entry: entries[0])
+    LogbookRow(entry: entries[0])
 }

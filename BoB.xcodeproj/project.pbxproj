@@ -15,10 +15,10 @@
 		3001E6FA2B8426E0003B09B1 /* MetadataLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3001E6F92B8426E0003B09B1 /* MetadataLogger.swift */; };
 		3011124E2B96B17E0035D079 /* watchBoB_Watch_AppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3011124D2B96B17E0035D079 /* watchBoB_Watch_AppTests.swift */; };
 		3044A2902B98052800BF977C /* LogDataView_Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3044A28F2B98052800BF977C /* LogDataView_Tests.swift */; };
-		970FDF762B8FBC6000D32DE1 /* phoneLogbookExportDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 970FDF752B8FBC6000D32DE1 /* phoneLogbookExportDetailView.swift */; };
 		97349CEB2AF1679300021CA3 /* RawMotionRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97349CEA2AF1679300021CA3 /* RawMotionRow.swift */; };
 		973AFCFE2AF15A0100A29AF0 /* RawDataView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 973AFCFD2AF15A0100A29AF0 /* RawDataView.swift */; };
 		973AFD022AF15C3900A29AF0 /* NeatDataView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 973AFD012AF15C3900A29AF0 /* NeatDataView.swift */; };
+		9746B5052BBF6BCC000BFEA7 /* DetailRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9746B5042BBF6BCC000BFEA7 /* DetailRow.swift */; };
 		978450C12B462635006C915C /* SettingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 978450C02B462635006C915C /* SettingManager.swift */; };
 		978D10612AE2E82E00310B26 /* HeaderRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 978D10602AE2E82E00310B26 /* HeaderRow.swift */; };
 		978D10632AE2FE3D00310B26 /* RectangleDivider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 978D10622AE2FE3D00310B26 /* RectangleDivider.swift */; };
@@ -45,8 +45,8 @@
 		97DF8EB72AE1968600A33A80 /* watchBoB Watch App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 97DF8EAA2AE1968500A33A80 /* watchBoB Watch App.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		97DF8EBD2AE1D9AF00A33A80 /* LogDataView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97DF8EBC2AE1D9AE00A33A80 /* LogDataView.swift */; };
 		97DF8EBF2AE1EA8A00A33A80 /* LogDataRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97DF8EBE2AE1EA8A00A33A80 /* LogDataRow.swift */; };
-		97E505812B472E8700334D6F /* phoneLogbookRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97E505802B472E8700334D6F /* phoneLogbookRow.swift */; };
-		97E505832B472F9700334D6F /* phoneLogbookDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97E505822B472F9700334D6F /* phoneLogbookDetailView.swift */; };
+		97E505812B472E8700334D6F /* LogbookRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97E505802B472E8700334D6F /* LogbookRow.swift */; };
+		97E505832B472F9700334D6F /* LogbookDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97E505822B472F9700334D6F /* LogbookDetail.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -98,12 +98,12 @@
 		3011124B2B96B17E0035D079 /* watchBoB Watch AppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "watchBoB Watch AppTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3011124D2B96B17E0035D079 /* watchBoB_Watch_AppTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = watchBoB_Watch_AppTests.swift; sourceTree = "<group>"; };
 		3044A28F2B98052800BF977C /* LogDataView_Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogDataView_Tests.swift; sourceTree = "<group>"; };
-		970FDF752B8FBC6000D32DE1 /* phoneLogbookExportDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = phoneLogbookExportDetailView.swift; sourceTree = "<group>"; };
 		970FDF782B8FE1C300D32DE1 /* BoB_UITestsLaunchTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BoB_UITestsLaunchTests.swift; sourceTree = "<group>"; };
 		970FDF792B8FE1C300D32DE1 /* BoB_UITests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BoB_UITests.swift; sourceTree = "<group>"; };
 		97349CEA2AF1679300021CA3 /* RawMotionRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RawMotionRow.swift; sourceTree = "<group>"; };
 		973AFCFD2AF15A0100A29AF0 /* RawDataView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RawDataView.swift; sourceTree = "<group>"; };
 		973AFD012AF15C3900A29AF0 /* NeatDataView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NeatDataView.swift; sourceTree = "<group>"; };
+		9746B5042BBF6BCC000BFEA7 /* DetailRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailRow.swift; sourceTree = "<group>"; };
 		978450C02B462635006C915C /* SettingManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingManager.swift; sourceTree = "<group>"; };
 		978D10602AE2E82E00310B26 /* HeaderRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderRow.swift; sourceTree = "<group>"; };
 		978D10622AE2FE3D00310B26 /* RectangleDivider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RectangleDivider.swift; sourceTree = "<group>"; };
@@ -131,8 +131,8 @@
 		97DF8EB32AE1968600A33A80 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		97DF8EBC2AE1D9AE00A33A80 /* LogDataView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogDataView.swift; sourceTree = "<group>"; };
 		97DF8EBE2AE1EA8A00A33A80 /* LogDataRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogDataRow.swift; sourceTree = "<group>"; };
-		97E505802B472E8700334D6F /* phoneLogbookRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = phoneLogbookRow.swift; sourceTree = "<group>"; };
-		97E505822B472F9700334D6F /* phoneLogbookDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = phoneLogbookDetailView.swift; sourceTree = "<group>"; };
+		97E505802B472E8700334D6F /* LogbookRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogbookRow.swift; sourceTree = "<group>"; };
+		97E505822B472F9700334D6F /* LogbookDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogbookDetail.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -209,7 +209,7 @@
 		973AFCFA2AEFEA4B00A29AF0 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				97E5057F2B472B5B00334D6F /* PhoneLogBook */,
+				97E5057F2B472B5B00334D6F /* LogBook */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -393,14 +393,14 @@
 			path = LogData;
 			sourceTree = "<group>";
 		};
-		97E5057F2B472B5B00334D6F /* PhoneLogBook */ = {
+		97E5057F2B472B5B00334D6F /* LogBook */ = {
 			isa = PBXGroup;
 			children = (
-				97E505802B472E8700334D6F /* phoneLogbookRow.swift */,
-				97E505822B472F9700334D6F /* phoneLogbookDetailView.swift */,
-				970FDF752B8FBC6000D32DE1 /* phoneLogbookExportDetailView.swift */,
+				97E505802B472E8700334D6F /* LogbookRow.swift */,
+				97E505822B472F9700334D6F /* LogbookDetail.swift */,
+				9746B5042BBF6BCC000BFEA7 /* DetailRow.swift */,
 			);
-			path = PhoneLogBook;
+			path = LogBook;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -582,12 +582,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				97E505812B472E8700334D6F /* phoneLogbookRow.swift in Sources */,
-				97E505832B472F9700334D6F /* phoneLogbookDetailView.swift in Sources */,
+				97E505812B472E8700334D6F /* LogbookRow.swift in Sources */,
+				97E505832B472F9700334D6F /* LogbookDetail.swift in Sources */,
 				978D10762AE6E97700310B26 /* Entry.swift in Sources */,
+				9746B5052BBF6BCC000BFEA7 /* DetailRow.swift in Sources */,
 				978D10732AE6E92300310B26 /* LogbookModel.swift in Sources */,
 				97DF8E9B2AE195FA00A33A80 /* ContentView.swift in Sources */,
-				970FDF762B8FBC6000D32DE1 /* phoneLogbookExportDetailView.swift in Sources */,
 				97DF8E992AE195FA00A33A80 /* BoBApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
