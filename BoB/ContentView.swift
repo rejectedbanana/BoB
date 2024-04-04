@@ -6,25 +6,25 @@
 //
 
 import SwiftUI
-import WatchConnectivity
+//import WatchConnectivity
 
-class SessionDelegate: NSObject, WCSessionDelegate {
-    func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
-        
-    }
-    
-    func sessionDidBecomeInactive(_ session: WCSession) {
-        
-    }
-    
-    func sessionDidDeactivate(_ session: WCSession) {
-        
-    }
-    
-    func session(_ session: WCSession, didReceiveMessage message: [String : Any]) {
-        
-    }
-}
+//class SessionDelegate: NSObject, WCSessionDelegate {
+//    func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
+//        
+//    }
+//    
+//    func sessionDidBecomeInactive(_ session: WCSession) {
+//        
+//    }
+//    
+//    func sessionDidDeactivate(_ session: WCSession) {
+//        
+//    }
+//    
+//    func session(_ session: WCSession, didReceiveMessage message: [String : Any]) {
+//        
+//    }
+//}
 
 struct ContentView: View {
     @State private var metadata: [String: Any]?
@@ -47,11 +47,11 @@ struct ContentView: View {
                     
                 }
             }
-            .onAppear {
-                let sessionDelegate = SessionDelegate()
-                WCSession.default.delegate = sessionDelegate
-                WCSession.default.activate()
-            }
+//            .onAppear {
+//                let sessionDelegate = SessionDelegate()
+//                WCSession.default.delegate = sessionDelegate
+//                WCSession.default.activate()
+//            }
             
             Button("Sync with Watch", systemImage: "arrow.left.arrow.right") {
                 
@@ -63,10 +63,10 @@ struct ContentView: View {
         }
     }
     
-    private func sendMetadataToWatch() {
-        let metadata: [String: Any] = ["key1": "value1", "key2": "value2"]
-        WCSession.default.sendMessage(metadata, replyHandler: nil, errorHandler: nil)
-    }
+//    private func sendMetadataToWatch() {
+//        let metadata: [String: Any] = ["key1": "value1", "key2": "value2"]
+//        WCSession.default.sendMessage(metadata, replyHandler: nil, errorHandler: nil)
+//    }
 
 }
 

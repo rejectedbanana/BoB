@@ -330,13 +330,13 @@
 		97DF8E972AE195FA00A33A80 /* BoB */ = {
 			isa = PBXGroup;
 			children = (
-				97DF8E9C2AE195FB00A33A80 /* Assets.xcassets */,
+				97DF8E982AE195FA00A33A80 /* BoBApp.swift */,
+				97DF8E9A2AE195FA00A33A80 /* ContentView.swift */,
+				973AFCFA2AEFEA4B00A29AF0 /* Views */,
 				973AFCFB2AEFEA5200A29AF0 /* Models */,
 				97DF8E9E2AE195FB00A33A80 /* Preview Content */,
 				973AFCFC2AEFEA9B00A29AF0 /* Resources */,
-				973AFCFA2AEFEA4B00A29AF0 /* Views */,
-				97DF8E982AE195FA00A33A80 /* BoBApp.swift */,
-				97DF8E9A2AE195FA00A33A80 /* ContentView.swift */,
+				97DF8E9C2AE195FB00A33A80 /* Assets.xcassets */,
 			);
 			path = BoB;
 			sourceTree = "<group>";
