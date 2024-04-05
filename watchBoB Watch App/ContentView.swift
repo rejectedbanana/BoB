@@ -11,8 +11,6 @@ import WatchConnectivity
 struct ContentView: View {
     @Environment(\.managedObjectContext) var moc
     
-    @StateObject var settings = SettingsManager()
-    
     var body: some View {
         
         // MARK: - Navigation Flow
@@ -91,7 +89,6 @@ struct ContentView: View {
             }
         }
         .navigationTitle("BoB")
-        .environmentObject(settings)
     }
     
 //    private func sendMetadataToPhone() {

@@ -231,14 +231,17 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
-		978450BD2B45DC69006C915C /* UnusedViews */ = {
+		978450BD2B45DC69006C915C /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				978D10682AE304B200310B26 /* SettingsView.swift */,
+				978D10622AE2FE3D00310B26 /* RectangleDivider.swift */,
 				973AFD012AF15C3900A29AF0 /* NeatDataView.swift */,
+				97DF8EBE2AE1EA8A00A33A80 /* LogDataRow.swift */,
 				973AFCFD2AF15A0100A29AF0 /* RawDataView.swift */,
 				978D10602AE2E82E00310B26 /* HeaderRow.swift */,
 			);
-			path = UnusedViews;
+			path = Views;
 			sourceTree = "<group>";
 		};
 		978450C22B4626B2006C915C /* Settings */ = {
@@ -259,15 +262,6 @@
 			path = LogBook;
 			sourceTree = "<group>";
 		};
-		978D10652AE3046700310B26 /* Settings */ = {
-			isa = PBXGroup;
-			children = (
-				978D10682AE304B200310B26 /* SettingsView.swift */,
-				978D10622AE2FE3D00310B26 /* RectangleDivider.swift */,
-			);
-			path = Settings;
-			sourceTree = "<group>";
-		};
 		978D106A2AE6E81100310B26 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
@@ -282,7 +276,6 @@
 				97B104AB2AE9775E00FE81DC /* LogBook */,
 				97B104AC2AE9777400FE81DC /* LogData */,
 				3001E6ED2B7BEB44003B09B1 /* MotionDataModel */,
-				978450C22B4626B2006C915C /* Settings */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -305,13 +298,23 @@
 			path = LogData;
 			sourceTree = "<group>";
 		};
+		97CE390F2BC0AE4000CFCBB4 /* Archive */ = {
+			isa = PBXGroup;
+			children = (
+				978450BD2B45DC69006C915C /* Views */,
+				978450C22B4626B2006C915C /* Settings */,
+				970FDF772B8FE0F400D32DE1 /* Bob_UITests */,
+				3011124C2B96B17E0035D079 /* watchBoB Watch AppTests */,
+			);
+			path = Archive;
+			sourceTree = "<group>";
+		};
 		97DF8E8C2AE195FA00A33A80 = {
 			isa = PBXGroup;
 			children = (
 				97DF8E972AE195FA00A33A80 /* BoB */,
 				97DF8EAB2AE1968500A33A80 /* watchBoB Watch App */,
-				970FDF772B8FE0F400D32DE1 /* Bob_UITests */,
-				3011124C2B96B17E0035D079 /* watchBoB Watch AppTests */,
+				97CE390F2BC0AE4000CFCBB4 /* Archive */,
 				97DF8E962AE195FA00A33A80 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -377,8 +380,6 @@
 			children = (
 				97DF8EC12AE1EBBF00A33A80 /* LogData */,
 				978D10642AE3044F00310B26 /* LogBook */,
-				978D10652AE3046700310B26 /* Settings */,
-				978450BD2B45DC69006C915C /* UnusedViews */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -388,7 +389,6 @@
 			children = (
 				97DF8EBC2AE1D9AE00A33A80 /* LogDataView.swift */,
 				97349CEA2AF1679300021CA3 /* RawMotionRow.swift */,
-				97DF8EBE2AE1EA8A00A33A80 /* LogDataRow.swift */,
 			);
 			path = LogData;
 			sourceTree = "<group>";

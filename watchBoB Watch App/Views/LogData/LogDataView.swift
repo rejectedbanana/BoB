@@ -17,7 +17,6 @@ struct LogDataView: View {
     
     // create the variables to write to CoreData
     @State private var startDatetime: Date = Date()
-    //@State private var stopDatetime: Date = Date()
     @State private var name: String = ""
     @State private var startLatitude: CLLocationDegrees? = nil
     @State private var startLongitude: CLLocationDegrees? = nil
@@ -32,8 +31,6 @@ struct LogDataView: View {
     
     // Toggle to turn data logging on and off
     @State private var isLoggingData = false
-    
-    @EnvironmentObject var settings: SettingsManager
     
     // pull in the metadataLogger to take metadata
     @ObservedObject private var metadataLogger = MetadataLogger()
@@ -105,7 +102,7 @@ struct LogDataView: View {
                     // take some metadata
                     metadataLogger.startLogging()
                     // start taking data
-                    sensorManager.startLogging(settings.samplingFrequency)
+                    sensorManager.startLogging(10)
                 } else {
                     // stop taking data
                     sensorManager.stopLogging()

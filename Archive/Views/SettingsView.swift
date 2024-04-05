@@ -20,7 +20,7 @@ struct SettingsView: View {
         VStack {
             Text("Settings")
                 .frame(maxWidth: .infinity, alignment: .leading)
-            RectangleDivider()
+//            RectangleDivider()
             
             
                 Picker("Sampling Frequency", selection: $samplingFrequency) {
