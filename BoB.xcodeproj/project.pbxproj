@@ -358,10 +358,10 @@
 				97DF8EAC2AE1968500A33A80 /* watchBoBApp.swift */,
 				97DF8EAE2AE1968500A33A80 /* ContentView.swift */,
 				978D106E2AE6E88200310B26 /* Models */,
-				97DF8EB22AE1968600A33A80 /* Preview Content */,
-				3001E6F22B7BF3B9003B09B1 /* Provider */,
-				978D106A2AE6E81100310B26 /* Resources */,
 				97DF8EC02AE1EBA300A33A80 /* Views */,
+				3001E6F22B7BF3B9003B09B1 /* Provider */,
+				97DF8EB22AE1968600A33A80 /* Preview Content */,
+				978D106A2AE6E81100310B26 /* Resources */,
 				97DF8EB02AE1968600A33A80 /* Assets.xcassets */,
 			);
 			path = "watchBoB Watch App";

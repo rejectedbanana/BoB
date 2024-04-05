@@ -16,13 +16,8 @@ struct LogDataView: View {
     @Environment(\.dismiss) var dismiss
     
     // create the variables to write to CoreData
-    @State private var startDatetime: Date = Date()
-    @State private var name: String = ""
-    @State private var startLatitude: CLLocationDegrees? = nil
-    @State private var startLongitude: CLLocationDegrees? = nil
-    
-    // create the location manager in ContentView, then pull it in here
-    // @EnvironmentObject var locationDataManager: LocationDataManager
+    @State private var name: String = "TBD" // Change to datetime string in the future
+
     // create the location manager here
     @StateObject var locationDataManager = LocationDataManager()
     
@@ -110,7 +105,6 @@ struct LogDataView: View {
                     metadataLogger.stopLogging()
 
                     // create a new log entry to save to CoreData
-                    let stopDatetime = Date()
                     let newEntry = LogBookRecord(context: moc)
                     newEntry.id = metadataLogger.sessionID
                     newEntry.startDatetime = metadataLogger.startDatetime
