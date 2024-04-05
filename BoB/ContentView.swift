@@ -54,16 +54,16 @@ struct ContentView: View {
                     VStack {
                         Spacer()
                         
-                        Button(action: {
+                        Button {
                             // insert sync action here
-                        }, label: {
+                        } label: {
                             Image(systemName: "arrow.down.applewatch")
                                 .font(.largeTitle)
                                 .frame(width: 80, height: 80)
                                 .background(.fandango)
                                 .clipShape(Circle())
                                 .foregroundColor(.white)
-                        })
+                        }
                         .padding()
                         .shadow(radius: 2)
                     }
