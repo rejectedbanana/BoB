@@ -172,7 +172,6 @@
 			children = (
 				3001E6EE2B7BEB44003B09B1 /* MotionSample.swift */,
 				3001E6F02B7BF2D6003B09B1 /* MotionDataLogging.swift */,
-				3001E6F52B7BF568003B09B1 /* PersistenceController.swift */,
 				3001E6F72B7FD6D5003B09B1 /* TemperatureDepthLogger.swift */,
 				3001E6F92B8426E0003B09B1 /* MetadataLogger.swift */,
 			);
@@ -301,12 +300,21 @@
 		97CE390F2BC0AE4000CFCBB4 /* Archive */ = {
 			isa = PBXGroup;
 			children = (
+				97CE39102BC0B9AD00CFCBB4 /* Models */,
 				978450BD2B45DC69006C915C /* Views */,
 				978450C22B4626B2006C915C /* Settings */,
 				970FDF772B8FE0F400D32DE1 /* Bob_UITests */,
 				3011124C2B96B17E0035D079 /* watchBoB Watch AppTests */,
 			);
 			path = Archive;
+			sourceTree = "<group>";
+		};
+		97CE39102BC0B9AD00CFCBB4 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				3001E6F52B7BF568003B09B1 /* PersistenceController.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 		97DF8E8C2AE195FA00A33A80 = {
