@@ -11,19 +11,13 @@ import CoreLocation
 
 
 struct LogDataView: View {
-    // load the CoreData so you can write to it
+    // Get a reference to the managed object context from the environment.
     @Environment(\.managedObjectContext) var moc
     @Environment(\.dismiss) var dismiss
     
     // create the variables to write to CoreData
-    @State private var startDatetime: Date = Date()
-    //@State private var stopDatetime: Date = Date()
-    @State private var name: String = ""
-    @State private var startLatitude: CLLocationDegrees? = nil
-    @State private var startLongitude: CLLocationDegrees? = nil
-    
-    // create the location manager in ContentView, then pull it in here
-    // @EnvironmentObject var locationDataManager: LocationDataManager
+    @State private var name: String = "TBD" // Change to datetime string in the future
+
     // create the location manager here
     @StateObject var locationDataManager = LocationDataManager()
     
@@ -32,8 +26,6 @@ struct LogDataView: View {
     
     // Toggle to turn data logging on and off
     @State private var isLoggingData = false
-    
-    @EnvironmentObject var settings: SettingsManager
     
     // pull in the metadataLogger to take metadata
     @ObservedObject private var metadataLogger = MetadataLogger()
@@ -105,7 +97,7 @@ struct LogDataView: View {
                     // take some metadata
                     metadataLogger.startLogging()
                     // start taking data
-                    sensorManager.startLogging(settings.samplingFrequency)
+                    sensorManager.startLogging(10)
                 } else {
                     // stop taking data
                     sensorManager.stopLogging()
@@ -113,8 +105,7 @@ struct LogDataView: View {
                     metadataLogger.stopLogging()
 
                     // create a new log entry to save to CoreData
-                    let stopDatetime = Date()
-                    let newEntry = LogBookRecord(context: moc)
+                    let newEntry = SampleSet(context: moc)
                     newEntry.id = metadataLogger.sessionID
                     newEntry.startDatetime = metadataLogger.startDatetime
                     newEntry.stopDatetime = metadataLogger.stopDatetime

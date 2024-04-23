@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct LogbookDetail: View {
-    let record: LogBookRecord
+    let record: SampleSet
     
     @Environment(\.managedObjectContext) var moc
 

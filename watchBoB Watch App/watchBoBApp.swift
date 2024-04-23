@@ -13,13 +13,14 @@ func degree() -> String {
 
 @main
 struct watchBobApp: App {
-    
-    let persistenceController = PersistenceController.shared
+    // Create an observable instance of the Core Data stack.
+    @StateObject private var coreDataController = CoreDataController()
     
     var body: some Scene {
         WindowGroup {
             ContentView()
-                .environment(\.managedObjectContext, persistenceController.container.viewContext)
+            // Inject the persistent container's managed object context into the environment
+                .environment(\.managedObjectContext, coreDataController.container.viewContext)
         }
     }
 }

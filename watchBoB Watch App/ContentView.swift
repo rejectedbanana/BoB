@@ -9,9 +9,8 @@ import SwiftUI
 import WatchConnectivity
 
 struct ContentView: View {
+    // Get a reference to the managed object context from the environment.
     @Environment(\.managedObjectContext) var moc
-    
-    @StateObject var settings = SettingsManager()
     
     var body: some View {
         
@@ -42,7 +41,7 @@ struct ContentView: View {
                         Text("Start Sampling")
                             .frame(maxWidth: .infinity, alignment: .leading)
                             .font(.headline)
-                        Image(systemName: "arrow.right.circle")
+                        Image(systemName: "waveform")
                     }
                     .padding(.bottom, 60)
                 }
@@ -69,44 +68,39 @@ struct ContentView: View {
                 .buttonStyle(.borderedProminent)
                 .padding(.bottom, 20)
                 
-                // Change settings
-                NavigationLink(destination: SettingsView() ) {
+                
+                // Sync coredata with phone
+                Button {
+                    // sync action here
+//                    sendMetadataToPhone()
+                } label: {
                     HStack {
-                        Text("Settings")
+                        Text("Sync with phone")
                             .frame(maxWidth: .infinity, alignment: .leading)
                             .font(.headline)
-                        Image(systemName: "gear")
+                        Image(systemName: "iphone.and.arrow.forward")
                     }
-                        .padding(.bottom, 60)
+                    .padding(.bottom, 60)
                 }
                 .tint(.silver)
                 .opacity(0.8)
                 .buttonBorderShape(.roundedRectangle(radius: 10))
-                .cornerRadius(10)
                 .buttonStyle(.borderedProminent)
-                
-                Button("Sync with Phone") {
-                    sendMetadataToPhone()
-                }
-                .padding()
-                .foregroundColor(.blue)
-                .buttonStyle(.bordered)
                 
             }
         }
         .navigationTitle("BoB")
-        .environmentObject(settings)
     }
     
-    private func sendMetadataToPhone() {
-        guard WCSession.default.isReachable else {
-            print("Phone is not reachable")
-            return
-        }
-
-        let metadata: [String: Any] = ["key1": "value1", "key2": "value2"] // Replace with your metadata
-        WCSession.default.sendMessage(metadata, replyHandler: nil, errorHandler: nil)
-    }
+//    private func sendMetadataToPhone() {
+//        guard WCSession.default.isReachable else {
+//            print("Phone is not reachable")
+//            return
+//        }
+//
+//        let metadata: [String: Any] = ["key1": "value1", "key2": "value2"] // Replace with your metadata
+//        WCSession.default.sendMessage(metadata, replyHandler: nil, errorHandler: nil)
+//    }
 }
 
 #Preview {
