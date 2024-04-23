@@ -14,7 +14,7 @@ func dateFormatter(_ date: Date) -> String {
 }
 
 struct LogbookRow: View {
-    let record: LogBookRecord
+    let record: SampleSet
     
     @Environment(\.managedObjectContext) var moc
     

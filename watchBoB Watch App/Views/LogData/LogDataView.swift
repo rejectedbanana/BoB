@@ -105,7 +105,7 @@ struct LogDataView: View {
                     metadataLogger.stopLogging()
 
                     // create a new log entry to save to CoreData
-                    let newEntry = LogBookRecord(context: moc)
+                    let newEntry = SampleSet(context: moc)
                     newEntry.id = metadataLogger.sessionID
                     newEntry.startDatetime = metadataLogger.startDatetime
                     newEntry.stopDatetime = metadataLogger.stopDatetime
