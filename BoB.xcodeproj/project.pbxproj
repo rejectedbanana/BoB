@@ -173,7 +173,6 @@
 				3001E6EE2B7BEB44003B09B1 /* MotionSample.swift */,
 				3001E6F02B7BF2D6003B09B1 /* MotionDataLogging.swift */,
 				3001E6F72B7FD6D5003B09B1 /* TemperatureDepthLogger.swift */,
-				3001E6F92B8426E0003B09B1 /* MetadataLogger.swift */,
 			);
 			path = MotionDataModel;
 			sourceTree = "<group>";
@@ -184,7 +183,7 @@
 				3001E6F32B7BF3B9003B09B1 /* LogBookRecordsProvider.swift */,
 			);
 			name = Provider;
-			path = "watchBoB Watch App/Provider";
+			path = Archive/Models/Provider;
 			sourceTree = SOURCE_ROOT;
 		};
 		3011124C2B96B17E0035D079 /* watchBoB Watch AppTests */ = {
@@ -274,7 +273,6 @@
 			children = (
 				97B104AB2AE9775E00FE81DC /* LogBook */,
 				97B104AC2AE9777400FE81DC /* LogData */,
-				3001E6ED2B7BEB44003B09B1 /* MotionDataModel */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -283,7 +281,6 @@
 			isa = PBXGroup;
 			children = (
 				9797363F2AEB1AB4009BCFF0 /* CoreDataController.swift */,
-				97B104AD2AE9778D00FE81DC /* SensorDataModel.swift */,
 			);
 			path = LogBook;
 			sourceTree = "<group>";
@@ -293,6 +290,7 @@
 			children = (
 				97B104A92AE9771700FE81DC /* SensorManager.swift */,
 				97CE319B2AED6ADE009335C9 /* LocationDataManager.swift */,
+				3001E6F92B8426E0003B09B1 /* MetadataLogger.swift */,
 			);
 			path = LogData;
 			sourceTree = "<group>";
@@ -312,6 +310,9 @@
 		97CE39102BC0B9AD00CFCBB4 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				3001E6F22B7BF3B9003B09B1 /* Provider */,
+				3001E6ED2B7BEB44003B09B1 /* MotionDataModel */,
+				97B104AD2AE9778D00FE81DC /* SensorDataModel.swift */,
 				3001E6F52B7BF568003B09B1 /* PersistenceController.swift */,
 			);
 			path = Models;
@@ -367,7 +368,6 @@
 				97DF8EAE2AE1968500A33A80 /* ContentView.swift */,
 				978D106E2AE6E88200310B26 /* Models */,
 				97DF8EC02AE1EBA300A33A80 /* Views */,
-				3001E6F22B7BF3B9003B09B1 /* Provider */,
 				97DF8EB22AE1968600A33A80 /* Preview Content */,
 				978D106A2AE6E81100310B26 /* Resources */,
 				97DF8EB02AE1968600A33A80 /* Assets.xcassets */,

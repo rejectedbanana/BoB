@@ -11,7 +11,7 @@ import CoreLocation
 
 
 struct LogDataView: View {
-    // load the CoreData so you can write to it
+    // Get a reference to the managed object context from the environment.
     @Environment(\.managedObjectContext) var moc
     @Environment(\.dismiss) var dismiss
     

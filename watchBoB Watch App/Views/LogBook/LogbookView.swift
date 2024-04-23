@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct LogbookView: View {
+    // Get a reference to the managed object context from the environment.
     @Environment(\.managedObjectContext) var moc
     @FetchRequest(sortDescriptors: [SortDescriptor(\.startDatetime, order: .reverse)]) var logBookRecords: FetchedResults<LogBookRecord>
     

@@ -9,6 +9,7 @@ import SwiftUI
 import WatchConnectivity
 
 struct ContentView: View {
+    // Get a reference to the managed object context from the environment.
     @Environment(\.managedObjectContext) var moc
     
     var body: some View {
