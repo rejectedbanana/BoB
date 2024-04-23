@@ -47,6 +47,10 @@
 		97DF8EBF2AE1EA8A00A33A80 /* LogDataRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97DF8EBE2AE1EA8A00A33A80 /* LogDataRow.swift */; };
 		97E505812B472E8700334D6F /* LogbookRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97E505802B472E8700334D6F /* LogbookRow.swift */; };
 		97E505832B472F9700334D6F /* LogbookDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97E505822B472F9700334D6F /* LogbookDetail.swift */; };
+		97FAC84D2BD850A4003E65E7 /* SampleSet+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97FAC8492BD850A4003E65E7 /* SampleSet+CoreDataClass.swift */; };
+		97FAC84E2BD850A4003E65E7 /* SampleSet+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97FAC84A2BD850A4003E65E7 /* SampleSet+CoreDataProperties.swift */; };
+		97FAC84F2BD850A4003E65E7 /* SensorSample+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97FAC84B2BD850A4003E65E7 /* SensorSample+CoreDataClass.swift */; };
+		97FAC8502BD850A4003E65E7 /* SensorSample+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97FAC84C2BD850A4003E65E7 /* SensorSample+CoreDataProperties.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -133,6 +137,10 @@
 		97DF8EBE2AE1EA8A00A33A80 /* LogDataRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogDataRow.swift; sourceTree = "<group>"; };
 		97E505802B472E8700334D6F /* LogbookRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogbookRow.swift; sourceTree = "<group>"; };
 		97E505822B472F9700334D6F /* LogbookDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogbookDetail.swift; sourceTree = "<group>"; };
+		97FAC8492BD850A4003E65E7 /* SampleSet+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "SampleSet+CoreDataClass.swift"; path = "watchBoB Watch App/SampleSet+CoreDataClass.swift"; sourceTree = "<group>"; };
+		97FAC84A2BD850A4003E65E7 /* SampleSet+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "SampleSet+CoreDataProperties.swift"; path = "watchBoB Watch App/SampleSet+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		97FAC84B2BD850A4003E65E7 /* SensorSample+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "SensorSample+CoreDataClass.swift"; path = "watchBoB Watch App/SensorSample+CoreDataClass.swift"; sourceTree = "<group>"; };
+		97FAC84C2BD850A4003E65E7 /* SensorSample+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "SensorSample+CoreDataProperties.swift"; path = "watchBoB Watch App/SensorSample+CoreDataProperties.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -321,6 +329,10 @@
 		97DF8E8C2AE195FA00A33A80 = {
 			isa = PBXGroup;
 			children = (
+				97FAC8492BD850A4003E65E7 /* SampleSet+CoreDataClass.swift */,
+				97FAC84A2BD850A4003E65E7 /* SampleSet+CoreDataProperties.swift */,
+				97FAC84B2BD850A4003E65E7 /* SensorSample+CoreDataClass.swift */,
+				97FAC84C2BD850A4003E65E7 /* SensorSample+CoreDataProperties.swift */,
 				97DF8E972AE195FA00A33A80 /* BoB */,
 				97DF8EAB2AE1968500A33A80 /* watchBoB Watch App */,
 				97CE390F2BC0AE4000CFCBB4 /* Archive */,
@@ -623,6 +635,10 @@
 				97B104AA2AE9771700FE81DC /* SensorManager.swift in Sources */,
 				9797363E2AEB15B8009BCFF0 /* Bob.xcdatamodeld in Sources */,
 				978450C12B462635006C915C /* SettingManager.swift in Sources */,
+				97FAC84D2BD850A4003E65E7 /* SampleSet+CoreDataClass.swift in Sources */,
+				97FAC84E2BD850A4003E65E7 /* SampleSet+CoreDataProperties.swift in Sources */,
+				97FAC84F2BD850A4003E65E7 /* SensorSample+CoreDataClass.swift in Sources */,
+				97FAC8502BD850A4003E65E7 /* SensorSample+CoreDataProperties.swift in Sources */,
 				97DF8EBF2AE1EA8A00A33A80 /* LogDataRow.swift in Sources */,
 				979736402AEB1AB4009BCFF0 /* CoreDataController.swift in Sources */,
 				3001E6EF2B7BEB44003B09B1 /* MotionSample.swift in Sources */,
