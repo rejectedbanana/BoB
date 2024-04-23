@@ -1,5 +1,5 @@
 //
-//  DataController.swift
+//  CoreDataController.swift
 //  watchBoB Watch App
 //
 //  Created by Kim Martini on 10/26/23.
@@ -8,7 +8,7 @@
 import CoreData
 import Foundation
 
-class DataController: ObservableObject {
+class CoreDataController: ObservableObject {
     let container = NSPersistentContainer(name: "Bob")
     
     init() {

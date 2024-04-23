@@ -29,7 +29,7 @@
 		978D10762AE6E97700310B26 /* Entry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 978D10752AE6E97700310B26 /* Entry.swift */; };
 		978D107A2AE70F8F00310B26 /* LogbookRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 978D10782AE70F8F00310B26 /* LogbookRow.swift */; };
 		9797363E2AEB15B8009BCFF0 /* Bob.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 9797363C2AEB15B8009BCFF0 /* Bob.xcdatamodeld */; };
-		979736402AEB1AB4009BCFF0 /* DataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9797363F2AEB1AB4009BCFF0 /* DataController.swift */; };
+		979736402AEB1AB4009BCFF0 /* CoreDataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9797363F2AEB1AB4009BCFF0 /* CoreDataController.swift */; };
 		97B104A32AE7160200FE81DC /* LogbookDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97B104A22AE7160200FE81DC /* LogbookDetail.swift */; };
 		97B104AA2AE9771700FE81DC /* SensorManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97B104A92AE9771700FE81DC /* SensorManager.swift */; };
 		97B104AE2AE9778D00FE81DC /* SensorDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97B104AD2AE9778D00FE81DC /* SensorDataModel.swift */; };
@@ -114,7 +114,7 @@
 		978D10752AE6E97700310B26 /* Entry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Entry.swift; sourceTree = "<group>"; };
 		978D10782AE70F8F00310B26 /* LogbookRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogbookRow.swift; sourceTree = "<group>"; };
 		9797363D2AEB15B8009BCFF0 /* Bob.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Bob.xcdatamodel; sourceTree = "<group>"; };
-		9797363F2AEB1AB4009BCFF0 /* DataController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataController.swift; sourceTree = "<group>"; };
+		9797363F2AEB1AB4009BCFF0 /* CoreDataController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataController.swift; sourceTree = "<group>"; };
 		97B104A22AE7160200FE81DC /* LogbookDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogbookDetail.swift; sourceTree = "<group>"; };
 		97B104A92AE9771700FE81DC /* SensorManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SensorManager.swift; sourceTree = "<group>"; };
 		97B104AD2AE9778D00FE81DC /* SensorDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SensorDataModel.swift; sourceTree = "<group>"; };
@@ -282,7 +282,7 @@
 		97B104AB2AE9775E00FE81DC /* LogBook */ = {
 			isa = PBXGroup;
 			children = (
-				9797363F2AEB1AB4009BCFF0 /* DataController.swift */,
+				9797363F2AEB1AB4009BCFF0 /* CoreDataController.swift */,
 				97B104AD2AE9778D00FE81DC /* SensorDataModel.swift */,
 			);
 			path = LogBook;
@@ -624,7 +624,7 @@
 				9797363E2AEB15B8009BCFF0 /* Bob.xcdatamodeld in Sources */,
 				978450C12B462635006C915C /* SettingManager.swift in Sources */,
 				97DF8EBF2AE1EA8A00A33A80 /* LogDataRow.swift in Sources */,
-				979736402AEB1AB4009BCFF0 /* DataController.swift in Sources */,
+				979736402AEB1AB4009BCFF0 /* CoreDataController.swift in Sources */,
 				3001E6EF2B7BEB44003B09B1 /* MotionSample.swift in Sources */,
 				978D107A2AE70F8F00310B26 /* LogbookRow.swift in Sources */,
 				978D10612AE2E82E00310B26 /* HeaderRow.swift in Sources */,

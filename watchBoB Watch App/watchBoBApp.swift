@@ -14,12 +14,12 @@ func degree() -> String {
 @main
 struct watchBobApp: App {
     
-    @StateObject private var dataController = DataController()
+    @StateObject private var coreDataController = CoreDataController()
     
     var body: some Scene {
         WindowGroup {
             ContentView()
-                .environment(\.managedObjectContext, dataController.container.viewContext)
+                .environment(\.managedObjectContext, coreDataController.container.viewContext)
         }
     }
 }
