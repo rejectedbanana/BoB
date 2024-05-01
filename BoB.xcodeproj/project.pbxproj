@@ -8,6 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		3001E6FA2B8426E0003B09B1 /* MetadataLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3001E6F92B8426E0003B09B1 /* MetadataLogger.swift */; };
+		9728898C2BE2E91B00BB9A14 /* SampleSet+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97FAC8492BD850A4003E65E7 /* SampleSet+CoreDataClass.swift */; };
+		9728898D2BE2E91F00BB9A14 /* SampleSet+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97FAC84A2BD850A4003E65E7 /* SampleSet+CoreDataProperties.swift */; };
+		9728898E2BE2E92200BB9A14 /* SensorSample+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97FAC84B2BD850A4003E65E7 /* SensorSample+CoreDataClass.swift */; };
+		9728898F2BE2E92500BB9A14 /* SensorSample+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97FAC84C2BD850A4003E65E7 /* SensorSample+CoreDataProperties.swift */; };
+		972889902BE2E93800BB9A14 /* Bob.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 9797363C2AEB15B8009BCFF0 /* Bob.xcdatamodeld */; };
+		972889912BE2E95300BB9A14 /* CoreDataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9797363F2AEB1AB4009BCFF0 /* CoreDataController.swift */; };
 		97349CEB2AF1679300021CA3 /* RawMotionRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97349CEA2AF1679300021CA3 /* RawMotionRow.swift */; };
 		9746B5052BBF6BCC000BFEA7 /* DetailRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9746B5042BBF6BCC000BFEA7 /* DetailRow.swift */; };
 		978D10672AE3049400310B26 /* LogbookView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 978D10662AE3049400310B26 /* LogbookView.swift */; };
@@ -105,10 +111,10 @@
 		97DF8EBC2AE1D9AE00A33A80 /* LogDataView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogDataView.swift; sourceTree = "<group>"; };
 		97E505802B472E8700334D6F /* LogbookRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogbookRow.swift; sourceTree = "<group>"; };
 		97E505822B472F9700334D6F /* LogbookDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogbookDetail.swift; sourceTree = "<group>"; };
-		97FAC8492BD850A4003E65E7 /* SampleSet+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "SampleSet+CoreDataClass.swift"; path = "watchBoB Watch App/SampleSet+CoreDataClass.swift"; sourceTree = "<group>"; };
-		97FAC84A2BD850A4003E65E7 /* SampleSet+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "SampleSet+CoreDataProperties.swift"; path = "watchBoB Watch App/SampleSet+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		97FAC84B2BD850A4003E65E7 /* SensorSample+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "SensorSample+CoreDataClass.swift"; path = "watchBoB Watch App/SensorSample+CoreDataClass.swift"; sourceTree = "<group>"; };
-		97FAC84C2BD850A4003E65E7 /* SensorSample+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "SensorSample+CoreDataProperties.swift"; path = "watchBoB Watch App/SensorSample+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		97FAC8492BD850A4003E65E7 /* SampleSet+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SampleSet+CoreDataClass.swift"; sourceTree = "<group>"; };
+		97FAC84A2BD850A4003E65E7 /* SampleSet+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SampleSet+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		97FAC84B2BD850A4003E65E7 /* SensorSample+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SensorSample+CoreDataClass.swift"; sourceTree = "<group>"; };
+		97FAC84C2BD850A4003E65E7 /* SensorSample+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SensorSample+CoreDataProperties.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -143,6 +149,27 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		9728898B2BE2E8FD00BB9A14 /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				972889922BE2E96200BB9A14 /* Models */,
+			);
+			path = Shared;
+			sourceTree = "<group>";
+		};
+		972889922BE2E96200BB9A14 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				9797363F2AEB1AB4009BCFF0 /* CoreDataController.swift */,
+				97FAC8492BD850A4003E65E7 /* SampleSet+CoreDataClass.swift */,
+				97FAC84A2BD850A4003E65E7 /* SampleSet+CoreDataProperties.swift */,
+				97FAC84B2BD850A4003E65E7 /* SensorSample+CoreDataClass.swift */,
+				97FAC84C2BD850A4003E65E7 /* SensorSample+CoreDataProperties.swift */,
+				9797363C2AEB15B8009BCFF0 /* Bob.xcdatamodeld */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 		973AFCFA2AEFEA4B00A29AF0 /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -181,7 +208,6 @@
 		978D106A2AE6E81100310B26 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				9797363C2AEB15B8009BCFF0 /* Bob.xcdatamodeld */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -198,7 +224,6 @@
 		97B104AB2AE9775E00FE81DC /* LogBook */ = {
 			isa = PBXGroup;
 			children = (
-				9797363F2AEB1AB4009BCFF0 /* CoreDataController.swift */,
 			);
 			path = LogBook;
 			sourceTree = "<group>";
@@ -216,10 +241,7 @@
 		97DF8E8C2AE195FA00A33A80 = {
 			isa = PBXGroup;
 			children = (
-				97FAC8492BD850A4003E65E7 /* SampleSet+CoreDataClass.swift */,
-				97FAC84A2BD850A4003E65E7 /* SampleSet+CoreDataProperties.swift */,
-				97FAC84B2BD850A4003E65E7 /* SensorSample+CoreDataClass.swift */,
-				97FAC84C2BD850A4003E65E7 /* SensorSample+CoreDataProperties.swift */,
+				9728898B2BE2E8FD00BB9A14 /* Shared */,
 				97DF8E972AE195FA00A33A80 /* BoB */,
 				97DF8EAB2AE1968500A33A80 /* watchBoB Watch App */,
 				97DF8E962AE195FA00A33A80 /* Products */,
@@ -486,13 +508,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9728898D2BE2E91F00BB9A14 /* SampleSet+CoreDataProperties.swift in Sources */,
 				97E505812B472E8700334D6F /* LogbookRow.swift in Sources */,
+				9728898F2BE2E92500BB9A14 /* SensorSample+CoreDataProperties.swift in Sources */,
 				97E505832B472F9700334D6F /* LogbookDetail.swift in Sources */,
+				9728898C2BE2E91B00BB9A14 /* SampleSet+CoreDataClass.swift in Sources */,
 				978D10762AE6E97700310B26 /* Entry.swift in Sources */,
 				9746B5052BBF6BCC000BFEA7 /* DetailRow.swift in Sources */,
 				978D10732AE6E92300310B26 /* LogbookModel.swift in Sources */,
+				972889912BE2E95300BB9A14 /* CoreDataController.swift in Sources */,
 				97DF8E9B2AE195FA00A33A80 /* ContentView.swift in Sources */,
+				9728898E2BE2E92200BB9A14 /* SensorSample+CoreDataClass.swift in Sources */,
 				97DF8E992AE195FA00A33A80 /* BoBApp.swift in Sources */,
+				972889902BE2E93800BB9A14 /* Bob.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
