@@ -34,7 +34,7 @@
 		97DF8EAF2AE1968500A33A80 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97DF8EAE2AE1968500A33A80 /* ContentView.swift */; };
 		97DF8EB12AE1968600A33A80 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 97DF8EB02AE1968600A33A80 /* Assets.xcassets */; };
 		97DF8EB42AE1968600A33A80 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 97DF8EB32AE1968600A33A80 /* Preview Assets.xcassets */; };
-		97DF8EB72AE1968600A33A80 /* watchBoB Watch App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 97DF8EAA2AE1968500A33A80 /* watchBoB Watch App.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		97DF8EB72AE1968600A33A80 /* BoB.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 97DF8EAA2AE1968500A33A80 /* BoB.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		97DF8EBD2AE1D9AF00A33A80 /* LogDataView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97DF8EBC2AE1D9AE00A33A80 /* LogDataView.swift */; };
 		97E505812B472E8700334D6F /* LogbookRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97E505802B472E8700334D6F /* LogbookRow.swift */; };
 		97E505832B472F9700334D6F /* LogbookDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97E505822B472F9700334D6F /* LogbookDetail.swift */; };
@@ -75,7 +75,7 @@
 			dstPath = "$(CONTENTS_FOLDER_PATH)/Watch";
 			dstSubfolderSpec = 16;
 			files = (
-				97DF8EB72AE1968600A33A80 /* watchBoB Watch App.app in Embed Watch Content */,
+				97DF8EB72AE1968600A33A80 /* BoB.app in Embed Watch Content */,
 			);
 			name = "Embed Watch Content";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -103,7 +103,7 @@
 		97DF8E9A2AE195FA00A33A80 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		97DF8E9C2AE195FB00A33A80 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		97DF8E9F2AE195FB00A33A80 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		97DF8EAA2AE1968500A33A80 /* watchBoB Watch App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "watchBoB Watch App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		97DF8EAA2AE1968500A33A80 /* BoB.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BoB.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		97DF8EAC2AE1968500A33A80 /* watchBoBApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = watchBoBApp.swift; sourceTree = "<group>"; };
 		97DF8EAE2AE1968500A33A80 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		97DF8EB02AE1968600A33A80 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -252,7 +252,7 @@
 			isa = PBXGroup;
 			children = (
 				97DF8E952AE195FA00A33A80 /* BoB.app */,
-				97DF8EAA2AE1968500A33A80 /* watchBoB Watch App.app */,
+				97DF8EAA2AE1968500A33A80 /* BoB.app */,
 				3011123E2B96AEBC0035D079 /* BoBTests.xctest */,
 				3011124B2B96B17E0035D079 /* watchBoB Watch AppTests.xctest */,
 			);
@@ -403,7 +403,7 @@
 			);
 			name = "watchBoB Watch App";
 			productName = "watchBoB Watch App";
-			productReference = 97DF8EAA2AE1968500A33A80 /* watchBoB Watch App.app */;
+			productReference = 97DF8EAA2AE1968500A33A80 /* BoB.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -838,7 +838,6 @@
 				DEVELOPMENT_TEAM = FPDAJG7FA2;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_CFBundleDisplayName = watchBoB;
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Bob uses the location data to mark the start and end coordinates of a LogBook entry when taking data";
 				INFOPLIST_KEY_NSMotionUsageDescription = "Using accelerometer data to show watch motion";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
@@ -850,7 +849,7 @@
 				);
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.TiniScientific.BoB.watchkitapp;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = BoB;
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -871,7 +870,6 @@
 				DEVELOPMENT_TEAM = FPDAJG7FA2;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_CFBundleDisplayName = watchBoB;
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Bob uses the location data to mark the start and end coordinates of a LogBook entry when taking data";
 				INFOPLIST_KEY_NSMotionUsageDescription = "Using accelerometer data to show watch motion";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
@@ -883,7 +881,7 @@
 				);
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.TiniScientific.BoB.watchkitapp;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = BoB;
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
