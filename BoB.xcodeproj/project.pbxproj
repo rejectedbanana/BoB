@@ -8,14 +8,16 @@
 
 /* Begin PBXBuildFile section */
 		3001E6FA2B8426E0003B09B1 /* MetadataLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3001E6F92B8426E0003B09B1 /* MetadataLogger.swift */; };
-		9728898C2BE2E91B00BB9A14 /* SampleSet+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97FAC8492BD850A4003E65E7 /* SampleSet+CoreDataClass.swift */; };
-		9728898D2BE2E91F00BB9A14 /* SampleSet+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97FAC84A2BD850A4003E65E7 /* SampleSet+CoreDataProperties.swift */; };
-		9728898E2BE2E92200BB9A14 /* SensorSample+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97FAC84B2BD850A4003E65E7 /* SensorSample+CoreDataClass.swift */; };
-		9728898F2BE2E92500BB9A14 /* SensorSample+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97FAC84C2BD850A4003E65E7 /* SensorSample+CoreDataProperties.swift */; };
-		972889902BE2E93800BB9A14 /* Bob.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 9797363C2AEB15B8009BCFF0 /* Bob.xcdatamodeld */; };
-		972889912BE2E95300BB9A14 /* CoreDataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9797363F2AEB1AB4009BCFF0 /* CoreDataController.swift */; };
+		972889942BE2F3D200BB9A14 /* WatchSessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 972889932BE2F3D200BB9A14 /* WatchSessionManager.swift */; };
+		972889962BE2F5E500BB9A14 /* PhoneSessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 972889952BE2F5E500BB9A14 /* PhoneSessionManager.swift */; };
 		97349CEB2AF1679300021CA3 /* RawMotionRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97349CEA2AF1679300021CA3 /* RawMotionRow.swift */; };
 		9746B5052BBF6BCC000BFEA7 /* DetailRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9746B5042BBF6BCC000BFEA7 /* DetailRow.swift */; };
+		977E74C72BE9894F009A36AD /* CoreDataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9797363F2AEB1AB4009BCFF0 /* CoreDataController.swift */; };
+		977E74C82BE98952009A36AD /* SampleSet+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97FAC8492BD850A4003E65E7 /* SampleSet+CoreDataClass.swift */; };
+		977E74C92BE98955009A36AD /* SampleSet+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97FAC84A2BD850A4003E65E7 /* SampleSet+CoreDataProperties.swift */; };
+		977E74CA2BE98957009A36AD /* SensorSample+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97FAC84B2BD850A4003E65E7 /* SensorSample+CoreDataClass.swift */; };
+		977E74CB2BE9895A009A36AD /* SensorSample+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97FAC84C2BD850A4003E65E7 /* SensorSample+CoreDataProperties.swift */; };
+		977E74CC2BE9895D009A36AD /* Bob.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 9797363C2AEB15B8009BCFF0 /* Bob.xcdatamodeld */; };
 		978D10672AE3049400310B26 /* LogbookView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 978D10662AE3049400310B26 /* LogbookView.swift */; };
 		978D106C2AE6E84500310B26 /* BoBDataList.json in Resources */ = {isa = PBXBuildFile; fileRef = 978D106B2AE6E84500310B26 /* BoBDataList.json */; };
 		978D10732AE6E92300310B26 /* LogbookModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 978D10722AE6E92300310B26 /* LogbookModel.swift */; };
@@ -86,6 +88,8 @@
 		3001E6F92B8426E0003B09B1 /* MetadataLogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetadataLogger.swift; sourceTree = "<group>"; };
 		3011123E2B96AEBC0035D079 /* BoBTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BoBTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		3011124B2B96B17E0035D079 /* watchBoB Watch AppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "watchBoB Watch AppTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		972889932BE2F3D200BB9A14 /* WatchSessionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchSessionManager.swift; sourceTree = "<group>"; };
+		972889952BE2F5E500BB9A14 /* PhoneSessionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneSessionManager.swift; sourceTree = "<group>"; };
 		97349CEA2AF1679300021CA3 /* RawMotionRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RawMotionRow.swift; sourceTree = "<group>"; };
 		9746B5042BBF6BCC000BFEA7 /* DetailRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailRow.swift; sourceTree = "<group>"; };
 		978D10662AE3049400310B26 /* LogbookView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogbookView.swift; sourceTree = "<group>"; };
@@ -183,6 +187,7 @@
 			children = (
 				978D10752AE6E97700310B26 /* Entry.swift */,
 				978D10722AE6E92300310B26 /* LogbookModel.swift */,
+				972889952BE2F5E500BB9A14 /* PhoneSessionManager.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -224,6 +229,7 @@
 		97B104AB2AE9775E00FE81DC /* LogBook */ = {
 			isa = PBXGroup;
 			children = (
+				972889932BE2F3D200BB9A14 /* WatchSessionManager.swift */,
 			);
 			path = LogBook;
 			sourceTree = "<group>";
@@ -508,19 +514,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9728898D2BE2E91F00BB9A14 /* SampleSet+CoreDataProperties.swift in Sources */,
+				977E74C82BE98952009A36AD /* SampleSet+CoreDataClass.swift in Sources */,
+				977E74C92BE98955009A36AD /* SampleSet+CoreDataProperties.swift in Sources */,
+				977E74CA2BE98957009A36AD /* SensorSample+CoreDataClass.swift in Sources */,
 				97E505812B472E8700334D6F /* LogbookRow.swift in Sources */,
-				9728898F2BE2E92500BB9A14 /* SensorSample+CoreDataProperties.swift in Sources */,
 				97E505832B472F9700334D6F /* LogbookDetail.swift in Sources */,
-				9728898C2BE2E91B00BB9A14 /* SampleSet+CoreDataClass.swift in Sources */,
+				977E74CB2BE9895A009A36AD /* SensorSample+CoreDataProperties.swift in Sources */,
 				978D10762AE6E97700310B26 /* Entry.swift in Sources */,
+				977E74CC2BE9895D009A36AD /* Bob.xcdatamodeld in Sources */,
 				9746B5052BBF6BCC000BFEA7 /* DetailRow.swift in Sources */,
 				978D10732AE6E92300310B26 /* LogbookModel.swift in Sources */,
-				972889912BE2E95300BB9A14 /* CoreDataController.swift in Sources */,
+				977E74C72BE9894F009A36AD /* CoreDataController.swift in Sources */,
 				97DF8E9B2AE195FA00A33A80 /* ContentView.swift in Sources */,
-				9728898E2BE2E92200BB9A14 /* SensorSample+CoreDataClass.swift in Sources */,
 				97DF8E992AE195FA00A33A80 /* BoBApp.swift in Sources */,
-				972889902BE2E93800BB9A14 /* Bob.xcdatamodeld in Sources */,
+				972889962BE2F5E500BB9A14 /* PhoneSessionManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -530,6 +537,7 @@
 			files = (
 				97349CEB2AF1679300021CA3 /* RawMotionRow.swift in Sources */,
 				97B104A32AE7160200FE81DC /* LogbookDetail.swift in Sources */,
+				972889942BE2F3D200BB9A14 /* WatchSessionManager.swift in Sources */,
 				97DF8EAF2AE1968500A33A80 /* ContentView.swift in Sources */,
 				97DF8EAD2AE1968500A33A80 /* watchBoBApp.swift in Sources */,
 				978D10672AE3049400310B26 /* LogbookView.swift in Sources */,

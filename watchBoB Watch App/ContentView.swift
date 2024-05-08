@@ -12,10 +12,37 @@ struct ContentView: View {
     // Get a reference to the managed object context from the environment.
     @Environment(\.managedObjectContext) var moc
     
+    @State private var phoneActivated = false
+    @State private var watchMessage = "Text from your watch!"
+    
+    var watchSession = WatchSessionManager()
+    
+    func activatePhone() {
+        if self.watchSession.session.isReachable {
+            print("iOS - Phone is available")
+            self.phoneActivated = true
+        } else {
+            print("iOS - Phone is unavailable")
+            self.phoneActivated = false
+        }
+    }
+    
+    func sendMessageToPhone() {
+        if self.watchSession.session.isReachable {
+            print("iOS - Phone is available")
+            self.phoneActivated = true
+            self.watchSession.session.sendMessage(["message": String(self.watchMessage)], replyHandler: nil) { (error) in
+                print("WatchOS ERROR SENDING MESSAGE - " + error.localizedDescription)
+            }
+        } else {
+            print("Watch")
+        }
+        print("send message to phone")
+    }
+    
+    @State private var isTransferComplete = false
+    
     var body: some View {
-        
-        // MARK: - Navigation Flow
-        
         NavigationView {
             ScrollView {
                 
@@ -71,7 +98,8 @@ struct ContentView: View {
                 
                 // Sync coredata with phone
                 Button {
-                    // sync action here
+                    activatePhone()
+                    sendMessageToPhone()
                 } label: {
                     HStack {
                         Text("Sync with phone")

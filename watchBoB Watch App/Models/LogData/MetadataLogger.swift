@@ -39,7 +39,7 @@ class MetadataLogger: NSObject, ObservableObject, CLLocationManagerDelegate {
         startDatetime = Date()
         ( startLatitude, startLongitude ) = getCurrentLocation()
 
-        WKInterfaceDevice.current().enableWaterLock()
+//        WKInterfaceDevice.current().enableWaterLock()
         
         isLogging = true
         

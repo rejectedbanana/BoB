@@ -6,9 +6,30 @@
 //
 
 import SwiftUI
+import CoreData
+import WatchConnectivity
 
 struct ContentView: View {
-    @State private var metadata: [String: Any]?
+    // Get a reference to the managed object context from the environment.
+    @Environment(\.managedObjectContext) var moc
+    
+    // create an instance of the watch connection class
+    @ObservedObject var phoneSessionManager = PhoneSessionManager()
+    
+    @State var message = ""
+    
+    func getMessageFromWatch() {
+        print("Getting message from watch...")
+        // retrieve the message
+        if let storedReceivedMessage = UserDefaults.standard.string(forKey: "message") {
+            self.message = storedReceivedMessage.description
+            print("Successfully retrieved message from watch")
+        } else {
+            self.message = ""
+            print("Could not retrieve message from watch")
+        }
+    }
+    
     var body: some View {
         NavigationStack {
             ZStack {
@@ -32,6 +53,8 @@ struct ContentView: View {
                     
                     Button {
                         // insert sync action here
+                        getMessageFromWatch()
+                        
                     } label: {
                         Image(systemName: "arrow.down.applewatch")
                             .font(.largeTitle)
@@ -42,6 +65,13 @@ struct ContentView: View {
                     }
                     .padding()
                     .shadow(radius: 2)
+                    
+                    if (self.message == "") {
+                        Text("No message received from IPhone")
+                    } else {
+                        Text("Message received: " + message)
+                    }
+
                 }
             }
         }
