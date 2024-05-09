@@ -17,29 +17,6 @@ struct ContentView: View {
     
     var watchSession = WatchSessionManager()
     
-    func activatePhone() {
-        if self.watchSession.session.isReachable {
-            print("iOS - Phone is available")
-            self.phoneActivated = true
-        } else {
-            print("iOS - Phone is unavailable")
-            self.phoneActivated = false
-        }
-    }
-    
-    func sendMessageToPhone() {
-        if self.watchSession.session.isReachable {
-            print("iOS - Phone is available")
-            self.phoneActivated = true
-            self.watchSession.session.sendMessage(["message": String(self.watchMessage)], replyHandler: nil) { (error) in
-                print("WatchOS ERROR SENDING MESSAGE - " + error.localizedDescription)
-            }
-        } else {
-            print("Watch")
-        }
-        print("send message to phone")
-    }
-    
     @State private var isTransferComplete = false
     
     var body: some View {
@@ -98,8 +75,8 @@ struct ContentView: View {
                 
                 // Sync coredata with phone
                 Button {
-                    activatePhone()
-                    sendMessageToPhone()
+                    watchSession.activatePhone()
+                    watchSession.sendMessageToPhone(watchMessage)
                 } label: {
                     HStack {
                         Text("Sync with phone")

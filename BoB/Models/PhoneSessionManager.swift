@@ -41,10 +41,12 @@ class PhoneSessionManager: NSObject, WCSessionDelegate, ObservableObject {
     }
     // Stubs for conformance
     // Required to manage transitions between different apple watches (only need on iOS, not watchOS)
+    // or watch moves away from phone
     func sessionDidBecomeInactive(_ session: WCSession) {
         //
     }
     // Required to manage transitions between different apple watches (only need on iOS, not watchOS)
+    // drop the connection and you are not going to get it back
     func sessionDidDeactivate(_ session: WCSession) {
         //
     }
