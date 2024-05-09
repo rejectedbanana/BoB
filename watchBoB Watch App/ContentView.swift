@@ -12,7 +12,6 @@ struct ContentView: View {
     // Get a reference to the managed object context from the environment.
     @Environment(\.managedObjectContext) var moc
     
-    @State private var phoneActivated = false
     @State private var watchMessage = "Text from your watch!"
     
     var watchSession = WatchSessionManager()

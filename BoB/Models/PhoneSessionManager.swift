@@ -62,6 +62,22 @@ class PhoneSessionManager: NSObject, WCSessionDelegate, ObservableObject {
         }
     }
     
+    func getMessageFromWatch() -> String {
+        var message = ""
+        
+        print("Getting message from watch...")
+        // retrieve the message
+        if let storedReceivedMessage = UserDefaults.standard.string(forKey: "message") {
+            message = storedReceivedMessage.description
+            print("Successfully retrieved message from watch")
+        } else {
+            message = ""
+            print("Could not retrieve message from watch")
+        }
+        
+        return message
+    }
+    
     deinit {
         print("Phone Session Manager is dead.")
     }
