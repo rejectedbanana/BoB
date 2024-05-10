@@ -10,7 +10,7 @@ import SwiftUI
 struct LogbookDetail: View {
     let record: SampleSet
     
-    @Environment(\.managedObjectContext) var moc
+//    @Environment(\.managedObjectContext) var moc
 
     var body: some View {
         ScrollView {

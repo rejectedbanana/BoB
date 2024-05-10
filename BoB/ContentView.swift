@@ -18,18 +18,6 @@ struct ContentView: View {
     
     @State var message = ""
     
-//    func getMessageFromWatch() {
-//        print("Getting message from watch...")
-//        // retrieve the message
-//        if let storedReceivedMessage = UserDefaults.standard.string(forKey: "message") {
-//            self.message = storedReceivedMessage.description
-//            print("Successfully retrieved message from watch")
-//        } else {
-//            self.message = ""
-//            print("Could not retrieve message from watch")
-//        }
-//    }
-    
     var body: some View {
         NavigationStack {
             ZStack {

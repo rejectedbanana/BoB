@@ -38,6 +38,7 @@ class WatchSessionManager: NSObject, WCSessionDelegate {
         // Handle application completion
     }
     
+   // Test if the phone is reachable
    func activatePhone() {
         if self.session.isReachable {
             print("iOS - Phone is available")
@@ -46,22 +47,22 @@ class WatchSessionManager: NSObject, WCSessionDelegate {
         }
     }
     
+    // Send a text string to the phone
     func sendMessageToPhone(_ message: String) {
         if self.session.isReachable {
-            print("iOS - Phone is available")
+            print("iOS - Phone is available, sending message")
             self.session.sendMessage(["message": String(message)], replyHandler: nil) { (error) in
                 print("WatchOS ERROR SENDING MESSAGE - " + error.localizedDescription)
             }
-        } else {
-            print("Watch")
         }
         print("send message to phone")
     }
     
-    // Send data method
+    // Send data to the phone
     func sendDataToPhone(_ data: Data) {
-        if WCSession.default.isReachable {
-            WCSession.default.sendMessageData(data, replyHandler: nil) {error in
+        if self.session.isReachable {
+            print("iOS - Phone is available, sending data")
+            self.session.sendMessageData(data, replyHandler: nil) {error in
                 print("Error sending data: \(error.localizedDescription)")
             }
         }

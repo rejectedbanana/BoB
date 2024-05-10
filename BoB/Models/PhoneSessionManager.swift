@@ -26,7 +26,7 @@ class PhoneSessionManager: NSObject, WCSessionDelegate, ObservableObject {
     // scriptpapi
     var session: WCSession
     @Published var receivedMessage = ""
-    
+    // make the memberwise initializer
     init(session: WCSession = .default) {
         self.session = session
         super.init()
@@ -51,6 +51,7 @@ class PhoneSessionManager: NSObject, WCSessionDelegate, ObservableObject {
         //
     }
     
+    // When the phone receives a message from the watch, store it to the defaults
     func session(_ session: WCSession, didReceiveMessage message: [String: Any]) {
         // Handle received data
         // Assuming data is serializes CoreData objects, deserialize and process here
@@ -59,22 +60,21 @@ class PhoneSessionManager: NSObject, WCSessionDelegate, ObservableObject {
             print("Received message > " + self.receivedMessage)
             // code to save to watch internal memory
             UserDefaults.standard.set(self.receivedMessage, forKey: "message")
+            print("Message saved to watch memory")
         }
     }
     
+    // read the message from the watch
     func getMessageFromWatch() -> String {
         var message = ""
         
-        print("Getting message from watch...")
         // retrieve the message
         if let storedReceivedMessage = UserDefaults.standard.string(forKey: "message") {
             message = storedReceivedMessage.description
-            print("Successfully retrieved message from watch")
+            print("Successfully retrieved message from watch storage: \(message)")
         } else {
-            message = ""
             print("Could not retrieve message from watch")
         }
-        
         return message
     }
     

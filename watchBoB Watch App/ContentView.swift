@@ -12,11 +12,13 @@ struct ContentView: View {
     // Get a reference to the managed object context from the environment.
     @Environment(\.managedObjectContext) var moc
     
-    @State private var watchMessage = "Text from your watch!"
-    
+    // Create the watch session manager
     var watchSession = WatchSessionManager()
     
-    @State private var isTransferComplete = false
+    // create 
+    @State private var watchMessage = "Text from your watch!"
+
+//    @State private var isTransferComplete = false
     
     var body: some View {
         NavigationView {

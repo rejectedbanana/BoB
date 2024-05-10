@@ -220,8 +220,8 @@
 		978D106E2AE6E88200310B26 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				97B104AB2AE9775E00FE81DC /* LogBook */,
 				97B104AC2AE9777400FE81DC /* LogData */,
+				97B104AB2AE9775E00FE81DC /* LogBook */,
 			);
 			path = Models;
 			sourceTree = "<group>";
