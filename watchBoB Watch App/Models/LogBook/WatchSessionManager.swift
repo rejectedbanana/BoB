@@ -50,7 +50,7 @@ class WatchSessionManager: NSObject, WCSessionDelegate {
     // Send a text string to the phone
     func sendMessageToPhone(_ message: String) {
         if self.session.isReachable {
-            print("iOS - Phone is available, sending message")
+            print("iOS - Phone is available, sending message: \(message)")
             self.session.sendMessage(["message": String(message)], replyHandler: nil) { (error) in
                 print("WatchOS ERROR SENDING MESSAGE - " + error.localizedDescription)
             }

@@ -12,36 +12,66 @@ import WatchConnectivity
 struct ContentView: View {
     // Get a reference to the managed object context from the environment.
     @Environment(\.managedObjectContext) var moc
+    @FetchRequest(sortDescriptors: [SortDescriptor(\.startDatetime, order: .reverse)]) var logBookRecords: FetchedResults<SampleSet>
+    @Environment(\.dismiss) var dismiss
+    
+    @StateObject var coreDataController = CoreDataController()
     
     // create an instance of the watch connection class
     @ObservedObject var phoneSessionManager = PhoneSessionManager()
     
-    @State var message = ""
+    @State var message: String? = ""
     
     var body: some View {
         NavigationStack {
             ZStack {
-                // List of Logbook entries. Imported BoBDataList.json for building UI. Will replace with CoreData Metadata
-                List(entries) {entry in
-                    NavigationLink {
-                        LogbookDetail()
-                    } label: {
-                        LogbookRow(entry: entry)
+                List {
+                    ForEach(logBookRecords) {logBookRecord in
+                        NavigationLink {
+                            LogbookDetail()
+                        } label: {
+                            ListRow(record: logBookRecord)
+                        }
                     }
+                    .onDelete(perform: deleteSampleSet)
                 }
-                .navigationTitle("Logbook")
-                .toolbar {
-                    Button("Edit") {
-                        
-                    }
+                .onAppear {
+                    // You can perform operations on your Core Data stack here
+                    // For example, enable NSPersistentHistoryTrackingKey
+                    coreDataController.enableHistoryTracking()
                 }
+                //                .navigationTitle("Logbook")
+                //                .toolbar {
+                //                    Button("Edit") {
+                //
+                //                    }
+                //                }
                 
                 VStack {
                     Spacer()
                     
                     Button {
                         // insert sync action here
-                        message = phoneSessionManager.getMessageFromWatch()
+                        self.message = phoneSessionManager.getMessageFromWatch()
+                        
+                        // now write the entry to Core Data
+                        let newEntry = SampleSet(context: moc)
+                        newEntry.id = UUID()
+                        newEntry.startDatetime = Date.now
+                        newEntry.stopDatetime = Date.now
+                        newEntry.name = self.message
+                        newEntry.startLatitude = 1.1
+                        newEntry.startLongitude = 1.2
+                        newEntry.stopLatitude = 1.3
+                        newEntry.stopLongitude = 1.4
+                        // save to Core Data
+                        do {
+                            try moc.save()
+                            print("Entry saved!")
+                        } catch {
+                            print("Failed to save log entry: \(error)")
+                        }
+                        dismiss()
                         
                     } label: {
                         Image(systemName: "arrow.down.applewatch")
@@ -57,11 +87,19 @@ struct ContentView: View {
                     if (self.message == "") {
                         Text("No message received from IPhone")
                     } else {
-                        Text("Message received: " + message)
+                        Text("Message received: " + (self.message ?? "optional not unwrapped"))
                     }
 
                 }
             }
+        }
+    }
+    
+    // Make a function to delete log entries
+    func deleteSampleSet(at offsets: IndexSet) {
+        for offset in offsets {
+            let entry = logBookRecords[offset]
+            moc.delete(entry)
         }
     }
 }

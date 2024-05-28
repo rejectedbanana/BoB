@@ -60,7 +60,7 @@ class PhoneSessionManager: NSObject, WCSessionDelegate, ObservableObject {
             print("Received message > " + self.receivedMessage)
             // code to save to watch internal memory
             UserDefaults.standard.set(self.receivedMessage, forKey: "message")
-            print("Message saved to watch memory")
+            print("Message saved to phone memory")
         }
     }
     

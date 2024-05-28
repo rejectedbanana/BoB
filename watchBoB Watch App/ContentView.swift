@@ -15,8 +15,8 @@ struct ContentView: View {
     // Create the watch session manager
     var watchSession = WatchSessionManager()
     
-    // create 
-    @State private var watchMessage = "Text from your watch!"
+    // make a dynamic message
+    @State private var watchMessage = ""
 
 //    @State private var isTransferComplete = false
     
@@ -76,6 +76,7 @@ struct ContentView: View {
                 
                 // Sync coredata with phone
                 Button {
+                    watchMessage = dateFormatter(Date.now)
                     watchSession.activatePhone()
                     watchSession.sendMessageToPhone(watchMessage)
                 } label: {
