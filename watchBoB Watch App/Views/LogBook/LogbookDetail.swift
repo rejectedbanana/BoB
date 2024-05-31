@@ -9,25 +9,62 @@ import SwiftUI
 
 struct LogbookDetail: View {
     let record: SampleSet
+    @State private var recordDictionary: [String: Any] = [:]
     
-//    @Environment(\.managedObjectContext) var moc
+    // Create the watch session manager
+    var watchSession = WatchSessionManager()
+    
+    // make a dynamic message
+    @State private var watchMessage: String = ""
+    // make a dynamic dictionary
+    @State private var watchDictionary: [String: String] = ["name": ""]
 
     var body: some View {
         ScrollView {
             VStack(alignment: .leading) {
-                VStack(alignment: .leading) {
+                
+                Button {
+                    // Send a text message
+                    // define the text to send
+//                    watchMessage = dateFormatter(Date.now)
+                    watchMessage = record.name ?? "Name Unknown"
+                    // check if phone is activated
+                    watchSession.activatePhone()
+                    // send the textmessage
+                    watchSession.sendMessageToPhone(watchMessage)
                     
-                    DetailRow(header: "Min Temp", content: "7.0 °C")
-                    DetailRow(header: "Max Depth", content: "44.0 m")
-                    DetailRow(header: "Start Time", content: dateFormatter( record.startDatetime ?? Date(timeIntervalSince1970: 0) ))
-                    DetailRow(header: "End Time", content: dateFormatter( record.stopDatetime ?? Date(timeIntervalSince1970: 0) ))
-                    DetailRow(header: "Start Coordinates", content: String(format: "%0.3f", record.startLatitude)+" N,"+String(format: "%0.3f", record.startLongitude)+" E")
-                    DetailRow(header: "End Coordinates", content: String(format: "%0.3f", record.stopLatitude)+" N,"+String(format: "%0.3f", record.stopLongitude)+" E")
-                    DetailRow(header: "Samples", content: "1430")
-                    DetailRow(header: "Sampling Frequency", content: "10 Hz")
-
+//                    // Send a dictionary
+//                    // check if the phone is activated
+//                    watchSession.activatePhone()
+//                    // build the dictionary from the Core Data Record
+//                    recordDictionary["id"] = record.id
+//                    recordDictionary["startDatetime"] = record.startDatetime
+//                    recordDictionary["stopDatetime"] = record.stopDatetime
+//                    recordDictionary["name"] = record.name
+//                    recordDictionary["startLatitude"] = record.startLatitude
+//                    recordDictionary["startLongitude"] = record.startLongitude
+//                    recordDictionary["stopLatitude"] = record.stopLatitude
+//                    recordDictionary["stopLongitude"] = record.startLongitude
+//                    // send the dictionary
+//                    watchSession.sendDictionaryToPhone(recordDictionary)
+                    
+                    
+//                    if let data = try? JSONEncoder().encode(record) {
+//                        WatchSessionManager.sendDataToPhone(data)
+//                    }
+                    
+                } label: {
+                    Text("Send to phone")
                 }
-
+                
+                DetailRow(header: "Min Temp", content: "7.0 °C")
+                DetailRow(header: "Max Depth", content: "44.0 m")
+                DetailRow(header: "Start Time", content: dateFormatter( record.startDatetime ?? Date(timeIntervalSince1970: 0) ))
+                DetailRow(header: "End Time", content: dateFormatter( record.stopDatetime ?? Date(timeIntervalSince1970: 0) ))
+                DetailRow(header: "Start Coordinates", content: String(format: "%0.3f", record.startLatitude)+" N,"+String(format: "%0.3f", record.startLongitude)+" E")
+                DetailRow(header: "End Coordinates", content: String(format: "%0.3f", record.stopLatitude)+" N,"+String(format: "%0.3f", record.stopLongitude)+" E")
+                DetailRow(header: "Samples", content: "1430")
+                DetailRow(header: "Sampling Frequency", content: "10 Hz")
             }
         }
     }

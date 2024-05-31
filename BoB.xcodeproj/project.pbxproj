@@ -23,6 +23,8 @@
 		978D10732AE6E92300310B26 /* LogbookModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 978D10722AE6E92300310B26 /* LogbookModel.swift */; };
 		978D10762AE6E97700310B26 /* Entry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 978D10752AE6E97700310B26 /* Entry.swift */; };
 		978D107A2AE70F8F00310B26 /* LogbookRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 978D10782AE70F8F00310B26 /* LogbookRow.swift */; };
+		978F5A3E2C07ED00000FEF7F /* SampleSetCodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 978F5A3D2C07ED00000FEF7F /* SampleSetCodable.swift */; };
+		978F5A3F2C07ED00000FEF7F /* SampleSetCodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 978F5A3D2C07ED00000FEF7F /* SampleSetCodable.swift */; };
 		9794676F2BEE8A0D00DF6E0B /* ListRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9794676E2BEE8A0D00DF6E0B /* ListRow.swift */; };
 		9797363E2AEB15B8009BCFF0 /* Bob.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 9797363C2AEB15B8009BCFF0 /* Bob.xcdatamodeld */; };
 		979736402AEB1AB4009BCFF0 /* CoreDataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9797363F2AEB1AB4009BCFF0 /* CoreDataController.swift */; };
@@ -98,6 +100,7 @@
 		978D10722AE6E92300310B26 /* LogbookModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogbookModel.swift; sourceTree = "<group>"; };
 		978D10752AE6E97700310B26 /* Entry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Entry.swift; sourceTree = "<group>"; };
 		978D10782AE70F8F00310B26 /* LogbookRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogbookRow.swift; sourceTree = "<group>"; };
+		978F5A3D2C07ED00000FEF7F /* SampleSetCodable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleSetCodable.swift; sourceTree = "<group>"; };
 		9794676E2BEE8A0D00DF6E0B /* ListRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListRow.swift; sourceTree = "<group>"; };
 		9797363D2AEB15B8009BCFF0 /* Bob.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Bob.xcdatamodel; sourceTree = "<group>"; };
 		9797363F2AEB1AB4009BCFF0 /* CoreDataController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataController.swift; sourceTree = "<group>"; };
@@ -172,6 +175,7 @@
 				97FAC84B2BD850A4003E65E7 /* SensorSample+CoreDataClass.swift */,
 				97FAC84C2BD850A4003E65E7 /* SensorSample+CoreDataProperties.swift */,
 				9797363C2AEB15B8009BCFF0 /* Bob.xcdatamodeld */,
+				978F5A3D2C07ED00000FEF7F /* SampleSetCodable.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -526,6 +530,7 @@
 				978D10762AE6E97700310B26 /* Entry.swift in Sources */,
 				977E74CC2BE9895D009A36AD /* Bob.xcdatamodeld in Sources */,
 				9746B5052BBF6BCC000BFEA7 /* DetailRow.swift in Sources */,
+				978F5A3E2C07ED00000FEF7F /* SampleSetCodable.swift in Sources */,
 				978D10732AE6E92300310B26 /* LogbookModel.swift in Sources */,
 				977E74C72BE9894F009A36AD /* CoreDataController.swift in Sources */,
 				97DF8E9B2AE195FA00A33A80 /* ContentView.swift in Sources */,
@@ -546,6 +551,7 @@
 				97DF8EAD2AE1968500A33A80 /* watchBoBApp.swift in Sources */,
 				978D10672AE3049400310B26 /* LogbookView.swift in Sources */,
 				97DF8EBD2AE1D9AF00A33A80 /* LogDataView.swift in Sources */,
+				978F5A3F2C07ED00000FEF7F /* SampleSetCodable.swift in Sources */,
 				97CE319C2AED6ADE009335C9 /* LocationDataManager.swift in Sources */,
 				97B104AA2AE9771700FE81DC /* SensorManager.swift in Sources */,
 				9797363E2AEB15B8009BCFF0 /* Bob.xcdatamodeld in Sources */,

@@ -109,7 +109,7 @@ struct LogDataView: View {
                     newEntry.id = metadataLogger.sessionID
                     newEntry.startDatetime = metadataLogger.startDatetime
                     newEntry.stopDatetime = metadataLogger.stopDatetime
-                    newEntry.name = name
+                    newEntry.name = metadataLogger.name
                     newEntry.startLatitude = metadataLogger.startLatitude
                     newEntry.startLongitude = metadataLogger.startLongitude
                     newEntry.stopLatitude = metadataLogger.stopLatitude

@@ -59,10 +59,10 @@ class WatchSessionManager: NSObject, WCSessionDelegate {
     }
     
     // Send data to the phone
-    func sendDataToPhone(_ data: Data) {
+    func sendDictionaryToPhone(_ data: [String: Any]) {
         if self.session.isReachable {
             print("iOS - Phone is available, sending data")
-            self.session.sendMessageData(data, replyHandler: nil) {error in
+            self.session.sendMessage(data, replyHandler: nil) {error in
                 print("Error sending data: \(error.localizedDescription)")
             }
         }

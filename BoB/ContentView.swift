@@ -20,7 +20,8 @@ struct ContentView: View {
     // create an instance of the watch connection class
     @ObservedObject var phoneSessionManager = PhoneSessionManager()
     
-    @State var message: String? = ""
+    @State var messageString: String? = ""
+    @State var messageDictionary: [String: String] = ["name": "blank"]
     
     var body: some View {
         NavigationStack {
@@ -52,14 +53,14 @@ struct ContentView: View {
                     
                     Button {
                         // insert sync action here
-                        self.message = phoneSessionManager.getMessageFromWatch()
+                        self.messageString = phoneSessionManager.getMessageFromWatch()
                         
                         // now write the entry to Core Data
                         let newEntry = SampleSet(context: moc)
                         newEntry.id = UUID()
                         newEntry.startDatetime = Date.now
                         newEntry.stopDatetime = Date.now
-                        newEntry.name = self.message
+                        newEntry.name = messageString
                         newEntry.startLatitude = 1.1
                         newEntry.startLongitude = 1.2
                         newEntry.stopLatitude = 1.3
@@ -84,10 +85,12 @@ struct ContentView: View {
                     .padding()
                     .shadow(radius: 2)
                     
-                    if (self.message == "") {
+                    
+                    if (self.messageString == "") {
                         Text("No message received from IPhone")
                     } else {
-                        Text("Message received: " + (self.message ?? "optional not unwrapped"))
+//                        Text("Message received: " + (self.message ?? "optional not unwrapped"))
+                        Text("Message Received")
                     }
 
                 }

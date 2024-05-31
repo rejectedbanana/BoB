@@ -25,7 +25,6 @@ class PhoneSessionManager: NSObject, WCSessionDelegate, ObservableObject {
     
     // scriptpapi
     var session: WCSession
-    @Published var receivedMessage = ""
     // make the memberwise initializer
     init(session: WCSession = .default) {
         self.session = session
@@ -33,6 +32,10 @@ class PhoneSessionManager: NSObject, WCSessionDelegate, ObservableObject {
         self.session.delegate = self
         session.activate()
     }
+    
+    // Define the receivedMessage
+    @Published var receivedMessage = "" 
+    @Published var receivedDictionary: [String: String] = ["name": ""]
     
     // Implement the necessary delegate methods
     // Lets the session know that your app supports asynchronus activation
@@ -55,28 +58,82 @@ class PhoneSessionManager: NSObject, WCSessionDelegate, ObservableObject {
     func session(_ session: WCSession, didReceiveMessage message: [String: Any]) {
         // Handle received data
         // Assuming data is serializes CoreData objects, deserialize and process here
-        DispatchQueue.main.async {
-            self.receivedMessage = message["message"] as? String ?? ""
-            print("Received message > " + self.receivedMessage)
-            // code to save to watch internal memory
-            UserDefaults.standard.set(self.receivedMessage, forKey: "message")
-            print("Message saved to phone memory")
+        
+        // Check if message is a string
+        if message["message"] is String {
+            // Save received text message to UserDefaults
+            DispatchQueue.main.async {
+                self.receivedMessage = message["message"] as? String ?? ""
+                print("Received message > " + self.receivedMessage)
+                // code to save to watch internal memory
+                UserDefaults.standard.set(self.receivedMessage, forKey: "message")
+                print("String saved to phone memory")
+            }
         }
+        // Check if message variable is a dictionary
+        else if message["message"] is [AnyHashable: Any] {
+            // Save the received dictionary to UserDefaults
+            DispatchQueue.main.async {
+            }
+            print("Received dictionary")
+            print("Dictionary not saved to phone memory yet")
+        }
+        // Handle other types
+        else {
+            print("Message is not a string or dictionary")
+        }
+        
+        // Decode and save to core data
+        
+    }
+    
+    // When the phone received data from the watch, decode it and store it to Core Data
+    func session(_ session: WCSession, didReceiveMessageData messageData: Data) {
+        // Handle received data
+        // Assuming data is serialized CoreData objects, deserialize and process here
+//        let decoder = JSONDecoder()
+//        decoder.userInfo[CodingUserInfoKey.managedObjectContext] = myPer
     }
     
     // read the message from the watch
     func getMessageFromWatch() -> String {
-        var message = ""
+        var message: String = ""
         
         // retrieve the message
         if let storedReceivedMessage = UserDefaults.standard.string(forKey: "message") {
             message = storedReceivedMessage.description
-            print("Successfully retrieved message from watch storage: \(message)")
+            print("Successfully retrieved message from phone storage: \(message)")
         } else {
-            print("Could not retrieve message from watch")
+            print("Could not retrieve message from phone storage.")
         }
+        
+//        // retrieve the message
+//        if let storedReceivedMessage = UserDefaults.standard.string(forKey: "message") {
+//            message["name"] = storedReceivedMessage
+////            print("Successfully retrieved message from phone storage: \(message)")
+//        } else {
+//            print("Could not retrieve message from phone storage.")
+//        }
+        
         return message
     }
+    
+//    // read the message from the watch
+//    func getDictionaryFromWatch() -> [String: Any] {
+//        //
+//        var message: [String: Any] = [:]
+//        
+//        // retrieve the message
+//        if let storedReceivedMessage = UserDefaults.standard.string(forKey: "message") {
+//            message = storedReceivedMessage.description
+//            print("Successfully retrieved message from phone storage: \(message)")
+//        } else {
+//            print("Could not retrieve message from phone storage.")
+//        }
+//        return message
+//    }
+    
+
     
     deinit {
         print("Phone Session Manager is dead.")

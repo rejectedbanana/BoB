@@ -9,14 +9,14 @@ import SwiftUI
 import WatchConnectivity
 
 struct ContentView: View {
-    // Get a reference to the managed object context from the environment.
+    // Get a reference to the managed object context from the environment. 
     @Environment(\.managedObjectContext) var moc
     
     // Create the watch session manager
-    var watchSession = WatchSessionManager()
+//    var watchSession = WatchSessionManager()
     
-    // make a dynamic message
-    @State private var watchMessage = ""
+//    // make a dynamic message
+//    @State private var watchMessage = ""
 
 //    @State private var isTransferComplete = false
     
@@ -73,25 +73,40 @@ struct ContentView: View {
                 .buttonStyle(.borderedProminent)
                 .padding(.bottom, 20)
                 
+//                // Sync coredata with phone
+//                NavigationLink(destination: SyncWithPhoneView() ) {
+//                    HStack {
+//                        Text("Sync with phone")
+//                            .frame(maxWidth: .infinity, alignment: .leading)
+//                            .font(.headline)
+//                        Image(systemName: "iphone.and.arrow.forward")
+//                    }
+//                    .padding(.bottom, 60)
+//                }
+//                .tint(.silver)
+//                .opacity(0.8)
+//                .buttonBorderShape(.roundedRectangle(radius: 10))
+//                .buttonStyle(.borderedProminent)
                 
-                // Sync coredata with phone
-                Button {
-                    watchMessage = dateFormatter(Date.now)
-                    watchSession.activatePhone()
-                    watchSession.sendMessageToPhone(watchMessage)
-                } label: {
-                    HStack {
-                        Text("Sync with phone")
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                            .font(.headline)
-                        Image(systemName: "iphone.and.arrow.forward")
-                    }
-                    .padding(.bottom, 60)
-                }
-                .tint(.silver)
-                .opacity(0.8)
-                .buttonBorderShape(.roundedRectangle(radius: 10))
-                .buttonStyle(.borderedProminent)
+                
+//                // Sync coredata with phone
+//                Button {
+//                    watchMessage = dateFormatter(Date.now)
+//                    watchSession.activatePhone()
+//                    watchSession.sendMessageToPhone(watchMessage)
+//                } label: {
+//                    HStack {
+//                        Text("Sync with phone")
+//                            .frame(maxWidth: .infinity, alignment: .leading)
+//                            .font(.headline)
+//                        Image(systemName: "iphone.and.arrow.forward")
+//                    }
+//                    .padding(.bottom, 60)
+//                }
+//                .tint(.silver)
+//                .opacity(0.8)
+//                .buttonBorderShape(.roundedRectangle(radius: 10))
+//                .buttonStyle(.borderedProminent)
                 
             }
         }
