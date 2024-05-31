@@ -7,6 +7,7 @@
 
 import Foundation
 import WatchConnectivity
+//import SwiftUI
 
 // Send Core Data to iPhone using a button
 class WatchSessionManager: NSObject, WCSessionDelegate {
@@ -29,8 +30,11 @@ class WatchSessionManager: NSObject, WCSessionDelegate {
     init(session: WCSession = .default) {
         self.session = session
         super.init()
-        self.session.delegate = self
-        session.activate()
+        
+        if WCSession.isSupported() {
+            self.session.delegate = self
+            session.activate()
+        }
     }
 
     // Implement the necesssary delegate methods
@@ -52,7 +56,7 @@ class WatchSessionManager: NSObject, WCSessionDelegate {
         if self.session.isReachable {
             print("iOS - Phone is available, sending message: \(message)")
             self.session.sendMessage(["message": String(message)], replyHandler: nil) { (error) in
-                print("WatchOS ERROR SENDING MESSAGE - " + error.localizedDescription)
+                print("Error sending message to phone: \(error.localizedDescription)")
             }
         }
         print("send message to phone")
@@ -61,14 +65,17 @@ class WatchSessionManager: NSObject, WCSessionDelegate {
     // Send data to the phone
     func sendDictionaryToPhone(_ data: [String: Any]) {
         if self.session.isReachable {
-            print("iOS - Phone is available, sending data")
+            print("iOS - Phone is available, sending the following data:")
+            for (key, value) in data {
+                print("WatchDictionary[\(key)] = \(value)")
+            }
             self.session.sendMessage(data, replyHandler: nil) {error in
-                print("Error sending data: \(error.localizedDescription)")
+                print("Error sending dictionary to phone: \(error.localizedDescription)")
             }
         }
     }
     
-    deinit {
-        print("Watch Session Manager class is dead.")
-    }
+//    deinit {
+//        print("Watch Session Manager class is dead.")
+//    }
 }

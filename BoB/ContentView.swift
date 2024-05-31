@@ -15,13 +15,14 @@ struct ContentView: View {
     @FetchRequest(sortDescriptors: [SortDescriptor(\.startDatetime, order: .reverse)]) var logBookRecords: FetchedResults<SampleSet>
     @Environment(\.dismiss) var dismiss
     
+    
     @StateObject var coreDataController = CoreDataController()
     
     // create an instance of the watch connection class
     @ObservedObject var phoneSessionManager = PhoneSessionManager()
     
     @State var messageString: String? = ""
-    @State var messageDictionary: [String: String] = ["name": "blank"]
+    @State var messageDictionary: [String: Any] = [:]
     
     var body: some View {
         NavigationStack {
@@ -41,30 +42,42 @@ struct ContentView: View {
                     // For example, enable NSPersistentHistoryTrackingKey
                     coreDataController.enableHistoryTracking()
                 }
-                //                .navigationTitle("Logbook")
-                //                .toolbar {
-                //                    Button("Edit") {
-                //
-                //                    }
-                //                }
+                .toolbar {
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        EditButton()
+                    }
+                }
                 
                 VStack {
                     Spacer()
                     
                     Button {
                         // insert sync action here
-                        self.messageString = phoneSessionManager.getMessageFromWatch()
+//                        self.messageString = phoneSessionManager.getMessageFromWatch()
+                        self.messageDictionary = phoneSessionManager.getDictionaryFromWatch()
+                        
+                        for (key, value) in messageDictionary {
+                            print("phoneDictionary[\(key)] = \(value) (\(type(of: value)))")
+                        }
                         
                         // now write the entry to Core Data
                         let newEntry = SampleSet(context: moc)
                         newEntry.id = UUID()
-                        newEntry.startDatetime = Date.now
-                        newEntry.stopDatetime = Date.now
-                        newEntry.name = messageString
-                        newEntry.startLatitude = 1.1
-                        newEntry.startLongitude = 1.2
-                        newEntry.stopLatitude = 1.3
-                        newEntry.stopLongitude = 1.4
+                        newEntry.name = messageDictionary["name"] as? String
+                        newEntry.startDatetime = messageDictionary["startDatetime"] as? Date
+                        newEntry.stopDatetime = messageDictionary["stopDatetime"] as? Date
+                        if let startLat = messageDictionary["startLatitude"] as? Double {
+                            newEntry.startLatitude = startLat
+                        }
+                        if let startLon = messageDictionary[""] as? Double {
+                            newEntry.startLongitude = startLon
+                        }
+                        if let stopLat = messageDictionary["stopLatitude"] as? Double {
+                            newEntry.stopLatitude = stopLat
+                        }
+                        if let stopLon = messageDictionary["stopLatitude"] as? Double {
+                            newEntry.stopLongitude = stopLon
+                        }
                         // save to Core Data
                         do {
                             try moc.save()

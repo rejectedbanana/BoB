@@ -16,7 +16,7 @@ struct LogDataView: View {
     @Environment(\.dismiss) var dismiss
     
     // create the variables to write to CoreData
-    @State private var name: String = "TBD" // Change to datetime string in the future
+    @State private var name: String = "TBD" 
 
     // create the location manager here
     @StateObject var locationDataManager = LocationDataManager()

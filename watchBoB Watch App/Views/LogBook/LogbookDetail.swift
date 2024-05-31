@@ -9,7 +9,6 @@ import SwiftUI
 
 struct LogbookDetail: View {
     let record: SampleSet
-    @State private var recordDictionary: [String: Any] = [:]
     
     // Create the watch session manager
     var watchSession = WatchSessionManager()
@@ -17,7 +16,7 @@ struct LogbookDetail: View {
     // make a dynamic message
     @State private var watchMessage: String = ""
     // make a dynamic dictionary
-    @State private var watchDictionary: [String: String] = ["name": ""]
+    @State private var watchDictionary: [String: Any] = [:]
 
     var body: some View {
         ScrollView {
@@ -27,31 +26,26 @@ struct LogbookDetail: View {
                     // Send a text message
                     // define the text to send
 //                    watchMessage = dateFormatter(Date.now)
-                    watchMessage = record.name ?? "Name Unknown"
+//                    watchMessage = record.name ?? "Name not added to string."
                     // check if phone is activated
-                    watchSession.activatePhone()
-                    // send the textmessage
-                    watchSession.sendMessageToPhone(watchMessage)
-                    
-//                    // Send a dictionary
-//                    // check if the phone is activated
 //                    watchSession.activatePhone()
-//                    // build the dictionary from the Core Data Record
-//                    recordDictionary["id"] = record.id
-//                    recordDictionary["startDatetime"] = record.startDatetime
-//                    recordDictionary["stopDatetime"] = record.stopDatetime
-//                    recordDictionary["name"] = record.name
-//                    recordDictionary["startLatitude"] = record.startLatitude
-//                    recordDictionary["startLongitude"] = record.startLongitude
-//                    recordDictionary["stopLatitude"] = record.stopLatitude
-//                    recordDictionary["stopLongitude"] = record.startLongitude
-//                    // send the dictionary
-//                    watchSession.sendDictionaryToPhone(recordDictionary)
+                    // send the textmessage
+//                    watchSession.sendMessageToPhone(watchMessage)
                     
-                    
-//                    if let data = try? JSONEncoder().encode(record) {
-//                        WatchSessionManager.sendDataToPhone(data)
-//                    }
+                    // Send a dictionary
+                    // check if the phone is activated
+                    watchSession.activatePhone()
+                    // build the dictionary from the Core Data Record
+//                    watchDictionary["id"] = record.id
+                    watchDictionary["name"] = String(record.name ?? "Name not added to dictionary.")
+                    watchDictionary["startDatetime"] = record.startDatetime
+                    watchDictionary["stopDatetime"] = record.stopDatetime
+                    watchDictionary["startLatitude"] = record.startLatitude
+                    watchDictionary["startLongitude"] = record.startLongitude
+                    watchDictionary["stopLatitude"] = record.stopLatitude
+                    watchDictionary["stopLongitude"] = record.startLongitude
+                    // send the dictionary
+                    watchSession.sendDictionaryToPhone(watchDictionary)
                     
                 } label: {
                     Text("Send to phone")
