@@ -29,9 +29,9 @@ struct ContentView: View {
                 List {
                     ForEach(logBookRecords) {logBookRecord in
                         NavigationLink {
-                            LogbookDetail(record: logBookRecord)
+                            LogbookDetail(entry: logBookRecord)
                         } label: {
-                            ListRow(record: logBookRecord)
+                            ListRow(entry: logBookRecord)
                         }
                     }
                     .onDelete(perform: deleteSampleSet)

@@ -11,7 +11,6 @@
 		972889942BE2F3D200BB9A14 /* WatchSessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 972889932BE2F3D200BB9A14 /* WatchSessionManager.swift */; };
 		972889962BE2F5E500BB9A14 /* PhoneSessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 972889952BE2F5E500BB9A14 /* PhoneSessionManager.swift */; };
 		97349CEB2AF1679300021CA3 /* RawMotionRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97349CEA2AF1679300021CA3 /* RawMotionRow.swift */; };
-		9746B5052BBF6BCC000BFEA7 /* DetailRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9746B5042BBF6BCC000BFEA7 /* DetailRow.swift */; };
 		9749DA442C0F532A00E2EA84 /* CoreDataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9797363F2AEB1AB4009BCFF0 /* CoreDataController.swift */; };
 		977E74C82BE98952009A36AD /* SampleSet+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97FAC8492BD850A4003E65E7 /* SampleSet+CoreDataClass.swift */; };
 		977E74C92BE98955009A36AD /* SampleSet+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97FAC84A2BD850A4003E65E7 /* SampleSet+CoreDataProperties.swift */; };
@@ -37,7 +36,6 @@
 		97DF8EB42AE1968600A33A80 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 97DF8EB32AE1968600A33A80 /* Preview Assets.xcassets */; };
 		97DF8EB72AE1968600A33A80 /* BoB.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 97DF8EAA2AE1968500A33A80 /* BoB.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		97DF8EBD2AE1D9AF00A33A80 /* LogDataView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97DF8EBC2AE1D9AE00A33A80 /* LogDataView.swift */; };
-		97E505812B472E8700334D6F /* LogbookRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97E505802B472E8700334D6F /* LogbookRow.swift */; };
 		97E505832B472F9700334D6F /* LogbookDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97E505822B472F9700334D6F /* LogbookDetail.swift */; };
 		97FAC84D2BD850A4003E65E7 /* SampleSet+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97FAC8492BD850A4003E65E7 /* SampleSet+CoreDataClass.swift */; };
 		97FAC84E2BD850A4003E65E7 /* SampleSet+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97FAC84A2BD850A4003E65E7 /* SampleSet+CoreDataProperties.swift */; };
@@ -90,7 +88,6 @@
 		972889932BE2F3D200BB9A14 /* WatchSessionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchSessionManager.swift; sourceTree = "<group>"; };
 		972889952BE2F5E500BB9A14 /* PhoneSessionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneSessionManager.swift; sourceTree = "<group>"; };
 		97349CEA2AF1679300021CA3 /* RawMotionRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RawMotionRow.swift; sourceTree = "<group>"; };
-		9746B5042BBF6BCC000BFEA7 /* DetailRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailRow.swift; sourceTree = "<group>"; };
 		978D10662AE3049400310B26 /* LogbookView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogbookView.swift; sourceTree = "<group>"; };
 		978D106B2AE6E84500310B26 /* BoBDataList.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = BoBDataList.json; sourceTree = "<group>"; };
 		978D10782AE70F8F00310B26 /* LogbookRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogbookRow.swift; sourceTree = "<group>"; };
@@ -111,7 +108,6 @@
 		97DF8EB02AE1968600A33A80 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		97DF8EB32AE1968600A33A80 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		97DF8EBC2AE1D9AE00A33A80 /* LogDataView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogDataView.swift; sourceTree = "<group>"; };
-		97E505802B472E8700334D6F /* LogbookRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogbookRow.swift; sourceTree = "<group>"; };
 		97E505822B472F9700334D6F /* LogbookDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogbookDetail.swift; sourceTree = "<group>"; };
 		97FAC8492BD850A4003E65E7 /* SampleSet+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SampleSet+CoreDataClass.swift"; sourceTree = "<group>"; };
 		97FAC84A2BD850A4003E65E7 /* SampleSet+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SampleSet+CoreDataProperties.swift"; sourceTree = "<group>"; };
@@ -175,7 +171,7 @@
 		973AFCFA2AEFEA4B00A29AF0 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				97E5057F2B472B5B00334D6F /* LogBook */,
+				97E505822B472F9700334D6F /* LogbookDetail.swift */,
 				9794676E2BEE8A0D00DF6E0B /* ListRow.swift */,
 			);
 			path = Views;
@@ -322,16 +318,6 @@
 				97349CEA2AF1679300021CA3 /* RawMotionRow.swift */,
 			);
 			path = LogData;
-			sourceTree = "<group>";
-		};
-		97E5057F2B472B5B00334D6F /* LogBook */ = {
-			isa = PBXGroup;
-			children = (
-				97E505802B472E8700334D6F /* LogbookRow.swift */,
-				97E505822B472F9700334D6F /* LogbookDetail.swift */,
-				9746B5042BBF6BCC000BFEA7 /* DetailRow.swift */,
-			);
-			path = LogBook;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -515,11 +501,9 @@
 				977E74C92BE98955009A36AD /* SampleSet+CoreDataProperties.swift in Sources */,
 				9749DA442C0F532A00E2EA84 /* CoreDataController.swift in Sources */,
 				977E74CA2BE98957009A36AD /* SensorSample+CoreDataClass.swift in Sources */,
-				97E505812B472E8700334D6F /* LogbookRow.swift in Sources */,
 				97E505832B472F9700334D6F /* LogbookDetail.swift in Sources */,
 				977E74CB2BE9895A009A36AD /* SensorSample+CoreDataProperties.swift in Sources */,
 				977E74CC2BE9895D009A36AD /* Bob.xcdatamodeld in Sources */,
-				9746B5052BBF6BCC000BFEA7 /* DetailRow.swift in Sources */,
 				97DF8E9B2AE195FA00A33A80 /* ContentView.swift in Sources */,
 				97DF8E992AE195FA00A33A80 /* BoBApp.swift in Sources */,
 				972889962BE2F5E500BB9A14 /* PhoneSessionManager.swift in Sources */,

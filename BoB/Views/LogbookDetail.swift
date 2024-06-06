@@ -8,14 +8,14 @@
 import SwiftUI
 
 struct LogbookDetail: View {
-    let record: SampleSet
+    let entry: SampleSet
     var body: some View {
                 List {
                     Section("Sample Details"){
                         DetailRow(header: "Minimum Water Temperature", content: "7.0 °C")
                         DetailRow(header: "Maximum Underwater Depth", content: "44.0 m")
-                        DetailRow(header: "Start Time", content: dateFormatter( record.startDatetime ?? Date(timeIntervalSince1970: 0) ))
-                        DetailRow(header: "End Time", content: dateFormatter( record.stopDatetime ?? Date(timeIntervalSince1970: 0) ))
+                        DetailRow(header: "Start Time", content: dateFormatter( entry.startDatetime ?? Date(timeIntervalSince1970: 0) ))
+                        DetailRow(header: "End Time", content: dateFormatter( entry.stopDatetime ?? Date(timeIntervalSince1970: 0) ))
                         DetailRow(header: "Samples", content: "1430")
                         DetailRow(header: "Sampling Frequency", content: "10 Hz")
                         DetailRow(header: "Source", content: "Kim's Apple Watch")
@@ -41,3 +41,18 @@ struct LogbookDetail: View {
 //#Preview {
 //    LogbookDetail()
 //}
+
+struct DetailRow: View {
+    let header: String
+    let content: String
+    
+    var body: some View {
+            VStack(alignment: .leading) {
+                Text(header)
+                    .font(.callout)
+                    .foregroundColor(Color.gray)
+                Text(content)
+                    .font(.body)
+            }
+    }
+}
