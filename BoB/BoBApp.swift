@@ -16,7 +16,7 @@ func dateFormatter(_ date: Date) -> String {
 @main
 struct BoBApp: App {
     // Create an observable instance of the Core Data stack.
-    @StateObject var coreDataController = CoreDataController()
+    @StateObject private var coreDataController = CoreDataController()
     
     var body: some Scene {
         WindowGroup {

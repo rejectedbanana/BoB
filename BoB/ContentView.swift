@@ -15,7 +15,6 @@ struct ContentView: View {
     @FetchRequest(sortDescriptors: [SortDescriptor(\.startDatetime, order: .reverse)]) var logBookRecords: FetchedResults<SampleSet>
     @Environment(\.dismiss) var dismiss
     
-    
     @StateObject var coreDataController = CoreDataController()
     
     // create an instance of the watch connection class
@@ -30,7 +29,7 @@ struct ContentView: View {
                 List {
                     ForEach(logBookRecords) {logBookRecord in
                         NavigationLink {
-                            LogbookDetail()
+                            LogbookDetail(record: logBookRecord)
                         } label: {
                             ListRow(record: logBookRecord)
                         }
@@ -69,13 +68,13 @@ struct ContentView: View {
                         if let startLat = messageDictionary["startLatitude"] as? Double {
                             newEntry.startLatitude = startLat
                         }
-                        if let startLon = messageDictionary[""] as? Double {
+                        if let startLon = messageDictionary["startLongitude"] as? Double {
                             newEntry.startLongitude = startLon
                         }
                         if let stopLat = messageDictionary["stopLatitude"] as? Double {
                             newEntry.stopLatitude = stopLat
                         }
-                        if let stopLon = messageDictionary["stopLatitude"] as? Double {
+                        if let stopLon = messageDictionary["stopLongitude"] as? Double {
                             newEntry.stopLongitude = stopLon
                         }
                         // save to Core Data
@@ -97,15 +96,6 @@ struct ContentView: View {
                     }
                     .padding()
                     .shadow(radius: 2)
-                    
-                    
-                    if (self.messageString == "") {
-                        Text("No message received from IPhone")
-                    } else {
-//                        Text("Message received: " + (self.message ?? "optional not unwrapped"))
-                        Text("Message Received")
-                    }
-
                 }
             }
         }

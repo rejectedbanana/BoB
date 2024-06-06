@@ -35,8 +35,7 @@ struct LogbookDetail: View {
                     // Send a dictionary
                     // check if the phone is activated
                     watchSession.activatePhone()
-                    // build the dictionary from the Core Data Record
-                    watchDictionary["id"] = [""]
+                    // build the dictionary from the Core Data Record (don't send the UUID)
                     watchDictionary["name"] = String(record.name ?? "Name not added to dictionary.")
                     watchDictionary["startDatetime"] = record.startDatetime
                     watchDictionary["stopDatetime"] = record.stopDatetime

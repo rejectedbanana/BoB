@@ -11,18 +11,6 @@ import WatchConnectivity
 
 // Send Core Data to iPhone using a button
 class WatchSessionManager: NSObject, WCSessionDelegate {
-    // ChatGPT
-//    static let shared = WatchSessionManager()
-//    private override init() {
-//        super.init()
-//    }
-//    
-//    func startSession() {
-//        if WCSession.isSupported() {
-//            WCSession.default.delegate = self
-//            WCSession.default.activate()
-//        }
-//    }
     
     // scriptpapi
     var session: WCSession

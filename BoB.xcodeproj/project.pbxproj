@@ -12,7 +12,7 @@
 		972889962BE2F5E500BB9A14 /* PhoneSessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 972889952BE2F5E500BB9A14 /* PhoneSessionManager.swift */; };
 		97349CEB2AF1679300021CA3 /* RawMotionRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97349CEA2AF1679300021CA3 /* RawMotionRow.swift */; };
 		9746B5052BBF6BCC000BFEA7 /* DetailRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9746B5042BBF6BCC000BFEA7 /* DetailRow.swift */; };
-		977E74C72BE9894F009A36AD /* CoreDataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9797363F2AEB1AB4009BCFF0 /* CoreDataController.swift */; };
+		9749DA442C0F532A00E2EA84 /* CoreDataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9797363F2AEB1AB4009BCFF0 /* CoreDataController.swift */; };
 		977E74C82BE98952009A36AD /* SampleSet+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97FAC8492BD850A4003E65E7 /* SampleSet+CoreDataClass.swift */; };
 		977E74C92BE98955009A36AD /* SampleSet+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97FAC84A2BD850A4003E65E7 /* SampleSet+CoreDataProperties.swift */; };
 		977E74CA2BE98957009A36AD /* SensorSample+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97FAC84B2BD850A4003E65E7 /* SensorSample+CoreDataClass.swift */; };
@@ -20,8 +20,6 @@
 		977E74CC2BE9895D009A36AD /* Bob.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 9797363C2AEB15B8009BCFF0 /* Bob.xcdatamodeld */; };
 		978D10672AE3049400310B26 /* LogbookView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 978D10662AE3049400310B26 /* LogbookView.swift */; };
 		978D106C2AE6E84500310B26 /* BoBDataList.json in Resources */ = {isa = PBXBuildFile; fileRef = 978D106B2AE6E84500310B26 /* BoBDataList.json */; };
-		978D10732AE6E92300310B26 /* LogbookModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 978D10722AE6E92300310B26 /* LogbookModel.swift */; };
-		978D10762AE6E97700310B26 /* Entry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 978D10752AE6E97700310B26 /* Entry.swift */; };
 		978D107A2AE70F8F00310B26 /* LogbookRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 978D10782AE70F8F00310B26 /* LogbookRow.swift */; };
 		9794676F2BEE8A0D00DF6E0B /* ListRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9794676E2BEE8A0D00DF6E0B /* ListRow.swift */; };
 		9797363E2AEB15B8009BCFF0 /* Bob.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 9797363C2AEB15B8009BCFF0 /* Bob.xcdatamodeld */; };
@@ -95,8 +93,6 @@
 		9746B5042BBF6BCC000BFEA7 /* DetailRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailRow.swift; sourceTree = "<group>"; };
 		978D10662AE3049400310B26 /* LogbookView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogbookView.swift; sourceTree = "<group>"; };
 		978D106B2AE6E84500310B26 /* BoBDataList.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = BoBDataList.json; sourceTree = "<group>"; };
-		978D10722AE6E92300310B26 /* LogbookModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogbookModel.swift; sourceTree = "<group>"; };
-		978D10752AE6E97700310B26 /* Entry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Entry.swift; sourceTree = "<group>"; };
 		978D10782AE70F8F00310B26 /* LogbookRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogbookRow.swift; sourceTree = "<group>"; };
 		9794676E2BEE8A0D00DF6E0B /* ListRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListRow.swift; sourceTree = "<group>"; };
 		9797363D2AEB15B8009BCFF0 /* Bob.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Bob.xcdatamodel; sourceTree = "<group>"; };
@@ -189,8 +185,6 @@
 			isa = PBXGroup;
 			children = (
 				972889952BE2F5E500BB9A14 /* PhoneSessionManager.swift */,
-				978D10752AE6E97700310B26 /* Entry.swift */,
-				978D10722AE6E92300310B26 /* LogbookModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -519,15 +513,13 @@
 			files = (
 				977E74C82BE98952009A36AD /* SampleSet+CoreDataClass.swift in Sources */,
 				977E74C92BE98955009A36AD /* SampleSet+CoreDataProperties.swift in Sources */,
+				9749DA442C0F532A00E2EA84 /* CoreDataController.swift in Sources */,
 				977E74CA2BE98957009A36AD /* SensorSample+CoreDataClass.swift in Sources */,
 				97E505812B472E8700334D6F /* LogbookRow.swift in Sources */,
 				97E505832B472F9700334D6F /* LogbookDetail.swift in Sources */,
 				977E74CB2BE9895A009A36AD /* SensorSample+CoreDataProperties.swift in Sources */,
-				978D10762AE6E97700310B26 /* Entry.swift in Sources */,
 				977E74CC2BE9895D009A36AD /* Bob.xcdatamodeld in Sources */,
 				9746B5052BBF6BCC000BFEA7 /* DetailRow.swift in Sources */,
-				978D10732AE6E92300310B26 /* LogbookModel.swift in Sources */,
-				977E74C72BE9894F009A36AD /* CoreDataController.swift in Sources */,
 				97DF8E9B2AE195FA00A33A80 /* ContentView.swift in Sources */,
 				97DF8E992AE195FA00A33A80 /* BoBApp.swift in Sources */,
 				972889962BE2F5E500BB9A14 /* PhoneSessionManager.swift in Sources */,
