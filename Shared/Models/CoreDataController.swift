@@ -14,6 +14,10 @@ class CoreDataController: ObservableObject {
     let container = NSPersistentContainer(name: "Bob")
     
     init() {
+        
+        let description = container.persistentStoreDescriptions.first
+                description?.setOption(true as NSNumber, forKey: NSPersistentHistoryTrackingKey)
+        
         // Load any persistent stores, which creates a store if none exists.
         container.loadPersistentStores { description, error in
             if let error = error {
@@ -21,6 +25,14 @@ class CoreDataController: ObservableObject {
             }
             
             self.container.viewContext.mergePolicy = NSMergePolicy.mergeByPropertyObjectTrump
+        }
+    }
+    
+    // Enable persistent history tracking
+    func enableHistoryTracking() {
+        let context = container.viewContext
+        context.performAndWait {
+            try? context.setQueryGenerationFrom(NSQueryGenerationToken.current)
         }
     }
 }

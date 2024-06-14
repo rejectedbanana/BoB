@@ -11,6 +11,12 @@ func degree() -> String {
     return "\u{00B0}"
 }
 
+func dateFormatter(_ date: Date) -> String {
+    let format = DateFormatter()
+    format.dateFormat = "MMM d y, HH:mm:ss"
+    return format.string(from: date)
+}
+
 @main
 struct watchBobApp: App {
     // Create an observable instance of the Core Data stack.

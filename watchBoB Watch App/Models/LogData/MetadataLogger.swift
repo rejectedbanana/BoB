@@ -13,6 +13,7 @@ class MetadataLogger: NSObject, ObservableObject, CLLocationManagerDelegate {
     
     // define an ID for the metadata
     var sessionID: UUID?
+    var name: String? = "TBD"
     // define the start data
     var startDatetime: Date?
     var startLatitude: Double = 0.0
@@ -36,10 +37,11 @@ class MetadataLogger: NSObject, ObservableObject, CLLocationManagerDelegate {
     func startLogging() {
         // replace with just updating the local variables
         sessionID = UUID()
+        name = dateFormatter(Date.now)
         startDatetime = Date()
         ( startLatitude, startLongitude ) = getCurrentLocation()
 
-        WKInterfaceDevice.current().enableWaterLock()
+//        WKInterfaceDevice.current().enableWaterLock()
         
         isLogging = true
         

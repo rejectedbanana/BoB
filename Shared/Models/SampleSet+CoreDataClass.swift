@@ -11,5 +11,5 @@ import CoreData
 
 @objc(SampleSet)
 public class SampleSet: NSManagedObject {
-
+    
 }
