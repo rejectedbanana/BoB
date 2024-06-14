@@ -29,6 +29,8 @@ struct WatchSensorData {
         line.append(String(y) + ",")
         line.append(String(z) + "\n")
         
+        print(line)
+        
         switch sensorType {
         case .Accelerometer:
             self.accelerometerData.append(line)

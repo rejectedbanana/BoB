@@ -88,6 +88,7 @@ class SensorManager: NSObject, ObservableObject {
         // get elapsed time string
         elapsedTime = String(format: "%.2f", Date().timeIntervalSince(startTime))
         
+        // append the data string
         self.data.append(time: timeStampFormatter(timeStamp), x: self.accX, y: self.accY, z: self.accZ, sensorType: .Accelerometer)
 
     }
@@ -127,6 +128,8 @@ class SensorManager: NSObject, ObservableObject {
         if motionManager!.isDeviceMotionActive {
             motionManager?.stopDeviceMotionUpdates()
         }
+        
+        print(data)
     }
     
     // Save the data to CoreData
