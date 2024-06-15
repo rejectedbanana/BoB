@@ -19,6 +19,7 @@ struct LogbookDetail: View {
                 DetailRow(header: "Samples", content: "1430")
                 DetailRow(header: "Sampling Frequency", content: "10 Hz")
                 DetailRow(header: "Source", content: "Kim's Apple Watch")
+                DetailRow(header: "CSV Data", content: entry.sampleCSV ?? "No CSV data.")
             }
             
             Section("Device Details"){

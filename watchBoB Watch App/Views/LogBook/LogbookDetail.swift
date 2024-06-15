@@ -44,6 +44,7 @@ struct LogbookDetail: View {
                     watchDictionary["startLongitude"] = record.startLongitude
                     watchDictionary["stopLatitude"] = record.stopLatitude
                     watchDictionary["stopLongitude"] = record.startLongitude
+                    watchDictionary["sampleCSV"] = record.sampleCSV
                     // send the dictionary
                     watchSession.sendDictionaryToPhone(watchDictionary)
                     
