@@ -234,8 +234,8 @@
 			children = (
 				97B104A92AE9771700FE81DC /* SensorManager.swift */,
 				97FC9EE52C1CFA1D0076F30E /* WatchSensorData.swift */,
-				97CE319B2AED6ADE009335C9 /* LocationDataManager.swift */,
 				3001E6F92B8426E0003B09B1 /* MetadataLogger.swift */,
+				97CE319B2AED6ADE009335C9 /* LocationDataManager.swift */,
 			);
 			path = LogData;
 			sourceTree = "<group>";

@@ -25,6 +25,7 @@ extension SampleSet {
     @NSManaged public var stopLatitude: Double
     @NSManaged public var stopLongitude: Double
     @NSManaged public var sample: NSSet?
+    @NSManaged public var sampleCSV: String?
 
 }
 
