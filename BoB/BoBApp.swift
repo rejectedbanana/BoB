@@ -7,9 +7,15 @@
 
 import SwiftUI
 
-func dateFormatter(_ date: Date) -> String {
+func dateFormatterForView(_ date: Date) -> String {
     let format = DateFormatter()
     format.dateFormat = "MMM d y, HH:mm:ss"
+    return format.string(from: date)
+}
+
+func dateFormatterForExport(_ date: Date) -> String {
+    let format = DateFormatter()
+    format.dateFormat = "yyyyMMdd_HHmmss"
     return format.string(from: date)
 }
 

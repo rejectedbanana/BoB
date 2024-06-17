@@ -9,13 +9,17 @@ import SwiftUI
 
 struct LogbookDetail: View {
     let entry: SampleSet
+    
+    @State private var csvName = ""
+    @State private var csvContent = ""
+
     var body: some View {
         List {
             Section("Sample Details"){
                 DetailRow(header: "Minimum Water Temperature", content: "7.0 °C")
                 DetailRow(header: "Maximum Underwater Depth", content: "44.0 m")
-                DetailRow(header: "Start Time", content: dateFormatter( entry.startDatetime ?? Date(timeIntervalSince1970: 0) ))
-                DetailRow(header: "End Time", content: dateFormatter( entry.stopDatetime ?? Date(timeIntervalSince1970: 0) ))
+                DetailRow(header: "Start Time", content: dateFormatterForView( entry.startDatetime ?? Date(timeIntervalSince1970: 0) ))
+                DetailRow(header: "End Time", content: dateFormatterForView( entry.stopDatetime ?? Date(timeIntervalSince1970: 0) ))
                 DetailRow(header: "Samples", content: "1430")
                 DetailRow(header: "Sampling Frequency", content: "10 Hz")
                 DetailRow(header: "Source", content: "Kim's Apple Watch")
@@ -33,8 +37,28 @@ struct LogbookDetail: View {
         .navigationBarTitleDisplayMode(.inline)
         .navigationTitle("Details")
         .toolbar {
-            ShareLink(item: "Your sweet ocean data")
+            ShareLink(item: exportCSV(fileName: csvName) )
         }
+        .onAppear {
+            self.csvName = dateFormatterForExport(entry.startDatetime ?? Date.now )+"_AWUData.csv"
+            self.csvContent = entry.sampleCSV ?? "No CSV data"
+        }
+    }
+    
+    func exportCSV(fileName: String) -> URL {
+        // Get the path to the documents directory
+        let documentsDirectory = URL.documentsDirectory
+        let fileURL = documentsDirectory.appending(path: fileName)
+        
+        do {
+            // Append CSV content to file
+            try csvContent.write(to: fileURL, atomically: true, encoding: .utf8)
+            
+        } catch {
+            print("Failed to write CSV: \(error.localizedDescription)")
+        }
+        
+        return fileURL
     }
 }
 
