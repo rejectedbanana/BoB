@@ -15,8 +15,6 @@ struct ContentView: View {
     @FetchRequest(sortDescriptors: [SortDescriptor(\.startDatetime, order: .reverse)]) var logBookRecords: FetchedResults<SampleSet>
     @Environment(\.dismiss) var dismiss
     
-//    @StateObject var coreDataController = CoreDataController()
-    
     // create an instance of the watch connection class
     @ObservedObject var phoneSessionManager = PhoneSessionManager()
     
@@ -35,11 +33,6 @@ struct ContentView: View {
                         }
                     }
                     .onDelete(perform: deleteSampleSet)
-                }
-                .onAppear {
-                    // You can perform operations on your Core Data stack here
-                    // For example, enable NSPersistentHistoryTrackingKey
-//                    coreDataController.enableHistoryTracking()
                 }
                 .toolbar {
                     ToolbarItem(placement: .navigationBarTrailing) {
