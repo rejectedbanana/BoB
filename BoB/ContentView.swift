@@ -77,6 +77,7 @@ struct ContentView: View {
                         if let stopLon = messageDictionary["stopLongitude"] as? Double {
                             newEntry.stopLongitude = stopLon
                         }
+                        newEntry.sampleCSV = messageDictionary["sampleCSV"] as? String
                         // save to Core Data
                         do {
                             try moc.save()

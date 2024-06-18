@@ -25,7 +25,10 @@ func formatElapsedTime(elapsedTime: TimeInterval) -> String {
 }
 
 class SensorManager: NSObject, ObservableObject {
+    //
     var motionManager: CMMotionManager? = CMMotionManager()
+    // make the structure to save data to
+    var data = WatchSensorData()
     
     // device motion variables
     @Published var accX = 0.0
@@ -85,7 +88,8 @@ class SensorManager: NSObject, ObservableObject {
         // get elapsed time string
         elapsedTime = String(format: "%.2f", Date().timeIntervalSince(startTime))
         
-        
+        // append the data string
+        self.data.append(time: timeStampFormatter(timeStamp), x: self.accX, y: self.accY, z: self.accZ, sensorType: .Accelerometer)
 
     }
 
@@ -124,6 +128,8 @@ class SensorManager: NSObject, ObservableObject {
         if motionManager!.isDeviceMotionActive {
             motionManager?.stopDeviceMotionUpdates()
         }
+        
+        print(data)
     }
     
     // Save the data to CoreData
