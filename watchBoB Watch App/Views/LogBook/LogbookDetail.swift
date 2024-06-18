@@ -23,15 +23,6 @@ struct LogbookDetail: View {
             VStack(alignment: .leading) {
                 
                 Button {
-                    // Send a text message
-                    // define the text to send
-//                    watchMessage = dateFormatter(Date.now)
-//                    watchMessage = record.name ?? "Name not added to string."
-                    // check if phone is activated
-//                    watchSession.activatePhone()
-                    // send the textmessage
-//                    watchSession.sendMessageToPhone(watchMessage)
-                    
                     // Send a dictionary
                     // check if the phone is activated
                     watchSession.activatePhone()

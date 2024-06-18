@@ -10,18 +10,6 @@ import WatchConnectivity
 
 // Receive Core Data from iPhone
 class PhoneSessionManager: NSObject, WCSessionDelegate, ObservableObject {
-    // CHATGPT
-//    static let shared = PhoneSessionManager()
-//    private override init() {
-//        super.init()
-//    }
-//    
-//    func startSession() {
-//        if WCSession.isSupported() {
-//            WCSession.default.delegate = self
-//            WCSession.default.activate()
-//        }
-//    }
     
     // scriptpapi
     var session: WCSession

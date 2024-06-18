@@ -18,7 +18,6 @@
 		977E74CB2BE9895A009A36AD /* SensorSample+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97FAC84C2BD850A4003E65E7 /* SensorSample+CoreDataProperties.swift */; };
 		977E74CC2BE9895D009A36AD /* Bob.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 9797363C2AEB15B8009BCFF0 /* Bob.xcdatamodeld */; };
 		978D10672AE3049400310B26 /* LogbookView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 978D10662AE3049400310B26 /* LogbookView.swift */; };
-		978D106C2AE6E84500310B26 /* BoBDataList.json in Resources */ = {isa = PBXBuildFile; fileRef = 978D106B2AE6E84500310B26 /* BoBDataList.json */; };
 		978D107A2AE70F8F00310B26 /* LogbookRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 978D10782AE70F8F00310B26 /* LogbookRow.swift */; };
 		9794676F2BEE8A0D00DF6E0B /* ListRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9794676E2BEE8A0D00DF6E0B /* ListRow.swift */; };
 		9797363E2AEB15B8009BCFF0 /* Bob.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 9797363C2AEB15B8009BCFF0 /* Bob.xcdatamodeld */; };
@@ -90,7 +89,6 @@
 		972889952BE2F5E500BB9A14 /* PhoneSessionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneSessionManager.swift; sourceTree = "<group>"; };
 		97349CEA2AF1679300021CA3 /* RawMotionRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RawMotionRow.swift; sourceTree = "<group>"; };
 		978D10662AE3049400310B26 /* LogbookView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogbookView.swift; sourceTree = "<group>"; };
-		978D106B2AE6E84500310B26 /* BoBDataList.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = BoBDataList.json; sourceTree = "<group>"; };
 		978D10782AE70F8F00310B26 /* LogbookRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogbookRow.swift; sourceTree = "<group>"; };
 		9794676E2BEE8A0D00DF6E0B /* ListRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListRow.swift; sourceTree = "<group>"; };
 		9797363D2AEB15B8009BCFF0 /* Bob.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Bob.xcdatamodel; sourceTree = "<group>"; };
@@ -190,7 +188,6 @@
 		973AFCFC2AEFEA9B00A29AF0 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				978D106B2AE6E84500310B26 /* BoBDataList.json */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -465,7 +462,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				97DF8EA02AE195FB00A33A80 /* Preview Assets.xcassets in Resources */,
-				978D106C2AE6E84500310B26 /* BoBDataList.json in Resources */,
 				97DF8E9D2AE195FB00A33A80 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

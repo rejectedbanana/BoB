@@ -7,12 +7,6 @@
 
 import Foundation
 
-enum SensorType {
-    case Accelerometer
-    case Gyroscope
-    case Magnetometer
-}
-
 struct WatchSensorData {
     var dataCSV: String
     
