@@ -14,33 +14,37 @@ enum SensorType {
 }
 
 struct WatchSensorData {
-    var accelerometerData: String
+    var dataCSV: String
     
-    private var header = "time,x,y,z\n"
+    // add units later
+    private var header = "time,AccelerometerX,AccelerometerY,AccelerometerZ,GyroscopeX,GyroscopeY,GyroscopeZ,MagnetometerX,MagnetometerY,MagnetometerZ\n"
     
     init() {
-        self.accelerometerData = self.header
+        self.dataCSV = self.header
     }
     
     // append the data with a new line of string
-    mutating func append(time: String, x: Double, y: Double, z: Double, sensorType: SensorType) {
+    mutating func append(time: String, AccX: Double, AccY: Double, AccZ: Double, GyrX: Double, GyrY: Double, GyrZ: Double, MagX: Double, MagY: Double, MagZ: Double) {
         var line = time + ","
-        line.append(String(x) + ",")
-        line.append(String(y) + ",")
-        line.append(String(z) + "\n")
+        
+        line.append(String(AccX) + ",")
+        line.append(String(AccY) + ",")
+        line.append(String(AccZ) + ",")
+        line.append(String(GyrX) + ",")
+        line.append(String(GyrY) + ",")
+        line.append(String(GyrZ) + ",")
+        line.append(String(MagX) + ",")
+        line.append(String(MagY) + ",")
+        line.append(String(MagZ) + "\n")
         
         print(line)
         
-        switch sensorType {
-        case .Accelerometer:
-            self.accelerometerData.append(line)
-        default:
-            print("Data from \(sensorType) is not available")
-        }
+        self.dataCSV.append(line)
+        
     }
     
     mutating func reset() {
-        self.accelerometerData = self.header
+        self.dataCSV = self.header
     }
     
 }

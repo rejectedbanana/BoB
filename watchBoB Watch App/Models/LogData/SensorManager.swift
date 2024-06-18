@@ -11,7 +11,6 @@ import CoreData
 
 func timeStampFormatter(_ date: Date) -> String {
     let format = ISO8601DateFormatter()
-
     return format.string(from: date)
 }
 
@@ -25,7 +24,7 @@ func formatElapsedTime(elapsedTime: TimeInterval) -> String {
 }
 
 class SensorManager: NSObject, ObservableObject {
-    //
+    // Start reporting movement
     var motionManager: CMMotionManager? = CMMotionManager()
     // make the structure to save data to
     var data = WatchSensorData()
@@ -89,7 +88,7 @@ class SensorManager: NSObject, ObservableObject {
         elapsedTime = String(format: "%.2f", Date().timeIntervalSince(startTime))
         
         // append the data string
-        self.data.append(time: timeStampFormatter(timeStamp), x: self.accX, y: self.accY, z: self.accZ, sensorType: .Accelerometer)
+        self.data.append(time: timeStampFormatter(timeStamp), AccX: self.accX, AccY: self.accY, AccZ: self.accZ, GyrX: self.gyrX, GyrY: self.gyrZ, GyrZ: self.gyrZ, MagX: self.magX, MagY: self.magY, MagZ: self.magZ)
 
     }
 
