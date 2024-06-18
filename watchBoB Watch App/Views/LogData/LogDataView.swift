@@ -114,7 +114,7 @@ struct LogDataView: View {
                     newEntry.startLongitude = metadataLogger.startLongitude
                     newEntry.stopLatitude = metadataLogger.stopLatitude
                     newEntry.stopLongitude = metadataLogger.stopLongitude
-                    newEntry.sampleCSV = sensorManager.data.accelerometerData
+                    newEntry.sampleCSV = sensorManager.data.dataCSV
                     // save to CoreData
                     do {
                         try moc.save()

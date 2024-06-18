@@ -9,23 +9,8 @@ import Foundation
 import CoreMotion
 import CoreData
 
-func timeStampFormatter(_ date: Date) -> String {
-    let format = ISO8601DateFormatter()
-
-    return format.string(from: date)
-}
-
-func formatElapsedTime(elapsedTime: TimeInterval) -> String {
-    let formatter = DateComponentsFormatter()
-    formatter.unitsStyle = .positional
-    formatter.zeroFormattingBehavior = .pad
-    formatter.allowedUnits = [.hour, .minute, .second]
-    
-    return formatter.string(from: elapsedTime) ?? "00:00:00"
-}
-
 class SensorManager: NSObject, ObservableObject {
-    //
+    // Start reporting movement
     var motionManager: CMMotionManager? = CMMotionManager()
     // make the structure to save data to
     var data = WatchSensorData()
@@ -42,6 +27,7 @@ class SensorManager: NSObject, ObservableObject {
     @Published var magZ = 0.0
     
     // time stamps
+    let timeStampFormatter = TimeStampManager()
     @Published var timeStamp = Date()
     @Published var elapsedTime = "00:00.00"
     
@@ -85,11 +71,11 @@ class SensorManager: NSObject, ObservableObject {
         
         // Get the time stamps
         timeStamp = Date()
-        // get elapsed time string
+        // get elapsed time string (UPDATE THIS TO A BETTER FORMAT AT SOME POINT)
         elapsedTime = String(format: "%.2f", Date().timeIntervalSince(startTime))
         
         // append the data string
-        self.data.append(time: timeStampFormatter(timeStamp), x: self.accX, y: self.accY, z: self.accZ, sensorType: .Accelerometer)
+        self.data.append(time: timeStampFormatter.ISO8601Format(timeStamp), AccX: self.accX, AccY: self.accY, AccZ: self.accZ, GyrX: self.gyrX, GyrY: self.gyrZ, GyrZ: self.gyrZ, MagX: self.magX, MagY: self.magY, MagZ: self.magZ)
 
     }
 

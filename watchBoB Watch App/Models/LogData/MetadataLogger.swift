@@ -10,6 +10,8 @@ import CoreData
 import WatchKit
 
 class MetadataLogger: NSObject, ObservableObject, CLLocationManagerDelegate {
+    // time stamp formatter
+    let timeStampFormatter = TimeStampManager()
     
     // define an ID for the metadata
     var sessionID: UUID?
@@ -37,7 +39,7 @@ class MetadataLogger: NSObject, ObservableObject, CLLocationManagerDelegate {
     func startLogging() {
         // replace with just updating the local variables
         sessionID = UUID()
-        name = dateFormatter(Date.now)
+        name = timeStampFormatter.exportNameFormat(Date.now)
         startDatetime = Date()
         ( startLatitude, startLongitude ) = getCurrentLocation()
 
