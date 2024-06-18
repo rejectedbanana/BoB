@@ -17,6 +17,9 @@ struct LogbookDetail: View {
     @State private var watchMessage: String = ""
     // make a dynamic dictionary
     @State private var watchDictionary: [String: Any] = [:]
+    
+    // time stamp formatter
+    let timeStampFormatter = TimeStampManager()
 
     var body: some View {
         ScrollView {
@@ -45,8 +48,8 @@ struct LogbookDetail: View {
                 
                 DetailRow(header: "Min Temp", content: "7.0 °C")
                 DetailRow(header: "Max Depth", content: "44.0 m")
-                DetailRow(header: "Start Time", content: dateFormatter( record.startDatetime ?? Date(timeIntervalSince1970: 0) ))
-                DetailRow(header: "End Time", content: dateFormatter( record.stopDatetime ?? Date(timeIntervalSince1970: 0) ))
+                DetailRow(header: "Start Time", content: timeStampFormatter.viewFormat( record.startDatetime ?? Date(timeIntervalSince1970: 0) ))
+                DetailRow(header: "End Time", content: timeStampFormatter.viewFormat( record.stopDatetime ?? Date(timeIntervalSince1970: 0) ))
                 DetailRow(header: "Start Coordinates", content: String(format: "%0.3f", record.startLatitude)+" N,"+String(format: "%0.3f", record.startLongitude)+" E")
                 DetailRow(header: "End Coordinates", content: String(format: "%0.3f", record.stopLatitude)+" N,"+String(format: "%0.3f", record.stopLongitude)+" E")
                 DetailRow(header: "Samples", content: "1430")

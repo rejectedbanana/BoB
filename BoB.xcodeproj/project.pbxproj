@@ -24,6 +24,8 @@
 		979736402AEB1AB4009BCFF0 /* CoreDataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9797363F2AEB1AB4009BCFF0 /* CoreDataController.swift */; };
 		97B104A32AE7160200FE81DC /* LogbookDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97B104A22AE7160200FE81DC /* LogbookDetail.swift */; };
 		97B104AA2AE9771700FE81DC /* SensorManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97B104A92AE9771700FE81DC /* SensorManager.swift */; };
+		97B1CED82C22041D00F771FB /* TimeStampManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97B1CED72C22041D00F771FB /* TimeStampManager.swift */; };
+		97B1CED92C22041D00F771FB /* TimeStampManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97B1CED72C22041D00F771FB /* TimeStampManager.swift */; };
 		97CE319C2AED6ADE009335C9 /* LocationDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97CE319B2AED6ADE009335C9 /* LocationDataManager.swift */; };
 		97DF8E992AE195FA00A33A80 /* BoBApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97DF8E982AE195FA00A33A80 /* BoBApp.swift */; };
 		97DF8E9B2AE195FA00A33A80 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97DF8E9A2AE195FA00A33A80 /* ContentView.swift */; };
@@ -95,6 +97,7 @@
 		9797363F2AEB1AB4009BCFF0 /* CoreDataController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataController.swift; sourceTree = "<group>"; };
 		97B104A22AE7160200FE81DC /* LogbookDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogbookDetail.swift; sourceTree = "<group>"; };
 		97B104A92AE9771700FE81DC /* SensorManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SensorManager.swift; sourceTree = "<group>"; };
+		97B1CED72C22041D00F771FB /* TimeStampManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeStampManager.swift; sourceTree = "<group>"; };
 		97CE319B2AED6ADE009335C9 /* LocationDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationDataManager.swift; sourceTree = "<group>"; };
 		97DF8E952AE195FA00A33A80 /* BoB.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BoB.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		97DF8E982AE195FA00A33A80 /* BoBApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoBApp.swift; sourceTree = "<group>"; };
@@ -159,6 +162,7 @@
 			isa = PBXGroup;
 			children = (
 				9797363F2AEB1AB4009BCFF0 /* CoreDataController.swift */,
+				97B1CED72C22041D00F771FB /* TimeStampManager.swift */,
 				97FAC8492BD850A4003E65E7 /* SampleSet+CoreDataClass.swift */,
 				97FAC84A2BD850A4003E65E7 /* SampleSet+CoreDataProperties.swift */,
 				97FAC84B2BD850A4003E65E7 /* SensorSample+CoreDataClass.swift */,
@@ -496,6 +500,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				97B1CED82C22041D00F771FB /* TimeStampManager.swift in Sources */,
 				977E74C82BE98952009A36AD /* SampleSet+CoreDataClass.swift in Sources */,
 				977E74C92BE98955009A36AD /* SampleSet+CoreDataProperties.swift in Sources */,
 				9749DA442C0F532A00E2EA84 /* CoreDataController.swift in Sources */,
@@ -529,6 +534,7 @@
 				97FAC84E2BD850A4003E65E7 /* SampleSet+CoreDataProperties.swift in Sources */,
 				97FAC84F2BD850A4003E65E7 /* SensorSample+CoreDataClass.swift in Sources */,
 				97FAC8502BD850A4003E65E7 /* SensorSample+CoreDataProperties.swift in Sources */,
+				97B1CED92C22041D00F771FB /* TimeStampManager.swift in Sources */,
 				979736402AEB1AB4009BCFF0 /* CoreDataController.swift in Sources */,
 				978D107A2AE70F8F00310B26 /* LogbookRow.swift in Sources */,
 				3001E6FA2B8426E0003B09B1 /* MetadataLogger.swift in Sources */,
