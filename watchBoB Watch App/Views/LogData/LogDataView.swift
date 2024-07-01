@@ -34,7 +34,7 @@ struct LogDataView: View {
         VStack {
             
             // Static time/location Header
-            Text("Position: time, lat/lon")
+            Text("Time, Lat, Lon")
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .foregroundColor(.silver)
                 .padding(.leading, 5)

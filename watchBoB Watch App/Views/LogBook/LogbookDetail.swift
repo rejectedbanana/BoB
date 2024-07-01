@@ -54,7 +54,7 @@ struct LogbookDetail: View {
                 DetailRow(header: "End Coordinates", content: String(format: "%0.3f", record.stopLatitude)+" N,"+String(format: "%0.3f", record.stopLongitude)+" E")
                 DetailRow(header: "Samples", content: "1430")
                 DetailRow(header: "Sampling Frequency", content: "10 Hz")
-                DetailRow(header: "CSV Data", content: record.sampleCSV ?? "No CSV Data")
+//                DetailRow(header: "CSV Data", content: record.sampleCSV ?? "No CSV Data")
             }
         }
     }
