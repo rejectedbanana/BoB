@@ -49,3 +49,27 @@ extension SampleSet {
 extension SampleSet : Identifiable {
 
 }
+
+extension SampleSet: Codable {
+    enum CodingKeys: CodingKey {
+        case id
+        case name
+        case startDatetime
+        case startLatitude
+        case startLongitude
+        case stopDatetime
+        case stopLatitude
+        case stopLongitude
+        case sample
+        case sampleCSV
+    }
+    
+}
+
+extension CodingUserInfoKey {
+    static let managedObjectContext = CodingUserInfoKey(rawValue: "managedObjectContext")
+}
+
+enum DecoderConfigurationError: Error {
+    case missingManagedObjectContext
+}
