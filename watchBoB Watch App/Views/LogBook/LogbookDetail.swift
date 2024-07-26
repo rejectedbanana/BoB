@@ -26,21 +26,29 @@ struct LogbookDetail: View {
             VStack(alignment: .leading) {
                 
                 Button {
-                    // Send a dictionary
                     // check if the phone is activated
                     watchSession.activatePhone()
-                    // build the dictionary from the Core Data Record
-                    watchDictionary["id"] = [""]
-                    watchDictionary["name"] = String(record.name ?? "Name not added to dictionary.")
-                    watchDictionary["startDatetime"] = record.startDatetime
-                    watchDictionary["stopDatetime"] = record.stopDatetime
-                    watchDictionary["startLatitude"] = record.startLatitude
-                    watchDictionary["startLongitude"] = record.startLongitude
-                    watchDictionary["stopLatitude"] = record.stopLatitude
-                    watchDictionary["stopLongitude"] = record.startLongitude
-                    watchDictionary["sampleCSV"] = record.sampleCSV
-                    // send the dictionary
-                    watchSession.sendDictionaryToPhone(watchDictionary)
+                    
+                    // SEND STRING TO PHONE
+//                    watchSession.sendMessageToPhone("I'm a string!")
+                    
+                    // SEND COREDATA RECORD AS A DICTIONARY
+//                    // build the dictionary from the Core Data Record
+//                    watchDictionary["id"] = [""]
+//                    watchDictionary["name"] = String(record.name ?? "Name not added to dictionary.")
+//                    watchDictionary["startDatetime"] = record.startDatetime
+//                    watchDictionary["stopDatetime"] = record.stopDatetime
+//                    watchDictionary["startLatitude"] = record.startLatitude
+//                    watchDictionary["startLongitude"] = record.startLongitude
+//                    watchDictionary["stopLatitude"] = record.stopLatitude
+//                    watchDictionary["stopLongitude"] = record.startLongitude
+//                    watchDictionary["sampleCSV"] = record.sampleCSV
+//                    // send the dictionary
+//                    watchSession.sendDictionaryToPhone(watchDictionary)
+                    
+                    // SEND COREDATA RECORD AS ENCODED DATA
+                    watchSession.sendDataToPhone(record)
+                    
                     
                 } label: {
                     Text("Send to phone")
