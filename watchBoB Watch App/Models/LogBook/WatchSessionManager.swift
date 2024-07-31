@@ -73,6 +73,7 @@ class WatchSessionManager: NSObject, WCSessionDelegate {
             
             let encoder = JSONEncoder()
             encoder.outputFormatting = .prettyPrinted
+            
             if let data = try? encoder.encode(dataModel) {
                 self.session.sendMessageData(data, replyHandler: nil) { error in
                     print("Error sending data: \(error.localizedDescription)")
