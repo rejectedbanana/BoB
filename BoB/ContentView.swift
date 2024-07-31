@@ -42,17 +42,18 @@ struct ContentView: View {
                 
                 VStack {
                     Spacer()
-                    
+                    // Sync data with phone
                     Button {
-                        // insert sync action here
+                        // GET DATA AS A MESSAGE
 //                        self.messageString = phoneSessionManager.getMessageFromWatch()
-                        self.messageDictionary = phoneSessionManager.getDictionaryFromWatch()
                         
+                        // GET DATA AS A DICTIONARY
+                        self.messageDictionary = phoneSessionManager.getDictionaryFromWatch()
+                        // print out the data for debugging
                         for (key, value) in messageDictionary {
                             print("phoneDictionary[\(key)] = \(value) (\(type(of: value)))")
                         }
-                        
-                        // now write the entry to Core Data
+                        // write the entry to Core Data
                         let newEntry = SampleSet(context: moc)
                         newEntry.id = UUID()
                         newEntry.name = messageDictionary["name"] as? String
@@ -71,6 +72,11 @@ struct ContentView: View {
                             newEntry.stopLongitude = stopLon
                         }
                         newEntry.sampleCSV = messageDictionary["sampleCSV"] as? String
+                        
+//                        // GET ENCODED DATA (DOESN'T WORK)
+//                        self.messageString = phoneSessionManager.getMessageFromWatch()
+
+                        
                         // save to Core Data
                         do {
                             try moc.save()

@@ -29,6 +29,7 @@ class PhoneSessionManager: NSObject, WCSessionDelegate, ObservableObject {
     @Published var receivedDictionary: [String: Any] = [:]
     
     
+    
     // MARK: - WCSessionDelegate methods
     // Implement the necessary delegate methods
     // Lets the session know that your app supports asynchronus activation
@@ -47,41 +48,50 @@ class PhoneSessionManager: NSObject, WCSessionDelegate, ObservableObject {
         //
     }
     
-    // Handle data received from the watch
+    // Handle strings and dictionaries received from the watch
     func session(_ session: WCSession, didReceiveMessage message: [String: Any]) {
-        // SAVE TO USER DEFAULTS
         // Check if message is a string
-        if message["message"] is String {
+        if let _ = message["message"] as? String {
             // Save received text message to UserDefaults
             DispatchQueue.main.async {
                 self.receivedMessage = message["message"] as? String ?? ""
                 print("Received message > " + self.receivedMessage)
-                // code to save to watch internal memory
+                // save string to watch internal memory
                 UserDefaults.standard.set(self.receivedMessage, forKey: "message")
-                print("String saved to phone memory")
+                print("String saved to defaults")
             }
         }
-        // Handle other types
         else {
-            // Save the received dictionary to UserDefaults
+            // Anything else is a dictionary
             DispatchQueue.main.async {
                 self.receivedDictionary = message
-                print("____\\")
+                // print dictionary for debugging
                 print("Received dictionary from watch.")
                 for (key, value) in self.receivedDictionary {
                     print("receivedDictionary[\(key)] = \(value)")
                 }
-                // some code to save dictionary to watch internal memory
+                // save dictionary to watch internal memory
                 UserDefaults.standard.set(self.receivedDictionary, forKey: "dictionary")
                 print("Dictionary saved to user defaults")
             }
         }
     }
     
-    // When the phone received data from the watch, decode it and store it to Core Data
+    // Handle encoded data received from the watch
     func session(_ session: WCSession, didReceiveMessageData messageData: Data) {
-        // Handle received data
-        // Assuming data is serialized CoreData objects, deserialize and process here
+        // Check the incoming data when debugging
+        print(String(data: messageData, encoding: .utf8)!)
+        // define the decoder
+        let decoder = JSONDecoder()
+        
+        // Test if the data was decoded (it was not, still an error)
+        do {
+            let data = try decoder.decode(SampleSet.self, from: messageData)
+            let t = type(of: data)
+            print("Decodedtype is \(t)")
+        } catch {
+            print("Failed to decode the received data: \(error.localizedDescription)")
+        }
     }
     
     // MARK: - retrieve watch data stored in defaults
@@ -113,9 +123,7 @@ class PhoneSessionManager: NSObject, WCSessionDelegate, ObservableObject {
         }
         return dictionary
     }
-    
 
-    
     deinit {
         print("Phone Session Manager is dead.")
     }
