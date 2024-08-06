@@ -10,12 +10,10 @@ import CoreData
 import WatchConnectivity
 
 struct ContentView: View {
-    // Get a reference to the managed object context from the environment.
     @Environment(\.managedObjectContext) var moc
     @FetchRequest(sortDescriptors: [SortDescriptor(\.startDatetime, order: .reverse)]) var logBookRecords: FetchedResults<SampleSet>
     @Environment(\.dismiss) var dismiss
     
-    // create an instance of the watch connection class
     @ObservedObject var phoneSessionManager = PhoneSessionManager()
     
     @State var messageString: String? = ""
@@ -25,7 +23,7 @@ struct ContentView: View {
         NavigationStack {
             ZStack {
                 List {
-                    ForEach(logBookRecords) {logBookRecord in
+                    ForEach(logBookRecords) { logBookRecord in
                         NavigationLink {
                             LogbookDetail(entry: logBookRecord)
                         } label: {
@@ -42,42 +40,22 @@ struct ContentView: View {
                 
                 VStack {
                     Spacer()
-                    // Sync data with phone
                     Button {
-                        // GET DATA AS A MESSAGE
-//                        self.messageString = phoneSessionManager.getMessageFromWatch()
-                        
-                        // GET DATA AS A DICTIONARY
                         self.messageDictionary = phoneSessionManager.getDictionaryFromWatch()
-                        // print out the data for debugging
                         for (key, value) in messageDictionary {
                             print("phoneDictionary[\(key)] = \(value) (\(type(of: value)))")
                         }
-                        // write the entry to Core Data
                         let newEntry = SampleSet(context: moc)
                         newEntry.id = UUID()
                         newEntry.name = messageDictionary["name"] as? String
                         newEntry.startDatetime = messageDictionary["startDatetime"] as? Date
                         newEntry.stopDatetime = messageDictionary["stopDatetime"] as? Date
-                        if let startLat = messageDictionary["startLatitude"] as? Double {
-                            newEntry.startLatitude = startLat
-                        }
-                        if let startLon = messageDictionary["startLongitude"] as? Double {
-                            newEntry.startLongitude = startLon
-                        }
-                        if let stopLat = messageDictionary["stopLatitude"] as? Double {
-                            newEntry.stopLatitude = stopLat
-                        }
-                        if let stopLon = messageDictionary["stopLongitude"] as? Double {
-                            newEntry.stopLongitude = stopLon
-                        }
+                        newEntry.startLatitude = messageDictionary["startLatitude"] as? Double ?? 0.0
+                        newEntry.startLongitude = messageDictionary["startLongitude"] as? Double ?? 0.0
+                        newEntry.stopLatitude = messageDictionary["stopLatitude"] as? Double ?? 0.0
+                        newEntry.stopLongitude = messageDictionary["stopLongitude"] as? Double ?? 0.0
                         newEntry.sampleCSV = messageDictionary["sampleCSV"] as? String
                         
-//                        // GET ENCODED DATA (DOESN'T WORK)
-//                        self.messageString = phoneSessionManager.getMessageFromWatch()
-
-                        
-                        // save to Core Data
                         do {
                             try moc.save()
                             print("Entry saved!")
@@ -90,7 +68,47 @@ struct ContentView: View {
                         Image(systemName: "arrow.down.applewatch")
                             .font(.largeTitle)
                             .frame(width: 80, height: 80)
-                            .background(.fandango)
+                            .background(Color.purple)
+                            .clipShape(Circle())
+                            .foregroundColor(.white)
+                    }
+                    .padding()
+                    .shadow(radius: 2)
+                    Button {
+                        // Create a mock dictionary
+                        let mockDictionary: [String: Any] = [
+                            "name": "Mock Dive",
+                            "startDatetime": Date(),
+                            "stopDatetime": Date(),
+                            "startLatitude": 37.7749,
+                            "startLongitude": -122.4194,
+                            "stopLatitude": 34.0522,
+                            "stopLongitude": -118.2437,
+                            "sampleCSV": "Mock,CSV,Data"
+                        ]
+                        
+                        let newEntry = SampleSet(context: moc)
+                        newEntry.id = UUID()
+                        newEntry.name = mockDictionary["name"] as? String
+                        newEntry.startDatetime = mockDictionary["startDatetime"] as? Date
+                        newEntry.stopDatetime = mockDictionary["stopDatetime"] as? Date
+                        newEntry.startLatitude = mockDictionary["startLatitude"] as? Double ?? 0.0
+                        newEntry.startLongitude = mockDictionary["startLongitude"] as? Double ?? 0.0
+                        newEntry.stopLatitude = mockDictionary["stopLatitude"] as? Double ?? 0.0
+                        newEntry.stopLongitude = mockDictionary["stopLongitude"] as? Double ?? 0.0
+                        newEntry.sampleCSV = mockDictionary["sampleCSV"] as? String
+                        
+                        do {
+                            try moc.save()
+                            print("Mock entry saved!")
+                        } catch {
+                            print("Failed to save mock entry: \(error)")
+                        }
+                    } label: {
+                        Image(systemName: "plus.circle.fill")
+                            .font(.largeTitle)
+                            .frame(width: 80, height: 80)
+                            .background(Color.blue)
                             .clipShape(Circle())
                             .foregroundColor(.white)
                     }
@@ -101,7 +119,6 @@ struct ContentView: View {
         }
     }
     
-    // Make a function to delete log entries
     func deleteSampleSet(at offsets: IndexSet) {
         for offset in offsets {
             let entry = logBookRecords[offset]

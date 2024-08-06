@@ -11,7 +11,7 @@ struct LogbookDetail: View {
     let record: SampleSet
     
     // Create the watch session manager
-    var watchSession = WatchSessionManager()
+    @StateObject private var watchSession = WatchSessionManager()
     
     // make a dynamic message
     @State private var watchMessage: String = ""
