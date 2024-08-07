@@ -30,7 +30,7 @@ struct ContentView: View {
                             ListRow(entry: logBookRecord)
                         }
                     }
-                    .onDelete(perform: deleteSampleSet)
+                    .onDelete(perform: delete)
                 }
                 .toolbar {
                     ToolbarItem(placement: .navigationBarTrailing) {
@@ -119,10 +119,15 @@ struct ContentView: View {
         }
     }
     
-    func deleteSampleSet(at offsets: IndexSet) {
+    func delete(at offsets: IndexSet) {
         for offset in offsets {
             let entry = logBookRecords[offset]
             moc.delete(entry)
+        }
+        do {
+            try moc.save()
+        } catch {
+            print("Failed to delete log entry: \(error)")
         }
     }
 }
