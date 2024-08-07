@@ -74,46 +74,6 @@ struct ContentView: View {
                     }
                     .padding()
                     .shadow(radius: 2)
-                    Button {
-                        // Create a mock dictionary
-                        let mockDictionary: [String: Any] = [
-                            "name": "Mock Dive",
-                            "startDatetime": Date(),
-                            "stopDatetime": Date(),
-                            "startLatitude": 37.7749,
-                            "startLongitude": -122.4194,
-                            "stopLatitude": 34.0522,
-                            "stopLongitude": -118.2437,
-                            "sampleCSV": "Mock,CSV,Data"
-                        ]
-                        
-                        let newEntry = SampleSet(context: moc)
-                        newEntry.id = UUID()
-                        newEntry.name = mockDictionary["name"] as? String
-                        newEntry.startDatetime = mockDictionary["startDatetime"] as? Date
-                        newEntry.stopDatetime = mockDictionary["stopDatetime"] as? Date
-                        newEntry.startLatitude = mockDictionary["startLatitude"] as? Double ?? 0.0
-                        newEntry.startLongitude = mockDictionary["startLongitude"] as? Double ?? 0.0
-                        newEntry.stopLatitude = mockDictionary["stopLatitude"] as? Double ?? 0.0
-                        newEntry.stopLongitude = mockDictionary["stopLongitude"] as? Double ?? 0.0
-                        newEntry.sampleCSV = mockDictionary["sampleCSV"] as? String
-                        
-                        do {
-                            try moc.save()
-                            print("Mock entry saved!")
-                        } catch {
-                            print("Failed to save mock entry: \(error)")
-                        }
-                    } label: {
-                        Image(systemName: "plus.circle.fill")
-                            .font(.largeTitle)
-                            .frame(width: 80, height: 80)
-                            .background(Color.blue)
-                            .clipShape(Circle())
-                            .foregroundColor(.white)
-                    }
-                    .padding()
-                    .shadow(radius: 2)
                 }
             }
         }
