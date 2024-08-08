@@ -15,6 +15,29 @@ struct LogbookDetail: View {
     
     // time stamp formatter
     let timeStampFormatter = TimeStampManager()
+    private var parsedData: [[String: Any]]? {
+        return parseJSON()
+    }
+    
+    private func parseJSON() -> [[String: Any]]? {
+        guard let jsonString = entry.sampleJSON else {
+            print("No JSON string found")
+            return nil
+        }
+        print("JSON String: \(jsonString)") // Debugging line
+        let data = Data(jsonString.utf8)
+        do {
+            if let jsonArray = try JSONSerialization.jsonObject(with: data, options: []) as? [[String: Any]] {
+                return jsonArray
+            } else {
+                print("JSON is not an array of dictionaries")
+                return nil
+            }
+        } catch {
+            print("Error parsing JSON: \(error)")
+            return nil
+        }
+    }
 
     var body: some View {
         List {
@@ -27,6 +50,18 @@ struct LogbookDetail: View {
                 DetailRow(header: "Sampling Frequency", content: "10 Hz")
                 DetailRow(header: "Source", content: "Kim's Apple Watch")
                 DetailRow(header: "CSV Data", content: entry.sampleCSV ?? "No CSV data.")
+                if let dataArray = parsedData {
+                    ForEach(dataArray.indices, id: \.self) { index in
+                        let item = dataArray[index]
+                        if let timestamp = item["timestamp"] as? String,
+                           let latitude = item["latitude"] as? Double,
+                           let longitude = item["longitude"] as? Double {
+                            DetailRow(header: "Location Sample \(index + 1)", content: "Time: \(timeStampFormatter.formattedTime(from: timestamp)), \nLat: \(latitude), \nLon: \(longitude)")
+                        }
+                    }
+                } else {
+                    DetailRow(header: "Sample Data", content: "No data available")
+                }
             }
             
             Section("Device Details"){

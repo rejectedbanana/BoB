@@ -38,4 +38,18 @@ class TimeStampManager: ObservableObject {
         return formatter.string(from: elapsedTime) ?? "00:00:00"
     }
     
+    func formattedTime(from timestamp: String) -> String {
+        let inputFormatter = DateFormatter()
+        inputFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ" // Adjust the format to match your input timestamp
+        
+        let outputFormatter = DateFormatter()
+        outputFormatter.dateFormat = "HH:mm:ss"
+        
+        if let date = inputFormatter.date(from: timestamp) {
+            return outputFormatter.string(from: date)
+        } else {
+            return "Invalid Date"
+        }
+    }
+    
 }

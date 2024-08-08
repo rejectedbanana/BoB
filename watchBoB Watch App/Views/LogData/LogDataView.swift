@@ -98,11 +98,13 @@ struct LogDataView: View {
                     metadataLogger.startLogging()
                     // start taking data
                     sensorManager.startLogging(10)
+                    locationDataManager.startSamplingGPS()
                 } else {
                     // stop taking data
                     sensorManager.stopLogging()
                     // take more metadata
                     metadataLogger.stopLogging()
+                    locationDataManager.stopSamplingGPS()
 
                     // create a new log entry to save to CoreData
                     let newEntry = SampleSet(context: moc)
@@ -115,7 +117,7 @@ struct LogDataView: View {
                     newEntry.stopLatitude = metadataLogger.stopLatitude
                     newEntry.stopLongitude = metadataLogger.stopLongitude
                     newEntry.sampleCSV = sensorManager.data.dataCSV
-                    // save to CoreData
+                    newEntry.sampleJSON = locationDataManager.sampledLocationsToJSON()
                     do {
                         try moc.save()
                     } catch {

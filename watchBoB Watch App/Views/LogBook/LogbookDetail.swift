@@ -20,40 +20,34 @@ struct LogbookDetail: View {
     
     // time stamp formatter
     let timeStampFormatter = TimeStampManager()
-
+    
+    private var parsedData: [[String: Any]]? {
+        return parseJSON()
+    }
+    
+    private func parseJSON() -> [[String: Any]]? {
+        guard let jsonString = record.sampleJSON else {
+            print("No JSON string found")
+            return nil
+        }
+        print("JSON String: \(jsonString)") // Debugging line
+        let data = Data(jsonString.utf8)
+        do {
+            if let jsonArray = try JSONSerialization.jsonObject(with: data, options: []) as? [[String: Any]] {
+                return jsonArray
+            } else {
+                print("JSON is not an array of dictionaries")
+                return nil
+            }
+        } catch {
+            print("Error parsing JSON: \(error)")
+            return nil
+        }
+    }
+    
     var body: some View {
         ScrollView {
             VStack(alignment: .leading) {
-                
-                Button {
-                    // check if the phone is activated
-                    watchSession.activatePhone()
-                    
-//                    // SEND STRING TO PHONE
-//                    watchSession.sendMessageToPhone("I'm a string!")
-                    
-                    // SEND COREDATA RECORD AS A DICTIONARY
-                    // build the dictionary from the Core Data Record
-                    watchDictionary["id"] = [""]
-                    watchDictionary["name"] = String(record.name ?? "Name not added to dictionary.")
-                    watchDictionary["startDatetime"] = record.startDatetime
-                    watchDictionary["stopDatetime"] = record.stopDatetime
-                    watchDictionary["startLatitude"] = record.startLatitude
-                    watchDictionary["startLongitude"] = record.startLongitude
-                    watchDictionary["stopLatitude"] = record.stopLatitude
-                    watchDictionary["stopLongitude"] = record.startLongitude
-                    watchDictionary["sampleCSV"] = record.sampleCSV
-                    // send the dictionary
-                    watchSession.sendDictionaryToPhone(watchDictionary)
-                    
-//                    // SEND COREDATA RECORD AS ENCODED DATA (WORKS)
-//                    watchSession.sendDataToPhone(record)
-                    
-                    
-                } label: {
-                    Text("Send to phone")
-                }
-                
                 DetailRow(header: "Min Temp", content: "7.0 °C")
                 DetailRow(header: "Max Depth", content: "44.0 m")
                 DetailRow(header: "Start Time", content: timeStampFormatter.viewFormat( record.startDatetime ?? Date(timeIntervalSince1970: 0) ))
@@ -62,7 +56,19 @@ struct LogbookDetail: View {
                 DetailRow(header: "End Coordinates", content: String(format: "%0.3f", record.stopLatitude)+" N,"+String(format: "%0.3f", record.stopLongitude)+" E")
                 DetailRow(header: "Samples", content: "1430")
                 DetailRow(header: "Sampling Frequency", content: "10 Hz")
-//                DetailRow(header: "CSV Data", content: record.sampleCSV ?? "No CSV Data")
+                if let dataArray = parsedData {
+                    ForEach(dataArray.indices, id: \.self) { index in
+                        let item = dataArray[index]
+                        if let timestamp = item["timestamp"] as? String,
+                           let latitude = item["latitude"] as? Double,
+                           let longitude = item["longitude"] as? Double {
+                            DetailRow(header: "Location Sample \(index + 1)", content: "Time: \(timeStampFormatter.formattedTime(from: timestamp)), \nLat: \(latitude), \nLon: \(longitude)")
+                        }
+                    }
+                } else {
+                    DetailRow(header: "Sample Data", content: "No data available")
+                }
+                //                DetailRow(header: "CSV Data", content: record.sampleCSV ?? "No CSV Data")
             }
         }
     }
