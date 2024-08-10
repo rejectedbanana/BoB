@@ -24,7 +24,7 @@ struct LogbookDetail: View {
     
     // Combine sampleCSV and sampleJSON into one JSON object
     private func combineJSON() -> [String: Any]? {
-        guard let sampleCSV = entry.sampleCSV, let sampleJSON = entry.sampleJSON else {
+        guard let sampleCSV = entry.sampleCSV, let sampleJSON = entry.gpsJSON else {
             print("No sampleCSV or sampleJSON found")
             return nil
         }
@@ -61,7 +61,7 @@ struct LogbookDetail: View {
     }
     
     private func parseJSON() -> [[String: Any]]? {
-        guard let jsonString = entry.sampleJSON else {
+        guard let jsonString = entry.gpsJSON else {
             print("No JSON string found")
             return nil
         }

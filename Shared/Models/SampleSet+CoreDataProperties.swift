@@ -26,7 +26,7 @@ extension SampleSet {
     @NSManaged public var stopLongitude: Double
     @NSManaged public var sample: NSSet?
     @NSManaged public var sampleCSV: String?
-    @NSManaged public var sampleJSON: String?
+    @NSManaged public var gpsJSON: String?
 
 }
 
@@ -63,7 +63,7 @@ extension SampleSet: Codable {
         case stopLongitude
         case sample
         case sampleCSV
-        case sampleJSON
+        case gpsJSON
     }
     
 }

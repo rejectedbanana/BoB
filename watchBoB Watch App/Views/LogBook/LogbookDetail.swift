@@ -26,7 +26,7 @@ struct LogbookDetail: View {
     }
     
     private func parseJSON() -> [[String: Any]]? {
-        guard let jsonString = record.sampleJSON else {
+        guard let jsonString = record.gpsJSON else {
             print("No JSON string found")
             return nil
         }
