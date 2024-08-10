@@ -37,6 +37,39 @@ struct WatchSensorData {
         
     }
     
+    func convertToJSONString() -> String? {
+        let lines = dataCSV.split(separator: "\n").map { String($0) }
+        guard let headerLine = lines.first else { return nil }
+        
+        let headers = headerLine.split(separator: ",").map { String($0) }
+        var jsonArray: [[String: Any]] = []
+        
+        for line in lines.dropFirst() { // Skip the header line
+            let values = line.split(separator: ",").map { String($0) }
+            var jsonObject: [String: Any] = [:]
+            
+            for (index, header) in headers.enumerated() {
+                if index < values.count {
+                    let valueString = values[index]
+                    if let value = Double(valueString), !value.isNaN, !value.isInfinite {
+                        jsonObject[header] = value
+                    } else {
+                        jsonObject[header] = valueString // Keep the original string if it's not a valid number
+                    }
+                }
+            }
+            jsonArray.append(jsonObject)
+        }
+        
+        do {
+            let jsonData = try JSONSerialization.data(withJSONObject: jsonArray, options: .prettyPrinted)
+            return String(data: jsonData, encoding: .utf8)
+        } catch {
+            print("Failed to serialize JSON: \(error)")
+            return nil
+        }
+    }
+    
     mutating func reset() {
         self.dataCSV = self.header
     }

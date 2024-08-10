@@ -66,9 +66,8 @@ struct LogbookDetail: View {
                         }
                     }
                 } else {
-                    DetailRow(header: "Sample Data", content: "No data available")
+                    DetailRow(header: "Location Data", content: "No data available")
                 }
-                //                DetailRow(header: "CSV Data", content: record.sampleCSV ?? "No CSV Data")
             }
         }
     }

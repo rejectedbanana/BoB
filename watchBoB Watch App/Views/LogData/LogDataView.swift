@@ -116,7 +116,7 @@ struct LogDataView: View {
                     newEntry.startLongitude = metadataLogger.startLongitude
                     newEntry.stopLatitude = metadataLogger.stopLatitude
                     newEntry.stopLongitude = metadataLogger.stopLongitude
-                    newEntry.sampleCSV = sensorManager.data.dataCSV
+                    newEntry.sampleCSV = sensorManager.data.convertToJSONString()
                     newEntry.sampleJSON = locationDataManager.sampledLocationsToJSON()
                     do {
                         try moc.save()
