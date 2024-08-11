@@ -37,44 +37,6 @@ struct ContentView: View {
                         EditButton()
                     }
                 }
-                
-                VStack {
-                    Spacer()
-                    Button {
-                        self.messageDictionary = phoneSessionManager.getDictionaryFromWatch()
-                        for (key, value) in messageDictionary {
-                            print("phoneDictionary[\(key)] = \(value) (\(type(of: value)))")
-                        }
-                        let newEntry = SampleSet(context: moc)
-                        newEntry.id = UUID()
-                        newEntry.name = messageDictionary["name"] as? String
-                        newEntry.startDatetime = messageDictionary["startDatetime"] as? Date
-                        newEntry.stopDatetime = messageDictionary["stopDatetime"] as? Date
-                        newEntry.startLatitude = messageDictionary["startLatitude"] as? Double ?? 0.0
-                        newEntry.startLongitude = messageDictionary["startLongitude"] as? Double ?? 0.0
-                        newEntry.stopLatitude = messageDictionary["stopLatitude"] as? Double ?? 0.0
-                        newEntry.stopLongitude = messageDictionary["stopLongitude"] as? Double ?? 0.0
-                        newEntry.sampleCSV = messageDictionary["sampleCSV"] as? String
-                        
-                        do {
-                            try moc.save()
-                            print("Entry saved!")
-                        } catch {
-                            print("Failed to save log entry: \(error)")
-                        }
-                        dismiss()
-                        
-                    } label: {
-                        Image(systemName: "arrow.down.applewatch")
-                            .font(.largeTitle)
-                            .frame(width: 80, height: 80)
-                            .background(Color.purple)
-                            .clipShape(Circle())
-                            .foregroundColor(.white)
-                    }
-                    .padding()
-                    .shadow(radius: 2)
-                }
             }
         }
     }

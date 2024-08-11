@@ -15,7 +15,71 @@ struct LogbookDetail: View {
     
     // time stamp formatter
     let timeStampFormatter = TimeStampManager()
-
+    private var parsedData: [[String: Any]]? {
+        return parseJSON()
+    }
+    private var combinedJSON: [String: Any]? {
+        return combineJSON()
+    }
+    
+    // Combine sampleCSV and sampleJSON into one JSON object
+    private func combineJSON() -> [String: Any]? {
+        guard let sampleCSV = entry.sampleCSV, let sampleJSON = entry.gpsJSON else {
+            print("No sampleCSV or sampleJSON found")
+            return nil
+        }
+        
+        let csvData = Data(sampleCSV.utf8)
+        let jsonData = Data(sampleJSON.utf8)
+        
+        do {
+            let csvJSONObject = try JSONSerialization.jsonObject(with: csvData, options: []) as? [[String: Any]] ?? []
+            let jsonJSONObject = try JSONSerialization.jsonObject(with: jsonData, options: []) as? [[String: Any]] ?? []
+            let combinedJSON: [String: Any] = [
+                "motion": csvJSONObject,
+                "gps": jsonJSONObject
+            ]
+            
+            return combinedJSON
+        } catch {
+            print("Error parsing or combining JSON: \(error)")
+            return nil
+        }
+    }
+    
+    // Convert combined JSON to a string
+    private func convertCombinedJSONToString() -> String? {
+        guard let combinedJSON = combinedJSON else { return nil }
+        
+        do {
+            let jsonData = try JSONSerialization.data(withJSONObject: combinedJSON, options: .prettyPrinted)
+            return String(data: jsonData, encoding: .utf8)
+        } catch {
+            print("Error converting combined JSON to string: \(error)")
+            return nil
+        }
+    }
+    
+    private func parseJSON() -> [[String: Any]]? {
+        guard let jsonString = entry.gpsJSON else {
+            print("No JSON string found")
+            return nil
+        }
+        print("JSON String: \(jsonString)") // Debugging line
+        let data = Data(jsonString.utf8)
+        do {
+            if let jsonArray = try JSONSerialization.jsonObject(with: data, options: []) as? [[String: Any]] {
+                return jsonArray
+            } else {
+                print("JSON is not an array of dictionaries")
+                return nil
+            }
+        } catch {
+            print("Error parsing JSON: \(error)")
+            return nil
+        }
+    }
+    
     var body: some View {
         List {
             Section("Sample Details"){
@@ -27,6 +91,18 @@ struct LogbookDetail: View {
                 DetailRow(header: "Sampling Frequency", content: "10 Hz")
                 DetailRow(header: "Source", content: "Kim's Apple Watch")
                 DetailRow(header: "CSV Data", content: entry.sampleCSV ?? "No CSV data.")
+                if let dataArray = parsedData {
+                    ForEach(dataArray.indices, id: \.self) { index in
+                        let item = dataArray[index]
+                        if let timestamp = item["timestamp"] as? String,
+                           let latitude = item["latitude"] as? Double,
+                           let longitude = item["longitude"] as? Double {
+                            DetailRow(header: "Location Sample \(index + 1)", content: "Time: \(timeStampFormatter.formattedTime(from: timestamp)), \nLat: \(latitude), \nLon: \(longitude)")
+                        }
+                    }
+                } else {
+                    DetailRow(header: "Sample Data", content: "No data available")
+                }
             }
             
             Section("Device Details"){
@@ -40,7 +116,11 @@ struct LogbookDetail: View {
         .navigationBarTitleDisplayMode(.inline)
         .navigationTitle("Details")
         .toolbar {
-            ShareLink(item: exportCSV(fileName: csvName) )
+            if let combinedJSONString = convertCombinedJSONToString() {
+                ShareLink(item: exportCombinedJSON(fileName: csvName, content: combinedJSONString))
+            } else {
+                Text("No data to share")
+            }
         }
         .onAppear {
             self.csvName = timeStampFormatter.exportNameFormat(entry.startDatetime ?? Date.now )+"_AWUData.csv"
@@ -48,17 +128,14 @@ struct LogbookDetail: View {
         }
     }
     
-    func exportCSV(fileName: String) -> URL {
-        // Get the path to the documents directory
+    func exportCombinedJSON(fileName: String, content: String) -> URL {
         let documentsDirectory = URL.documentsDirectory
         let fileURL = documentsDirectory.appending(path: fileName)
         
         do {
-            // Append CSV content to file
-            try csvContent.write(to: fileURL, atomically: true, encoding: .utf8)
-            
+            try content.write(to: fileURL, atomically: true, encoding: .utf8)
         } catch {
-            print("Failed to write CSV: \(error.localizedDescription)")
+            print("Failed to write combined JSON: \(error.localizedDescription)")
         }
         
         return fileURL

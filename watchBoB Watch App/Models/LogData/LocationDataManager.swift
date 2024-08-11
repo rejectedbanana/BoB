@@ -12,12 +12,27 @@ class LocationDataManager: NSObject, ObservableObject, CLLocationManagerDelegate
     var locationManager = CLLocationManager()
     
     @Published var authorizationStatus: CLAuthorizationStatus?
-    
     @Published var location: CLLocationCoordinate2D?
+    
+    @Published var sampledLocations: [GPSData] = []
+    
+    private var samplingTimer: Timer?
     
     override init() {
         super.init()
         locationManager.delegate = self
+    }
+    
+    func startSamplingGPS() {
+        locationManager.requestWhenInUseAuthorization()
+        samplingTimer = Timer.scheduledTimer(withTimeInterval: 10.0, repeats: true) { _ in
+            self.locationManager.requestLocation()
+        }
+    }
+    
+    func stopSamplingGPS() {
+        samplingTimer?.invalidate()
+        samplingTimer = nil
     }
     
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
@@ -25,29 +40,36 @@ class LocationDataManager: NSObject, ObservableObject, CLLocationManagerDelegate
         case .authorizedWhenInUse:
             authorizationStatus = .authorizedWhenInUse
             locationManager.requestLocation()
-            break
-            
         case .restricted, .denied:
             break
-            
         case .notDetermined:
             manager.requestWhenInUseAuthorization()
-            break
-        
         default:
             break
         }
     }
     
-    func requestLocation() {
-        locationManager.requestLocation()
-    }
-    
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        location = locations.first?.coordinate
+        if let location = locations.first?.coordinate {
+            let gpsData = GPSData(
+                latitude: round(location.latitude * 10000) / 10000, // 4 decimal places
+                longitude: round(location.longitude * 10000) / 10000, // 4 decimal places
+                timestamp: Date()
+            )
+            sampledLocations.append(gpsData)
+        }
     }
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-        print("error: \(error.localizedDescription)")
+        print("Failed to get location: \(error.localizedDescription)")
+    }
+    
+    func sampledLocationsToJSON() -> String? {
+        let encoder = JSONEncoder()
+        encoder.dateEncodingStrategy = .iso8601
+        if let jsonData = try? encoder.encode(sampledLocations) {
+            return String(data: jsonData, encoding: .utf8)
+        }
+        return nil
     }
 }

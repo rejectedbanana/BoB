@@ -28,8 +28,8 @@ public class SampleSet: NSManagedObject {
         self.stopDatetime = try container.decode(Date.self, forKey: .stopDatetime)
         self.stopLatitude = try container.decode(Double.self, forKey: .stopLatitude)
         self.startLongitude = try container.decode(Double.self, forKey: .stopLongitude)
-//        self.sample = try container.decode(NSSet.self, forKey: .sample)
         self.sampleCSV = try container.decode(String.self, forKey: .sampleCSV)
+        self.gpsJSON = try container.decode(String.self, forKey: .gpsJSON)
     }
     
     public func encode(to encoder: Encoder) throws {
@@ -42,8 +42,8 @@ public class SampleSet: NSManagedObject {
         try container.encode(stopDatetime, forKey: .stopDatetime)
         try container.encode(stopLatitude, forKey: .stopLatitude)
         try container.encode(stopLongitude, forKey: .stopLongitude)
-//        try container.encode(sample, forKey: .sample)
         try container.encode(sampleCSV, forKey: .sampleCSV)
+        try container.encode(gpsJSON, forKey: .gpsJSON)
     }
     
 }
