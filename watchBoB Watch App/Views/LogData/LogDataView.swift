@@ -29,6 +29,7 @@ struct LogDataView: View {
     
     // pull in the metadataLogger to take metadata
     @ObservedObject private var metadataLogger = MetadataLogger()
+    @ObservedObject var waterSubmersionManager = WaterSubmersionManager()
     
     var body: some View {
         VStack {
@@ -74,21 +75,23 @@ struct LogDataView: View {
             RawMotionRow(title: "Mag", xValue: sensorManager.magX, yValue: sensorManager.magY, zValue: sensorManager.magZ, stringFormat: "%3.1f")
             
             // Static water data header
-            Text("Water: depth, temp, light")
+            Text("Water: depth, temp")
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .foregroundColor(.silver)
                 .padding(.leading, 5)
             
             // Dynamic water data
-            HStack{
-                Text("10 m")
-                Spacer()
-                Text("17.1 \(degree())C")
-                Spacer()
-                Text("54%")
+            if let latestSample = waterSubmersionManager.submersionDataSamples.last {
+                HStack {
+                    Text("\(latestSample.depth ?? 0.0) m")
+                    Spacer()
+                    Text("\(latestSample.temperature ?? 0.0) \(degree())C")
+                }
+                .padding(.leading, 50)
+            } else {
+                Text("No data yet")
+                    .padding(.leading, 50)
             }
-            .padding(.leading, 50)
-            
             // Button start logging data
             Button {
                 isLoggingData.toggle()
