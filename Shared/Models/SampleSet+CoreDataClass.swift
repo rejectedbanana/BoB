@@ -30,6 +30,7 @@ public class SampleSet: NSManagedObject {
         self.startLongitude = try container.decode(Double.self, forKey: .stopLongitude)
         self.sampleCSV = try container.decode(String.self, forKey: .sampleCSV)
         self.gpsJSON = try container.decode(String.self, forKey: .gpsJSON)
+        self.waterSubmersionJSON = try container.decode(String.self, forKey: .waterSubmersionJSON)
     }
     
     public func encode(to encoder: Encoder) throws {
@@ -44,6 +45,7 @@ public class SampleSet: NSManagedObject {
         try container.encode(stopLongitude, forKey: .stopLongitude)
         try container.encode(sampleCSV, forKey: .sampleCSV)
         try container.encode(gpsJSON, forKey: .gpsJSON)
+        try container.encode(waterSubmersionJSON, forKey: .waterSubmersionJSON)
     }
     
 }

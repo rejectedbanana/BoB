@@ -26,7 +26,6 @@ class WaterSubmersionManager: NSObject, ObservableObject {
     
     override init() {
         super.init()
-        
         submersionManager.delegate = self
     }
     
@@ -52,10 +51,20 @@ class WaterSubmersionManager: NSObject, ObservableObject {
     
     @MainActor
     private func addSubmersionSample(measurement: CMWaterSubmersionMeasurement?, temperature: CMWaterTemperature?) {
+        guard let depth = measurement?.depth?.value else {
+            debugPrint("No depth data available")
+            return
+        }
+        
+        guard let tempValue = temperature?.temperature.value else {
+            debugPrint("No temperature data available")
+            return
+        }
+        
         let newSample = SubmersionDataSample(
             timestamp: Date(),
-            depth: measurement?.depth?.value,
-            temperature: temperature?.temperature.value,
+            depth: depth,
+            temperature: tempValue,
             surfacePressure: measurement?.surfacePressure.value
         )
         submersionDataSamples.append(newSample)
@@ -78,7 +87,30 @@ class WaterSubmersionManager: NSObject, ObservableObject {
         
         debugPrint("[WKExtendedRuntimeSession] *** Dive session started. ***")
     }
-
+    
+    func stopDiveSession() {
+        debugPrint("[WKExtendedRuntimeSession] *** Stopping dive session. ***")
+        diveSessionRunning = false
+        extendedRuntimeSession = nil
+        self.extendedRuntimeSession?.invalidate()
+    }
+    
+    func serializeSubmersionData() -> String? {
+        guard !submersionDataSamples.isEmpty else {
+            debugPrint("No submersion data to serialize.")
+            return nil
+        }
+        
+        let encoder = JSONEncoder()
+        do {
+            let jsonData = try encoder.encode(submersionDataSamples)
+            let jsonString = String(data: jsonData, encoding: .utf8)
+            return jsonString
+        } catch {
+            print("Failed to encode submersion data: \(error)")
+            return nil
+        }
+    }
 }
 
 extension WaterSubmersionManager: CMWaterSubmersionManagerDelegate {
@@ -185,6 +217,7 @@ extension WaterSubmersionManager: CMWaterSubmersionManagerDelegate {
 extension WaterSubmersionManager: WKExtendedRuntimeSessionDelegate {
     func extendedRuntimeSession(_ extendedRuntimeSession: WKExtendedRuntimeSession, didInvalidateWith reason: WKExtendedRuntimeSessionInvalidationReason, error: Error?) {
         debugPrint("[WKExtendedRuntimeSession] *** Session invalidated with reason: \(reason.rawValue) and error: \(error?.localizedDescription ?? "nil") ***")
+        stopDiveSession()
     }
     
     func extendedRuntimeSessionDidStart(_ extendedRuntimeSession: WKExtendedRuntimeSession) {
@@ -193,5 +226,6 @@ extension WaterSubmersionManager: WKExtendedRuntimeSessionDelegate {
     
     func extendedRuntimeSessionWillExpire(_ extendedRuntimeSession: WKExtendedRuntimeSession) {
         debugPrint("[WKExtendedRuntimeSession] *** Session will expire. ***")
+        stopDiveSession()
     }
 }

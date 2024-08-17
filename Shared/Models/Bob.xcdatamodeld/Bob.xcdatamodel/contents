@@ -11,6 +11,7 @@
         <attribute name="stopDatetime" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="stopLatitude" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="stopLongitude" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="waterSubmersionJSON" optional="YES" attributeType="String"/>
         <relationship name="sample" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="SensorSample" inverseName="sampleSet" inverseEntity="SensorSample"/>
     </entity>
     <entity name="SensorSample" representedClassName="SensorSample" syncable="YES">

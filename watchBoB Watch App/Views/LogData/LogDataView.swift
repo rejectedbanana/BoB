@@ -102,6 +102,7 @@ struct LogDataView: View {
                     // start taking data
                     sensorManager.startLogging(10)
                     locationDataManager.startSamplingGPS()
+                    waterSubmersionManager.startDiveSession()
                 } else {
                     // stop taking data
                     sensorManager.stopLogging()
@@ -121,6 +122,9 @@ struct LogDataView: View {
                     newEntry.stopLongitude = metadataLogger.stopLongitude
                     newEntry.sampleCSV = sensorManager.data.convertToJSONString()
                     newEntry.gpsJSON = locationDataManager.sampledLocationsToJSON()
+                    if let submersionJSON = waterSubmersionManager.serializeSubmersionData() {
+                        newEntry.waterSubmersionJSON = submersionJSON
+                    }
                     do {
                         try moc.save()
                     } catch {

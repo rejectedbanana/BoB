@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct SubmersionDataSample {
+struct SubmersionDataSample: Codable {
     let timestamp: Date
     let depth: Double?
     let temperature: Double?

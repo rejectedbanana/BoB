@@ -27,6 +27,7 @@ extension SampleSet {
     @NSManaged public var sample: NSSet?
     @NSManaged public var sampleCSV: String?
     @NSManaged public var gpsJSON: String?
+    @NSManaged public var waterSubmersionJSON: String?
 
 }
 
@@ -64,6 +65,7 @@ extension SampleSet: Codable {
         case sample
         case sampleCSV
         case gpsJSON
+        case waterSubmersionJSON
     }
     
 }
