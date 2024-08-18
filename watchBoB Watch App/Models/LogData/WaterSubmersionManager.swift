@@ -73,26 +73,21 @@ class WaterSubmersionManager: NSObject, ObservableObject {
     func startDiveSession() {
         debugPrint("[WKExtendedRuntimeSession] *** Starting a dive session. ***")
 
-        // Create the extended runtime session.
         let session = WKExtendedRuntimeSession()
-
-        // Assign a delegate to the session.
         session.delegate = self
-
-        // Start the session.
         session.start()
 
         self.extendedRuntimeSession = session
         diveSessionRunning = true
         
-        debugPrint("[WKExtendedRuntimeSession] *** Dive session started. ***")
+        debugPrint("[WKExtendedRuntimeSession] *** Dive session started. Waiting for submersion... ***")
     }
     
     func stopDiveSession() {
         debugPrint("[WKExtendedRuntimeSession] *** Stopping dive session. ***")
         diveSessionRunning = false
+        extendedRuntimeSession?.invalidate()
         extendedRuntimeSession = nil
-        self.extendedRuntimeSession?.invalidate()
     }
     
     func serializeSubmersionData() -> String? {
@@ -133,79 +128,32 @@ extension WaterSubmersionManager: CMWaterSubmersionManagerDelegate {
             await add(event: event)
             if let submerged = submerged, submerged == true {
                 await set(submerged: submerged)
+                debugPrint("Watch is submerged. Starting data collection.")
+                diveSessionRunning = true
+            } else {
+                debugPrint("Watch is not submerged. Pausing data collection.")
+                diveSessionRunning = false
             }
         }
     }
     
     func manager(_ manager: CMWaterSubmersionManager, didUpdate measurement: CMWaterSubmersionMeasurement) {
-        debugPrint("[Measurement] *** Received a depth measurement. ***")
-        
-        let currentDepth: String
-        if let depth = measurement.depth {
-            currentDepth = depth.description
-        } else {
-            currentDepth = "None"
-        }
-        
-        let currentSurfacePressure: String
-        let surfacePressure = measurement.surfacePressure
-        currentSurfacePressure = surfacePressure.description
-        
-        let currentPressure: String
-        if let pressure = measurement.pressure {
-            currentPressure = pressure.description
-        } else {
-            currentPressure = "None"
-        }
-        
-        debugPrint("[Measurement] *** Depth: \(currentDepth) ***")
-        debugPrint("[Measurement] *** Surface Pressure: \(currentSurfacePressure) ***")
-        debugPrint("[Measurement] *** Pressure: \(currentPressure) ***")
-        
-        let submerged: Bool?
-        switch measurement.submersionState {
-        case .unknown:
-            debugPrint("[Measurement] *** Unknown Depth ***")
-            submerged = nil
-        case .notSubmerged:
-            debugPrint("[Measurement] *** Not Submerged ***")
-            submerged = false
-        case .submergedShallow:
-            debugPrint("[Measurement] *** Shallow Depth ***")
-            submerged = true
-        case .submergedDeep:
-            debugPrint("[Measurement] *** Deep Depth ***")
-            submerged = true
-        case .approachingMaxDepth:
-            debugPrint("[Measurement] *** Approaching Max Depth ***")
-            submerged = true
-        case .pastMaxDepth:
-            debugPrint("[Measurement] *** Past Max Depth ***")
-            submerged = true
-        case .sensorDepthError:
-            debugPrint("[Measurement] *** A depth error has occurred. ***")
-            submerged = nil
-        @unknown default:
-            fatalError("[Measurement] *** An unknown measurement depth state: \(measurement.submersionState)")
-        }
-        
-        Task {
-            await set(measurement: measurement)
-            if let submerged = submerged, submerged == true {
-                await set(submerged: submerged)
+        if diveSessionRunning {
+            debugPrint("[Measurement] *** Received a depth measurement. ***")
+            Task {
+                await set(measurement: measurement)
+                await addSubmersionSample(measurement: measurement, temperature: self.temperature)
             }
-            await addSubmersionSample(measurement: measurement, temperature: self.temperature)
         }
     }
     
     func manager(_ manager: CMWaterSubmersionManager, didUpdate measurement: CMWaterTemperature) {
-        let currentTemperature = measurement.temperature.formatted()
-        
-        debugPrint(("[Temperature] *** \(currentTemperature) ***"))
-        
-        Task {
-            await set(temperature:measurement)
-            await addSubmersionSample(measurement: self.measurement, temperature: temperature)
+        if diveSessionRunning {
+            debugPrint(("[Temperature] *** \(measurement.temperature.formatted()) ***"))
+            Task {
+                await set(temperature: measurement)
+                await addSubmersionSample(measurement: self.measurement, temperature: temperature)
+            }
         }
     }
     

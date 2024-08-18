@@ -15,10 +15,7 @@ struct LogDataView: View {
     @Environment(\.managedObjectContext) var moc
     @Environment(\.dismiss) var dismiss
     
-    // create the variables to write to CoreData
-    @State private var name: String = "TBD" 
-
-    // create the location manager here
+    @State private var name: String = "TBD"
     @StateObject var locationDataManager = LocationDataManager()
     
     // pull in the sensor manager to take data
@@ -68,8 +65,8 @@ struct LogDataView: View {
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .foregroundColor(.silver)
                 .padding(.leading, 5)
-
-            // Dynanic motion data
+            
+            // Dynamic motion data
             RawMotionRow(title: "Acc", xValue: sensorManager.accX, yValue: sensorManager.accY, zValue: sensorManager.accZ, stringFormat: "%4.2f")
             RawMotionRow(title: "Gyr", xValue: sensorManager.gyrX, yValue: sensorManager.gyrY, zValue: sensorManager.gyrZ, stringFormat: "%4.2f")
             RawMotionRow(title: "Mag", xValue: sensorManager.magX, yValue: sensorManager.magY, zValue: sensorManager.magZ, stringFormat: "%3.1f")
@@ -92,25 +89,21 @@ struct LogDataView: View {
                 Text("No data yet")
                     .padding(.leading, 50)
             }
-            // Button start logging data
+            
+            // Button to start/stop logging data
             Button {
                 isLoggingData.toggle()
                 
                 if isLoggingData {
-                    // take some metadata
                     metadataLogger.startLogging()
-                    // start taking data
                     sensorManager.startLogging(10)
                     locationDataManager.startSamplingGPS()
                     waterSubmersionManager.startDiveSession()
                 } else {
-                    // stop taking data
                     sensorManager.stopLogging()
-                    // take more metadata
                     metadataLogger.stopLogging()
                     locationDataManager.stopSamplingGPS()
-
-                    // create a new log entry to save to CoreData
+                    waterSubmersionManager.stopDiveSession()
                     let newEntry = SampleSet(context: moc)
                     newEntry.id = metadataLogger.sessionID
                     newEntry.startDatetime = metadataLogger.startDatetime
@@ -131,7 +124,6 @@ struct LogDataView: View {
                         print("Failed to save log entry: \(error)")
                     }
                     dismiss()
-                    
                 }
             } label: {
                 Text(isLoggingData ? "Stop" : "Start")
@@ -140,10 +132,12 @@ struct LogDataView: View {
             .frame(width: 160, height: 35)
             .buttonStyle(.borderedProminent)
             .padding(.top, 10)
-        
         }
         .navigationBarBackButtonHidden(true)
         .padding(.top, 10)
+        .onReceive(waterSubmersionManager.$submersionDataSamples) { sample in
+            debugPrint("New submersion data received, updating view. \(sample)")
+        }
     }
 }
 
