@@ -43,6 +43,7 @@
 		97FAC84F2BD850A4003E65E7 /* SensorSample+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97FAC84B2BD850A4003E65E7 /* SensorSample+CoreDataClass.swift */; };
 		97FAC8502BD850A4003E65E7 /* SensorSample+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97FAC84C2BD850A4003E65E7 /* SensorSample+CoreDataProperties.swift */; };
 		97FC9EE62C1CFA1D0076F30E /* WatchSensorData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97FC9EE52C1CFA1D0076F30E /* WatchSensorData.swift */; };
+		FC9A2A1E2C739E0800820928 /* StartSamplingIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC9A2A1D2C739E0800820928 /* StartSamplingIntent.swift */; };
 		FCBA60C02C65490400E01B1F /* GPSData.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCBA60BF2C65490400E01B1F /* GPSData.swift */; };
 		FCBA60C12C65490400E01B1F /* GPSData.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCBA60BF2C65490400E01B1F /* GPSData.swift */; };
 		FCBA60C52C6BC20A00E01B1F /* WaterSubmersionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCBA60C42C6BC20300E01B1F /* WaterSubmersionManager.swift */; };
@@ -122,6 +123,7 @@
 		97FC9EE52C1CFA1D0076F30E /* WatchSensorData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchSensorData.swift; sourceTree = "<group>"; };
 		FC7B9B302C5FF1C400600C51 /* BoB.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = BoB.entitlements; sourceTree = "<group>"; };
 		FC7B9B312C5FF1E400600C51 /* watchBoB Watch App.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "watchBoB Watch App.entitlements"; sourceTree = "<group>"; };
+		FC9A2A1D2C739E0800820928 /* StartSamplingIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartSamplingIntent.swift; sourceTree = "<group>"; };
 		FCBA60BA2C628A7500E01B1F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		FCBA60BB2C628A9600E01B1F /* watchBoB-Watch-App-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "watchBoB-Watch-App-Info.plist"; sourceTree = SOURCE_ROOT; };
 		FCBA60BF2C65490400E01B1F /* GPSData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GPSData.swift; sourceTree = "<group>"; };
@@ -307,6 +309,7 @@
 				FC7B9B312C5FF1E400600C51 /* watchBoB Watch App.entitlements */,
 				97DF8EAC2AE1968500A33A80 /* watchBoBApp.swift */,
 				97DF8EAE2AE1968500A33A80 /* ContentView.swift */,
+				FC9A2A1C2C739D7500820928 /* AppIntent */,
 				978D106E2AE6E88200310B26 /* Models */,
 				97DF8EC02AE1EBA300A33A80 /* Views */,
 				97DF8EB22AE1968600A33A80 /* Preview Content */,
@@ -340,6 +343,14 @@
 				97349CEA2AF1679300021CA3 /* RawMotionRow.swift */,
 			);
 			path = LogData;
+			sourceTree = "<group>";
+		};
+		FC9A2A1C2C739D7500820928 /* AppIntent */ = {
+			isa = PBXGroup;
+			children = (
+				FC9A2A1D2C739E0800820928 /* StartSamplingIntent.swift */,
+			);
+			path = AppIntent;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -546,6 +557,7 @@
 				978D10672AE3049400310B26 /* LogbookView.swift in Sources */,
 				97DF8EBD2AE1D9AF00A33A80 /* LogDataView.swift in Sources */,
 				FCBA60C52C6BC20A00E01B1F /* WaterSubmersionManager.swift in Sources */,
+				FC9A2A1E2C739E0800820928 /* StartSamplingIntent.swift in Sources */,
 				97CE319C2AED6ADE009335C9 /* LocationDataManager.swift in Sources */,
 				97B104AA2AE9771700FE81DC /* SensorManager.swift in Sources */,
 				97FC9EE62C1CFA1D0076F30E /* WatchSensorData.swift in Sources */,

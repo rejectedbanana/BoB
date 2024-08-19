@@ -8,30 +8,6 @@
 import Foundation
 import SwiftUI
 import CoreLocation
-import AppIntents
-struct StartDiveIntent: AppIntent {
-    static var title: LocalizedStringResource = "Start Dive"
-    
-    func perform() async throws -> some IntentResult {
-        toggleDiveSession()
-        return .result(dialog: "Toggling dive session.")
-    }
-    
-    private func toggleDiveSession() {
-        print("Dive session toggled.")
-    }
-}
-
-struct AppShortcuts: AppShortcutsProvider {
-    static var appShortcuts: [AppShortcut] {
-        AppShortcut(
-            intent: StartDiveIntent(),
-            phrases: ["Start data sampling with \(.applicationName)"],
-            shortTitle: "Start Sampling",
-            systemImageName: "figure.walk.scuba"
-        )
-    }
-}
 
 struct LogDataView: View {
     // Get a reference to the managed object context from the environment.
@@ -112,13 +88,14 @@ struct LogDataView: View {
                 Text("No data yet")
                     .padding(.leading, 50)
             }
-            Button("Toggle Dive") {
-                Task {
-                    let intent = StartDiveIntent()
-                    try? await intent.perform()
-                }
-            }
-            // Button to start/stop logging data
+            
+//            Button("Toggle Dive") {
+//                Task {
+//                    let intent = StartSamplingIntent()
+//                    try? await intent.perform()
+//                }
+//            }
+            
             Button {
                 isLoggingData.toggle()
                 
