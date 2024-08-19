@@ -26,7 +26,9 @@ struct AppShortcuts: AppShortcutsProvider {
     static var appShortcuts: [AppShortcut] {
         AppShortcut(
             intent: StartDiveIntent(),
-            phrases: ["Start dive with \(.applicationName)"]
+            phrases: ["Start data sampling with \(.applicationName)"],
+            shortTitle: "Start Sampling",
+            systemImageName: "figure.walk.scuba"
         )
     }
 }
