@@ -21,7 +21,7 @@ struct LogDataView: View {
     @ObservedObject var sensorManager = SensorManager()
     
     // Toggle to turn data logging on and off
-    @State private var isLoggingData = false
+    @AppStorage("isSamplingActive") private var isLoggingData: Bool = false
     
     // pull in the metadataLogger to take metadata
     @ObservedObject private var metadataLogger = MetadataLogger()
@@ -89,46 +89,13 @@ struct LogDataView: View {
                     .padding(.leading, 50)
             }
             
-//            Button("Toggle Dive") {
-//                Task {
-//                    let intent = StartSamplingIntent()
-//                    try? await intent.perform()
-//                }
-//            }
-            
             Button {
                 isLoggingData.toggle()
                 
                 if isLoggingData {
-                    metadataLogger.startLogging()
-                    sensorManager.startLogging(10)
-                    locationDataManager.startSamplingGPS()
-                    waterSubmersionManager.startDiveSession()
+                    SamplingService.shared.startSampling(sensorManager: sensorManager, locationDataManager: locationDataManager, metadataLogger: metadataLogger, waterSubmersionManager: waterSubmersionManager)
                 } else {
-                    sensorManager.stopLogging()
-                    metadataLogger.stopLogging()
-                    locationDataManager.stopSamplingGPS()
-                    waterSubmersionManager.stopDiveSession()
-                    let newEntry = SampleSet(context: moc)
-                    newEntry.id = metadataLogger.sessionID
-                    newEntry.startDatetime = metadataLogger.startDatetime
-                    newEntry.stopDatetime = metadataLogger.stopDatetime
-                    newEntry.name = metadataLogger.name
-                    newEntry.startLatitude = metadataLogger.startLatitude
-                    newEntry.startLongitude = metadataLogger.startLongitude
-                    newEntry.stopLatitude = metadataLogger.stopLatitude
-                    newEntry.stopLongitude = metadataLogger.stopLongitude
-                    newEntry.sampleCSV = sensorManager.data.convertToJSONString()
-                    newEntry.gpsJSON = locationDataManager.sampledLocationsToJSON()
-                    if let submersionJSON = waterSubmersionManager.serializeSubmersionData() {
-                        newEntry.waterSubmersionJSON = submersionJSON
-                    }
-                    do {
-                        try moc.save()
-                    } catch {
-                        print("Failed to save log entry: \(error)")
-                    }
-                    dismiss()
+                    SamplingService.shared.stopSampling(sensorManager: sensorManager, locationDataManager: locationDataManager, metadataLogger: metadataLogger, waterSubmersionManager: waterSubmersionManager, context: moc, dismiss: dismiss.callAsFunction)
                 }
             } label: {
                 Text(isLoggingData ? "Stop" : "Start")
