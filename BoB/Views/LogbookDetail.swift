@@ -22,7 +22,6 @@ struct LogbookDetail: View {
         return combineJSON()
     }
     
-    // Combine sampleCSV and sampleJSON into one JSON object
     private func combineJSON() -> [String: Any]? {
         guard let sampleCSV = entry.sampleCSV, let sampleJSON = entry.gpsJSON else {
             print("No sampleCSV or sampleJSON found")
@@ -33,14 +32,37 @@ struct LogbookDetail: View {
         let jsonData = Data(sampleJSON.utf8)
         
         do {
-            let csvJSONObject = try JSONSerialization.jsonObject(with: csvData, options: []) as? [[String: Any]] ?? []
-            let jsonJSONObject = try JSONSerialization.jsonObject(with: jsonData, options: []) as? [[String: Any]] ?? []
-            let combinedJSON: [String: Any] = [
-                "motion": csvJSONObject,
-                "gps": jsonJSONObject
+            // Parse the motion data from CSV
+            let motionDataArray = try JSONSerialization.jsonObject(with: csvData, options: []) as? [[String: Any]] ?? []
+            let motionData = motionDataArray.map { $0.map { $1 } }
+            
+            // Parse the location data from JSON
+            let locationDataArray = try JSONSerialization.jsonObject(with: jsonData, options: []) as? [[String: Any]] ?? []
+            let locationData = locationDataArray.map { [$0["timestamp"], $0["latitude"], $0["longitude"]] }
+            
+            // Create structured JSON with metadata
+            let structuredJSON: [String: Any] = [
+                "MOTION": [
+                    "metadata": [
+                        "variables": "time,accelerometerX,accelerometerY,accelerometerZ,gyroscopeX,gyroscopeY,gyroscopeZ,magnetometerX,magnetometerY,magnetometerZ",
+                        "units": "yyyy-MM-dd'T'HH:mm:ss.SSSZ, m/s, m/s, m/s, radians/s, radians/s, radians/s, microTesla, microTesla, microTesla",
+                        "sensor_id": "motion",
+                        "description": "3-axis acceleration, rotation, and magnetic field from motion sensors"
+                    ],
+                    "data": motionData
+                ],
+                "LOCATION": [
+                    "metadata": [
+                        "variables": "time,latitude,longitude",
+                        "units": "yyyy-MM-dd'T'HH:mm:ss.SSSZ, degrees North, degrees East",
+                        "sensor_id": "location",
+                        "description": "Location determined from either L1 and L5 GPS, GLONASS, Galileo, QZSS, and BeiDou"
+                    ],
+                    "data": locationData
+                ]
             ]
             
-            return combinedJSON
+            return structuredJSON
         } catch {
             print("Error parsing or combining JSON: \(error)")
             return nil
