@@ -23,13 +23,14 @@ struct LogbookDetail: View {
     }
     
     private func combineJSON() -> [String: Any]? {
-        guard let sampleCSV = entry.sampleCSV, let sampleJSON = entry.gpsJSON else {
-            print("No sampleCSV or sampleJSON found")
+        guard let sampleCSV = entry.sampleCSV, let sampleJSON = entry.gpsJSON, let submersionJSON = entry.waterSubmersionJSON else {
+            print("No sampleCSV, sampleJSON, or submersionJSON found")
             return nil
         }
         
         let csvData = Data(sampleCSV.utf8)
         let jsonData = Data(sampleJSON.utf8)
+        let submersionData = Data(submersionJSON.utf8)
         
         do {
             // Parse the motion data from CSV
@@ -39,6 +40,10 @@ struct LogbookDetail: View {
             // Parse the location data from JSON
             let locationDataArray = try JSONSerialization.jsonObject(with: jsonData, options: []) as? [[String: Any]] ?? []
             let locationData = locationDataArray.map { [$0["timestamp"], $0["latitude"], $0["longitude"]] }
+            
+            // Parse the submersion data from JSON
+            let submersionDataArray = try JSONSerialization.jsonObject(with: submersionData, options: []) as? [[String: Any]] ?? []
+            let submersionData = submersionDataArray.map { [$0["timestamp"], $0["depth"], $0["temperature"]] }
             
             // Create structured JSON with metadata
             let structuredJSON: [String: Any] = [
@@ -59,6 +64,15 @@ struct LogbookDetail: View {
                         "description": "Location determined from either L1 and L5 GPS, GLONASS, Galileo, QZSS, and BeiDou"
                     ],
                     "data": locationData
+                ],
+                "SUBMERSION": [
+                    "metadata": [
+                        "variables": "time,depth,temperature",
+                        "units": "yyyy-MM-dd'T'HH:mm:ss.SSSZ, meters, degrees Celsius",
+                        "sensor_id": "submersion",
+                        "description": "Depth and temperature data from dive sensors when submerged"
+                    ],
+                    "data": submersionData
                 ]
             ]
             
