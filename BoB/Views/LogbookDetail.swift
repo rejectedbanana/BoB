@@ -119,11 +119,11 @@ struct LogbookDetail: View {
     var body: some View {
         List {
             Section("Sample Details"){
-                DetailRow(header: "Minimum Water Temperature", content: "7.0 °C")
-                DetailRow(header: "Maximum Underwater Depth", content: "44.0 m")
-                DetailRow(header: "Start Time", content: timeStampFormatter.viewFormat( entry.startDatetime ?? Date(timeIntervalSince1970: 0) ))
-                DetailRow(header: "End Time", content: timeStampFormatter.viewFormat( entry.stopDatetime ?? Date(timeIntervalSince1970: 0) ))
-                DetailRow(header: "Samples", content: "1430")
+                DetailRow(header: "Minimum Water Temperature", content: String(format: "%.1f °C", getMinimumTemperature(from: entry.waterSubmersionJSON)))
+                DetailRow(header: "Maximum Underwater Depth", content: String(format: "%.1f m", getMaximumDepth(from: entry.waterSubmersionJSON)))
+                DetailRow(header: "Start Time", content: timeStampFormatter.viewFormat(entry.startDatetime ?? Date(timeIntervalSince1970: 0)))
+                DetailRow(header: "End Time", content: timeStampFormatter.viewFormat(entry.stopDatetime ?? Date(timeIntervalSince1970: 0)))
+                DetailRow(header: "Samples", content: "\(getSampleCount(from: entry.sampleCSV))")
                 DetailRow(header: "Sampling Frequency", content: "10 Hz")
                 DetailRow(header: "Source", content: "Kim's Apple Watch")
                 DetailRow(header: "CSV Data", content: entry.sampleCSV ?? "No CSV data.")
@@ -141,12 +141,12 @@ struct LogbookDetail: View {
                 }
             }
             
-            Section("Device Details"){
-                DetailRow(header: "Name", content: "Apple Watch")
-                DetailRow(header: "Manufacturer", content: "Apple Inc.")
-                DetailRow(header: "Model", content: "Ultra")
-                DetailRow(header: "Hardware Version", content: "Watch6,18")
-                DetailRow(header: "Software Version", content: "10.3")
+            Section("Device Details") {
+                DetailRow(header: "Name", content: entry.deviceName ?? "Unknown")
+                DetailRow(header: "Manufacturer", content: entry.deviceManufacturer ?? "Unknown")
+                DetailRow(header: "Model", content: entry.deviceModel ?? "Unknown")
+                DetailRow(header: "Hardware Version", content: entry.deviceLocalizedModel ?? "Unknown")
+                DetailRow(header: "Software Version", content: entry.deviceSystemVersion ?? "Unknown")
             }
         }
         .navigationBarTitleDisplayMode(.inline)
@@ -162,6 +162,35 @@ struct LogbookDetail: View {
             self.csvName = timeStampFormatter.exportNameFormat(entry.startDatetime ?? Date.now )+"_AWUData.csv"
             self.csvContent = entry.sampleCSV ?? "No CSV data"
         }
+    }
+    
+    func getMinimumTemperature(from json: String?) -> Double {
+        guard let json = json, let data = json.data(using: .utf8) else { return 0.0 }
+        do {
+            let submersionDataArray = try JSONSerialization.jsonObject(with: data, options: []) as? [[String: Any]] ?? []
+            let temperatures = submersionDataArray.compactMap { $0["temperature"] as? Double }
+            return temperatures.min() ?? 0.0
+        } catch {
+            print("Error parsing submersion JSON for temperature: \(error)")
+            return 0.0
+        }
+    }
+    
+    func getMaximumDepth(from json: String?) -> Double {
+        guard let json = json, let data = json.data(using: .utf8) else { return 0.0 }
+        do {
+            let submersionDataArray = try JSONSerialization.jsonObject(with: data, options: []) as? [[String: Any]] ?? []
+            let depths = submersionDataArray.compactMap { $0["depth"] as? Double }
+            return depths.max() ?? 0.0
+        } catch {
+            print("Error parsing submersion JSON for depth: \(error)")
+            return 0.0
+        }
+    }
+    
+    func getSampleCount(from csv: String?) -> Int {
+        guard let csv = csv else { return 0 }
+        return csv.split(separator: "\n").count - 1 // Minus 1 to exclude header row
     }
     
     func exportCombinedJSON(fileName: String, content: String) -> URL {
@@ -187,12 +216,12 @@ struct DetailRow: View {
     let content: String
     
     var body: some View {
-            VStack(alignment: .leading) {
-                Text(header)
-                    .font(.callout)
-                    .foregroundColor(Color.gray)
-                Text(content)
-                    .font(.body)
-            }
+        VStack(alignment: .leading) {
+            Text(header)
+                .font(.callout)
+                .foregroundColor(Color.gray)
+            Text(content)
+                .font(.body)
+        }
     }
 }

@@ -31,6 +31,13 @@ public class SampleSet: NSManagedObject {
         self.sampleCSV = try container.decode(String.self, forKey: .sampleCSV)
         self.gpsJSON = try container.decode(String.self, forKey: .gpsJSON)
         self.waterSubmersionJSON = try container.decode(String.self, forKey: .waterSubmersionJSON)
+        
+        // Device Info
+        self.deviceName = try container.decode(String.self, forKey: .deviceName)
+        self.deviceModel = try container.decode(String.self, forKey: .deviceModel)
+        self.deviceManufacturer = try container.decode(String.self, forKey: .deviceManufacturer)
+        self.deviceSystemVersion = try container.decode(String.self, forKey: .deviceSystemVersion)
+        self.deviceLocalizedModel = try container.decode(String.self, forKey: .deviceLocalizedModel)
     }
     
     public func encode(to encoder: Encoder) throws {
@@ -46,6 +53,13 @@ public class SampleSet: NSManagedObject {
         try container.encode(sampleCSV, forKey: .sampleCSV)
         try container.encode(gpsJSON, forKey: .gpsJSON)
         try container.encode(waterSubmersionJSON, forKey: .waterSubmersionJSON)
+        
+        // Device Info
+        try container.encode(deviceName, forKey: .deviceName)
+        try container.encode(deviceModel, forKey: .deviceModel)
+        try container.encode(deviceManufacturer, forKey: .deviceManufacturer)
+        try container.encode(deviceSystemVersion, forKey: .deviceSystemVersion)
+        try container.encode(deviceLocalizedModel, forKey: .deviceLocalizedModel)
     }
     
 }

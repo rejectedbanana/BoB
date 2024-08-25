@@ -25,6 +25,13 @@ class MetadataLogger: NSObject, ObservableObject, CLLocationManagerDelegate {
     var stopLatitude: Double = 0.0
     var stopLongitude: Double = 0.0
     
+    // Device Info
+    var deviceName: String = "Unknown"
+    var deviceModel: String = "Unknown"
+    var deviceLocalizedModel: String = "Unknown"
+    var deviceSystemVersion: String = "Unknown"
+    var deviceManufacturer: String = "Unknown"
+    
     var isLogging = false
 
     func getCurrentLocation() -> (latitude: Double, longitude: Double){
