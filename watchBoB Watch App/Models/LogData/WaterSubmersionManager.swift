@@ -17,7 +17,7 @@ class WaterSubmersionManager: NSObject, ObservableObject {
     @Published var diveSessionRunning: Bool = false
     @Published var submersionDataSamples: [SubmersionDataSample] = []
     
-    private let submersionManager = CMWaterSubmersionManager()
+    private var submersionManager: CMWaterSubmersionManager?
     private var extendedRuntimeSession: WKExtendedRuntimeSession?
     
     private var waterSubmersionAvailable: Bool {
@@ -26,7 +26,14 @@ class WaterSubmersionManager: NSObject, ObservableObject {
     
     override init() {
         super.init()
-        submersionManager.delegate = self
+        
+        self.submersionManager = CMWaterSubmersionManager()
+        self.submersionManager?.delegate = self
+        
+        guard let submersionManager = self.submersionManager, CMWaterSubmersionManager.waterSubmersionAvailable else {
+            debugPrint("Water submersion is not available on this device.")
+            return
+        }
     }
     
     @MainActor
