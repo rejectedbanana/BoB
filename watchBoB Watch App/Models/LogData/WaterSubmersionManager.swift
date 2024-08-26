@@ -109,7 +109,7 @@ class WaterSubmersionManager: NSObject, ObservableObject {
 }
 
 extension WaterSubmersionManager: CMWaterSubmersionManagerDelegate {
-    func manager(_ manager: CMWaterSubmersionManager, didUpdate event: CMWaterSubmersionEvent) {
+    nonisolated func manager(_ manager: CMWaterSubmersionManager, didUpdate event: CMWaterSubmersionEvent) {
         let submerged: Bool?
         switch event.state {
         case .unknown:
@@ -137,27 +137,53 @@ extension WaterSubmersionManager: CMWaterSubmersionManagerDelegate {
         }
     }
     
-    func manager(_ manager: CMWaterSubmersionManager, didUpdate measurement: CMWaterSubmersionMeasurement) {
+    nonisolated func manager(_ manager: CMWaterSubmersionManager, didUpdate measurement: CMWaterSubmersionMeasurement) {
         if diveSessionRunning {
             debugPrint("[Measurement] *** Received a depth measurement. ***")
+            let submerged: Bool?
+            switch measurement.submersionState {
+            case .unknown:
+                debugPrint("*** Unknown Depth ***")
+                submerged = nil
+            case .notSubmerged:
+                debugPrint("*** Not Submerged ***")
+                submerged = false
+            case .submergedShallow, .submergedDeep, .approachingMaxDepth, .pastMaxDepth:
+                debugPrint("*** Submerged State: \(measurement.submersionState) ***")
+                submerged = true
+            case .sensorDepthError:
+                debugPrint("*** A depth error has occurred. ***")
+                submerged = nil
+            @unknown default:
+                fatalError("*** An unknown measurement depth state: \(measurement.submersionState)")
+            }
+            
             Task {
                 await set(measurement: measurement)
+                if let submerged = submerged {
+                    await set(submerged: submerged)
+                }
                 await addSubmersionSample(measurement: measurement, temperature: self.temperature)
             }
         }
     }
     
-    func manager(_ manager: CMWaterSubmersionManager, didUpdate measurement: CMWaterTemperature) {
+    nonisolated func manager(_ manager: CMWaterSubmersionManager, didUpdate measurement: CMWaterTemperature) {
         if diveSessionRunning {
-            debugPrint(("[Temperature] *** \(measurement.temperature.formatted()) ***"))
+            let temp = measurement.temperature
+            let uncertainty = measurement.temperatureUncertainty
+            let currentTemperature = "\(temp.value) +/- \(uncertainty.value) \(temp.unit)"
+            
+            debugPrint("*** Temperature: \(currentTemperature) ***")
+            
             Task {
                 await set(temperature: measurement)
-                await addSubmersionSample(measurement: self.measurement, temperature: temperature)
+                await addSubmersionSample(measurement: self.measurement, temperature: measurement)
             }
         }
     }
     
-    func manager(_ manager: CMWaterSubmersionManager, errorOccurred error: Error) {
+    nonisolated func manager(_ manager: CMWaterSubmersionManager, errorOccurred error: Error) {
         debugPrint("*** An error occurred: \(error.localizedDescription) ***")
     }
 }
