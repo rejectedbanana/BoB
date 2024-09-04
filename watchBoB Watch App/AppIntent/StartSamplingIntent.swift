@@ -21,7 +21,7 @@ struct ToggleSamplingIntent: AppIntent {
                 sensorManager: SensorManager(),
                 locationDataManager: LocationDataManager(),
                 metadataLogger: MetadataLogger(),
-                waterSubmersionManager: WaterSubmersionManager(),
+                waterSubmersionManager: WaterSubmersionManager.shared,
                 context: CoreDataController().container.viewContext,
                 dismiss: nil
             )
@@ -31,7 +31,7 @@ struct ToggleSamplingIntent: AppIntent {
                 sensorManager: SensorManager(),
                 locationDataManager: LocationDataManager(),
                 metadataLogger: MetadataLogger(),
-                waterSubmersionManager: WaterSubmersionManager()
+                waterSubmersionManager: WaterSubmersionManager.shared
             )
             return .result(dialog: "Sampling Session Started")
         }

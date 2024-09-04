@@ -10,6 +10,8 @@ import CoreMotion
 import WatchKit
 
 class WaterSubmersionManager: NSObject, ObservableObject {
+    static let shared = WaterSubmersionManager()
+
     @Published var events: [CMWaterSubmersionEvent] = []
     @Published var isSubmerged: Bool = false
     @Published var measurement: CMWaterSubmersionMeasurement? = nil
@@ -23,8 +25,8 @@ class WaterSubmersionManager: NSObject, ObservableObject {
     private var waterSubmersionAvailable: Bool {
         return CMWaterSubmersionManager.waterSubmersionAvailable
     }
-    
-    override init() {
+
+    override private init() {
         super.init()
         
         self.submersionManager = CMWaterSubmersionManager()
@@ -96,7 +98,15 @@ class WaterSubmersionManager: NSObject, ObservableObject {
         extendedRuntimeSession?.invalidate()
         extendedRuntimeSession = nil
     }
-    
+
+    func handleAutomaticSession(_ session: WKExtendedRuntimeSession) {
+        debugPrint("[WKExtendedRuntimeSession] *** Handling automatic dive session. ***")
+
+        session.delegate = self
+        self.extendedRuntimeSession = session
+        diveSessionRunning = true
+    }
+
     func serializeSubmersionData() -> String? {
         guard !submersionDataSamples.isEmpty else {
             debugPrint("No submersion data to serialize.")
