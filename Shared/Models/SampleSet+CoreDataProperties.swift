@@ -28,6 +28,13 @@ extension SampleSet {
     @NSManaged public var sampleCSV: String?
     @NSManaged public var gpsJSON: String?
     @NSManaged public var waterSubmersionJSON: String?
+    
+    // Device Info
+    @NSManaged public var deviceName: String?
+    @NSManaged public var deviceModel: String?
+    @NSManaged public var deviceLocalizedModel: String?
+    @NSManaged public var deviceSystemVersion: String?
+    @NSManaged public var deviceManufacturer: String?
 
 }
 
@@ -66,6 +73,11 @@ extension SampleSet: Codable {
         case sampleCSV
         case gpsJSON
         case waterSubmersionJSON
+        case deviceName
+        case deviceModel
+        case deviceLocalizedModel
+        case deviceSystemVersion
+        case deviceManufacturer
     }
     
 }

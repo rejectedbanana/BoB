@@ -25,7 +25,7 @@ struct LogDataView: View {
     
     // pull in the metadataLogger to take metadata
     @ObservedObject private var metadataLogger = MetadataLogger()
-    @ObservedObject var waterSubmersionManager = WaterSubmersionManager()
+    @ObservedObject var waterSubmersionManager = WaterSubmersionManager.shared
     
     var body: some View {
         VStack {

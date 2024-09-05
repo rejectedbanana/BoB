@@ -6,6 +6,7 @@
 //
 
 import CoreData
+import WatchKit
 
 
 class SamplingService {
@@ -17,7 +18,15 @@ class SamplingService {
         metadataLogger.startLogging()
         sensorManager.startLogging(10)
         locationDataManager.startSamplingGPS()
-        waterSubmersionManager.startDiveSession()
+        // Commented below since we're handling automatic 
+//        waterSubmersionManager.startDiveSession()
+        
+        let device = WKInterfaceDevice.current()
+        metadataLogger.deviceName = device.name
+        metadataLogger.deviceModel = device.model
+        metadataLogger.deviceLocalizedModel = device.localizedModel
+        metadataLogger.deviceSystemVersion = device.systemVersion
+        metadataLogger.deviceManufacturer = "Apple Inc."
     }
 
     func stopSampling(sensorManager: SensorManager, locationDataManager: LocationDataManager, metadataLogger: MetadataLogger, waterSubmersionManager: WaterSubmersionManager, context: NSManagedObjectContext, dismiss: (() -> Void)?) {
@@ -35,6 +44,13 @@ class SamplingService {
         newEntry.startLongitude = metadataLogger.startLongitude
         newEntry.stopLatitude = metadataLogger.stopLatitude
         newEntry.stopLongitude = metadataLogger.stopLongitude
+        
+        newEntry.deviceName = metadataLogger.deviceName
+        newEntry.deviceModel = metadataLogger.deviceModel
+        newEntry.deviceLocalizedModel = metadataLogger.deviceLocalizedModel
+        newEntry.deviceSystemVersion = metadataLogger.deviceSystemVersion
+        newEntry.deviceManufacturer = metadataLogger.deviceManufacturer
+        
         newEntry.sampleCSV = sensorManager.data.convertToJSONString()
         newEntry.gpsJSON = locationDataManager.sampledLocationsToJSON()
         if let submersionJSON = waterSubmersionManager.serializeSubmersionData() {
