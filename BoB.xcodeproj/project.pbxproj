@@ -45,6 +45,7 @@
 		97FC9EE62C1CFA1D0076F30E /* WatchSensorData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97FC9EE52C1CFA1D0076F30E /* WatchSensorData.swift */; };
 		FC7D2D6B2C8B07CA00FE5EA5 /* SubmersionDataSample.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC7D2D6A2C8B07CA00FE5EA5 /* SubmersionDataSample.swift */; };
 		FC7D2D6C2C8B07CA00FE5EA5 /* SubmersionDataSample.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC7D2D6A2C8B07CA00FE5EA5 /* SubmersionDataSample.swift */; };
+		FC7D2D6F2C8B0A8B00FE5EA5 /* JSONParserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC7D2D6E2C8B0A8B00FE5EA5 /* JSONParserService.swift */; };
 		FC9A2A1E2C739E0800820928 /* StartSamplingIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC9A2A1D2C739E0800820928 /* StartSamplingIntent.swift */; };
 		FC9A2A212C73AE0E00820928 /* SamplingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC9A2A202C73AE0E00820928 /* SamplingService.swift */; };
 		FCBA60C02C65490400E01B1F /* GPSData.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCBA60BF2C65490400E01B1F /* GPSData.swift */; };
@@ -127,6 +128,7 @@
 		FC7B9B302C5FF1C400600C51 /* BoB.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = BoB.entitlements; sourceTree = "<group>"; };
 		FC7B9B312C5FF1E400600C51 /* watchBoB Watch App.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "watchBoB Watch App.entitlements"; sourceTree = "<group>"; };
 		FC7D2D6A2C8B07CA00FE5EA5 /* SubmersionDataSample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubmersionDataSample.swift; sourceTree = "<group>"; };
+		FC7D2D6E2C8B0A8B00FE5EA5 /* JSONParserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONParserService.swift; sourceTree = "<group>"; };
 		FC9A2A1D2C739E0800820928 /* StartSamplingIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartSamplingIntent.swift; sourceTree = "<group>"; };
 		FC9A2A202C73AE0E00820928 /* SamplingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SamplingService.swift; sourceTree = "<group>"; };
 		FCBA60BA2C628A7500E01B1F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
@@ -287,6 +289,7 @@
 		97DF8E972AE195FA00A33A80 /* BoB */ = {
 			isa = PBXGroup;
 			children = (
+				FC7D2D6D2C8B0A8500FE5EA5 /* Services */,
 				FCBA60BA2C628A7500E01B1F /* Info.plist */,
 				FC7B9B302C5FF1C400600C51 /* BoB.entitlements */,
 				97DF8E982AE195FA00A33A80 /* BoBApp.swift */,
@@ -350,6 +353,14 @@
 				97349CEA2AF1679300021CA3 /* RawMotionRow.swift */,
 			);
 			path = LogData;
+			sourceTree = "<group>";
+		};
+		FC7D2D6D2C8B0A8500FE5EA5 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				FC7D2D6E2C8B0A8B00FE5EA5 /* JSONParserService.swift */,
+			);
+			path = Services;
 			sourceTree = "<group>";
 		};
 		FC9A2A1C2C739D7500820928 /* AppIntent */ = {
@@ -554,6 +565,7 @@
 				97E505832B472F9700334D6F /* LogbookDetail.swift in Sources */,
 				FC7D2D6B2C8B07CA00FE5EA5 /* SubmersionDataSample.swift in Sources */,
 				977E74CB2BE9895A009A36AD /* SensorSample+CoreDataProperties.swift in Sources */,
+				FC7D2D6F2C8B0A8B00FE5EA5 /* JSONParserService.swift in Sources */,
 				977E74CC2BE9895D009A36AD /* Bob.xcdatamodeld in Sources */,
 				97DF8E9B2AE195FA00A33A80 /* ContentView.swift in Sources */,
 				97DF8E992AE195FA00A33A80 /* BoBApp.swift in Sources */,
