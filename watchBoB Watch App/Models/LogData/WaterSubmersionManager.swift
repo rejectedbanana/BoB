@@ -106,7 +106,12 @@ class WaterSubmersionManager: NSObject, ObservableObject {
         self.extendedRuntimeSession = session
         diveSessionRunning = true
     }
-
+    
+    func enableWaterLock() {
+        debugPrint("[Water Lock] *** Activating Water Lock. ***")
+        WKInterfaceDevice.current().enableWaterLock()
+    }
+    
     func serializeSubmersionData() -> String? {
         guard !submersionDataSamples.isEmpty else {
             debugPrint("No submersion data to serialize.")
