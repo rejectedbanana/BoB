@@ -9,7 +9,7 @@ import SwiftUI
 
 struct LogbookDetail: View {
     let entry: SampleSet
-    let jsonParserService: JSONParserService // Dependency injection
+    let jsonParserService: JSONParserService
     
     @State private var showMotionJSON = false
     @State private var showLocationJSON = false
@@ -62,7 +62,7 @@ struct LogbookDetail: View {
             let jsonData = try JSONSerialization.data(withJSONObject: dictionary, options: .prettyPrinted)
             return String(data: jsonData, encoding: .utf8)
         } catch {
-            print("Error converting dictionary to string: \(error)")
+            debugPrint("Error converting dictionary to string: \(error)")
             return nil
         }
     }
@@ -72,7 +72,7 @@ struct LogbookDetail: View {
             let jsonData = try JSONSerialization.data(withJSONObject: array, options: .prettyPrinted)
             return String(data: jsonData, encoding: .utf8)
         } catch {
-            print("Error converting array to string: \(error)")
+            debugPrint("Error converting array to string: \(error)")
             return nil
         }
     }
@@ -83,30 +83,29 @@ struct LogbookDetail: View {
         guard let sampleJSON = entry.sampleJSON,
               let locationJSON = entry.gpsJSON,
               let submersionJSON = entry.waterSubmersionJSON else {
-            print("No sampleJSON, gpsJSON, or waterSubmersionJSON found")
+            debugPrint("No sampleJSON, gpsJSON, or waterSubmersionJSON found")
             return nil
         }
 
         // Parse motion data (expected to be a dictionary with a "data" key holding an array of arrays)
         guard let motionJSONObject = try? JSONSerialization.jsonObject(with: Data(sampleJSON.utf8), options: []) as? [String: Any],
               let motionDataArray = motionJSONObject["data"] as? [[Any]] else {
-            print("Failed to parse motion data")
+            debugPrint("Failed to parse motion data")
             return nil
         }
 
         // Parse location data (expected to be an array of dictionaries)
         guard let locationDataArray = try? JSONSerialization.jsonObject(with: Data(locationJSON.utf8), options: []) as? [[String: Any]] else {
-            print("Failed to parse location data")
+            debugPrint("Failed to parse location data")
             return nil
         }
 
         // Parse submersion data (expected to be an array of dictionaries)
         guard let submersionDataArray = try? JSONSerialization.jsonObject(with: Data(submersionJSON.utf8), options: []) as? [[String: Any]] else {
-            print("Failed to parse submersion data")
+            debugPrint("Failed to parse submersion data")
             return nil
         }
 
-        // Create structured JSON with metadata
         var structuredJSON: [String: Any] = [
             "MOTION": [
                 "metadata": [
@@ -119,7 +118,6 @@ struct LogbookDetail: View {
             ]
         ]
 
-        // Add location data
         structuredJSON["LOCATION"] = [
             "metadata": [
                 "variables": "time,latitude,longitude",
@@ -130,7 +128,6 @@ struct LogbookDetail: View {
             "data": locationDataArray.map { [$0["timestamp"], $0["latitude"], $0["longitude"]] }
         ]
 
-        // Add submersion data
         structuredJSON["SUBMERSION"] = [
             "metadata": [
                 "variables": "time,depth,temperature",
