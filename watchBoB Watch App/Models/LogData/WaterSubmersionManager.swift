@@ -98,6 +98,11 @@ class WaterSubmersionManager: NSObject, ObservableObject {
         extendedRuntimeSession?.invalidate()
         extendedRuntimeSession = nil
     }
+    
+    func enableWaterLock() {
+        debugPrint("[Water Lock] *** Activating Water Lock. ***")
+        WKInterfaceDevice.current().enableWaterLock()
+    }
 
     func handleAutomaticSession(_ session: WKExtendedRuntimeSession) {
         debugPrint("[WKExtendedRuntimeSession] *** Handling automatic dive session. ***")
