@@ -51,7 +51,7 @@ class SamplingService {
         newEntry.deviceSystemVersion = metadataLogger.deviceSystemVersion
         newEntry.deviceManufacturer = metadataLogger.deviceManufacturer
         
-        newEntry.sampleCSV = sensorManager.data.convertToJSONString()
+        newEntry.sampleJSON = sensorManager.data.convertToJSONString()
         newEntry.gpsJSON = locationDataManager.sampledLocationsToJSON()
         if let submersionJSON = waterSubmersionManager.serializeSubmersionData() {
             newEntry.waterSubmersionJSON = submersionJSON
