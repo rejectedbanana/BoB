@@ -86,21 +86,15 @@ struct LogbookDetail: View {
             debugPrint("No sampleJSON, gpsJSON, or waterSubmersionJSON found")
             return nil
         }
-
-        // Parse motion data (expected to be a dictionary with a "data" key holding an array of arrays)
         guard let motionJSONObject = try? JSONSerialization.jsonObject(with: Data(sampleJSON.utf8), options: []) as? [String: Any],
               let motionDataArray = motionJSONObject["data"] as? [[Any]] else {
             debugPrint("Failed to parse motion data")
             return nil
         }
-
-        // Parse location data (expected to be an array of dictionaries)
         guard let locationDataArray = try? JSONSerialization.jsonObject(with: Data(locationJSON.utf8), options: []) as? [[String: Any]] else {
             debugPrint("Failed to parse location data")
             return nil
         }
-
-        // Parse submersion data (expected to be an array of dictionaries)
         guard let submersionDataArray = try? JSONSerialization.jsonObject(with: Data(submersionJSON.utf8), options: []) as? [[String: Any]] else {
             debugPrint("Failed to parse submersion data")
             return nil

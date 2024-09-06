@@ -37,7 +37,7 @@ struct JSONView: View {
                 return formattedString
             }
         } catch {
-            print("Error formatting JSON: \(error)")
+            debugPrint("Error formatting JSON: \(error)")
         }
         return json
     }
