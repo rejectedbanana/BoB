@@ -18,8 +18,6 @@ class SamplingService {
         metadataLogger.startLogging()
         sensorManager.startLogging(10)
         locationDataManager.startSamplingGPS()
-        
-        waterSubmersionManager.enableWaterLock()
         // Commented below since we're handling automatic
 //        waterSubmersionManager.startDiveSession()
         

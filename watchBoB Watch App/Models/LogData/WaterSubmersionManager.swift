@@ -105,6 +105,7 @@ class WaterSubmersionManager: NSObject, ObservableObject {
         session.delegate = self
         self.extendedRuntimeSession = session
         diveSessionRunning = true
+        enableWaterLock()
     }
     
     func enableWaterLock() {
