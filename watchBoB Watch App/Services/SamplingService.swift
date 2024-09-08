@@ -18,7 +18,7 @@ class SamplingService {
         metadataLogger.startLogging()
         sensorManager.startLogging(10)
         locationDataManager.startSamplingGPS()
-        // Commented below since we're handling automatic 
+        // Commented below since we're handling automatic
 //        waterSubmersionManager.startDiveSession()
         
         let device = WKInterfaceDevice.current()
