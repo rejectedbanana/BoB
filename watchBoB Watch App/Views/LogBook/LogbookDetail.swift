@@ -56,18 +56,19 @@ struct LogbookDetail: View {
                 DetailRow(header: "End Coordinates", content: String(format: "%0.3f", record.stopLatitude)+" N,"+String(format: "%0.3f", record.stopLongitude)+" E")
                 DetailRow(header: "Samples", content: "1430")
                 DetailRow(header: "Sampling Frequency", content: "10 Hz")
-                if let dataArray = parsedData {
-                    ForEach(dataArray.indices, id: \.self) { index in
-                        let item = dataArray[index]
-                        if let timestamp = item["timestamp"] as? String,
-                           let latitude = item["latitude"] as? Double,
-                           let longitude = item["longitude"] as? Double {
-                            DetailRow(header: "Location Sample \(index + 1)", content: "Time: \(timeStampFormatter.formattedTime(from: timestamp)), \nLat: \(latitude), \nLon: \(longitude)")
-                        }
-                    }
-                } else {
-                    DetailRow(header: "Location Data", content: "No data available")
-                }
+                DetailRow(header: "Location JSON", content: record.gpsJSON ?? "No data available")
+//                if let dataArray = parsedData {
+//                    ForEach(dataArray.indices, id: \.self) { index in
+//                        let item = dataArray[index]
+//                        if let timestamp = item["timestamp"] as? String,
+//                           let latitude = item["latitude"] as? Double,
+//                           let longitude = item["longitude"] as? Double {
+//                            DetailRow(header: "Location Sample \(index + 1)", content: "Time: \(timeStampFormatter.formattedTime(from: timestamp)), \nLat: \(latitude), \nLon: \(longitude)")
+//                        }
+//                    }
+//                } else {
+//                    DetailRow(header: "Location Data", content: "No data available")
+//                }
             }
         }
     }

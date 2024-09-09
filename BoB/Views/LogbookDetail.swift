@@ -107,7 +107,7 @@ struct LogbookDetail: View {
                 DetailRow(header: "Samples", content: "\(getSampleCount(from: entry.sampleCSV))")
                 DetailRow(header: "Sampling Frequency", content: "10 Hz")
                 DetailRow(header: "Source", content: "Kim's Apple Watch")
-                DetailRow(header: "CSV Data", content: entry.sampleCSV ?? "No CSV data.")
+//                DetailRow(header: "CSV Data", content: entry.sampleCSV ?? "No CSV data.")
                 
                 // Buttons for viewing JSON data
                 Button("View Motion Data") {
