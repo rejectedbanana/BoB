@@ -10,14 +10,15 @@ import SwiftUI
 struct LogbookDetail: View {
     let entry: SampleSet
     
+    @State private var showMotionJSON = false
+    @State private var showLocationJSON = false
+    @State private var showSubmersionJSON = false
     @State private var csvName = ""
     @State private var csvContent = ""
     
     // time stamp formatter
     let timeStampFormatter = TimeStampManager()
-    private var parsedData: [[String: Any]]? {
-        return parseJSON()
-    }
+    
     private var combinedJSON: [String: Any]? {
         return combineJSON()
     }
@@ -96,29 +97,9 @@ struct LogbookDetail: View {
         }
     }
     
-    private func parseJSON() -> [[String: Any]]? {
-        guard let jsonString = entry.gpsJSON else {
-            print("No JSON string found")
-            return nil
-        }
-        print("JSON String: \(jsonString)") // Debugging line
-        let data = Data(jsonString.utf8)
-        do {
-            if let jsonArray = try JSONSerialization.jsonObject(with: data, options: []) as? [[String: Any]] {
-                return jsonArray
-            } else {
-                print("JSON is not an array of dictionaries")
-                return nil
-            }
-        } catch {
-            print("Error parsing JSON: \(error)")
-            return nil
-        }
-    }
-    
     var body: some View {
         List {
-            Section("Sample Details"){
+            Section("Sample Details") {
                 DetailRow(header: "Minimum Water Temperature", content: String(format: "%.1f °C", getMinimumTemperature(from: entry.waterSubmersionJSON)))
                 DetailRow(header: "Maximum Underwater Depth", content: String(format: "%.1f m", getMaximumDepth(from: entry.waterSubmersionJSON)))
                 DetailRow(header: "Start Time", content: timeStampFormatter.viewFormat(entry.startDatetime ?? Date(timeIntervalSince1970: 0)))
@@ -126,18 +107,28 @@ struct LogbookDetail: View {
                 DetailRow(header: "Samples", content: "\(getSampleCount(from: entry.sampleCSV))")
                 DetailRow(header: "Sampling Frequency", content: "10 Hz")
                 DetailRow(header: "Source", content: "Kim's Apple Watch")
-                DetailRow(header: "CSV Data", content: entry.sampleCSV ?? "No CSV data.")
-                if let dataArray = parsedData {
-                    ForEach(dataArray.indices, id: \.self) { index in
-                        let item = dataArray[index]
-                        if let timestamp = item["timestamp"] as? String,
-                           let latitude = item["latitude"] as? Double,
-                           let longitude = item["longitude"] as? Double {
-                            DetailRow(header: "Location Sample \(index + 1)", content: "Time: \(timeStampFormatter.formattedTime(from: timestamp)), \nLat: \(latitude), \nLon: \(longitude)")
-                        }
-                    }
-                } else {
-                    DetailRow(header: "Sample Data", content: "No data available")
+//                DetailRow(header: "CSV Data", content: entry.sampleCSV ?? "No CSV data.")
+                
+                // Buttons for viewing JSON data
+                Button("View Motion Data") {
+                    showMotionJSON.toggle()
+                }
+                .sheet(isPresented: $showMotionJSON) {
+                    JSONView(jsonContent: entry.sampleCSV ?? "No CSV data", title: "Motion Data")
+                }
+                
+                Button("View Location Data") {
+                    showLocationJSON.toggle()
+                }
+                .sheet(isPresented: $showLocationJSON) {
+                    JSONView(jsonContent: entry.gpsJSON ?? "No GPS data", title: "Location Data")
+                }
+                
+                Button("View Submersion Data") {
+                    showSubmersionJSON.toggle()
+                }
+                .sheet(isPresented: $showSubmersionJSON) {
+                    JSONView(jsonContent: entry.waterSubmersionJSON ?? "No Submersion data", title: "Submersion Data")
                 }
             }
             
