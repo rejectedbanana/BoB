@@ -13,18 +13,13 @@ struct LogbookView: View {
     @FetchRequest(sortDescriptors: [SortDescriptor(\.startDatetime, order: .reverse)]) var logBookRecords: FetchedResults<SampleSet>
     
     var body: some View {
-        NavigationStack {
-            List {
-                ForEach(logBookRecords) {logBookRecord in
-                    NavigationLink {
-                        LogbookDetail(record: logBookRecord)
-                    } label: {
-//                        Text(logBookRecord.name ?? "Unknown Name")
-                        LogbookRow(record: logBookRecord)
-                    }
+        List {
+            ForEach(logBookRecords) { logBookRecord in
+                NavigationLink(destination: LogbookDetail(record: logBookRecord)) {
+                    LogbookRow(record: logBookRecord)
                 }
-                .onDelete(perform: deleteBooks)
             }
+            .onDelete(perform: deleteBooks)
         }
         .navigationTitle("Logbook")
     }

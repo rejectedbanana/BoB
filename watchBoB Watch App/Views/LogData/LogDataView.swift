@@ -20,6 +20,8 @@ struct LogDataView: View {
     // pull in the sensor manager to take data
     @ObservedObject var sensorManager = SensorManager()
     
+    @State private var showSamplingMessage: Bool = false
+    
     // Toggle to turn data logging on and off
     @AppStorage("isSamplingActive") private var isLoggingData: Bool = false
     
@@ -88,13 +90,33 @@ struct LogDataView: View {
                 Text("No data yet")
                     .padding(.leading, 50)
             }
-            
+            if showSamplingMessage {
+                Text("Sampling started, waterlock on")
+                    .font(.headline)
+                    .foregroundColor(.green)
+                    .transition(.opacity)
+                    .padding(.vertical, 16)
+            }
             Button {
                 isLoggingData.toggle()
                 
                 if isLoggingData {
+                    // Start sampling
                     SamplingService.shared.startSampling(sensorManager: sensorManager, locationDataManager: locationDataManager, metadataLogger: metadataLogger, waterSubmersionManager: waterSubmersionManager)
+                    
+                    // Show the sampling message with animation
+                    withAnimation {
+                        showSamplingMessage = true
+                    }
+                    
+                    // Hide the message after 2 seconds
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                        withAnimation {
+                            showSamplingMessage = false
+                        }
+                    }
                 } else {
+                    // Stop sampling
                     SamplingService.shared.stopSampling(sensorManager: sensorManager, locationDataManager: locationDataManager, metadataLogger: metadataLogger, waterSubmersionManager: waterSubmersionManager, context: moc, dismiss: dismiss.callAsFunction)
                 }
             } label: {
@@ -105,7 +127,7 @@ struct LogDataView: View {
             .buttonStyle(.borderedProminent)
             .padding(.top, 10)
         }
-        .navigationBarBackButtonHidden(true)
+        .navigationBarBackButtonHidden(isLoggingData)
         .padding(.top, 10)
         .onReceive(waterSubmersionManager.$submersionDataSamples) { sample in
             debugPrint("New submersion data received, updating view. \(sample)")
