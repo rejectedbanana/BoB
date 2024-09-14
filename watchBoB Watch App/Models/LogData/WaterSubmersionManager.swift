@@ -58,6 +58,14 @@ class WaterSubmersionManager: NSObject, ObservableObject {
         self.temperature = temperature
     }
     
+    func clear() {
+        events.removeAll()
+        isSubmerged = false
+        measurement = nil
+        temperature = nil
+        submersionDataSamples.removeAll()
+    }
+    
     @MainActor
     private func addSubmersionSample(measurement: CMWaterSubmersionMeasurement?, temperature: CMWaterTemperature?) {
         guard let depth = measurement?.depth?.value else {

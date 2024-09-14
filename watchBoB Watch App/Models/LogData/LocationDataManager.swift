@@ -72,4 +72,8 @@ class LocationDataManager: NSObject, ObservableObject, CLLocationManagerDelegate
         }
         return nil
     }
+    
+    func clear() {
+        sampledLocations.removeAll()
+    }
 }
