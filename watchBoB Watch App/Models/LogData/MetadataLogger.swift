@@ -14,16 +14,14 @@ class MetadataLogger: NSObject, ObservableObject, CLLocationManagerDelegate {
     let timeStampFormatter = TimeStampManager()
     
     // define an ID for the metadata
-    var sessionID: UUID?
-    var name: String? = "TBD"
-    // define the start data
-    var startDatetime: Date?
-    var startLatitude: Double = 0.0
-    var startLongitude: Double = 0.0
-    // define the stop data
-    var stopDatetime: Date?
-    var stopLatitude: Double = 0.0
-    var stopLongitude: Double = 0.0
+    @Published var sessionID: UUID?
+    @Published var name: String = "TBD"
+    @Published var startDatetime: Date?
+    @Published var startLatitude: Double = 0.0
+    @Published var startLongitude: Double = 0.0
+    @Published var stopDatetime: Date?
+    @Published var stopLatitude: Double = 0.0
+    @Published var stopLongitude: Double = 0.0
     
     // Device Info
     var deviceName: String = "Unknown"
@@ -65,6 +63,16 @@ class MetadataLogger: NSObject, ObservableObject, CLLocationManagerDelegate {
         
     }
     
+    func clear() {
+        sessionID = nil
+        name = "TBD"
+        startDatetime = nil
+        startLatitude = 0.0
+        startLongitude = 0.0
+        stopDatetime = nil
+        stopLatitude = 0.0
+        stopLongitude = 0.0
+    }
  }
 extension Double {
     /// Rounds the double to 'places' decimal places.
