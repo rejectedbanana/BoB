@@ -8,7 +8,7 @@
 import Foundation
 
 struct SubmersionDataSample: Codable {
-    let timestamp: Date
+    let timestamp: String
     let depth: Double?
     let temperature: Double?
     let surfacePressure: Double?
