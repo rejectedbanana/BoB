@@ -11,10 +11,12 @@ struct JSONView: View {
     let jsonContent: String
     let title: String
     
+    @StateObject private var viewModel = JSONViewModel()
+    
     var body: some View {
         VStack {
             ScrollView {
-                Text(jsonContent)
+                Text(viewModel.truncatedJSONContent)
                     .padding()
                     .background(Color.black.opacity(0.05))
                     .cornerRadius(8)
@@ -33,30 +35,16 @@ struct JSONView: View {
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button(action: {
-                    UIPasteboard.general.string = jsonContent
+                    UIPasteboard.general.string = viewModel.truncatedJSONContent
                 }) {
                     Image(systemName: "doc.on.doc")
                 }
                 .help("Copy JSON to clipboard")
             }
         }
+        .onAppear {
+            viewModel.processJSON(jsonContent)
+        }
     }
 }
 
-#Preview {
-    JSONView(jsonContent: """
-    {
-        "MOTION": {
-            "metadata": {
-                "variables": "time,accelerometerX,accelerometerY,accelerometerZ,gyroscopeX,gyroscopeY,gyroscopeZ,magnetometerX,magnetometerY,magnetometerZ",
-                "units": "yyyy-MM-dd'T'HH:mm:ss.SSSZ, m/s, m/s, m/s, radians/s, radians/s, radians/s, microTesla, microTesla, microTesla",
-                "sensor_id": "motion",
-                "description": "3-axis acceleration, rotation, and magnetic field from motion sensors"
-            },
-            "data": [
-                ["2024-06-19T16:27:20.892Z", 0.0169, -0.0843, -0.9829, -0.0322, 0.0037, 0.0037, 12.0515, -7.9176, -46.0155]
-            ]
-        }
-    }
-    """, title: "Sample JSON")
-}
