@@ -37,8 +37,13 @@ class MetadataLogger: NSObject, ObservableObject, CLLocationManagerDelegate {
     func getCurrentLocation() -> (latitude: Double, longitude: Double) {
         let locationDataManager = LocationDataManager()
         
-        let latitude = locationDataManager.locationManager.location?.coordinate.latitude.rounded(toPlaces: 6) ?? Double.nan
-        let longitude = locationDataManager.locationManager.location?.coordinate.longitude.rounded(toPlaces: 6) ?? Double.nan
+        guard let location = locationDataManager.locationManager.location else {
+            debugPrint("Location data is unavailable.")
+            return (Double.nan, Double.nan)
+        }
+        
+        let latitude = location.coordinate.latitude.rounded(toPlaces: 6)
+        let longitude = location.coordinate.longitude.rounded(toPlaces: 6)
         
         return (latitude, longitude)
     }
