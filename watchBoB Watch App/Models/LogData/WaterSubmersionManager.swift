@@ -72,17 +72,28 @@ class WaterSubmersionManager: NSObject, ObservableObject {
             debugPrint("No depth data available")
             return
         }
+        let surfacePressureRounded: Double? = {
+            if let pressure = measurement?.surfacePressure.value {
+                return (pressure * 1000).rounded() / 1000
+            } else {
+                return nil
+            }
+        }()
         
         guard let tempValue = temperature?.temperature.value else {
             debugPrint("No temperature data available")
             return
         }
+        let tempValueRounded = (tempValue * 1000).rounded() / 1000
+        
+        let iso8601Formatter = ISO8601DateFormatter()
+        let timestamp = iso8601Formatter.string(from: Date())
         
         let newSample = SubmersionDataSample(
-            timestamp: Date(),
+            timestamp: timestamp,
             depth: depth,
-            temperature: tempValue,
-            surfacePressure: measurement?.surfacePressure.value
+            temperature: tempValueRounded,
+            surfacePressure: surfacePressureRounded
         )
         submersionDataSamples.append(newSample)
     }

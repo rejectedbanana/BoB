@@ -34,35 +34,42 @@ class MetadataLogger: NSObject, ObservableObject, CLLocationManagerDelegate {
     
     var isLogging = false
 
-    func getCurrentLocation() -> (latitude: Double, longitude: Double){
+    func getCurrentLocation() -> (latitude: Double, longitude: Double) {
         let locationDataManager = LocationDataManager()
         
-        let latitude = locationDataManager.locationManager.location?.coordinate.latitude ?? Double.nan
-        let longitude = locationDataManager.locationManager.location?.coordinate.longitude ?? Double.nan
+        guard let location = locationDataManager.locationManager.location else {
+            debugPrint("Location data is unavailable.")
+            return (Double.nan, Double.nan)
+        }
         
-        return( latitude, longitude)
+        let latitude = location.coordinate.latitude.rounded(toPlaces: 6)
+        let longitude = location.coordinate.longitude.rounded(toPlaces: 6)
+        
+        return (latitude, longitude)
     }
 
     func startLogging() {
-        // replace with just updating the local variables
         sessionID = UUID()
         name = timeStampFormatter.exportNameFormat(Date.now)
         startDatetime = Date()
-        ( startLatitude, startLongitude ) = getCurrentLocation()
-
-//        WKInterfaceDevice.current().enableWaterLock()
-        
+        (startLatitude, startLongitude) = getCurrentLocation()
         isLogging = true
         
     }
 
     func stopLogging() {
-        // replace with just updating the local variables
         stopDatetime = Date()
-        ( stopLatitude, stopLongitude ) = getCurrentLocation()
+        (stopLatitude, stopLongitude) = getCurrentLocation()
 
         isLogging = false
         
     }
     
  }
+extension Double {
+    /// Rounds the double to 'places' decimal places.
+    func rounded(toPlaces places: Int) -> Double {
+        let divisor = pow(10.0, Double(places))
+        return (self * divisor).rounded() / divisor
+    }
+}
