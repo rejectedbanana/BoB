@@ -118,6 +118,20 @@ class SensorManager: NSObject, ObservableObject {
         print(data)
     }
     
+    func clear() {
+        accX = 0.0
+        accY = 0.0
+        accZ = 0.0
+        gyrX = 0.0
+        gyrY = 0.0
+        gyrZ = 0.0
+        magX = 0.0
+        magY = 0.0
+        magZ = 0.0
+        elapsedTime = "00:00.00"
+        data.reset()
+    }
+    
     // Save the data to CoreData
     func saveData(timeStamp: Double, accX: Double ) {
         // figure out how to save data to Core Motion here

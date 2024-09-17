@@ -127,6 +127,17 @@ struct LogDataView: View {
             .buttonStyle(.borderedProminent)
             .padding(.top, 10)
         }
+        .onAppear {
+            sensorManager.clear()
+            locationDataManager.clear()
+            waterSubmersionManager.clear()
+        }
+        .onDisappear {
+            sensorManager.clear()
+            locationDataManager.clear()
+            waterSubmersionManager.clear()
+            SamplingService.shared.stopSampling(sensorManager: sensorManager, locationDataManager: locationDataManager, metadataLogger: metadataLogger, waterSubmersionManager: waterSubmersionManager, context: moc, dismiss: dismiss.callAsFunction)
+        }
         .navigationBarBackButtonHidden(isLoggingData)
         .padding(.top, 10)
         .onReceive(waterSubmersionManager.$submersionDataSamples) { sample in
