@@ -28,20 +28,30 @@ struct LogbookDetail: View {
             print("No sampleCSV or sampleJSON found")
             return nil
         }
-        
-        let csvData = Data(sampleCSV.utf8)
         let jsonData = Data(sampleJSON.utf8)
         let submersionJSON = entry.waterSubmersionJSON ?? "[]"
         let submersionData = Data(submersionJSON.utf8)
         do {
-            // Parse the motion data from CSV
+            // Parse the motion data from CSV into an array of dictionaries
             let motionLines = sampleCSV.split(separator: "\n").map { String($0) }
             let motionHeaders = motionLines.first?.split(separator: ",").map { String($0) } ?? []
-            let motionData = motionLines.dropFirst().map { line -> [Any] in
+            let motionDataDictArray = motionLines.dropFirst().map { line -> [String: String] in
                 let values = line.split(separator: ",").map { String($0) }
-                return motionHeaders.enumerated().compactMap { index, header in
-                    index < values.count ? values[index] : nil
+                var dict: [String: String] = [:]
+                for (index, header) in motionHeaders.enumerated() {
+                    if index < values.count {
+                        dict[header] = values[index]
+                    }
                 }
+                return dict
+            }
+            
+            // Define the desired field order
+            let fieldOrder = ["time", "AccelerometerX", "AccelerometerY", "AccelerometerZ", "GyroscopeX", "GyroscopeY", "GyroscopeZ", "MagnetometerX", "MagnetometerY", "MagnetometerZ"]
+            
+            // Create the motionData array with fields in the desired order
+            let motionData = motionDataDictArray.map { dict in
+                fieldOrder.map { dict[$0] ?? "" }
             }
             
             // Parse the location data from JSON
@@ -56,8 +66,8 @@ struct LogbookDetail: View {
             let structuredJSON: [String: Any] = [
                 "MOTION": [
                     "metadata": [
-                        "variables": "time,accelerometerX,accelerometerY,accelerometerZ,gyroscopeX,gyroscopeY,gyroscopeZ,magnetometerX,magnetometerY,magnetometerZ",
-                        "units": "yyyy-MM-dd'T'HH:mm:ss.SSSZ, m/s, m/s, m/s, radians/s, radians/s, radians/s, microTesla, microTesla, microTesla",
+                        "variables": fieldOrder.joined(separator: ","),
+                        "units": "yyyy-MM-dd'T'HH:mm:ss.SSSZ, m/s², m/s², m/s², rad/s, rad/s, rad/s, µT, µT, µT",
                         "sensor_id": "motion",
                         "description": "3-axis acceleration, rotation, and magnetic field from motion sensors"
                     ],
@@ -65,19 +75,19 @@ struct LogbookDetail: View {
                 ],
                 "LOCATION": [
                     "metadata": [
-                        "variables": "time,latitude,longitude",
-                        "units": "yyyy-MM-dd'T'HH:mm:ss.SSSZ, degrees North, degrees East",
+                        "variables": "timestamp,latitude,longitude",
+                        "units": "yyyy-MM-dd'T'HH:mm:ss.SSSZ, degrees, degrees",
                         "sensor_id": "location",
-                        "description": "Location determined from either L1 and L5 GPS, GLONASS, Galileo, QZSS, and BeiDou"
+                        "description": "Geographical location data"
                     ],
                     "data": locationData
                 ],
                 "SUBMERSION": [
                     "metadata": [
-                        "variables": "time,depth,temperature",
-                        "units": "yyyy-MM-dd'T'HH:mm:ss.SSSZ, meters, degrees Celsius",
+                        "variables": "timestamp,depth,temperature",
+                        "units": "yyyy-MM-dd'T'HH:mm:ss.SSSZ, meters, °C",
                         "sensor_id": "submersion",
-                        "description": "Depth and temperature data from dive sensors when submerged"
+                        "description": "Depth and temperature data from submersion sensors"
                     ],
                     "data": submersionData
                 ]
@@ -89,6 +99,7 @@ struct LogbookDetail: View {
             return nil
         }
     }
+    
     
     // Convert combined JSON to a string
     private func convertCombinedJSONToString() -> String? {
@@ -113,7 +124,7 @@ struct LogbookDetail: View {
                 DetailRow(header: "Samples", content: "\(getSampleCount(from: entry.sampleCSV))")
                 DetailRow(header: "Sampling Frequency", content: "10 Hz")
                 DetailRow(header: "Source", content: "Kim's Apple Watch")
-//                DetailRow(header: "CSV Data", content: entry.sampleCSV ?? "No CSV data.")
+                //                DetailRow(header: "CSV Data", content: entry.sampleCSV ?? "No CSV data.")
                 
                 // Buttons for viewing JSON data
                 Button("View Motion Data") {
