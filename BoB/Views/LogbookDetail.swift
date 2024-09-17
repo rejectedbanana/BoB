@@ -24,15 +24,15 @@ struct LogbookDetail: View {
     }
     
     private func combineJSON() -> [String: Any]? {
-        guard let sampleCSV = entry.sampleCSV, let sampleJSON = entry.gpsJSON, let submersionJSON = entry.waterSubmersionJSON else {
-            print("No sampleCSV, sampleJSON, or submersionJSON found")
+        guard let sampleCSV = entry.sampleCSV, let sampleJSON = entry.gpsJSON else {
+            print("No sampleCSV or sampleJSON found")
             return nil
         }
         
         let csvData = Data(sampleCSV.utf8)
         let jsonData = Data(sampleJSON.utf8)
+        let submersionJSON = entry.waterSubmersionJSON ?? "[]"
         let submersionData = Data(submersionJSON.utf8)
-        
         do {
             // Parse the motion data from CSV
             let motionDataArray = try JSONSerialization.jsonObject(with: csvData, options: []) as? [[String: Any]] ?? []
