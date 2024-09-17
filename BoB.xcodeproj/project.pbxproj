@@ -46,6 +46,7 @@
 		FC2C5C632C8CD93A00084262 /* JSONView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC2C5C622C8CD93A00084262 /* JSONView.swift */; };
 		FC9A2A1E2C739E0800820928 /* StartSamplingIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC9A2A1D2C739E0800820928 /* StartSamplingIntent.swift */; };
 		FC9A2A212C73AE0E00820928 /* SamplingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC9A2A202C73AE0E00820928 /* SamplingService.swift */; };
+		FC9AFC922C973B0C001BE4D6 /* JSONViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC9AFC912C973B0C001BE4D6 /* JSONViewModel.swift */; };
 		FCBA60C02C65490400E01B1F /* GPSData.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCBA60BF2C65490400E01B1F /* GPSData.swift */; };
 		FCBA60C12C65490400E01B1F /* GPSData.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCBA60BF2C65490400E01B1F /* GPSData.swift */; };
 		FCBA60C52C6BC20A00E01B1F /* WaterSubmersionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCBA60C42C6BC20300E01B1F /* WaterSubmersionManager.swift */; };
@@ -128,6 +129,7 @@
 		FC7B9B312C5FF1E400600C51 /* watchBoB Watch App.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "watchBoB Watch App.entitlements"; sourceTree = "<group>"; };
 		FC9A2A1D2C739E0800820928 /* StartSamplingIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartSamplingIntent.swift; sourceTree = "<group>"; };
 		FC9A2A202C73AE0E00820928 /* SamplingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SamplingService.swift; sourceTree = "<group>"; };
+		FC9AFC912C973B0C001BE4D6 /* JSONViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONViewModel.swift; sourceTree = "<group>"; };
 		FCBA60BA2C628A7500E01B1F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		FCBA60BB2C628A9600E01B1F /* watchBoB-Watch-App-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "watchBoB-Watch-App-Info.plist"; sourceTree = SOURCE_ROOT; };
 		FCBA60BF2C65490400E01B1F /* GPSData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GPSData.swift; sourceTree = "<group>"; };
@@ -286,6 +288,7 @@
 		97DF8E972AE195FA00A33A80 /* BoB */ = {
 			isa = PBXGroup;
 			children = (
+				FC9AFC902C973AFF001BE4D6 /* ViewModels */,
 				FCBA60BA2C628A7500E01B1F /* Info.plist */,
 				FC7B9B302C5FF1C400600C51 /* BoB.entitlements */,
 				97DF8E982AE195FA00A33A80 /* BoBApp.swift */,
@@ -365,6 +368,14 @@
 				FC9A2A202C73AE0E00820928 /* SamplingService.swift */,
 			);
 			path = Services;
+			sourceTree = "<group>";
+		};
+		FC9AFC902C973AFF001BE4D6 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				FC9AFC912C973B0C001BE4D6 /* JSONViewModel.swift */,
+			);
+			path = ViewModels;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -554,6 +565,7 @@
 				977E74CB2BE9895A009A36AD /* SensorSample+CoreDataProperties.swift in Sources */,
 				977E74CC2BE9895D009A36AD /* Bob.xcdatamodeld in Sources */,
 				97DF8E9B2AE195FA00A33A80 /* ContentView.swift in Sources */,
+				FC9AFC922C973B0C001BE4D6 /* JSONViewModel.swift in Sources */,
 				97DF8E992AE195FA00A33A80 /* BoBApp.swift in Sources */,
 				972889962BE2F5E500BB9A14 /* PhoneSessionManager.swift in Sources */,
 				9794676F2BEE8A0D00DF6E0B /* ListRow.swift in Sources */,
