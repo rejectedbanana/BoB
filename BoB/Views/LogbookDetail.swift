@@ -35,8 +35,14 @@ struct LogbookDetail: View {
         let submersionData = Data(submersionJSON.utf8)
         do {
             // Parse the motion data from CSV
-            let motionDataArray = try JSONSerialization.jsonObject(with: csvData, options: []) as? [[String: Any]] ?? []
-            let motionData = motionDataArray.map { $0.map { $1 } }
+            let motionLines = sampleCSV.split(separator: "\n").map { String($0) }
+            let motionHeaders = motionLines.first?.split(separator: ",").map { String($0) } ?? []
+            let motionData = motionLines.dropFirst().map { line -> [Any] in
+                let values = line.split(separator: ",").map { String($0) }
+                return motionHeaders.enumerated().compactMap { index, header in
+                    index < values.count ? values[index] : nil
+                }
+            }
             
             // Parse the location data from JSON
             let locationDataArray = try JSONSerialization.jsonObject(with: jsonData, options: []) as? [[String: Any]] ?? []
