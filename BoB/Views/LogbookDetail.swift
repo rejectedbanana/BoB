@@ -24,50 +24,29 @@ struct LogbookDetail: View {
     }
     
     private func combineJSON() -> [String: Any]? {
-        guard let sampleCSV = entry.sampleCSV, let sampleJSON = entry.gpsJSON else {
-            print("No sampleCSV or sampleJSON found")
+        guard let sampleJSON = entry.sampleCSV, let locationJSON = entry.gpsJSON else {
+            print("No sampleJSON or locationJSON found")
             return nil
         }
-        let jsonData = Data(sampleJSON.utf8)
+        let jsonData = Data(locationJSON.utf8)
         let submersionJSON = entry.waterSubmersionJSON ?? "[]"
         let submersionData = Data(submersionJSON.utf8)
+        
         do {
-            // Parse the motion data from CSV into an array of dictionaries
-            let motionLines = sampleCSV.split(separator: "\n").map { String($0) }
-            let motionHeaders = motionLines.first?.split(separator: ",").map { String($0) } ?? []
-            let motionDataDictArray = motionLines.dropFirst().map { line -> [String: String] in
-                let values = line.split(separator: ",").map { String($0) }
-                var dict: [String: String] = [:]
-                for (index, header) in motionHeaders.enumerated() {
-                    if index < values.count {
-                        dict[header] = values[index]
-                    }
-                }
-                return dict
-            }
+            let motionDataArray = try JSONSerialization.jsonObject(with: Data(sampleJSON.utf8), options: []) as? [[String: Any]] ?? []
+            let motionData = motionDataArray.map { [$0["timestamp"], $0["accX"], $0["accY"], $0["accZ"], $0["gyrX"], $0["gyrY"], $0["gyrZ"], $0["magX"], $0["magY"], $0["magZ"]] }
             
-            // Define the desired field order
-            let fieldOrder = ["time", "AccelerometerX", "AccelerometerY", "AccelerometerZ", "GyroscopeX", "GyroscopeY", "GyroscopeZ", "MagnetometerX", "MagnetometerY", "MagnetometerZ"]
-            
-            // Create the motionData array with fields in the desired order
-            let motionData = motionDataDictArray.map { dict in
-                fieldOrder.map { dict[$0] ?? "" }
-            }
-            
-            // Parse the location data from JSON
             let locationDataArray = try JSONSerialization.jsonObject(with: jsonData, options: []) as? [[String: Any]] ?? []
             let locationData = locationDataArray.map { [$0["timestamp"], $0["latitude"], $0["longitude"]] }
             
-            // Parse the submersion data from JSON
             let submersionDataArray = try JSONSerialization.jsonObject(with: submersionData, options: []) as? [[String: Any]] ?? []
             let submersionData = submersionDataArray.map { [$0["timestamp"], $0["depth"], $0["temperature"]] }
             
-            // Create structured JSON with metadata
             let structuredJSON: [String: Any] = [
                 "MOTION": [
                     "metadata": [
-                        "variables": fieldOrder.joined(separator: ","),
-                        "units": "yyyy-MM-dd'T'HH:mm:ss.SSSZ, m/s², m/s², m/s², rad/s, rad/s, rad/s, µT, µT, µT",
+                        "variables": ["timestamp", "accX", "accY", "accZ", "gyrX", "gyrY", "gyrZ", "magX", "magY", "magZ"].joined(separator: ","),
+                        "units": "ISO8601, m/s², m/s², m/s², rad/s, rad/s, rad/s, µT, µT, µT",
                         "sensor_id": "motion",
                         "description": "3-axis acceleration, rotation, and magnetic field from motion sensors"
                     ],
@@ -76,7 +55,7 @@ struct LogbookDetail: View {
                 "LOCATION": [
                     "metadata": [
                         "variables": "timestamp,latitude,longitude",
-                        "units": "yyyy-MM-dd'T'HH:mm:ss.SSSZ, degrees, degrees",
+                        "units": "ISO8601, degrees, degrees",
                         "sensor_id": "location",
                         "description": "Geographical location data"
                     ],
@@ -85,7 +64,7 @@ struct LogbookDetail: View {
                 "SUBMERSION": [
                     "metadata": [
                         "variables": "timestamp,depth,temperature",
-                        "units": "yyyy-MM-dd'T'HH:mm:ss.SSSZ, meters, °C",
+                        "units": "ISO8601, meters, °C",
                         "sensor_id": "submersion",
                         "description": "Depth and temperature data from submersion sensors"
                     ],
@@ -99,6 +78,7 @@ struct LogbookDetail: View {
             return nil
         }
     }
+    
     
     
     // Convert combined JSON to a string
