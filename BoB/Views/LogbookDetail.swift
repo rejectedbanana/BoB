@@ -78,8 +78,17 @@ struct LogbookDetail: View {
             return nil
         }
     }
-    
-    
+    private func jsonString(for sensorType: String) -> String? {
+        guard let combinedJSON = combinedJSON else { return nil }
+        
+        if let sensorData = combinedJSON[sensorType] as? [String: Any],
+           let jsonData = try? JSONSerialization.data(withJSONObject: sensorData, options: .prettyPrinted),
+           let jsonString = String(data: jsonData, encoding: .utf8) {
+            return jsonString
+        } else {
+            return nil
+        }
+    }
     
     // Convert combined JSON to a string
     private func convertCombinedJSONToString() -> String? {
@@ -111,21 +120,21 @@ struct LogbookDetail: View {
                     showMotionJSON.toggle()
                 }
                 .sheet(isPresented: $showMotionJSON) {
-                    JSONView(jsonContent: entry.sampleCSV ?? "No CSV data", title: "Motion Data")
+                    JSONView(jsonContent: jsonString(for: "MOTION") ?? "No Motion Data", title: "Motion Data")
                 }
                 
                 Button("View Location Data") {
                     showLocationJSON.toggle()
                 }
                 .sheet(isPresented: $showLocationJSON) {
-                    JSONView(jsonContent: entry.gpsJSON ?? "No GPS data", title: "Location Data")
+                    JSONView(jsonContent: jsonString(for: "LOCATION") ?? "No Location Data", title: "Location Data")
                 }
                 
                 Button("View Submersion Data") {
                     showSubmersionJSON.toggle()
                 }
                 .sheet(isPresented: $showSubmersionJSON) {
-                    JSONView(jsonContent: entry.waterSubmersionJSON ?? "No Submersion data", title: "Submersion Data")
+                    JSONView(jsonContent: jsonString(for: "SUBMERSION") ?? "No Submersion Data", title: "Submersion Data")
                 }
             }
             
