@@ -36,6 +36,7 @@ struct ContentView: View {
                     ToolbarItem(placement: .navigationBarTrailing) {
                         EditButton()
                     }
+                    
                 }
             }
         }

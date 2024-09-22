@@ -136,7 +136,6 @@ struct LogDataView: View {
             sensorManager.clear()
             locationDataManager.clear()
             waterSubmersionManager.clear()
-            SamplingService.shared.stopSampling(sensorManager: sensorManager, locationDataManager: locationDataManager, metadataLogger: metadataLogger, waterSubmersionManager: waterSubmersionManager, context: moc, dismiss: dismiss.callAsFunction)
         }
         .navigationBarBackButtonHidden(isLoggingData)
         .padding(.top, 10)

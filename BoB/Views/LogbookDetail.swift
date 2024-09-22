@@ -24,40 +24,29 @@ struct LogbookDetail: View {
     }
     
     private func combineJSON() -> [String: Any]? {
-        guard let sampleCSV = entry.sampleCSV, let sampleJSON = entry.gpsJSON else {
-            print("No sampleCSV or sampleJSON found")
+        guard let sampleJSON = entry.sampleCSV, let locationJSON = entry.gpsJSON else {
+            print("No sampleJSON or locationJSON found")
             return nil
         }
-        
-        let csvData = Data(sampleCSV.utf8)
-        let jsonData = Data(sampleJSON.utf8)
+        let jsonData = Data(locationJSON.utf8)
         let submersionJSON = entry.waterSubmersionJSON ?? "[]"
         let submersionData = Data(submersionJSON.utf8)
+        
         do {
-            // Parse the motion data from CSV
-            let motionLines = sampleCSV.split(separator: "\n").map { String($0) }
-            let motionHeaders = motionLines.first?.split(separator: ",").map { String($0) } ?? []
-            let motionData = motionLines.dropFirst().map { line -> [Any] in
-                let values = line.split(separator: ",").map { String($0) }
-                return motionHeaders.enumerated().compactMap { index, header in
-                    index < values.count ? values[index] : nil
-                }
-            }
+            let motionDataArray = try JSONSerialization.jsonObject(with: Data(sampleJSON.utf8), options: []) as? [[String: Any]] ?? []
+            let motionData = motionDataArray.map { [$0["timestamp"], $0["accX"], $0["accY"], $0["accZ"], $0["gyrX"], $0["gyrY"], $0["gyrZ"], $0["magX"], $0["magY"], $0["magZ"]] }
             
-            // Parse the location data from JSON
             let locationDataArray = try JSONSerialization.jsonObject(with: jsonData, options: []) as? [[String: Any]] ?? []
             let locationData = locationDataArray.map { [$0["timestamp"], $0["latitude"], $0["longitude"]] }
             
-            // Parse the submersion data from JSON
             let submersionDataArray = try JSONSerialization.jsonObject(with: submersionData, options: []) as? [[String: Any]] ?? []
             let submersionData = submersionDataArray.map { [$0["timestamp"], $0["depth"], $0["temperature"]] }
             
-            // Create structured JSON with metadata
             let structuredJSON: [String: Any] = [
                 "MOTION": [
                     "metadata": [
-                        "variables": "time,accelerometerX,accelerometerY,accelerometerZ,gyroscopeX,gyroscopeY,gyroscopeZ,magnetometerX,magnetometerY,magnetometerZ",
-                        "units": "yyyy-MM-dd'T'HH:mm:ss.SSSZ, m/s, m/s, m/s, radians/s, radians/s, radians/s, microTesla, microTesla, microTesla",
+                        "variables": ["timestamp", "accX", "accY", "accZ", "gyrX", "gyrY", "gyrZ", "magX", "magY", "magZ"].joined(separator: ","),
+                        "units": "ISO8601, m/s², m/s², m/s², rad/s, rad/s, rad/s, µT, µT, µT",
                         "sensor_id": "motion",
                         "description": "3-axis acceleration, rotation, and magnetic field from motion sensors"
                     ],
@@ -65,19 +54,19 @@ struct LogbookDetail: View {
                 ],
                 "LOCATION": [
                     "metadata": [
-                        "variables": "time,latitude,longitude",
-                        "units": "yyyy-MM-dd'T'HH:mm:ss.SSSZ, degrees North, degrees East",
+                        "variables": "timestamp,latitude,longitude",
+                        "units": "ISO8601, degrees, degrees",
                         "sensor_id": "location",
-                        "description": "Location determined from either L1 and L5 GPS, GLONASS, Galileo, QZSS, and BeiDou"
+                        "description": "Geographical location data"
                     ],
                     "data": locationData
                 ],
                 "SUBMERSION": [
                     "metadata": [
-                        "variables": "time,depth,temperature",
-                        "units": "yyyy-MM-dd'T'HH:mm:ss.SSSZ, meters, degrees Celsius",
+                        "variables": "timestamp,depth,temperature",
+                        "units": "ISO8601, meters, °C",
                         "sensor_id": "submersion",
-                        "description": "Depth and temperature data from dive sensors when submerged"
+                        "description": "Depth and temperature data from submersion sensors"
                     ],
                     "data": submersionData
                 ]
@@ -86,6 +75,17 @@ struct LogbookDetail: View {
             return structuredJSON
         } catch {
             print("Error parsing or combining JSON: \(error)")
+            return nil
+        }
+    }
+    private func jsonString(for sensorType: String) -> String? {
+        guard let combinedJSON = combinedJSON else { return nil }
+        
+        if let sensorData = combinedJSON[sensorType] as? [String: Any],
+           let jsonData = try? JSONSerialization.data(withJSONObject: sensorData, options: .prettyPrinted),
+           let jsonString = String(data: jsonData, encoding: .utf8) {
+            return jsonString
+        } else {
             return nil
         }
     }
@@ -113,28 +113,28 @@ struct LogbookDetail: View {
                 DetailRow(header: "Samples", content: "\(getSampleCount(from: entry.sampleCSV))")
                 DetailRow(header: "Sampling Frequency", content: "10 Hz")
                 DetailRow(header: "Source", content: "Kim's Apple Watch")
-//                DetailRow(header: "CSV Data", content: entry.sampleCSV ?? "No CSV data.")
+                //                DetailRow(header: "CSV Data", content: entry.sampleCSV ?? "No CSV data.")
                 
                 // Buttons for viewing JSON data
                 Button("View Motion Data") {
                     showMotionJSON.toggle()
                 }
                 .sheet(isPresented: $showMotionJSON) {
-                    JSONView(jsonContent: entry.sampleCSV ?? "No CSV data", title: "Motion Data")
+                    JSONView(jsonContent: jsonString(for: "MOTION") ?? "No Motion Data", title: "Motion Data")
                 }
                 
                 Button("View Location Data") {
                     showLocationJSON.toggle()
                 }
                 .sheet(isPresented: $showLocationJSON) {
-                    JSONView(jsonContent: entry.gpsJSON ?? "No GPS data", title: "Location Data")
+                    JSONView(jsonContent: jsonString(for: "LOCATION") ?? "No Location Data", title: "Location Data")
                 }
                 
                 Button("View Submersion Data") {
                     showSubmersionJSON.toggle()
                 }
                 .sheet(isPresented: $showSubmersionJSON) {
-                    JSONView(jsonContent: entry.waterSubmersionJSON ?? "No Submersion data", title: "Submersion Data")
+                    JSONView(jsonContent: jsonString(for: "SUBMERSION") ?? "No Submersion Data", title: "Submersion Data")
                 }
             }
             
