@@ -18,7 +18,7 @@ struct ToggleSamplingIntent: AppIntent {
         let service = SamplingService.shared
         if isSamplingActive {
             service.stopSampling(
-                sensorManager: SensorManager(),
+                motionManager: MotionManager(),
                 locationDataManager: LocationDataManager(),
                 metadataLogger: MetadataLogger(),
                 waterSubmersionManager: WaterSubmersionManager.shared,
@@ -28,7 +28,7 @@ struct ToggleSamplingIntent: AppIntent {
             return .result(dialog: "Sampling Session Stopped")
         } else {
             service.startSampling(
-                sensorManager: SensorManager(),
+                motionManager: MotionManager(),
                 locationDataManager: LocationDataManager(),
                 metadataLogger: MetadataLogger(),
                 waterSubmersionManager: WaterSubmersionManager.shared

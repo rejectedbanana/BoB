@@ -14,9 +14,9 @@ class SamplingService {
 
     private init() {}
 
-    func startSampling(sensorManager: SensorManager, locationDataManager: LocationDataManager, metadataLogger: MetadataLogger, waterSubmersionManager: WaterSubmersionManager) {
+    func startSampling(motionManager: MotionManager, locationDataManager: LocationDataManager, metadataLogger: MetadataLogger, waterSubmersionManager: WaterSubmersionManager) {
         metadataLogger.startLogging()
-        sensorManager.startLogging(10)
+        motionManager.startLogging(10)
         locationDataManager.startSamplingGPS()
         // Commented below since we're handling automatic
 //        waterSubmersionManager.startDiveSession()
@@ -29,8 +29,8 @@ class SamplingService {
         metadataLogger.deviceManufacturer = "Apple Inc."
     }
 
-    func stopSampling(sensorManager: SensorManager, locationDataManager: LocationDataManager, metadataLogger: MetadataLogger, waterSubmersionManager: WaterSubmersionManager, context: NSManagedObjectContext, dismiss: (() -> Void)?) {
-        sensorManager.stopLogging()
+    func stopSampling(motionManager: MotionManager, locationDataManager: LocationDataManager, metadataLogger: MetadataLogger, waterSubmersionManager: WaterSubmersionManager, context: NSManagedObjectContext, dismiss: (() -> Void)?) {
+        motionManager.stopLogging()
         metadataLogger.stopLogging()
         locationDataManager.stopSamplingGPS()
         waterSubmersionManager.stopDiveSession()
@@ -51,7 +51,7 @@ class SamplingService {
         newEntry.deviceSystemVersion = metadataLogger.deviceSystemVersion
         newEntry.deviceManufacturer = metadataLogger.deviceManufacturer
         
-        newEntry.sampleCSV = sensorManager.convertToJSONString()
+        newEntry.sampleCSV = motionManager.convertToJSONString()
         newEntry.gpsJSON = locationDataManager.sampledLocationsToJSON()
         if let submersionJSON = waterSubmersionManager.serializeSubmersionData() {
             newEntry.waterSubmersionJSON = submersionJSON

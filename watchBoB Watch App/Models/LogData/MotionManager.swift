@@ -1,5 +1,5 @@
 //
-//  SensorManager.swift
+//  MotionManager.swift
 //  watchBoB Watch App
 //
 //  Created by Kim Martini on 10/25/23.
@@ -8,7 +8,7 @@
 import Foundation
 import CoreMotion
 import CoreData
-class SensorManager: NSObject, ObservableObject {
+class MotionManager: NSObject, ObservableObject {
     var motionManager: CMMotionManager? = CMMotionManager()
     var MotionDataArray: [MotionData] = []
 

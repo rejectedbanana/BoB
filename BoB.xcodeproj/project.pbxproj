@@ -23,7 +23,7 @@
 		9797363E2AEB15B8009BCFF0 /* Bob.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 9797363C2AEB15B8009BCFF0 /* Bob.xcdatamodeld */; };
 		979736402AEB1AB4009BCFF0 /* CoreDataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9797363F2AEB1AB4009BCFF0 /* CoreDataController.swift */; };
 		97B104A32AE7160200FE81DC /* LogbookDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97B104A22AE7160200FE81DC /* LogbookDetail.swift */; };
-		97B104AA2AE9771700FE81DC /* SensorManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97B104A92AE9771700FE81DC /* SensorManager.swift */; };
+		97B104AA2AE9771700FE81DC /* MotionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97B104A92AE9771700FE81DC /* MotionManager.swift */; };
 		97B1CED82C22041D00F771FB /* TimeStampManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97B1CED72C22041D00F771FB /* TimeStampManager.swift */; };
 		97B1CED92C22041D00F771FB /* TimeStampManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97B1CED72C22041D00F771FB /* TimeStampManager.swift */; };
 		97CE319C2AED6ADE009335C9 /* LocationDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97CE319B2AED6ADE009335C9 /* LocationDataManager.swift */; };
@@ -104,7 +104,7 @@
 		9797363D2AEB15B8009BCFF0 /* Bob.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Bob.xcdatamodel; sourceTree = "<group>"; };
 		9797363F2AEB1AB4009BCFF0 /* CoreDataController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataController.swift; sourceTree = "<group>"; };
 		97B104A22AE7160200FE81DC /* LogbookDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogbookDetail.swift; sourceTree = "<group>"; };
-		97B104A92AE9771700FE81DC /* SensorManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SensorManager.swift; sourceTree = "<group>"; };
+		97B104A92AE9771700FE81DC /* MotionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MotionManager.swift; sourceTree = "<group>"; };
 		97B1CED72C22041D00F771FB /* TimeStampManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeStampManager.swift; sourceTree = "<group>"; };
 		97CE319B2AED6ADE009335C9 /* LocationDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationDataManager.swift; sourceTree = "<group>"; };
 		97DF8E952AE195FA00A33A80 /* BoB.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BoB.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -255,7 +255,7 @@
 			isa = PBXGroup;
 			children = (
 				3001E6F92B8426E0003B09B1 /* MetadataLogger.swift */,
-				97B104A92AE9771700FE81DC /* SensorManager.swift */,
+				97B104A92AE9771700FE81DC /* MotionManager.swift */,
 				97FC9EE52C1CFA1D0076F30E /* MotionData.swift */,
 				FCBA60C42C6BC20300E01B1F /* WaterSubmersionManager.swift */,
 				97CE319B2AED6ADE009335C9 /* LocationDataManager.swift */,
@@ -587,7 +587,7 @@
 				FCBA60C52C6BC20A00E01B1F /* WaterSubmersionManager.swift in Sources */,
 				FC9A2A1E2C739E0800820928 /* StartSamplingIntent.swift in Sources */,
 				97CE319C2AED6ADE009335C9 /* LocationDataManager.swift in Sources */,
-				97B104AA2AE9771700FE81DC /* SensorManager.swift in Sources */,
+				97B104AA2AE9771700FE81DC /* MotionManager.swift in Sources */,
 				97FC9EE62C1CFA1D0076F30E /* MotionData.swift in Sources */,
 				9797363E2AEB15B8009BCFF0 /* Bob.xcdatamodeld in Sources */,
 				97FAC84D2BD850A4003E65E7 /* SampleSet+CoreDataClass.swift in Sources */,
