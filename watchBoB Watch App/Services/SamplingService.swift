@@ -53,7 +53,7 @@ class SamplingService {
         
         newEntry.sampleCSV = motionManager.convertToJSONString()
         newEntry.gpsJSON = locationDataManager.sampledLocationsToJSON()
-        if let submersionJSON = waterSubmersionManager.serializeSubmersionData() {
+        if let submersionJSON = waterSubmersionManager.serializeWaterSubmersionData() {
             newEntry.waterSubmersionJSON = submersionJSON
         }
 

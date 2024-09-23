@@ -79,7 +79,7 @@ struct LogDataView: View {
                 .padding(.leading, 5)
             
             // Dynamic water data
-            if let latestSample = waterSubmersionManager.submersionDataSamples.last {
+            if let latestSample = waterSubmersionManager.waterSubmersionData.last {
                 HStack {
                     Text("\(latestSample.depth ?? 0.0) m")
                     Spacer()
@@ -139,7 +139,7 @@ struct LogDataView: View {
         }
         .navigationBarBackButtonHidden(isLoggingData)
         .padding(.top, 10)
-        .onReceive(waterSubmersionManager.$submersionDataSamples) { sample in
+        .onReceive(waterSubmersionManager.$waterSubmersionData) { sample in
             debugPrint("New submersion data received, updating view. \(sample)")
         }
     }
