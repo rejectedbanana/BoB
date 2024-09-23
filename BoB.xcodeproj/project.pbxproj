@@ -47,8 +47,8 @@
 		FC9A2A1E2C739E0800820928 /* StartSamplingIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC9A2A1D2C739E0800820928 /* StartSamplingIntent.swift */; };
 		FC9A2A212C73AE0E00820928 /* SamplingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC9A2A202C73AE0E00820928 /* SamplingService.swift */; };
 		FC9AFC922C973B0C001BE4D6 /* JSONViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC9AFC912C973B0C001BE4D6 /* JSONViewModel.swift */; };
-		FCBA60C02C65490400E01B1F /* GPSData.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCBA60BF2C65490400E01B1F /* GPSData.swift */; };
-		FCBA60C12C65490400E01B1F /* GPSData.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCBA60BF2C65490400E01B1F /* GPSData.swift */; };
+		FCBA60C02C65490400E01B1F /* LocationData.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCBA60BF2C65490400E01B1F /* LocationData.swift */; };
+		FCBA60C12C65490400E01B1F /* LocationData.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCBA60BF2C65490400E01B1F /* LocationData.swift */; };
 		FCBA60C52C6BC20A00E01B1F /* WaterSubmersionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCBA60C42C6BC20300E01B1F /* WaterSubmersionManager.swift */; };
 		FCBA60C92C6D3F4A00E01B1F /* SubmersionSample.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCBA60C82C6D3F4200E01B1F /* SubmersionSample.swift */; };
 /* End PBXBuildFile section */
@@ -132,7 +132,7 @@
 		FC9AFC912C973B0C001BE4D6 /* JSONViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONViewModel.swift; sourceTree = "<group>"; };
 		FCBA60BA2C628A7500E01B1F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		FCBA60BB2C628A9600E01B1F /* watchBoB-Watch-App-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "watchBoB-Watch-App-Info.plist"; sourceTree = SOURCE_ROOT; };
-		FCBA60BF2C65490400E01B1F /* GPSData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GPSData.swift; sourceTree = "<group>"; };
+		FCBA60BF2C65490400E01B1F /* LocationData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationData.swift; sourceTree = "<group>"; };
 		FCBA60C42C6BC20300E01B1F /* WaterSubmersionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaterSubmersionManager.swift; sourceTree = "<group>"; };
 		FCBA60C82C6D3F4200E01B1F /* SubmersionSample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubmersionSample.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -180,7 +180,6 @@
 		972889922BE2E96200BB9A14 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				FCBA60BF2C65490400E01B1F /* GPSData.swift */,
 				9797363F2AEB1AB4009BCFF0 /* CoreDataController.swift */,
 				97B1CED72C22041D00F771FB /* TimeStampManager.swift */,
 				97FAC8492BD850A4003E65E7 /* SampleSet+CoreDataClass.swift */,
@@ -255,11 +254,12 @@
 		97B104AC2AE9777400FE81DC /* LogData */ = {
 			isa = PBXGroup;
 			children = (
-				FCBA60C42C6BC20300E01B1F /* WaterSubmersionManager.swift */,
-				97B104A92AE9771700FE81DC /* SensorManager.swift */,
-				97FC9EE52C1CFA1D0076F30E /* WatchSensorData.swift */,
 				3001E6F92B8426E0003B09B1 /* MetadataLogger.swift */,
+				97B104A92AE9771700FE81DC /* SensorManager.swift */,
+				FCBA60C42C6BC20300E01B1F /* WaterSubmersionManager.swift */,
+				97FC9EE52C1CFA1D0076F30E /* WatchSensorData.swift */,
 				97CE319B2AED6ADE009335C9 /* LocationDataManager.swift */,
+				FCBA60BF2C65490400E01B1F /* LocationData.swift */,
 			);
 			path = LogData;
 			sourceTree = "<group>";
@@ -555,7 +555,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				97B1CED82C22041D00F771FB /* TimeStampManager.swift in Sources */,
-				FCBA60C02C65490400E01B1F /* GPSData.swift in Sources */,
+				FCBA60C02C65490400E01B1F /* LocationData.swift in Sources */,
 				FC2C5C632C8CD93A00084262 /* JSONView.swift in Sources */,
 				977E74C82BE98952009A36AD /* SampleSet+CoreDataClass.swift in Sources */,
 				977E74C92BE98955009A36AD /* SampleSet+CoreDataProperties.swift in Sources */,
@@ -591,7 +591,7 @@
 				97FC9EE62C1CFA1D0076F30E /* WatchSensorData.swift in Sources */,
 				9797363E2AEB15B8009BCFF0 /* Bob.xcdatamodeld in Sources */,
 				97FAC84D2BD850A4003E65E7 /* SampleSet+CoreDataClass.swift in Sources */,
-				FCBA60C12C65490400E01B1F /* GPSData.swift in Sources */,
+				FCBA60C12C65490400E01B1F /* LocationData.swift in Sources */,
 				97FAC84E2BD850A4003E65E7 /* SampleSet+CoreDataProperties.swift in Sources */,
 				97FAC84F2BD850A4003E65E7 /* SensorSample+CoreDataClass.swift in Sources */,
 				97FAC8502BD850A4003E65E7 /* SensorSample+CoreDataProperties.swift in Sources */,

@@ -14,7 +14,7 @@ class LocationDataManager: NSObject, ObservableObject, CLLocationManagerDelegate
     @Published var authorizationStatus: CLAuthorizationStatus?
     @Published var location: CLLocationCoordinate2D?
     
-    @Published var sampledLocations: [GPSData] = []
+    @Published var sampledLocations: [LocationData] = []
     
     private var samplingTimer: Timer?
     
@@ -51,12 +51,12 @@ class LocationDataManager: NSObject, ObservableObject, CLLocationManagerDelegate
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if let location = locations.first?.coordinate {
-            let gpsData = GPSData(
+            let locationData = LocationData(
                 latitude: round(location.latitude * 10000) / 10000, // 4 decimal places
                 longitude: round(location.longitude * 10000) / 10000, // 4 decimal places
                 timestamp: Date()
             )
-            sampledLocations.append(gpsData)
+            sampledLocations.append(locationData)
         }
     }
     
