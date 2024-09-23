@@ -19,7 +19,7 @@ struct ToggleSamplingIntent: AppIntent {
         if isSamplingActive {
             service.stopSampling(
                 motionManager: MotionManager(),
-                locationDataManager: LocationDataManager(),
+                locationManager: LocationManager(),
                 metadataLogger: MetadataLogger(),
                 waterSubmersionManager: WaterSubmersionManager.shared,
                 context: CoreDataController().container.viewContext,
@@ -29,7 +29,7 @@ struct ToggleSamplingIntent: AppIntent {
         } else {
             service.startSampling(
                 motionManager: MotionManager(),
-                locationDataManager: LocationDataManager(),
+                locationManager: LocationManager(),
                 metadataLogger: MetadataLogger(),
                 waterSubmersionManager: WaterSubmersionManager.shared
             )

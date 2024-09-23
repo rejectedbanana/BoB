@@ -1,5 +1,5 @@
 //
-//  LocationDataManager.swift
+//  LocationManager.swift
 //  watchBoB Watch App
 //
 //  Created by Kim Martini on 10/28/23.
@@ -8,7 +8,7 @@
 import Foundation
 import CoreLocation
 
-class LocationDataManager: NSObject, ObservableObject, CLLocationManagerDelegate {
+class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
     var locationManager = CLLocationManager()
     
     @Published var authorizationStatus: CLAuthorizationStatus?

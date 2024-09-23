@@ -14,10 +14,10 @@ class SamplingService {
 
     private init() {}
 
-    func startSampling(motionManager: MotionManager, locationDataManager: LocationDataManager, metadataLogger: MetadataLogger, waterSubmersionManager: WaterSubmersionManager) {
+    func startSampling(motionManager: MotionManager, locationManager: LocationManager, metadataLogger: MetadataLogger, waterSubmersionManager: WaterSubmersionManager) {
         metadataLogger.startLogging()
         motionManager.startLogging(10)
-        locationDataManager.startSamplingGPS()
+        locationManager.startSamplingGPS()
         // Commented below since we're handling automatic
 //        waterSubmersionManager.startDiveSession()
         
@@ -29,10 +29,10 @@ class SamplingService {
         metadataLogger.deviceManufacturer = "Apple Inc."
     }
 
-    func stopSampling(motionManager: MotionManager, locationDataManager: LocationDataManager, metadataLogger: MetadataLogger, waterSubmersionManager: WaterSubmersionManager, context: NSManagedObjectContext, dismiss: (() -> Void)?) {
+    func stopSampling(motionManager: MotionManager, locationManager: LocationManager, metadataLogger: MetadataLogger, waterSubmersionManager: WaterSubmersionManager, context: NSManagedObjectContext, dismiss: (() -> Void)?) {
         motionManager.stopLogging()
         metadataLogger.stopLogging()
-        locationDataManager.stopSamplingGPS()
+        locationManager.stopSamplingGPS()
         waterSubmersionManager.stopDiveSession()
         
         let newEntry = SampleSet(context: context)
@@ -52,7 +52,7 @@ class SamplingService {
         newEntry.deviceManufacturer = metadataLogger.deviceManufacturer
         
         newEntry.sampleCSV = motionManager.convertToJSONString()
-        newEntry.gpsJSON = locationDataManager.sampledLocationsToJSON()
+        newEntry.gpsJSON = locationManager.sampledLocationsToJSON()
         if let submersionJSON = waterSubmersionManager.serializeWaterSubmersionData() {
             newEntry.waterSubmersionJSON = submersionJSON
         }

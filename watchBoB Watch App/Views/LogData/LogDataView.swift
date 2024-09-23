@@ -15,7 +15,7 @@ struct LogDataView: View {
     @Environment(\.dismiss) var dismiss
     
     @State private var name: String = "TBD"
-    @StateObject var locationDataManager = LocationDataManager()
+    @StateObject var locationManager = LocationManager()
     
     // pull in the sensor manager to take data
     @ObservedObject var motionManager = MotionManager()
@@ -43,10 +43,10 @@ struct LogDataView: View {
                 Text(motionManager.elapsedTime)
                     .frame(width: 70)
                 Spacer()
-                switch locationDataManager.locationManager.authorizationStatus {
+                switch locationManager.locationManager.authorizationStatus {
                 case .authorizedWhenInUse:
-                    let currentLat = locationDataManager.locationManager.location?.coordinate.latitude ?? Double.nan
-                    let currentLon = locationDataManager.locationManager.location?.coordinate.longitude ?? Double.nan
+                    let currentLat = locationManager.locationManager.location?.coordinate.latitude ?? Double.nan
+                    let currentLon = locationManager.locationManager.location?.coordinate.longitude ?? Double.nan
                     Text(String(format: "%.2f", currentLat) + ", " + String(format: "%.2f", currentLon))
                     
                 case .restricted, .denied:
@@ -102,7 +102,7 @@ struct LogDataView: View {
                 
                 if isLoggingData {
                     // Start sampling
-                    SamplingService.shared.startSampling(motionManager: motionManager, locationDataManager: locationDataManager, metadataLogger: metadataLogger, waterSubmersionManager: waterSubmersionManager)
+                    SamplingService.shared.startSampling(motionManager: motionManager, locationManager: locationManager, metadataLogger: metadataLogger, waterSubmersionManager: waterSubmersionManager)
                     
                     // Show the sampling message with animation
                     withAnimation {
@@ -117,7 +117,7 @@ struct LogDataView: View {
                     }
                 } else {
                     // Stop sampling
-                    SamplingService.shared.stopSampling(motionManager: motionManager, locationDataManager: locationDataManager, metadataLogger: metadataLogger, waterSubmersionManager: waterSubmersionManager, context: moc, dismiss: dismiss.callAsFunction)
+                    SamplingService.shared.stopSampling(motionManager: motionManager, locationManager: locationManager, metadataLogger: metadataLogger, waterSubmersionManager: waterSubmersionManager, context: moc, dismiss: dismiss.callAsFunction)
                 }
             } label: {
                 Text(isLoggingData ? "Stop" : "Start")
@@ -129,12 +129,12 @@ struct LogDataView: View {
         }
         .onAppear {
             motionManager.clear()
-            locationDataManager.clear()
+            locationManager.clear()
             waterSubmersionManager.clear()
         }
         .onDisappear {
             motionManager.clear()
-            locationDataManager.clear()
+            locationManager.clear()
             waterSubmersionManager.clear()
         }
         .navigationBarBackButtonHidden(isLoggingData)
