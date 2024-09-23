@@ -10,7 +10,7 @@ import CoreMotion
 import CoreData
 class SensorManager: NSObject, ObservableObject {
     var motionManager: CMMotionManager? = CMMotionManager()
-    var sensorDataArray: [SensorData] = []
+    var MotionDataArray: [MotionData] = []
 
     @Published var accX = 0.0
     @Published var accY = 0.0
@@ -45,7 +45,7 @@ class SensorManager: NSObject, ObservableObject {
         timeStamp = Date()
         elapsedTime = String(format: "%.2f", Date().timeIntervalSince(startTime))
 
-        let newSensorData = SensorData(
+        let newMotionData = MotionData(
             timestamp: timeStampFormatter.ISO8601Format(timeStamp),
             accX: accX,
             accY: accY,
@@ -57,7 +57,7 @@ class SensorManager: NSObject, ObservableObject {
             magY: magY,
             magZ: magZ
         )
-        sensorDataArray.append(newSensorData)
+        MotionDataArray.append(newMotionData)
     }
 
     func startLogging(_ freq: Double) {
@@ -85,7 +85,7 @@ class SensorManager: NSObject, ObservableObject {
         let encoder = JSONEncoder()
         encoder.dateEncodingStrategy = .iso8601
         do {
-            let jsonData = try encoder.encode(sensorDataArray)
+            let jsonData = try encoder.encode(MotionDataArray)
             return String(data: jsonData, encoding: .utf8)
         } catch {
             print("Error encoding sensor data to JSON: \(error)")
@@ -104,6 +104,6 @@ class SensorManager: NSObject, ObservableObject {
         magY = 0.0
         magZ = 0.0
         elapsedTime = "00:00.00"
-        sensorDataArray.removeAll()
+        MotionDataArray.removeAll()
     }
 }

@@ -1,5 +1,5 @@
 //
-//  WatchSensorData.swift
+//  MotionData.swift
 //  watchBoB Watch App
 //
 //  Created by Kim Martini on 6/14/24.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct SensorData: Codable {
+struct MotionData: Codable {
     let timestamp: String
     let accX: Double
     let accY: Double
