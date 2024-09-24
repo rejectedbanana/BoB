@@ -106,14 +106,13 @@ struct LogbookDetail: View {
     var body: some View {
         List {
             Section("Sample Details") {
-                DetailRow(header: "Minimum Water Temperature", content: String(format: "%.1f °C", getMinimumTemperature(from: entry.waterSubmersionJSON)))
-                DetailRow(header: "Maximum Underwater Depth", content: String(format: "%.1f m", getMaximumDepth(from: entry.waterSubmersionJSON)))
+                DetailRow(header: "Min Temp", content: entry.getMinimumTemperature().isNaN ? "no submersion data" : String(format: "%.1f °C", entry.getMinimumTemperature()) )
+                DetailRow(header: "Max Depth", content: entry.getMaximumDepth().isNaN ? "no submersion data" : String(format: "%.1f m", entry.getMaximumDepth()))
                 DetailRow(header: "Start Time", content: timeStampFormatter.viewFormat(entry.startDatetime ?? Date(timeIntervalSince1970: 0)))
                 DetailRow(header: "End Time", content: timeStampFormatter.viewFormat(entry.stopDatetime ?? Date(timeIntervalSince1970: 0)))
-                DetailRow(header: "Samples", content: "\(getSampleCount(from: entry.sampleCSV))")
+                DetailRow(header: "Samples", content: "\(entry.getMotionDataCount())")
                 DetailRow(header: "Sampling Frequency", content: "10 Hz")
                 DetailRow(header: "Source", content: "Kim's Apple Watch")
-                //                DetailRow(header: "CSV Data", content: entry.sampleCSV ?? "No CSV data.")
                 
                 // Buttons for viewing JSON data
                 Button("View Motion Data") {
@@ -159,35 +158,6 @@ struct LogbookDetail: View {
             self.csvName = timeStampFormatter.exportNameFormat(entry.startDatetime ?? Date.now )+"_AWUData.csv"
             self.csvContent = entry.sampleCSV ?? "No CSV data"
         }
-    }
-    
-    func getMinimumTemperature(from json: String?) -> Double {
-        guard let json = json, let data = json.data(using: .utf8) else { return 0.0 }
-        do {
-            let submersionDataArray = try JSONSerialization.jsonObject(with: data, options: []) as? [[String: Any]] ?? []
-            let temperatures = submersionDataArray.compactMap { $0["temperature"] as? Double }
-            return temperatures.min() ?? 0.0
-        } catch {
-            print("Error parsing submersion JSON for temperature: \(error)")
-            return 0.0
-        }
-    }
-    
-    func getMaximumDepth(from json: String?) -> Double {
-        guard let json = json, let data = json.data(using: .utf8) else { return 0.0 }
-        do {
-            let submersionDataArray = try JSONSerialization.jsonObject(with: data, options: []) as? [[String: Any]] ?? []
-            let depths = submersionDataArray.compactMap { $0["depth"] as? Double }
-            return depths.max() ?? 0.0
-        } catch {
-            print("Error parsing submersion JSON for depth: \(error)")
-            return 0.0
-        }
-    }
-    
-    func getSampleCount(from csv: String?) -> Int {
-        guard let csv = csv else { return 0 }
-        return csv.split(separator: "\n").count - 1 // Minus 1 to exclude header row
     }
     
     func exportCombinedJSON(fileName: String, content: String) -> URL {
