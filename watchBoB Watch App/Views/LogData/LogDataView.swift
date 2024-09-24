@@ -15,18 +15,18 @@ struct LogDataView: View {
     @Environment(\.dismiss) var dismiss
     
     @State private var name: String = "TBD"
-    @StateObject var locationDataManager = LocationDataManager()
+    @StateObject var locationManager = LocationManager()
     
     // pull in the sensor manager to take data
-    @ObservedObject var sensorManager = SensorManager()
+    @ObservedObject var motionManager = MotionManager()
     
     @State private var showSamplingMessage: Bool = false
     
     // Toggle to turn data logging on and off
     @AppStorage("isSamplingActive") private var isLoggingData: Bool = false
     
-    // pull in the metadataLogger to take metadata
-    @ObservedObject private var metadataLogger = MetadataLogger()
+    // pull in the metadataManager to take metadata
+    @ObservedObject private var metadataManager = MetadataManager()
     @ObservedObject var waterSubmersionManager = WaterSubmersionManager.shared
     
     var body: some View {
@@ -40,13 +40,13 @@ struct LogDataView: View {
             
             // Dynamic time/location data
             HStack{
-                Text(sensorManager.elapsedTime)
+                Text(motionManager.elapsedTime)
                     .frame(width: 70)
                 Spacer()
-                switch locationDataManager.locationManager.authorizationStatus {
+                switch locationManager.locationManager.authorizationStatus {
                 case .authorizedWhenInUse:
-                    let currentLat = locationDataManager.locationManager.location?.coordinate.latitude ?? Double.nan
-                    let currentLon = locationDataManager.locationManager.location?.coordinate.longitude ?? Double.nan
+                    let currentLat = locationManager.locationManager.location?.coordinate.latitude ?? Double.nan
+                    let currentLon = locationManager.locationManager.location?.coordinate.longitude ?? Double.nan
                     Text(String(format: "%.2f", currentLat) + ", " + String(format: "%.2f", currentLon))
                     
                 case .restricted, .denied:
@@ -68,9 +68,9 @@ struct LogDataView: View {
                 .padding(.leading, 5)
             
             // Dynamic motion data
-            RawMotionRow(title: "Acc", xValue: sensorManager.accX, yValue: sensorManager.accY, zValue: sensorManager.accZ, stringFormat: "%4.2f")
-            RawMotionRow(title: "Gyr", xValue: sensorManager.gyrX, yValue: sensorManager.gyrY, zValue: sensorManager.gyrZ, stringFormat: "%4.2f")
-            RawMotionRow(title: "Mag", xValue: sensorManager.magX, yValue: sensorManager.magY, zValue: sensorManager.magZ, stringFormat: "%3.1f")
+            RawMotionRow(title: "Acc", xValue: motionManager.accX, yValue: motionManager.accY, zValue: motionManager.accZ, stringFormat: "%4.2f")
+            RawMotionRow(title: "Gyr", xValue: motionManager.gyrX, yValue: motionManager.gyrY, zValue: motionManager.gyrZ, stringFormat: "%4.2f")
+            RawMotionRow(title: "Mag", xValue: motionManager.magX, yValue: motionManager.magY, zValue: motionManager.magZ, stringFormat: "%3.1f")
             
             // Static water data header
             Text("Water: depth, temp")
@@ -79,7 +79,7 @@ struct LogDataView: View {
                 .padding(.leading, 5)
             
             // Dynamic water data
-            if let latestSample = waterSubmersionManager.submersionDataSamples.last {
+            if let latestSample = waterSubmersionManager.waterSubmersionData.last {
                 HStack {
                     Text("\(latestSample.depth ?? 0.0) m")
                     Spacer()
@@ -102,7 +102,7 @@ struct LogDataView: View {
                 
                 if isLoggingData {
                     // Start sampling
-                    SamplingService.shared.startSampling(sensorManager: sensorManager, locationDataManager: locationDataManager, metadataLogger: metadataLogger, waterSubmersionManager: waterSubmersionManager)
+                    SamplingService.shared.startSampling(motionManager: motionManager, locationManager: locationManager, metadataManager: metadataManager, waterSubmersionManager: waterSubmersionManager)
                     
                     // Show the sampling message with animation
                     withAnimation {
@@ -117,7 +117,7 @@ struct LogDataView: View {
                     }
                 } else {
                     // Stop sampling
-                    SamplingService.shared.stopSampling(sensorManager: sensorManager, locationDataManager: locationDataManager, metadataLogger: metadataLogger, waterSubmersionManager: waterSubmersionManager, context: moc, dismiss: dismiss.callAsFunction)
+                    SamplingService.shared.stopSampling(motionManager: motionManager, locationManager: locationManager, metadataManager: metadataManager, waterSubmersionManager: waterSubmersionManager, context: moc, dismiss: dismiss.callAsFunction)
                 }
             } label: {
                 Text(isLoggingData ? "Stop" : "Start")
@@ -128,18 +128,18 @@ struct LogDataView: View {
             .padding(.top, 10)
         }
         .onAppear {
-            sensorManager.clear()
-            locationDataManager.clear()
+            motionManager.clear()
+            locationManager.clear()
             waterSubmersionManager.clear()
         }
         .onDisappear {
-            sensorManager.clear()
-            locationDataManager.clear()
+            motionManager.clear()
+            locationManager.clear()
             waterSubmersionManager.clear()
         }
         .navigationBarBackButtonHidden(isLoggingData)
         .padding(.top, 10)
-        .onReceive(waterSubmersionManager.$submersionDataSamples) { sample in
+        .onReceive(waterSubmersionManager.$waterSubmersionData) { sample in
             debugPrint("New submersion data received, updating view. \(sample)")
         }
     }

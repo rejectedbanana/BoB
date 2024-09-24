@@ -17,7 +17,7 @@ class WaterSubmersionManager: NSObject, ObservableObject {
     @Published var measurement: CMWaterSubmersionMeasurement? = nil
     @Published var temperature: CMWaterTemperature? = nil
     @Published var diveSessionRunning: Bool = false
-    @Published var submersionDataSamples: [SubmersionDataSample] = []
+    @Published var waterSubmersionData: [WaterSubmersionData] = []
     
     private var submersionManager: CMWaterSubmersionManager?
     private var extendedRuntimeSession: WKExtendedRuntimeSession?
@@ -63,7 +63,7 @@ class WaterSubmersionManager: NSObject, ObservableObject {
         isSubmerged = false
         measurement = nil
         temperature = nil
-        submersionDataSamples.removeAll()
+        waterSubmersionData.removeAll()
     }
     
     @MainActor
@@ -89,13 +89,13 @@ class WaterSubmersionManager: NSObject, ObservableObject {
         let iso8601Formatter = ISO8601DateFormatter()
         let timestamp = iso8601Formatter.string(from: Date())
         
-        let newSample = SubmersionDataSample(
+        let newSample = WaterSubmersionData(
             timestamp: timestamp,
             depth: depth,
             temperature: tempValueRounded,
             surfacePressure: surfacePressureRounded
         )
-        submersionDataSamples.append(newSample)
+        waterSubmersionData.append(newSample)
     }
     
     func startDiveSession() {
@@ -132,15 +132,15 @@ class WaterSubmersionManager: NSObject, ObservableObject {
         WKInterfaceDevice.current().enableWaterLock()
     }
     
-    func serializeSubmersionData() -> String? {
-        guard !submersionDataSamples.isEmpty else {
+    func serializeWaterSubmersionData() -> String? {
+        guard !waterSubmersionData.isEmpty else {
             debugPrint("No submersion data to serialize.")
             return nil
         }
         
         let encoder = JSONEncoder()
         do {
-            let jsonData = try encoder.encode(submersionDataSamples)
+            let jsonData = try encoder.encode(waterSubmersionData)
             let jsonString = String(data: jsonData, encoding: .utf8)
             return jsonString
         } catch {

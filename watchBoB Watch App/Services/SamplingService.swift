@@ -14,46 +14,46 @@ class SamplingService {
 
     private init() {}
 
-    func startSampling(sensorManager: SensorManager, locationDataManager: LocationDataManager, metadataLogger: MetadataLogger, waterSubmersionManager: WaterSubmersionManager) {
-        metadataLogger.startLogging()
-        sensorManager.startLogging(10)
-        locationDataManager.startSamplingGPS()
+    func startSampling(motionManager: MotionManager, locationManager: LocationManager, metadataManager: MetadataManager, waterSubmersionManager: WaterSubmersionManager) {
+        metadataManager.startLogging()
+        motionManager.startLogging(10)
+        locationManager.startSamplingGPS()
         // Commented below since we're handling automatic
 //        waterSubmersionManager.startDiveSession()
         
         let device = WKInterfaceDevice.current()
-        metadataLogger.deviceName = device.name
-        metadataLogger.deviceModel = device.model
-        metadataLogger.deviceLocalizedModel = device.localizedModel
-        metadataLogger.deviceSystemVersion = device.systemVersion
-        metadataLogger.deviceManufacturer = "Apple Inc."
+        metadataManager.deviceName = device.name
+        metadataManager.deviceModel = device.model
+        metadataManager.deviceLocalizedModel = device.localizedModel
+        metadataManager.deviceSystemVersion = device.systemVersion
+        metadataManager.deviceManufacturer = "Apple Inc."
     }
 
-    func stopSampling(sensorManager: SensorManager, locationDataManager: LocationDataManager, metadataLogger: MetadataLogger, waterSubmersionManager: WaterSubmersionManager, context: NSManagedObjectContext, dismiss: (() -> Void)?) {
-        sensorManager.stopLogging()
-        metadataLogger.stopLogging()
-        locationDataManager.stopSamplingGPS()
+    func stopSampling(motionManager: MotionManager, locationManager: LocationManager, metadataManager: MetadataManager, waterSubmersionManager: WaterSubmersionManager, context: NSManagedObjectContext, dismiss: (() -> Void)?) {
+        motionManager.stopLogging()
+        metadataManager.stopLogging()
+        locationManager.stopSamplingGPS()
         waterSubmersionManager.stopDiveSession()
         
         let newEntry = SampleSet(context: context)
-        newEntry.id = metadataLogger.sessionID
-        newEntry.startDatetime = metadataLogger.startDatetime
-        newEntry.stopDatetime = metadataLogger.stopDatetime
-        newEntry.name = metadataLogger.name
-        newEntry.startLatitude = metadataLogger.startLatitude
-        newEntry.startLongitude = metadataLogger.startLongitude
-        newEntry.stopLatitude = metadataLogger.stopLatitude
-        newEntry.stopLongitude = metadataLogger.stopLongitude
+        newEntry.id = metadataManager.sessionID
+        newEntry.startDatetime = metadataManager.startDatetime
+        newEntry.stopDatetime = metadataManager.stopDatetime
+        newEntry.name = metadataManager.name
+        newEntry.startLatitude = metadataManager.startLatitude
+        newEntry.startLongitude = metadataManager.startLongitude
+        newEntry.stopLatitude = metadataManager.stopLatitude
+        newEntry.stopLongitude = metadataManager.stopLongitude
         
-        newEntry.deviceName = metadataLogger.deviceName
-        newEntry.deviceModel = metadataLogger.deviceModel
-        newEntry.deviceLocalizedModel = metadataLogger.deviceLocalizedModel
-        newEntry.deviceSystemVersion = metadataLogger.deviceSystemVersion
-        newEntry.deviceManufacturer = metadataLogger.deviceManufacturer
+        newEntry.deviceName = metadataManager.deviceName
+        newEntry.deviceModel = metadataManager.deviceModel
+        newEntry.deviceLocalizedModel = metadataManager.deviceLocalizedModel
+        newEntry.deviceSystemVersion = metadataManager.deviceSystemVersion
+        newEntry.deviceManufacturer = metadataManager.deviceManufacturer
         
-        newEntry.sampleCSV = sensorManager.convertToJSONString()
-        newEntry.gpsJSON = locationDataManager.sampledLocationsToJSON()
-        if let submersionJSON = waterSubmersionManager.serializeSubmersionData() {
+        newEntry.sampleCSV = motionManager.convertToJSONString()
+        newEntry.gpsJSON = locationManager.sampledLocationsToJSON()
+        if let submersionJSON = waterSubmersionManager.serializeWaterSubmersionData() {
             newEntry.waterSubmersionJSON = submersionJSON
         }
 

@@ -18,9 +18,9 @@ struct ToggleSamplingIntent: AppIntent {
         let service = SamplingService.shared
         if isSamplingActive {
             service.stopSampling(
-                sensorManager: SensorManager(),
-                locationDataManager: LocationDataManager(),
-                metadataLogger: MetadataLogger(),
+                motionManager: MotionManager(),
+                locationManager: LocationManager(),
+                metadataManager: MetadataManager(),
                 waterSubmersionManager: WaterSubmersionManager.shared,
                 context: CoreDataController().container.viewContext,
                 dismiss: nil
@@ -28,9 +28,9 @@ struct ToggleSamplingIntent: AppIntent {
             return .result(dialog: "Sampling Session Stopped")
         } else {
             service.startSampling(
-                sensorManager: SensorManager(),
-                locationDataManager: LocationDataManager(),
-                metadataLogger: MetadataLogger(),
+                motionManager: MotionManager(),
+                locationManager: LocationManager(),
+                metadataManager: MetadataManager(),
                 waterSubmersionManager: WaterSubmersionManager.shared
             )
             return .result(dialog: "Sampling Session Started")

@@ -1,5 +1,5 @@
 //
-//  LocationDataManager.swift
+//  LocationManager.swift
 //  watchBoB Watch App
 //
 //  Created by Kim Martini on 10/28/23.
@@ -8,13 +8,13 @@
 import Foundation
 import CoreLocation
 
-class LocationDataManager: NSObject, ObservableObject, CLLocationManagerDelegate {
+class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
     var locationManager = CLLocationManager()
     
     @Published var authorizationStatus: CLAuthorizationStatus?
     @Published var location: CLLocationCoordinate2D?
     
-    @Published var sampledLocations: [GPSData] = []
+    @Published var sampledLocations: [LocationData] = []
     
     private var samplingTimer: Timer?
     
@@ -51,12 +51,12 @@ class LocationDataManager: NSObject, ObservableObject, CLLocationManagerDelegate
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if let location = locations.first?.coordinate {
-            let gpsData = GPSData(
+            let locationData = LocationData(
                 latitude: round(location.latitude * 10000) / 10000, // 4 decimal places
                 longitude: round(location.longitude * 10000) / 10000, // 4 decimal places
                 timestamp: Date()
             )
-            sampledLocations.append(gpsData)
+            sampledLocations.append(locationData)
         }
     }
     
