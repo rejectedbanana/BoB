@@ -62,4 +62,42 @@ public class SampleSet: NSManagedObject {
         try container.encode(deviceLocalizedModel, forKey: .deviceLocalizedModel)
     }
     
+    // Functions to check the data ranges
+    func getMinimumTemperature() -> Double {
+        guard let json = waterSubmersionJSON, let data = json.data(using: .utf8) else { return Double.nan }
+        do {
+            let submersionDataArray = try JSONSerialization.jsonObject(with: data, options: []) as? [[String: Any]] ?? []
+            let temperatures = submersionDataArray.compactMap { $0["temperature"] as? Double }
+            return temperatures.min() ?? Double.nan
+        } catch {
+            print("Error parsing submersion JSON for temperature: \(error)")
+            return Double.nan
+        }
+    }
+    
+    func getMaximumDepth() -> Double {
+        guard let json = waterSubmersionJSON, let data = json.data(using: .utf8) else { return Double.nan }
+        do {
+            let submersionDataArray = try JSONSerialization.jsonObject(with: data, options: []) as? [[String: Any]] ?? []
+            let depths = submersionDataArray.compactMap { $0["depth"] as? Double }
+            return depths.max() ?? Double.nan
+        } catch {
+            print("Error parsing submersion JSON for depth: \(error)")
+            return Double.nan
+        }
+    }
+    
+    func getMotionDataCount() -> Int {
+        guard let json = sampleCSV, let data = json.data(using: .utf8) else { return 0 }
+        do {
+            let motionDataArray = try JSONSerialization.jsonObject(with: data, options: []) as? [[String: Any]] ?? []
+            let accelerationX = motionDataArray.compactMap { $0["accX"] as? Double }
+            return accelerationX.count
+        } catch {
+            print("Error parsing motion JSON for data count: \(error)")
+            return 0
+        }
+    }
+    
+    
 }
