@@ -20,7 +20,7 @@ struct ToggleSamplingIntent: AppIntent {
             service.stopSampling(
                 motionManager: MotionManager(),
                 locationManager: LocationManager(),
-                metadataLogger: MetadataLogger(),
+                metadataManager: MetadataManager(),
                 waterSubmersionManager: WaterSubmersionManager.shared,
                 context: CoreDataController().container.viewContext,
                 dismiss: nil
@@ -30,7 +30,7 @@ struct ToggleSamplingIntent: AppIntent {
             service.startSampling(
                 motionManager: MotionManager(),
                 locationManager: LocationManager(),
-                metadataLogger: MetadataLogger(),
+                metadataManager: MetadataManager(),
                 waterSubmersionManager: WaterSubmersionManager.shared
             )
             return .result(dialog: "Sampling Session Started")

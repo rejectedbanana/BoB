@@ -25,8 +25,8 @@ struct LogDataView: View {
     // Toggle to turn data logging on and off
     @AppStorage("isSamplingActive") private var isLoggingData: Bool = false
     
-    // pull in the metadataLogger to take metadata
-    @ObservedObject private var metadataLogger = MetadataLogger()
+    // pull in the metadataManager to take metadata
+    @ObservedObject private var metadataManager = MetadataManager()
     @ObservedObject var waterSubmersionManager = WaterSubmersionManager.shared
     
     var body: some View {
@@ -102,7 +102,7 @@ struct LogDataView: View {
                 
                 if isLoggingData {
                     // Start sampling
-                    SamplingService.shared.startSampling(motionManager: motionManager, locationManager: locationManager, metadataLogger: metadataLogger, waterSubmersionManager: waterSubmersionManager)
+                    SamplingService.shared.startSampling(motionManager: motionManager, locationManager: locationManager, metadataManager: metadataManager, waterSubmersionManager: waterSubmersionManager)
                     
                     // Show the sampling message with animation
                     withAnimation {
@@ -117,7 +117,7 @@ struct LogDataView: View {
                     }
                 } else {
                     // Stop sampling
-                    SamplingService.shared.stopSampling(motionManager: motionManager, locationManager: locationManager, metadataLogger: metadataLogger, waterSubmersionManager: waterSubmersionManager, context: moc, dismiss: dismiss.callAsFunction)
+                    SamplingService.shared.stopSampling(motionManager: motionManager, locationManager: locationManager, metadataManager: metadataManager, waterSubmersionManager: waterSubmersionManager, context: moc, dismiss: dismiss.callAsFunction)
                 }
             } label: {
                 Text(isLoggingData ? "Stop" : "Start")

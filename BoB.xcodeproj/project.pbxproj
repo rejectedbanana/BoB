@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		3001E6FA2B8426E0003B09B1 /* MetadataLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3001E6F92B8426E0003B09B1 /* MetadataLogger.swift */; };
+		3001E6FA2B8426E0003B09B1 /* MetadataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3001E6F92B8426E0003B09B1 /* MetadataManager.swift */; };
 		972889942BE2F3D200BB9A14 /* WatchSessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 972889932BE2F3D200BB9A14 /* WatchSessionManager.swift */; };
 		972889962BE2F5E500BB9A14 /* PhoneSessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 972889952BE2F5E500BB9A14 /* PhoneSessionManager.swift */; };
 		97349CEB2AF1679300021CA3 /* RawMotionRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97349CEA2AF1679300021CA3 /* RawMotionRow.swift */; };
@@ -92,7 +92,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		3001E6F92B8426E0003B09B1 /* MetadataLogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetadataLogger.swift; sourceTree = "<group>"; };
+		3001E6F92B8426E0003B09B1 /* MetadataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetadataManager.swift; sourceTree = "<group>"; };
 		3011123E2B96AEBC0035D079 /* BoBTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BoBTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		3011124B2B96B17E0035D079 /* watchBoB Watch AppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "watchBoB Watch AppTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		972889932BE2F3D200BB9A14 /* WatchSessionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchSessionManager.swift; sourceTree = "<group>"; };
@@ -253,7 +253,7 @@
 		97B104AC2AE9777400FE81DC /* LogData */ = {
 			isa = PBXGroup;
 			children = (
-				3001E6F92B8426E0003B09B1 /* MetadataLogger.swift */,
+				3001E6F92B8426E0003B09B1 /* MetadataManager.swift */,
 				97CE319B2AED6ADE009335C9 /* LocationManager.swift */,
 				FCBA60BF2C65490400E01B1F /* LocationData.swift */,
 				97B104A92AE9771700FE81DC /* MotionManager.swift */,
@@ -599,7 +599,7 @@
 				FCBA60C92C6D3F4A00E01B1F /* WaterSubmersionData.swift in Sources */,
 				979736402AEB1AB4009BCFF0 /* CoreDataController.swift in Sources */,
 				978D107A2AE70F8F00310B26 /* LogbookRow.swift in Sources */,
-				3001E6FA2B8426E0003B09B1 /* MetadataLogger.swift in Sources */,
+				3001E6FA2B8426E0003B09B1 /* MetadataManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

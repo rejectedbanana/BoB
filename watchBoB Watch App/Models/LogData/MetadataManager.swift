@@ -1,5 +1,5 @@
 //
-//  MetadataLogger.swift
+//  MetadataManager.swift
 //  watchBoB Watch App
 //
 //  Created by Ramar Parham on 2/19/24.
@@ -9,7 +9,7 @@ import Foundation
 import CoreData
 import WatchKit
 
-class MetadataLogger: NSObject, ObservableObject, CLLocationManagerDelegate {
+class MetadataManager: NSObject, ObservableObject, CLLocationManagerDelegate {
     // time stamp formatter
     let timeStampFormatter = TimeStampManager()
     
