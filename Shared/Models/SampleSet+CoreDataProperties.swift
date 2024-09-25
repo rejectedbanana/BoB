@@ -25,8 +25,8 @@ extension SampleSet {
     @NSManaged public var stopLatitude: Double
     @NSManaged public var stopLongitude: Double
     @NSManaged public var sample: NSSet?
-    @NSManaged public var sampleCSV: String?
-    @NSManaged public var gpsJSON: String?
+    @NSManaged public var motionJSON: String?
+    @NSManaged public var locationJSON: String?
     @NSManaged public var waterSubmersionJSON: String?
     
     // Device Info
@@ -40,12 +40,6 @@ extension SampleSet {
 
 // MARK: Generated accessors for sample
 extension SampleSet {
-
-    @objc(addSampleObject:)
-    @NSManaged public func addToSample(_ value: SensorSample)
-
-    @objc(removeSampleObject:)
-    @NSManaged public func removeFromSample(_ value: SensorSample)
 
     @objc(addSample:)
     @NSManaged public func addToSample(_ values: NSSet)
@@ -70,8 +64,8 @@ extension SampleSet: Codable {
         case stopLatitude
         case stopLongitude
         case sample
-        case sampleCSV
-        case gpsJSON
+        case motionJSON
+        case locationJSON
         case waterSubmersionJSON
         case deviceName
         case deviceModel
@@ -88,4 +82,43 @@ extension CodingUserInfoKey {
 
 enum DecoderConfigurationError: Error {
     case missingManagedObjectContext
+}
+
+extension SampleSet {
+    // Functions to check the data ranges
+    func getMinimumTemperature() -> Double {
+        guard let json = waterSubmersionJSON, let data = json.data(using: .utf8) else { return Double.nan }
+        do {
+            let submersionDataArray = try JSONSerialization.jsonObject(with: data, options: []) as? [[String: Any]] ?? []
+            let temperatures = submersionDataArray.compactMap { $0["temperature"] as? Double }
+            return temperatures.min() ?? Double.nan
+        } catch {
+            print("Error parsing submersion JSON for temperature: \(error)")
+            return Double.nan
+        }
+    }
+    
+    func getMaximumDepth() -> Double {
+        guard let json = waterSubmersionJSON, let data = json.data(using: .utf8) else { return Double.nan }
+        do {
+            let submersionDataArray = try JSONSerialization.jsonObject(with: data, options: []) as? [[String: Any]] ?? []
+            let depths = submersionDataArray.compactMap { $0["depth"] as? Double }
+            return depths.max() ?? Double.nan
+        } catch {
+            print("Error parsing submersion JSON for depth: \(error)")
+            return Double.nan
+        }
+    }
+    
+    func getMotionDataCount() -> Int {
+        guard let json = motionJSON, let data = json.data(using: .utf8) else { return 0 }
+        do {
+            let motionDataArray = try JSONSerialization.jsonObject(with: data, options: []) as? [[String: Any]] ?? []
+            let accelerationX = motionDataArray.compactMap { $0["accX"] as? Double }
+            return accelerationX.count
+        } catch {
+            print("Error parsing motion JSON for data count: \(error)")
+            return 0
+        }
+    }
 }

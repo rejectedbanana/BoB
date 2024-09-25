@@ -10,22 +10,83 @@ import SwiftUI
 struct LogbookDetail: View {
     let entry: SampleSet
     
+    // Toggles to preview data
     @State private var showMotionJSON = false
     @State private var showLocationJSON = false
     @State private var showSubmersionJSON = false
-    @State private var csvName = ""
-    @State private var csvContent = ""
     
-    // time stamp formatter
-    let timeStampFormatter = TimeStampManager()
-    
+    // Strings to store exported name and data
+    @State private var JSONName = ""
+    @State private var JSONContent = ""
     private var combinedJSON: [String: Any]? {
         return combineJSON()
     }
     
+    // time stamp formatter
+    let timeStampFormatter = TimeStampManager()
+    
+    var body: some View {
+        List {
+            Section("Sample Details") {
+                DetailRow(header: "Min Temp", content: entry.getMinimumTemperature().isNaN ? "no submersion data" : String(format: "%.1f °C", entry.getMinimumTemperature()) )
+                DetailRow(header: "Max Depth", content: entry.getMaximumDepth().isNaN ? "no submersion data" : String(format: "%.1f m", entry.getMaximumDepth()))
+                DetailRow(header: "Start Time", content: timeStampFormatter.viewFormat(entry.startDatetime ?? Date(timeIntervalSince1970: 0)))
+                DetailRow(header: "End Time", content: timeStampFormatter.viewFormat(entry.stopDatetime ?? Date(timeIntervalSince1970: 0)))
+                DetailRow(header: "Samples", content: "\(entry.getMotionDataCount())")
+                DetailRow(header: "Sampling Frequency", content: "10 Hz")
+                DetailRow(header: "Source", content: "Kim's Apple Watch")
+                
+                // Buttons for viewing JSON data
+                Button("View Motion Data") {
+                    showMotionJSON.toggle()
+                }
+                .sheet(isPresented: $showMotionJSON) {
+                    JSONView(jsonContent: jsonString(for: "MOTION") ?? "No Motion Data", title: "Motion Data")
+                }
+                
+                Button("View Location Data") {
+                    showLocationJSON.toggle()
+                }
+                .sheet(isPresented: $showLocationJSON) {
+                    JSONView(jsonContent: jsonString(for: "LOCATION") ?? "No Location Data", title: "Location Data")
+                }
+                
+                Button("View Submersion Data") {
+                    showSubmersionJSON.toggle()
+                }
+                .sheet(isPresented: $showSubmersionJSON) {
+                    JSONView(jsonContent: jsonString(for: "SUBMERSION") ?? "No Submersion Data", title: "Submersion Data")
+                }
+            }
+            
+            Section("Device Details") {
+                DetailRow(header: "Name", content: entry.deviceName ?? "Unknown")
+                DetailRow(header: "Manufacturer", content: entry.deviceManufacturer ?? "Unknown")
+                DetailRow(header: "Model", content: entry.deviceModel ?? "Unknown")
+                DetailRow(header: "Hardware Version", content: entry.deviceLocalizedModel ?? "Unknown")
+                DetailRow(header: "Software Version", content: entry.deviceSystemVersion ?? "Unknown")
+            }
+        }
+        .navigationBarTitleDisplayMode(.inline)
+        .navigationTitle("Details")
+        .toolbar {
+            if let combinedJSONString = convertCombinedJSONToString() {
+                ShareLink(item: exportCombinedJSON(fileName: JSONName, content: combinedJSONString))
+            } else {
+                Text("No data to share")
+            }
+        }
+        .onAppear {
+            self.JSONName = timeStampFormatter.exportNameFormat(entry.startDatetime ?? Date.now )+"_AWUData.json"
+            self.JSONContent = entry.motionJSON ?? "No JSON data"
+        }
+    }
+    
+
+    
     private func combineJSON() -> [String: Any]? {
-        guard let sampleJSON = entry.sampleCSV, let locationJSON = entry.gpsJSON else {
-            print("No sampleJSON or locationJSON found")
+        guard let motionJSON = entry.motionJSON, let locationJSON = entry.locationJSON else {
+            print("No motionJSON or locationJSON found")
             return nil
         }
         let jsonData = Data(locationJSON.utf8)
@@ -33,7 +94,7 @@ struct LogbookDetail: View {
         let submersionData = Data(submersionJSON.utf8)
         
         do {
-            let motionDataArray = try JSONSerialization.jsonObject(with: Data(sampleJSON.utf8), options: []) as? [[String: Any]] ?? []
+            let motionDataArray = try JSONSerialization.jsonObject(with: Data(motionJSON.utf8), options: []) as? [[String: Any]] ?? []
             let motionData = motionDataArray.map { [$0["timestamp"], $0["accX"], $0["accY"], $0["accZ"], $0["gyrX"], $0["gyrY"], $0["gyrZ"], $0["magX"], $0["magY"], $0["magZ"]] }
             
             let locationDataArray = try JSONSerialization.jsonObject(with: jsonData, options: []) as? [[String: Any]] ?? []
@@ -78,18 +139,7 @@ struct LogbookDetail: View {
             return nil
         }
     }
-    private func jsonString(for sensorType: String) -> String? {
-        guard let combinedJSON = combinedJSON else { return nil }
-        
-        if let sensorData = combinedJSON[sensorType] as? [String: Any],
-           let jsonData = try? JSONSerialization.data(withJSONObject: sensorData, options: .prettyPrinted),
-           let jsonString = String(data: jsonData, encoding: .utf8) {
-            return jsonString
-        } else {
-            return nil
-        }
-    }
-    
+
     // Convert combined JSON to a string
     private func convertCombinedJSONToString() -> String? {
         guard let combinedJSON = combinedJSON else { return nil }
@@ -103,93 +153,7 @@ struct LogbookDetail: View {
         }
     }
     
-    var body: some View {
-        List {
-            Section("Sample Details") {
-                DetailRow(header: "Minimum Water Temperature", content: String(format: "%.1f °C", getMinimumTemperature(from: entry.waterSubmersionJSON)))
-                DetailRow(header: "Maximum Underwater Depth", content: String(format: "%.1f m", getMaximumDepth(from: entry.waterSubmersionJSON)))
-                DetailRow(header: "Start Time", content: timeStampFormatter.viewFormat(entry.startDatetime ?? Date(timeIntervalSince1970: 0)))
-                DetailRow(header: "End Time", content: timeStampFormatter.viewFormat(entry.stopDatetime ?? Date(timeIntervalSince1970: 0)))
-                DetailRow(header: "Samples", content: "\(getSampleCount(from: entry.sampleCSV))")
-                DetailRow(header: "Sampling Frequency", content: "10 Hz")
-                DetailRow(header: "Source", content: "Kim's Apple Watch")
-                //                DetailRow(header: "CSV Data", content: entry.sampleCSV ?? "No CSV data.")
-                
-                // Buttons for viewing JSON data
-                Button("View Motion Data") {
-                    showMotionJSON.toggle()
-                }
-                .sheet(isPresented: $showMotionJSON) {
-                    JSONView(jsonContent: jsonString(for: "MOTION") ?? "No Motion Data", title: "Motion Data")
-                }
-                
-                Button("View Location Data") {
-                    showLocationJSON.toggle()
-                }
-                .sheet(isPresented: $showLocationJSON) {
-                    JSONView(jsonContent: jsonString(for: "LOCATION") ?? "No Location Data", title: "Location Data")
-                }
-                
-                Button("View Submersion Data") {
-                    showSubmersionJSON.toggle()
-                }
-                .sheet(isPresented: $showSubmersionJSON) {
-                    JSONView(jsonContent: jsonString(for: "SUBMERSION") ?? "No Submersion Data", title: "Submersion Data")
-                }
-            }
-            
-            Section("Device Details") {
-                DetailRow(header: "Name", content: entry.deviceName ?? "Unknown")
-                DetailRow(header: "Manufacturer", content: entry.deviceManufacturer ?? "Unknown")
-                DetailRow(header: "Model", content: entry.deviceModel ?? "Unknown")
-                DetailRow(header: "Hardware Version", content: entry.deviceLocalizedModel ?? "Unknown")
-                DetailRow(header: "Software Version", content: entry.deviceSystemVersion ?? "Unknown")
-            }
-        }
-        .navigationBarTitleDisplayMode(.inline)
-        .navigationTitle("Details")
-        .toolbar {
-            if let combinedJSONString = convertCombinedJSONToString() {
-                ShareLink(item: exportCombinedJSON(fileName: csvName, content: combinedJSONString))
-            } else {
-                Text("No data to share")
-            }
-        }
-        .onAppear {
-            self.csvName = timeStampFormatter.exportNameFormat(entry.startDatetime ?? Date.now )+"_AWUData.csv"
-            self.csvContent = entry.sampleCSV ?? "No CSV data"
-        }
-    }
-    
-    func getMinimumTemperature(from json: String?) -> Double {
-        guard let json = json, let data = json.data(using: .utf8) else { return 0.0 }
-        do {
-            let submersionDataArray = try JSONSerialization.jsonObject(with: data, options: []) as? [[String: Any]] ?? []
-            let temperatures = submersionDataArray.compactMap { $0["temperature"] as? Double }
-            return temperatures.min() ?? 0.0
-        } catch {
-            print("Error parsing submersion JSON for temperature: \(error)")
-            return 0.0
-        }
-    }
-    
-    func getMaximumDepth(from json: String?) -> Double {
-        guard let json = json, let data = json.data(using: .utf8) else { return 0.0 }
-        do {
-            let submersionDataArray = try JSONSerialization.jsonObject(with: data, options: []) as? [[String: Any]] ?? []
-            let depths = submersionDataArray.compactMap { $0["depth"] as? Double }
-            return depths.max() ?? 0.0
-        } catch {
-            print("Error parsing submersion JSON for depth: \(error)")
-            return 0.0
-        }
-    }
-    
-    func getSampleCount(from csv: String?) -> Int {
-        guard let csv = csv else { return 0 }
-        return csv.split(separator: "\n").count - 1 // Minus 1 to exclude header row
-    }
-    
+    // Temporarily save the CombinedJSON to document storage for export
     func exportCombinedJSON(fileName: String, content: String) -> URL {
         let documentsDirectory = URL.documentsDirectory
         let fileURL = documentsDirectory.appending(path: fileName)
@@ -201,6 +165,19 @@ struct LogbookDetail: View {
         }
         
         return fileURL
+    }
+    
+    // View the piece of the JSON that was prepared for export
+    private func jsonString(for sensorType: String) -> String? {
+        guard let combinedJSON = combinedJSON else { return nil }
+        
+        if let sensorData = combinedJSON[sensorType] as? [String: Any],
+           let jsonData = try? JSONSerialization.data(withJSONObject: sensorData, options: .prettyPrinted),
+           let jsonString = String(data: jsonData, encoding: .utf8) {
+            return jsonString
+        } else {
+            return nil
+        }
     }
 }
 

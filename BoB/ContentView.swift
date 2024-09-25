@@ -14,11 +14,6 @@ struct ContentView: View {
     @FetchRequest(sortDescriptors: [SortDescriptor(\.startDatetime, order: .reverse)]) var logBookRecords: FetchedResults<SampleSet>
     @Environment(\.dismiss) var dismiss
     
-    @ObservedObject var phoneSessionManager = PhoneSessionManager()
-    
-    @State var messageString: String? = ""
-    @State var messageDictionary: [String: Any] = [:]
-    
     var body: some View {
         NavigationStack {
             ZStack {

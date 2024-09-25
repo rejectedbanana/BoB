@@ -52,9 +52,9 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if let location = locations.first?.coordinate {
             let locationData = LocationData(
+                timestamp: Date(),
                 latitude: round(location.latitude * 10000) / 10000, // 4 decimal places
-                longitude: round(location.longitude * 10000) / 10000, // 4 decimal places
-                timestamp: Date()
+                longitude: round(location.longitude * 10000) / 10000 // 4 decimal places
             )
             sampledLocations.append(locationData)
         }

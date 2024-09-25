@@ -28,8 +28,8 @@ public class SampleSet: NSManagedObject {
         self.stopDatetime = try container.decode(Date.self, forKey: .stopDatetime)
         self.stopLatitude = try container.decode(Double.self, forKey: .stopLatitude)
         self.startLongitude = try container.decode(Double.self, forKey: .stopLongitude)
-        self.sampleCSV = try container.decode(String.self, forKey: .sampleCSV)
-        self.gpsJSON = try container.decode(String.self, forKey: .gpsJSON)
+        self.motionJSON = try container.decode(String.self, forKey: .motionJSON)
+        self.locationJSON = try container.decode(String.self, forKey: .locationJSON)
         self.waterSubmersionJSON = try container.decode(String.self, forKey: .waterSubmersionJSON)
         
         // Device Info
@@ -50,8 +50,8 @@ public class SampleSet: NSManagedObject {
         try container.encode(stopDatetime, forKey: .stopDatetime)
         try container.encode(stopLatitude, forKey: .stopLatitude)
         try container.encode(stopLongitude, forKey: .stopLongitude)
-        try container.encode(sampleCSV, forKey: .sampleCSV)
-        try container.encode(gpsJSON, forKey: .gpsJSON)
+        try container.encode(motionJSON, forKey: .motionJSON)
+        try container.encode(locationJSON, forKey: .locationJSON)
         try container.encode(waterSubmersionJSON, forKey: .waterSubmersionJSON)
         
         // Device Info
@@ -61,5 +61,4 @@ public class SampleSet: NSManagedObject {
         try container.encode(deviceSystemVersion, forKey: .deviceSystemVersion)
         try container.encode(deviceLocalizedModel, forKey: .deviceLocalizedModel)
     }
-    
 }
