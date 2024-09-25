@@ -8,8 +8,8 @@
         <attribute name="deviceSystemVersion" optional="YES" attributeType="String"/>
         <attribute name="gpsJSON" optional="YES" attributeType="String"/>
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="motionJSON" optional="YES" attributeType="String"/>
         <attribute name="name" optional="YES" attributeType="String"/>
-        <attribute name="sampleCSV" optional="YES" attributeType="String"/>
         <attribute name="startDatetime" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="startLatitude" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="startLongitude" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>

@@ -24,7 +24,7 @@ struct LogbookDetail: View {
     }
     
     private func combineJSON() -> [String: Any]? {
-        guard let sampleJSON = entry.sampleCSV, let locationJSON = entry.gpsJSON else {
+        guard let sampleJSON = entry.motionJSON, let locationJSON = entry.gpsJSON else {
             print("No sampleJSON or locationJSON found")
             return nil
         }
@@ -156,7 +156,7 @@ struct LogbookDetail: View {
         }
         .onAppear {
             self.csvName = timeStampFormatter.exportNameFormat(entry.startDatetime ?? Date.now )+"_AWUData.csv"
-            self.csvContent = entry.sampleCSV ?? "No CSV data"
+            self.csvContent = entry.motionJSON ?? "No CSV data"
         }
     }
     

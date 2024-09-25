@@ -25,7 +25,7 @@ extension SampleSet {
     @NSManaged public var stopLatitude: Double
     @NSManaged public var stopLongitude: Double
     @NSManaged public var sample: NSSet?
-    @NSManaged public var sampleCSV: String?
+    @NSManaged public var motionJSON: String?
     @NSManaged public var gpsJSON: String?
     @NSManaged public var waterSubmersionJSON: String?
     
@@ -64,7 +64,7 @@ extension SampleSet: Codable {
         case stopLatitude
         case stopLongitude
         case sample
-        case sampleCSV
+        case motionJSON
         case gpsJSON
         case waterSubmersionJSON
         case deviceName
@@ -111,7 +111,7 @@ extension SampleSet {
     }
     
     func getMotionDataCount() -> Int {
-        guard let json = sampleCSV, let data = json.data(using: .utf8) else { return 0 }
+        guard let json = motionJSON, let data = json.data(using: .utf8) else { return 0 }
         do {
             let motionDataArray = try JSONSerialization.jsonObject(with: data, options: []) as? [[String: Any]] ?? []
             let accelerationX = motionDataArray.compactMap { $0["accX"] as? Double }
