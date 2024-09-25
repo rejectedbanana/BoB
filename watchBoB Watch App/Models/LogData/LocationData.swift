@@ -8,7 +8,7 @@
 import Foundation
 
 struct LocationData: Codable {
+    let timestamp: Date
     let latitude: Double?
     let longitude: Double?
-    let timestamp: Date
 }
