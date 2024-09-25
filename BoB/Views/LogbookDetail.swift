@@ -10,18 +10,79 @@ import SwiftUI
 struct LogbookDetail: View {
     let entry: SampleSet
     
+    // Toggles to preview data
     @State private var showMotionJSON = false
     @State private var showLocationJSON = false
     @State private var showSubmersionJSON = false
-    @State private var csvName = ""
-    @State private var csvContent = ""
+    
+    // Strings to store exported name and data
+    @State private var JSONName = ""
+    @State private var JSONContent = ""
+    private var combinedJSON: [String: Any]? {
+        return combineJSON()
+    }
     
     // time stamp formatter
     let timeStampFormatter = TimeStampManager()
     
-    private var combinedJSON: [String: Any]? {
-        return combineJSON()
+    var body: some View {
+        List {
+            Section("Sample Details") {
+                DetailRow(header: "Min Temp", content: entry.getMinimumTemperature().isNaN ? "no submersion data" : String(format: "%.1f °C", entry.getMinimumTemperature()) )
+                DetailRow(header: "Max Depth", content: entry.getMaximumDepth().isNaN ? "no submersion data" : String(format: "%.1f m", entry.getMaximumDepth()))
+                DetailRow(header: "Start Time", content: timeStampFormatter.viewFormat(entry.startDatetime ?? Date(timeIntervalSince1970: 0)))
+                DetailRow(header: "End Time", content: timeStampFormatter.viewFormat(entry.stopDatetime ?? Date(timeIntervalSince1970: 0)))
+                DetailRow(header: "Samples", content: "\(entry.getMotionDataCount())")
+                DetailRow(header: "Sampling Frequency", content: "10 Hz")
+                DetailRow(header: "Source", content: "Kim's Apple Watch")
+                
+                // Buttons for viewing JSON data
+                Button("View Motion Data") {
+                    showMotionJSON.toggle()
+                }
+                .sheet(isPresented: $showMotionJSON) {
+                    JSONView(jsonContent: jsonString(for: "MOTION") ?? "No Motion Data", title: "Motion Data")
+                }
+                
+                Button("View Location Data") {
+                    showLocationJSON.toggle()
+                }
+                .sheet(isPresented: $showLocationJSON) {
+                    JSONView(jsonContent: jsonString(for: "LOCATION") ?? "No Location Data", title: "Location Data")
+                }
+                
+                Button("View Submersion Data") {
+                    showSubmersionJSON.toggle()
+                }
+                .sheet(isPresented: $showSubmersionJSON) {
+                    JSONView(jsonContent: jsonString(for: "SUBMERSION") ?? "No Submersion Data", title: "Submersion Data")
+                }
+            }
+            
+            Section("Device Details") {
+                DetailRow(header: "Name", content: entry.deviceName ?? "Unknown")
+                DetailRow(header: "Manufacturer", content: entry.deviceManufacturer ?? "Unknown")
+                DetailRow(header: "Model", content: entry.deviceModel ?? "Unknown")
+                DetailRow(header: "Hardware Version", content: entry.deviceLocalizedModel ?? "Unknown")
+                DetailRow(header: "Software Version", content: entry.deviceSystemVersion ?? "Unknown")
+            }
+        }
+        .navigationBarTitleDisplayMode(.inline)
+        .navigationTitle("Details")
+        .toolbar {
+            if let combinedJSONString = convertCombinedJSONToString() {
+                ShareLink(item: exportCombinedJSON(fileName: JSONName, content: combinedJSONString))
+            } else {
+                Text("No data to share")
+            }
+        }
+        .onAppear {
+            self.JSONName = timeStampFormatter.exportNameFormat(entry.startDatetime ?? Date.now )+"_AWUData.json"
+            self.JSONContent = entry.motionJSON ?? "No JSON data"
+        }
     }
+    
+
     
     private func combineJSON() -> [String: Any]? {
         guard let motionJSON = entry.motionJSON, let locationJSON = entry.locationJSON else {
@@ -78,18 +139,7 @@ struct LogbookDetail: View {
             return nil
         }
     }
-    private func jsonString(for sensorType: String) -> String? {
-        guard let combinedJSON = combinedJSON else { return nil }
-        
-        if let sensorData = combinedJSON[sensorType] as? [String: Any],
-           let jsonData = try? JSONSerialization.data(withJSONObject: sensorData, options: .prettyPrinted),
-           let jsonString = String(data: jsonData, encoding: .utf8) {
-            return jsonString
-        } else {
-            return nil
-        }
-    }
-    
+
     // Convert combined JSON to a string
     private func convertCombinedJSONToString() -> String? {
         guard let combinedJSON = combinedJSON else { return nil }
@@ -103,63 +153,7 @@ struct LogbookDetail: View {
         }
     }
     
-    var body: some View {
-        List {
-            Section("Sample Details") {
-                DetailRow(header: "Min Temp", content: entry.getMinimumTemperature().isNaN ? "no submersion data" : String(format: "%.1f °C", entry.getMinimumTemperature()) )
-                DetailRow(header: "Max Depth", content: entry.getMaximumDepth().isNaN ? "no submersion data" : String(format: "%.1f m", entry.getMaximumDepth()))
-                DetailRow(header: "Start Time", content: timeStampFormatter.viewFormat(entry.startDatetime ?? Date(timeIntervalSince1970: 0)))
-                DetailRow(header: "End Time", content: timeStampFormatter.viewFormat(entry.stopDatetime ?? Date(timeIntervalSince1970: 0)))
-                DetailRow(header: "Samples", content: "\(entry.getMotionDataCount())")
-                DetailRow(header: "Sampling Frequency", content: "10 Hz")
-                DetailRow(header: "Source", content: "Kim's Apple Watch")
-                
-                // Buttons for viewing JSON data
-                Button("View Motion Data") {
-                    showMotionJSON.toggle()
-                }
-                .sheet(isPresented: $showMotionJSON) {
-                    JSONView(jsonContent: jsonString(for: "MOTION") ?? "No Motion Data", title: "Motion Data")
-                }
-                
-                Button("View Location Data") {
-                    showLocationJSON.toggle()
-                }
-                .sheet(isPresented: $showLocationJSON) {
-                    JSONView(jsonContent: jsonString(for: "LOCATION") ?? "No Location Data", title: "Location Data")
-                }
-                
-                Button("View Submersion Data") {
-                    showSubmersionJSON.toggle()
-                }
-                .sheet(isPresented: $showSubmersionJSON) {
-                    JSONView(jsonContent: jsonString(for: "SUBMERSION") ?? "No Submersion Data", title: "Submersion Data")
-                }
-            }
-            
-            Section("Device Details") {
-                DetailRow(header: "Name", content: entry.deviceName ?? "Unknown")
-                DetailRow(header: "Manufacturer", content: entry.deviceManufacturer ?? "Unknown")
-                DetailRow(header: "Model", content: entry.deviceModel ?? "Unknown")
-                DetailRow(header: "Hardware Version", content: entry.deviceLocalizedModel ?? "Unknown")
-                DetailRow(header: "Software Version", content: entry.deviceSystemVersion ?? "Unknown")
-            }
-        }
-        .navigationBarTitleDisplayMode(.inline)
-        .navigationTitle("Details")
-        .toolbar {
-            if let combinedJSONString = convertCombinedJSONToString() {
-                ShareLink(item: exportCombinedJSON(fileName: csvName, content: combinedJSONString))
-            } else {
-                Text("No data to share")
-            }
-        }
-        .onAppear {
-            self.csvName = timeStampFormatter.exportNameFormat(entry.startDatetime ?? Date.now )+"_AWUData.csv"
-            self.csvContent = entry.motionJSON ?? "No CSV data"
-        }
-    }
-    
+    // Temporarily save the CombinedJSON to document storage for export
     func exportCombinedJSON(fileName: String, content: String) -> URL {
         let documentsDirectory = URL.documentsDirectory
         let fileURL = documentsDirectory.appending(path: fileName)
@@ -171,6 +165,19 @@ struct LogbookDetail: View {
         }
         
         return fileURL
+    }
+    
+    // View the piece of the JSON that was prepared for export
+    private func jsonString(for sensorType: String) -> String? {
+        guard let combinedJSON = combinedJSON else { return nil }
+        
+        if let sensorData = combinedJSON[sensorType] as? [String: Any],
+           let jsonData = try? JSONSerialization.data(withJSONObject: sensorData, options: .prettyPrinted),
+           let jsonString = String(data: jsonData, encoding: .utf8) {
+            return jsonString
+        } else {
+            return nil
+        }
     }
 }
 
