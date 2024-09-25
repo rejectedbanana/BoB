@@ -41,12 +41,6 @@ extension SampleSet {
 // MARK: Generated accessors for sample
 extension SampleSet {
 
-    @objc(addSampleObject:)
-    @NSManaged public func addToSample(_ value: SensorSample)
-
-    @objc(removeSampleObject:)
-    @NSManaged public func removeFromSample(_ value: SensorSample)
-
     @objc(addSample:)
     @NSManaged public func addToSample(_ values: NSSet)
 
