@@ -13,21 +13,18 @@ struct LogDataView: View {
     // Get a reference to the managed object context from the environment.
     @Environment(\.managedObjectContext) var moc
     @Environment(\.dismiss) var dismiss
-    
-    @State private var name: String = "TBD"
+
+    // pull in managers to take meta, location, motion and waterSubmersion data
+    @ObservedObject private var metadataManager = MetadataManager()
     @StateObject var locationManager = LocationManager()
-    
-    // pull in the sensor manager to take data
     @ObservedObject var motionManager = MotionManager()
+    @ObservedObject var waterSubmersionManager = WaterSubmersionManager.shared
     
+    // Toggle to show sampling message
     @State private var showSamplingMessage: Bool = false
     
     // Toggle to turn data logging on and off
     @AppStorage("isSamplingActive") private var isLoggingData: Bool = false
-    
-    // pull in the metadataManager to take metadata
-    @ObservedObject private var metadataManager = MetadataManager()
-    @ObservedObject var waterSubmersionManager = WaterSubmersionManager.shared
     
     var body: some View {
         VStack {
