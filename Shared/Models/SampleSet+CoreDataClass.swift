@@ -29,7 +29,7 @@ public class SampleSet: NSManagedObject {
         self.stopLatitude = try container.decode(Double.self, forKey: .stopLatitude)
         self.startLongitude = try container.decode(Double.self, forKey: .stopLongitude)
         self.motionJSON = try container.decode(String.self, forKey: .motionJSON)
-        self.gpsJSON = try container.decode(String.self, forKey: .gpsJSON)
+        self.locationJSON = try container.decode(String.self, forKey: .locationJSON)
         self.waterSubmersionJSON = try container.decode(String.self, forKey: .waterSubmersionJSON)
         
         // Device Info
@@ -51,7 +51,7 @@ public class SampleSet: NSManagedObject {
         try container.encode(stopLatitude, forKey: .stopLatitude)
         try container.encode(stopLongitude, forKey: .stopLongitude)
         try container.encode(motionJSON, forKey: .motionJSON)
-        try container.encode(gpsJSON, forKey: .gpsJSON)
+        try container.encode(locationJSON, forKey: .locationJSON)
         try container.encode(waterSubmersionJSON, forKey: .waterSubmersionJSON)
         
         // Device Info

@@ -26,7 +26,7 @@ extension SampleSet {
     @NSManaged public var stopLongitude: Double
     @NSManaged public var sample: NSSet?
     @NSManaged public var motionJSON: String?
-    @NSManaged public var gpsJSON: String?
+    @NSManaged public var locationJSON: String?
     @NSManaged public var waterSubmersionJSON: String?
     
     // Device Info
@@ -65,7 +65,7 @@ extension SampleSet: Codable {
         case stopLongitude
         case sample
         case motionJSON
-        case gpsJSON
+        case locationJSON
         case waterSubmersionJSON
         case deviceName
         case deviceModel

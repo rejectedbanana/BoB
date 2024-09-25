@@ -24,8 +24,8 @@ struct LogbookDetail: View {
     }
     
     private func combineJSON() -> [String: Any]? {
-        guard let sampleJSON = entry.motionJSON, let locationJSON = entry.gpsJSON else {
-            print("No sampleJSON or locationJSON found")
+        guard let motionJSON = entry.motionJSON, let locationJSON = entry.locationJSON else {
+            print("No motionJSON or locationJSON found")
             return nil
         }
         let jsonData = Data(locationJSON.utf8)
@@ -33,7 +33,7 @@ struct LogbookDetail: View {
         let submersionData = Data(submersionJSON.utf8)
         
         do {
-            let motionDataArray = try JSONSerialization.jsonObject(with: Data(sampleJSON.utf8), options: []) as? [[String: Any]] ?? []
+            let motionDataArray = try JSONSerialization.jsonObject(with: Data(motionJSON.utf8), options: []) as? [[String: Any]] ?? []
             let motionData = motionDataArray.map { [$0["timestamp"], $0["accX"], $0["accY"], $0["accZ"], $0["gyrX"], $0["gyrY"], $0["gyrZ"], $0["magX"], $0["magY"], $0["magZ"]] }
             
             let locationDataArray = try JSONSerialization.jsonObject(with: jsonData, options: []) as? [[String: Any]] ?? []
