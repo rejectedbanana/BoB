@@ -37,18 +37,18 @@ struct LogbookDetail: View {
                 DetailRow(header: "Source", content: "Kim's Apple Watch")
                 
                 // Buttons for viewing JSON data
-                Button("View Motion Data") {
-                    showMotionJSON.toggle()
-                }
-                .sheet(isPresented: $showMotionJSON) {
-                    JSONView(jsonContent: jsonString(for: "MOTION") ?? "No Motion Data", title: "Motion Data")
-                }
-                
                 Button("View Location Data") {
                     showLocationJSON.toggle()
                 }
                 .sheet(isPresented: $showLocationJSON) {
                     JSONView(jsonContent: jsonString(for: "LOCATION") ?? "No Location Data", title: "Location Data")
+                }
+                
+                Button("View Motion Data") {
+                    showMotionJSON.toggle()
+                }
+                .sheet(isPresented: $showMotionJSON) {
+                    JSONView(jsonContent: jsonString(for: "MOTION") ?? "No Motion Data", title: "Motion Data")
                 }
                 
                 Button("View Submersion Data") {
@@ -81,9 +81,8 @@ struct LogbookDetail: View {
             self.JSONContent = entry.motionJSON ?? "No JSON data"
         }
     }
-    
 
-    
+    // Combine the data from all the sensors
     private func combineJSON() -> [String: Any]? {
         // Grab the JSON strings from CoreData
         guard let motionJSON = entry.motionJSON, let locationJSON = entry.locationJSON else {
@@ -171,7 +170,7 @@ struct LogbookDetail: View {
         guard let combinedJSON = combinedJSON else { return nil }
         
         if let sensorData = combinedJSON[sensorType] as? [String: Any],
-           let jsonData = try? JSONSerialization.data(withJSONObject: sensorData, options: .prettyPrinted),
+           let jsonData = try? JSONSerialization.data(withJSONObject: sensorData, options: [.sortedKeys, .prettyPrinted]),
            let jsonString = String(data: jsonData, encoding: .utf8) {
             return jsonString
         } else {
