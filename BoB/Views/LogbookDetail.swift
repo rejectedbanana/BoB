@@ -27,15 +27,17 @@ struct LogbookDetail: View {
     
     var body: some View {
         List {
-            Section("Sample Details") {
-                DetailRow(header: "Min Temp", content: entry.getMinimumTemperature().isNaN ? "no submersion data" : String(format: "%.1f °C", entry.getMinimumTemperature()) )
-                DetailRow(header: "Max Depth", content: entry.getMaximumDepth().isNaN ? "no submersion data" : String(format: "%.1f m", entry.getMaximumDepth()))
+            Section("Deployment Details") {
                 DetailRow(header: "Start Time", content: timeStampFormatter.viewFormat(entry.startDatetime ?? Date(timeIntervalSince1970: 0)))
                 DetailRow(header: "End Time", content: timeStampFormatter.viewFormat(entry.stopDatetime ?? Date(timeIntervalSince1970: 0)))
                 DetailRow(header: "Samples", content: "\(entry.getMotionDataCount())")
                 DetailRow(header: "Sampling Frequency", content: "10 Hz")
+                DetailRow(header: "Min Temp", content: entry.getMinimumTemperature().isNaN ? "no submersion data" : String(format: "%.1f °C", entry.getMinimumTemperature()) )
+                DetailRow(header: "Max Depth", content: entry.getMaximumDepth().isNaN ? "no submersion data" : String(format: "%.1f m", entry.getMaximumDepth()))
                 DetailRow(header: "Source", content: "Kim's Apple Watch")
-                
+            }
+            
+            Section("Data Viewer") {
                 // Buttons for viewing JSON data
                 Button("View Location Data") {
                     showLocationJSON.toggle()
