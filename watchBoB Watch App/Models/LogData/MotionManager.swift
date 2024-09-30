@@ -81,7 +81,7 @@ class MotionManager: NSObject, ObservableObject {
         }
     }
 
-    func convertToJSONString() -> String? {
+    func convertArrayToJSONString() -> String? {
         let encoder = JSONEncoder()
         encoder.dateEncodingStrategy = .iso8601
         do {

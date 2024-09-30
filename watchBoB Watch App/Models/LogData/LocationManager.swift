@@ -64,7 +64,7 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
         print("Failed to get location: \(error.localizedDescription)")
     }
     
-    func sampledLocationsToJSON() -> String? {
+    func convertArrayToJSONString() -> String? {
         let encoder = JSONEncoder()
         encoder.dateEncodingStrategy = .iso8601
         if let jsonData = try? encoder.encode(sampledLocations) {

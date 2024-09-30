@@ -132,7 +132,7 @@ class WaterSubmersionManager: NSObject, ObservableObject {
         WKInterfaceDevice.current().enableWaterLock()
     }
     
-    func serializeWaterSubmersionData() -> String? {
+    func convertArrayToJSONString() -> String? {
         guard !waterSubmersionData.isEmpty else {
             debugPrint("No submersion data to serialize.")
             return nil
