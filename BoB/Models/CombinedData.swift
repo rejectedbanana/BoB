@@ -1,5 +1,5 @@
 //
-//  OutputDataForJSON.swift
+//  CombinedData.swift
 //  BoB
 //
 //  Created by Kim Martini on 10/1/24.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct OutputDataForJSON: Codable {
+struct CombinedData: Codable {
     let LOCATION: LocationDataForJSON
     let MOTION: MotionDataForJSON
     let SUBMERSION: SubmersionDataForJSON

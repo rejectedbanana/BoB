@@ -18,8 +18,8 @@ struct LogbookDetail: View {
     // Strings to store exported name and data
     @State private var JSONName = ""
     @State private var JSONContent = ""
-    private var combinedJSON: OutputDataForJSON? {
-        return combineJSON()
+    private var combinedJSON: CombinedData? {
+        return combineJSON().structuredJSON
     }
     
     let encoder = JSONEncoder()
@@ -87,11 +87,11 @@ struct LogbookDetail: View {
     }
 
     // Combine the data from all the sensors
-    private func combineJSON() -> OutputDataForJSON? {
+    private func combineJSON() -> (structuredJSON: CombinedData?, locationJSON: LocationDataForJSON?, motionJSON: MotionDataForJSON?, submersionJSON: SubmersionDataForJSON?) {
         // Grab the JSON strings from CoreData
         guard let motionJSON = entry.motionJSON, let locationJSON = entry.locationJSON else {
             print("No motionJSON or locationJSON found")
-            return nil
+            return (structuredJSON: nil, locationJSON: nil, motionJSON: nil, submersionJSON: nil)
         }
         let submersionJSON = entry.waterSubmersionJSON ?? "[]"
         
@@ -107,6 +107,7 @@ struct LogbookDetail: View {
             let latitude = locationJsonObject.map { $0["latitude"] as? Double }
             let longitude = locationJsonObject.map { $0["longitude"] as? Double }
             let locationArrays = LocationArrays(timestamp: locationTimeStamp, latitude: latitude, longitude: longitude)
+            let locationDataForJSON = LocationDataForJSON(values: locationArrays)
             
             // extract motion data
             let motionJsonObject = try JSONSerialization.jsonObject(with: motionData, options: []) as? [[String: Any]] ?? []
@@ -121,22 +122,23 @@ struct LogbookDetail: View {
             let magY = motionJsonObject.map { $0["magY"] as? Double }
             let magZ = motionJsonObject.map { $0["magZ"] as? Double }
             let motionArrays = MotionArrays(timestamp: motionTimeStamp, accelerationX: accX, accelerationY: accY, accelerationZ: accZ, rotationRateX: gyrX, rotationRateY: gyrY, rotationRateZ: gyrZ, magneticFieldX: magX, magneticFieldY: magY, magneticFieldZ: magZ)
+            let motionDataforJSON = MotionDataForJSON(values: motionArrays)
             
             // extract the submersion data
             let submersionJsonObject = try JSONSerialization.jsonObject(with: submersionData, options: []) as? [[String: Any]] ?? []
             let submersionTimeStamp = submersionJsonObject.map { $0["timestamp"] as? String }
             let waterDepth = submersionJsonObject.map { $0["depth"] as? Double }
             let waterTemperature = submersionJsonObject.map { $0["temperature"] as? Double }
-            
             let submersionArrays = SubmersionArrays(timestamp: submersionTimeStamp, waterDepth: waterDepth, waterTemperature: waterTemperature)
+            let submersionDataforJSON = SubmersionDataForJSON(values: submersionArrays)
             
             // Combine the data
-            let structuredJSON = OutputDataForJSON(LOCATION: LocationDataForJSON(values: locationArrays ), MOTION: MotionDataForJSON(values: motionArrays ), SUBMERSION: SubmersionDataForJSON(values: submersionArrays) )
+            let structuredJSON = CombinedData(LOCATION: locationDataForJSON, MOTION: motionDataforJSON, SUBMERSION: submersionDataforJSON )
             
-            return structuredJSON
+            return (structuredJSON: structuredJSON, locationJSON: locationDataForJSON, motionJSON: motionDataforJSON, submersionJSON: submersionDataforJSON)
         } catch {
             print("Error parsing or combining JSON: \(error)")
-            return nil
+            return (structuredJSON: nil, locationJSON: nil, motionJSON: nil, submersionJSON: nil)
         }
     }
 
