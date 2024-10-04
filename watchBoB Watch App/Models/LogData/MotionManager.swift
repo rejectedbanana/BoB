@@ -10,7 +10,8 @@ import CoreMotion
 import CoreData
 class MotionManager: NSObject, ObservableObject {
     var motionManager: CMMotionManager? = CMMotionManager()
-    var MotionDataArray: [MotionData] = []
+//    @Published var sampledLocations: [LocationData] = []
+    var motionData: MotionData = MotionData(timestamp: [], accelerationX: [], accelerationY: [], accelerationZ: [], rotationRateX: [], rotationRateY: [], rotationRateZ: [], magneticFieldX: [], magneticFieldY: [], magneticFieldZ: [])
 
     @Published var accX = 0.0
     @Published var accY = 0.0
@@ -45,19 +46,31 @@ class MotionManager: NSObject, ObservableObject {
         timeStamp = Date()
         elapsedTime = String(format: "%.2f", Date().timeIntervalSince(startTime))
 
-        let newMotionData = MotionData(
-            timestamp: timeStampFormatter.ISO8601Format(timeStamp),
-            accX: accX,
-            accY: accY,
-            accZ: accZ,
-            gyrX: gyrX,
-            gyrY: gyrY,
-            gyrZ: gyrZ,
-            magX: magX,
-            magY: magY,
-            magZ: magZ
-        )
-        MotionDataArray.append(newMotionData)
+//        let newMotionData = MotionData(
+//            timestamp: timeStampFormatter.ISO8601Format(timeStamp),
+//            accX: accX,
+//            accY: accY,
+//            accZ: accZ,
+//            gyrX: gyrX,
+//            gyrY: gyrY,
+//            gyrZ: gyrZ,
+//            magX: magX,
+//            magY: magY,
+//            magZ: magZ
+//        )
+//        motionData.append(newMotionData)
+        motionData.timestamp.append(timeStampFormatter.ISO8601Format(timeStamp))
+        motionData.accelerationX.append(accX)
+        motionData.accelerationY.append(accY)
+        motionData.accelerationZ.append(accZ)
+        motionData.rotationRateX.append(gyrX)
+        motionData.rotationRateY.append(gyrY)
+        motionData.rotationRateZ.append(gyrZ)
+        motionData.magneticFieldX.append(magX)
+        motionData.magneticFieldY.append(magX)
+        motionData.magneticFieldZ.append(magX)
+        
+        
     }
 
     func startLogging(_ freq: Double) {
@@ -85,7 +98,7 @@ class MotionManager: NSObject, ObservableObject {
         let encoder = JSONEncoder()
         encoder.dateEncodingStrategy = .iso8601
         do {
-            let jsonData = try encoder.encode(MotionDataArray)
+            let jsonData = try encoder.encode(motionData)
             return String(data: jsonData, encoding: .utf8)
         } catch {
             print("Error encoding sensor data to JSON: \(error)")
@@ -104,6 +117,15 @@ class MotionManager: NSObject, ObservableObject {
         magY = 0.0
         magZ = 0.0
         elapsedTime = "00:00.00"
-        MotionDataArray.removeAll()
+        motionData.timestamp.removeAll()
+        motionData.accelerationX.removeAll()
+        motionData.accelerationY.removeAll()
+        motionData.accelerationZ.removeAll()
+        motionData.rotationRateX.removeAll()
+        motionData.rotationRateY.removeAll()
+        motionData.rotationRateZ.removeAll()
+        motionData.magneticFieldX.removeAll()
+        motionData.magneticFieldY.removeAll()
+        motionData.magneticFieldZ.removeAll()
     }
 }

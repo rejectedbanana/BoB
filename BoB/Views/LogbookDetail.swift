@@ -100,7 +100,9 @@ struct LogbookDetail: View {
         let location = Data(locationJSON.utf8)
         let locationData = try? decoder.decode( LocationData.self, from: location)
         
-        let motionData = Data(motionJSON.utf8)
+        let motion = Data(motionJSON.utf8)
+        let motionData = try? decoder.decode( MotionData.self, from: motion)
+        
         let submersionData = Data(submersionJSON.utf8)
         
         do {
@@ -109,18 +111,18 @@ struct LogbookDetail: View {
             let locationDataForJSON = LocationDataForJSON(values: locationArrays)
             
             // extract motion data
-            let motionJsonObject = try JSONSerialization.jsonObject(with: motionData, options: []) as? [[String: Any]] ?? []
-            let motionTimeStamp = motionJsonObject.map { $0["timestamp"] as? String }
-            let accX = motionJsonObject.map { $0["accX"] as? Double }
-            let accY = motionJsonObject.map { $0["accY"] as? Double }
-            let accZ = motionJsonObject.map { $0["accZ"] as? Double }
-            let gyrX = motionJsonObject.map { $0["gyrX"] as? Double }
-            let gyrY = motionJsonObject.map { $0["gyrY"] as? Double }
-            let gyrZ = motionJsonObject.map { $0["gyrZ"] as? Double }
-            let magX = motionJsonObject.map { $0["magX"] as? Double }
-            let magY = motionJsonObject.map { $0["magY"] as? Double }
-            let magZ = motionJsonObject.map { $0["magZ"] as? Double }
-            let motionArrays = MotionArrays(timestamp: motionTimeStamp, accelerationX: accX, accelerationY: accY, accelerationZ: accZ, rotationRateX: gyrX, rotationRateY: gyrY, rotationRateZ: gyrZ, magneticFieldX: magX, magneticFieldY: magY, magneticFieldZ: magZ)
+//            let motionJsonObject = try JSONSerialization.jsonObject(with: motionData, options: []) as? [[String: Any]] ?? []
+//            let motionTimeStamp = motionJsonObject.map { $0["timestamp"] as? String }
+//            let accX = motionJsonObject.map { $0["accX"] as? Double }
+//            let accY = motionJsonObject.map { $0["accY"] as? Double }
+//            let accZ = motionJsonObject.map { $0["accZ"] as? Double }
+//            let gyrX = motionJsonObject.map { $0["gyrX"] as? Double }
+//            let gyrY = motionJsonObject.map { $0["gyrY"] as? Double }
+//            let gyrZ = motionJsonObject.map { $0["gyrZ"] as? Double }
+//            let magX = motionJsonObject.map { $0["magX"] as? Double }
+//            let magY = motionJsonObject.map { $0["magY"] as? Double }
+//            let magZ = motionJsonObject.map { $0["magZ"] as? Double }
+            let motionArrays = MotionData(timestamp: motionData?.timestamp ?? [], accelerationX: motionData?.accelerationX ?? [], accelerationY: motionData?.accelerationY ?? [], accelerationZ: motionData?.accelerationZ ?? [], rotationRateX: motionData?.rotationRateX ?? [], rotationRateY: motionData?.rotationRateY ?? [], rotationRateZ: motionData?.rotationRateZ ?? [], magneticFieldX: motionData?.magneticFieldX ?? [], magneticFieldY: motionData?.magneticFieldY ?? [], magneticFieldZ: motionData?.magneticFieldZ ?? [])
             let motionDataforJSON = MotionDataForJSON(values: motionArrays)
             
             // extract the submersion data

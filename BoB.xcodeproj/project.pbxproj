@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		210CB8262CAC8D700060DECA /* CombinedData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 210CB8252CAC8D700060DECA /* CombinedData.swift */; };
+		21BBC6792CB05DCA0082B0F3 /* MotionData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97FC9EE52C1CFA1D0076F30E /* MotionData.swift */; };
 		3001E6FA2B8426E0003B09B1 /* MetadataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3001E6F92B8426E0003B09B1 /* MetadataManager.swift */; };
 		97349CEB2AF1679300021CA3 /* RawMotionRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97349CEA2AF1679300021CA3 /* RawMotionRow.swift */; };
 		9749DA442C0F532A00E2EA84 /* CoreDataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9797363F2AEB1AB4009BCFF0 /* CoreDataController.swift */; };
@@ -550,6 +551,7 @@
 				977E74C92BE98955009A36AD /* SampleSet+CoreDataProperties.swift in Sources */,
 				9749DA442C0F532A00E2EA84 /* CoreDataController.swift in Sources */,
 				97E505832B472F9700334D6F /* LogbookDetail.swift in Sources */,
+				21BBC6792CB05DCA0082B0F3 /* MotionData.swift in Sources */,
 				977E74CC2BE9895D009A36AD /* Bob.xcdatamodeld in Sources */,
 				97DF8E9B2AE195FA00A33A80 /* ContentView.swift in Sources */,
 				FC9AFC922C973B0C001BE4D6 /* JSONViewModel.swift in Sources */,
