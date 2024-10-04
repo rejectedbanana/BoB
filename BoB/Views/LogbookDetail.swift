@@ -23,6 +23,7 @@ struct LogbookDetail: View {
     }
     
     let encoder = JSONEncoder()
+    let decoder = JSONDecoder()
     
     // time stamp formatter
     let timeStampFormatter = TimeStampManager()
@@ -96,17 +97,21 @@ struct LogbookDetail: View {
         let submersionJSON = entry.waterSubmersionJSON ?? "[]"
         
         // Turn JSON strings into data
+        let location = Data(locationJSON.utf8)
+        let locationData = try? decoder.decode( LocationData.self, from: location)
+        
         let motionData = Data(motionJSON.utf8)
-        let locationData = Data(locationJSON.utf8)
         let submersionData = Data(submersionJSON.utf8)
         
         do {
             // extract location data
-            let locationJsonObject = try JSONSerialization.jsonObject(with: locationData, options: []) as? [[String: Any]] ?? []
-            let locationTimeStamp = locationJsonObject.map { $0["timestamp"] as? String }
-            let latitude = locationJsonObject.map { $0["latitude"] as? Double }
-            let longitude = locationJsonObject.map { $0["longitude"] as? Double }
-            let locationArrays = LocationArrays(timestamp: locationTimeStamp, latitude: latitude, longitude: longitude)
+//            let locationJsonObject = try JSONSerialization.jsonObject(with: locationData, options: []) as? [[String: Any]] ?? []
+//            let locationTimeStamp = locationJsonObject.map { $0["timestamp"] as? String }
+//            let latitude = locationJsonObject.map { $0["latitude"] as? Double }
+//            let longitude = locationJsonObject.map { $0["longitude"] as? Double }
+//            let locationArrays = LocationArrays(timestamp: locationTimeStamp, latitude: latitude, longitude: longitude)
+            
+            let locationArrays = LocationArrays(timestamp: locationData?.timestamp ?? [], latitude: locationData?.latitude ?? [], longitude: locationData?.longitude ?? [])
             let locationDataForJSON = LocationDataForJSON(values: locationArrays)
             
             // extract motion data
