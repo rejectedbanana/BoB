@@ -46,7 +46,7 @@ struct LogbookDetail: View {
                     showLocationJSON.toggle()
                 }
                 .sheet(isPresented: $showLocationJSON) {
-                    JSONView(jsonContent: jsonString(for: "LOCATION") ?? "No Location Data", title: "Location Data")
+                    JSONView(jsonContent: entry.locationJSON ?? "No Location Data", title: "Location Data")
                 }
                 
                 Button("View Motion Data") {
@@ -105,13 +105,7 @@ struct LogbookDetail: View {
         
         do {
             // extract location data
-//            let locationJsonObject = try JSONSerialization.jsonObject(with: locationData, options: []) as? [[String: Any]] ?? []
-//            let locationTimeStamp = locationJsonObject.map { $0["timestamp"] as? String }
-//            let latitude = locationJsonObject.map { $0["latitude"] as? Double }
-//            let longitude = locationJsonObject.map { $0["longitude"] as? Double }
-//            let locationArrays = LocationArrays(timestamp: locationTimeStamp, latitude: latitude, longitude: longitude)
-            
-            let locationArrays = LocationArrays(timestamp: locationData?.timestamp ?? [], latitude: locationData?.latitude ?? [], longitude: locationData?.longitude ?? [])
+            let locationArrays = LocationData(timestamp: locationData?.timestamp ?? [], latitude: locationData?.latitude ?? [], longitude: locationData?.longitude ?? [])
             let locationDataForJSON = LocationDataForJSON(values: locationArrays)
             
             // extract motion data

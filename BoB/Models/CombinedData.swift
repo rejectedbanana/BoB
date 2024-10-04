@@ -18,9 +18,9 @@ struct LocationDataForJSON: Codable {
     let description: String
     let labels: [String]
     let units: [String]
-    let values: LocationArrays
+    let values: LocationData
     
-    init( values: LocationArrays ) {
+    init( values: LocationData ) {
         self.sensor_id = "location"
         self.description = "Geographical location from L1 and L5 GPS, GLONASS, Galileo, QZSS, or BeiDou"
         self.labels = ["timestamp,latitude,longitude"]
