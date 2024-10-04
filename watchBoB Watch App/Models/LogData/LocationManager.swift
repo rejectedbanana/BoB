@@ -17,7 +17,7 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
 //    @Published var sampledLocations: [LocationData] = []
     @Published var sampledLocations: LocationData = LocationData(timestamp: [], latitude: [], longitude: [])
     
-    let timeStampFormatter = TimeStampManager()
+//    let timeStampFormatter = TimeStampManager()
     private var samplingTimer: Timer?
     
     override init() {
@@ -61,7 +61,7 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
 //            sampledLocations.append(locationData)
             
             // grab the data
-            let timestamp: String = timeStampFormatter.ISO8601Format(Date())
+            let timestamp: String = ISO8601DateFormatter().string(from: Date())
             let latitude: Double = round(location.latitude * 10000) / 10000
             let longitude: Double = round(location.longitude * 10000) / 10000
             
