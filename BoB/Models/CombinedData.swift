@@ -61,90 +61,11 @@ struct SubmersionDataForJSON: Codable {
     }
 }
 
-//struct LocationArrays: Codable {
-//    let timestamp: [String?]
-//    let latitude: [Double?]
-//    let longitude: [Double?]
-//    
-//    func encode(to encoder: any Encoder) throws {
-//        var container = encoder.container(keyedBy: CodingKeys.self)
-//        
-//        // encode the timestamp
-//        try container.encode(timestamp, forKey: .timestamp)
-//        
-//        // format latitude and longitude to 4 decimal places
-//        let formattedLatitude = latitude.map { $0.map { round( $0 * 10000 ) / 10000 } }
-//        let formattedLongitude = longitude.map { $0.map { round( $0 * 10000 ) / 10000 } }
-//        // encode the formatted values
-//        try container.encode(formattedLatitude, forKey: .latitude)
-//        try container.encode(formattedLongitude, forKey: .longitude)
-//    }
-//    
-//    enum CodingKeys: String, CodingKey {
-//        case timestamp
-//        case latitude
-//        case longitude
-//    }
-//}
-
-//struct MotionArrays: Codable {
-//    let timestamp: [String?]
-//    let accelerationX: [Double?]
-//    let accelerationY: [Double?]
-//    let accelerationZ: [Double?]
-//    let rotationRateX: [Double?]
-//    let rotationRateY: [Double?]
-//    let rotationRateZ: [Double?]
-//    let magneticFieldX: [Double?]
-//    let magneticFieldY: [Double?]
-//    let magneticFieldZ: [Double?]
-//    
-//    func encode(to encoder: any Encoder) throws {
-//        var container = encoder.container(keyedBy: CodingKeys.self)
-//        
-//        // encode the timestamp
-//        try container.encode(timestamp, forKey: .timestamp)
-//        
-//        // Format data to 6 decimal places
-//        let formattedAccelerationX = accelerationX.map { $0.map { round( $0 * 1000000 ) / 1000000 } }
-//        let formattedAccelerationY = accelerationY.map { $0.map { round( $0 * 1000000 ) / 1000000 } }
-//        let formattedAccelerationZ = accelerationZ.map { $0.map { round( $0 * 1000000 ) / 1000000 } }
-//        let formattedRotationX = rotationRateX.map { $0.map { round( $0 * 1000000 ) / 1000000 } }
-//        let formattedRotationY = rotationRateY.map { $0.map { round( $0 * 1000000 ) / 1000000 } }
-//        let formattedRotationZ = rotationRateZ.map { $0.map { round( $0 * 1000000 ) / 1000000 } }
-//        let formattedMagneticFieldX = magneticFieldY.map { $0.map { round( $0 * 1000 ) / 1000 } }
-//        let formattedMagneticFieldY = magneticFieldY.map { $0.map { round( $0 * 1000 ) / 10000 } }
-//        let formattedMagneticFieldZ = magneticFieldZ.map { $0.map { round( $0 * 1000 ) / 1000 } }
-//        // encode the formatted values
-//        try container.encode(formattedAccelerationX, forKey: .accelerationX)
-//        try container.encode(formattedAccelerationY, forKey: .accelerationY)
-//        try container.encode(formattedAccelerationZ, forKey: .accelerationZ)
-//        try container.encode(formattedRotationX, forKey: .rotationRateX)
-//        try container.encode(formattedRotationY, forKey: .rotationRateY)
-//        try container.encode(formattedRotationZ, forKey: .rotationRateZ)
-//        try container.encode(formattedMagneticFieldX, forKey: .magneticFieldX)
-//        try container.encode(formattedMagneticFieldY, forKey: .magneticFieldY)
-//        try container.encode(formattedMagneticFieldZ, forKey: .magneticFieldZ)
-//    }
-//    
-//    enum CodingKeys: String, CodingKey {
-//        case timestamp
-//        case accelerationX
-//        case accelerationY
-//        case accelerationZ
-//        case rotationRateX
-//        case rotationRateY
-//        case rotationRateZ
-//        case magneticFieldX
-//        case magneticFieldY
-//        case magneticFieldZ
-//    }
-//}
-
 struct SubmersionArrays: Codable {
     let timestamp: [String?]
     let waterDepth: [Double?]
     let waterTemperature: [Double?]
+    let surfacePressure: [Double?]
     
     func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
@@ -158,11 +79,13 @@ struct SubmersionArrays: Codable {
         // encode the data
         try container.encode(formattedWaterDepth, forKey: .waterDepth)
         try container.encode(formattedWaterTemperature, forKey: .waterTemperature)
+        try container.encode(surfacePressure, forKey: .surfacePressure)
     }
     
     enum CodingKeys: String, CodingKey {
         case timestamp
         case waterDepth
         case waterTemperature
+        case surfacePressure
     }
 }
