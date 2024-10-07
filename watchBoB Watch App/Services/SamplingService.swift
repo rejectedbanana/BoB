@@ -19,7 +19,7 @@ class SamplingService {
         motionManager.startLogging(10)
         locationManager.startSamplingGPS()
         // Commented below since we're handling automatic
-//        waterSubmersionManager.startDiveSession()
+        waterSubmersionManager.startDiveSession()
         
         let device = WKInterfaceDevice.current()
         metadataManager.deviceName = device.name

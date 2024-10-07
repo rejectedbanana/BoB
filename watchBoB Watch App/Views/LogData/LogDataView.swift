@@ -136,9 +136,9 @@ struct LogDataView: View {
         }
         .navigationBarBackButtonHidden(isLoggingData)
         .padding(.top, 10)
-        .onReceive(waterSubmersionManager.$waterSubmersionData) { sample in
-            debugPrint("New submersion data received, updating view. \(sample)")
-        }
+//        .onReceive(waterSubmersionManager.$waterSubmersionData) { sample in
+//            debugPrint("New submersion data received, updating view. \(sample)")
+//        }
     }
     
     

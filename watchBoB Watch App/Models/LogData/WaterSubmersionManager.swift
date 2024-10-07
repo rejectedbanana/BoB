@@ -19,12 +19,16 @@ class WaterSubmersionManager: NSObject, ObservableObject {
     @Published var diveSessionRunning: Bool = false
     @Published var waterSubmersionData: [WaterSubmersionData] = []
     
+    // Instantiate the submersion manager
     private var submersionManager: CMWaterSubmersionManager?
-    private var extendedRuntimeSession: WKExtendedRuntimeSession?
     
+    // Get the availability of water submersion data
     private var waterSubmersionAvailable: Bool {
         return CMWaterSubmersionManager.waterSubmersionAvailable
     }
+    
+    // explicitly create the extended runtime session
+    private var extendedRuntimeSession: WKExtendedRuntimeSession?
 
     override private init() {
         super.init()
@@ -68,10 +72,14 @@ class WaterSubmersionManager: NSObject, ObservableObject {
     
     @MainActor
     private func addSubmersionSample(measurement: CMWaterSubmersionMeasurement?, temperature: CMWaterTemperature?) {
+        
+        // grab the water depth
         guard let waterDepth = measurement?.depth?.value else {
             debugPrint("No depth data available")
             return
         }
+        
+        // grab the surface pressure
         let surfacePressure: Double? = {
             if let pressure = measurement?.surfacePressure.value {
                 return pressure
@@ -97,19 +105,31 @@ class WaterSubmersionManager: NSObject, ObservableObject {
         waterSubmersionData.append(newSample)
     }
     
+    // explicitly start a runtime session
     func startDiveSession() {
         debugPrint("[WKExtendedRuntimeSession] *** Starting a dive session. ***")
-
+        
+        // create the extended runtime session here because you can't pass it in from SamplingService
         let session = WKExtendedRuntimeSession()
+        
+        // Assign a delegate to the session
         session.delegate = self
+        
+        // Start the session
         session.start()
 
         self.extendedRuntimeSession = session
         diveSessionRunning = true
         
         debugPrint("[WKExtendedRuntimeSession] *** Dive session started. Waiting for submersion... ***")
+        
+        // runs until you
+        // 1. explicitly cancel the session by calling invadidate()
+        // 2. The wearer turns off Water Lock
+        // 3. Your app remains in the CMWaterSubmersionEvent.State.notSubmerged for 10 minutes
     }
     
+    // explicitly end the runtime session
     func stopDiveSession() {
         debugPrint("[WKExtendedRuntimeSession] *** Stopping dive session. ***")
         diveSessionRunning = false
@@ -117,13 +137,19 @@ class WaterSubmersionManager: NSObject, ObservableObject {
         extendedRuntimeSession = nil
     }
 
+    // automatically start a runtime session when the watch descends below 1 meter
     func handleAutomaticSession(_ session: WKExtendedRuntimeSession) {
         debugPrint("[WKExtendedRuntimeSession] *** Handling automatic dive session. ***")
-
+        
+        // assign a delegate to the session
         session.delegate = self
+        
         self.extendedRuntimeSession = session
         diveSessionRunning = true
+        
         enableWaterLock()
+        
+        debugPrint("[WKExtendedRuntimeSession] *** Dive session started. Submerged to 1 meter. ***")
     }
     
     func enableWaterLock() {
@@ -149,8 +175,11 @@ class WaterSubmersionManager: NSObject, ObservableObject {
     }
 }
 
+
 extension WaterSubmersionManager: CMWaterSubmersionManagerDelegate {
+    // respond to events
     nonisolated func manager(_ manager: CMWaterSubmersionManager, didUpdate event: CMWaterSubmersionEvent) {
+        
         let submerged: Bool?
         switch event.state {
         case .unknown:
@@ -178,6 +207,7 @@ extension WaterSubmersionManager: CMWaterSubmersionManagerDelegate {
         }
     }
     
+    // receive submersion measurement update (surface pressure, water pressure, depth, submersion state)
     nonisolated func manager(_ manager: CMWaterSubmersionManager, didUpdate measurement: CMWaterSubmersionMeasurement) {
         if diveSessionRunning {
             debugPrint("[Measurement] *** Received a depth measurement. ***")
@@ -204,11 +234,13 @@ extension WaterSubmersionManager: CMWaterSubmersionManagerDelegate {
                 if let submerged = submerged {
                     await set(submerged: submerged)
                 }
+                // add a measurement
                 await addSubmersionSample(measurement: measurement, temperature: self.temperature)
             }
         }
     }
     
+    // receive temperature measurement update (temperature, temperature uncertainty)
     nonisolated func manager(_ manager: CMWaterSubmersionManager, didUpdate measurement: CMWaterTemperature) {
         if diveSessionRunning {
             let temp = measurement.temperature
@@ -219,6 +251,7 @@ extension WaterSubmersionManager: CMWaterSubmersionManagerDelegate {
             
             Task {
                 await set(temperature: measurement)
+                // add a measurement
                 await addSubmersionSample(measurement: self.measurement, temperature: measurement)
             }
         }

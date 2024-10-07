@@ -60,7 +60,7 @@ struct LogbookDetail: View {
                     showSubmersionJSON.toggle()
                 }
                 .sheet(isPresented: $showSubmersionJSON) {
-                    JSONView(jsonContent: jsonString(for: "SUBMERSION") ?? "No Submersion Data", title: "Submersion Data")
+                    JSONView(jsonContent: entry.waterSubmersionJSON ?? "No Submersion Data", title: "Submersion Data")
                 }
             }
             
@@ -111,17 +111,6 @@ struct LogbookDetail: View {
             let locationDataForJSON = LocationDataForJSON(values: locationArrays)
             
             // extract motion data
-//            let motionJsonObject = try JSONSerialization.jsonObject(with: motionData, options: []) as? [[String: Any]] ?? []
-//            let motionTimeStamp = motionJsonObject.map { $0["timestamp"] as? String }
-//            let accX = motionJsonObject.map { $0["accX"] as? Double }
-//            let accY = motionJsonObject.map { $0["accY"] as? Double }
-//            let accZ = motionJsonObject.map { $0["accZ"] as? Double }
-//            let gyrX = motionJsonObject.map { $0["gyrX"] as? Double }
-//            let gyrY = motionJsonObject.map { $0["gyrY"] as? Double }
-//            let gyrZ = motionJsonObject.map { $0["gyrZ"] as? Double }
-//            let magX = motionJsonObject.map { $0["magX"] as? Double }
-//            let magY = motionJsonObject.map { $0["magY"] as? Double }
-//            let magZ = motionJsonObject.map { $0["magZ"] as? Double }
             let motionArrays = MotionData(timestamp: motionData?.timestamp ?? [], accelerationX: motionData?.accelerationX ?? [], accelerationY: motionData?.accelerationY ?? [], accelerationZ: motionData?.accelerationZ ?? [], rotationRateX: motionData?.rotationRateX ?? [], rotationRateY: motionData?.rotationRateY ?? [], rotationRateZ: motionData?.rotationRateZ ?? [], magneticFieldX: motionData?.magneticFieldX ?? [], magneticFieldY: motionData?.magneticFieldY ?? [], magneticFieldZ: motionData?.magneticFieldZ ?? [])
             let motionDataforJSON = MotionDataForJSON(values: motionArrays)
             
@@ -130,7 +119,8 @@ struct LogbookDetail: View {
             let submersionTimeStamp = submersionJsonObject.map { $0["timestamp"] as? String }
             let waterDepth = submersionJsonObject.map { $0["depth"] as? Double }
             let waterTemperature = submersionJsonObject.map { $0["temperature"] as? Double }
-            let submersionArrays = SubmersionArrays(timestamp: submersionTimeStamp, waterDepth: waterDepth, waterTemperature: waterTemperature)
+            let surfacePressure = submersionJsonObject.map { $0["surfacePressure"] as? Double }
+            let submersionArrays = SubmersionArrays(timestamp: submersionTimeStamp, waterDepth: waterDepth, waterTemperature: waterTemperature, surfacePressure: surfacePressure)
             let submersionDataforJSON = SubmersionDataForJSON(values: submersionArrays)
             
             // Combine the data
