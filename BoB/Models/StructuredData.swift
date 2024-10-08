@@ -1,5 +1,5 @@
 //
-//  CombinedData.swift
+//  StructuredData.swift
 //  BoB
 //
 //  Created by Kim Martini on 10/1/24.
@@ -7,13 +7,13 @@
 
 import Foundation
 
-struct CombinedData: Codable {
-    let LOCATION: LocationDataForJSON
-    let MOTION: MotionDataForJSON
-    let SUBMERSION: SubmersionDataForJSON
+struct StructuredData: Codable {
+    let LOCATION: FormattedLocationData
+    let MOTION: FormattedMotionData
+    let SUBMERSION: FormattedSubmersionData
 }
 
-struct LocationDataForJSON: Codable {
+struct FormattedLocationData: Codable {
     let sensor_id: String
     let description: String
     let labels: [String]
@@ -29,7 +29,7 @@ struct LocationDataForJSON: Codable {
     }
 }
 
-struct MotionDataForJSON: Codable {
+struct FormattedMotionData: Codable {
     let sensor_id: String
     let description: String
     let labels: [String]
@@ -45,7 +45,7 @@ struct MotionDataForJSON: Codable {
     }
 }
 
-struct SubmersionDataForJSON: Codable {
+struct FormattedSubmersionData: Codable {
     let sensor_id: String
     let description: String
     let labels: [String]
