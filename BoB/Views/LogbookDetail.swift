@@ -103,7 +103,8 @@ struct LogbookDetail: View {
         let motion = Data(motionJSON.utf8)
         let motionData = try? decoder.decode( MotionData.self, from: motion)
         
-        let submersionData = Data(submersionJSON.utf8)
+        let submersion = Data(submersionJSON.utf8)
+        let submersionData = try? decoder.decode( WaterSubmersionData.self, from: submersion)
         
         do {
             // extract location data
@@ -115,12 +116,7 @@ struct LogbookDetail: View {
             let motionDataforJSON = MotionDataForJSON(values: motionArrays)
             
             // extract the submersion data
-            let submersionJsonObject = try JSONSerialization.jsonObject(with: submersionData, options: []) as? [[String: Any]] ?? []
-            let submersionTimeStamp = submersionJsonObject.map { $0["timestamp"] as? String }
-            let waterDepth = submersionJsonObject.map { $0["depth"] as? Double }
-            let waterTemperature = submersionJsonObject.map { $0["temperature"] as? Double }
-            let surfacePressure = submersionJsonObject.map { $0["surfacePressure"] as? Double }
-            let submersionArrays = SubmersionArrays(timestamp: submersionTimeStamp, waterDepth: waterDepth, waterTemperature: waterTemperature, surfacePressure: surfacePressure)
+            let submersionArrays = SubmersionArrays(timestamp: submersionData?.timestamp ?? [], waterDepth: submersionData?.depth ?? [], waterTemperature: submersionData?.temperature ?? [])
             let submersionDataforJSON = SubmersionDataForJSON(values: submersionArrays)
             
             // Combine the data

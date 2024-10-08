@@ -8,8 +8,8 @@
 import Foundation
 
 struct WaterSubmersionData: Codable {
-    let timestamp: String
-    let depth: Double?
-    let temperature: Double?
-    let surfacePressure: Double?
+    var timestamp: [String]
+    var depth: [Double]
+    var temperature: [Double]
+//    let surfacePressure: Double?
 }

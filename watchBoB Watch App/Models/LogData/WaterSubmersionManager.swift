@@ -17,7 +17,7 @@ class WaterSubmersionManager: NSObject, ObservableObject {
     @Published var measurement: CMWaterSubmersionMeasurement? = nil
     @Published var temperature: CMWaterTemperature? = nil
     @Published var diveSessionRunning: Bool = false
-    @Published var waterSubmersionData: [WaterSubmersionData] = []
+    @Published var waterSubmersionData: WaterSubmersionData = WaterSubmersionData(timestamp: [], depth: [], temperature: [])
     
     // Instantiate the submersion manager
     private var submersionManager: CMWaterSubmersionManager?
@@ -67,7 +67,7 @@ class WaterSubmersionManager: NSObject, ObservableObject {
         isSubmerged = false
         measurement = nil
         temperature = nil
-        waterSubmersionData.removeAll()
+//        waterSubmersionData.removeAll()
     }
     
     @MainActor
@@ -79,14 +79,14 @@ class WaterSubmersionManager: NSObject, ObservableObject {
             return
         }
         
-        // grab the surface pressure
-        let surfacePressure: Double? = {
-            if let pressure = measurement?.surfacePressure.value {
-                return pressure
-            } else {
-                return nil
-            }
-        }()
+//        // grab the surface pressure
+//        let surfacePressure: Double? = {
+//            if let pressure = measurement?.surfacePressure.value {
+//                return pressure
+//            } else {
+//                return nil
+//            }
+//        }()
         
         guard let waterTemperature = temperature?.temperature.value else {
             debugPrint("No temperature data available")
@@ -96,13 +96,10 @@ class WaterSubmersionManager: NSObject, ObservableObject {
         let iso8601Formatter = ISO8601DateFormatter()
         let timestamp = iso8601Formatter.string(from: Date())
         
-        let newSample = WaterSubmersionData(
-            timestamp: timestamp,
-            depth: waterDepth,
-            temperature: waterTemperature,
-            surfacePressure: surfacePressure
-        )
-        waterSubmersionData.append(newSample)
+        waterSubmersionData.timestamp.append(timestamp)
+        waterSubmersionData.depth.append(waterDepth)
+        waterSubmersionData.temperature.append(waterTemperature)
+        
     }
     
     // explicitly start a runtime session
@@ -158,7 +155,7 @@ class WaterSubmersionManager: NSObject, ObservableObject {
     }
     
     func convertArrayToJSONString() -> String? {
-        guard !waterSubmersionData.isEmpty else {
+        guard !waterSubmersionData.timestamp.isEmpty else {
             debugPrint("No submersion data to serialize.")
             return nil
         }
@@ -175,7 +172,7 @@ class WaterSubmersionManager: NSObject, ObservableObject {
     }
 }
 
-
+// notifies when something interesting happens with CMWaterSubmersionDelegate
 extension WaterSubmersionManager: CMWaterSubmersionManagerDelegate {
     // respond to events
     nonisolated func manager(_ manager: CMWaterSubmersionManager, didUpdate event: CMWaterSubmersionEvent) {
@@ -262,6 +259,7 @@ extension WaterSubmersionManager: CMWaterSubmersionManagerDelegate {
     }
 }
 
+// notifies when something interesting happns with WKExtendedRuntimeSession
 extension WaterSubmersionManager: WKExtendedRuntimeSessionDelegate {
     func extendedRuntimeSession(_ extendedRuntimeSession: WKExtendedRuntimeSession, didInvalidateWith reason: WKExtendedRuntimeSessionInvalidationReason, error: Error?) {
         debugPrint("[WKExtendedRuntimeSession] *** Session invalidated with reason: \(reason.rawValue) and error: \(error?.localizedDescription ?? "nil") ***")

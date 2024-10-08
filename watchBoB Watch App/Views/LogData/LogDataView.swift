@@ -76,17 +76,18 @@ struct LogDataView: View {
                 .padding(.leading, 5)
             
             // Dynamic water data
-            if let latestSample = waterSubmersionManager.waterSubmersionData.last {
+            if let latestSample = waterSubmersionManager.waterSubmersionData.timestamp.last {
                 HStack {
-                    Text("\(latestSample.depth ?? 0.0) m")
+                    Text("\(waterSubmersionManager.waterSubmersionData.depth.last ?? 0.0) m")
                     Spacer()
-                    Text("\(latestSample.temperature ?? 0.0) \(degree())C")
+                    Text("\(waterSubmersionManager.waterSubmersionData.temperature.last ?? 0.0) \(degree())C")
                 }
                 .padding(.leading, 50)
             } else {
                 Text("No data yet")
                     .padding(.leading, 50)
             }
+            
             if showSamplingMessage {
                 Text("Sampling started, waterlock on")
                     .font(.headline)

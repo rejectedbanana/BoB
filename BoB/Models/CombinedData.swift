@@ -65,7 +65,7 @@ struct SubmersionArrays: Codable {
     let timestamp: [String?]
     let waterDepth: [Double?]
     let waterTemperature: [Double?]
-    let surfacePressure: [Double?]
+//    let surfacePressure: [Double?]
     
     func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
@@ -79,13 +79,13 @@ struct SubmersionArrays: Codable {
         // encode the data
         try container.encode(formattedWaterDepth, forKey: .waterDepth)
         try container.encode(formattedWaterTemperature, forKey: .waterTemperature)
-        try container.encode(surfacePressure, forKey: .surfacePressure)
+//        try container.encode(surfacePressure, forKey: .surfacePressure)
     }
     
     enum CodingKeys: String, CodingKey {
         case timestamp
         case waterDepth
         case waterTemperature
-        case surfacePressure
+//        case surfacePressure
     }
 }
