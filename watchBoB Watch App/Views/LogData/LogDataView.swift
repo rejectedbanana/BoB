@@ -76,7 +76,7 @@ struct LogDataView: View {
                 .padding(.leading, 5)
             
             // Dynamic water data
-            if let latestSample = waterSubmersionManager.waterSubmersionData.timestamp.last {
+            if !waterSubmersionManager.waterSubmersionData.timestamp.isEmpty {
                 HStack {
                     Text("\(waterSubmersionManager.waterSubmersionData.depth.last ?? 0.0) m")
                     Spacer()
