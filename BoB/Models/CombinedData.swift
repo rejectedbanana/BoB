@@ -50,42 +50,13 @@ struct SubmersionDataForJSON: Codable {
     let description: String
     let labels: [String]
     let units: [String]
-    let values: SubmersionArrays
+    let values: WaterSubmersionData
     
-    init( values: SubmersionArrays ) {
+    init( values: WaterSubmersionData ) {
         self.description = "Submersion data from water depth and water temperature sensors"
         self.sensor_id = "submersion"
         self.labels = ["timestamp,waterDepth,waterTemperature"]
         self.units = ["ISO8601,meters,°C"]
         self.values = values
-    }
-}
-
-struct SubmersionArrays: Codable {
-    let timestamp: [String?]
-    let waterDepth: [Double?]
-    let waterTemperature: [Double?]
-//    let surfacePressure: [Double?]
-    
-    func encode(to encoder: Encoder) throws {
-        var container = encoder.container(keyedBy: CodingKeys.self)
-        
-        // encode the timestamp
-        try container.encode(timestamp, forKey: .timestamp)
-        
-        // format the data to 4 decimal places
-        let formattedWaterDepth: [Double?] = waterDepth.map { $0.map { round( $0 * 10000 ) / 10000 } }
-        let formattedWaterTemperature: [Double?] = waterTemperature.map { $0.map { round( $0 * 1000 ) / 1000 } }
-        // encode the data
-        try container.encode(formattedWaterDepth, forKey: .waterDepth)
-        try container.encode(formattedWaterTemperature, forKey: .waterTemperature)
-//        try container.encode(surfacePressure, forKey: .surfacePressure)
-    }
-    
-    enum CodingKeys: String, CodingKey {
-        case timestamp
-        case waterDepth
-        case waterTemperature
-//        case surfacePressure
     }
 }

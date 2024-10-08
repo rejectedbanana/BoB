@@ -116,7 +116,7 @@ struct LogbookDetail: View {
             let motionDataforJSON = MotionDataForJSON(values: motionArrays)
             
             // extract the submersion data
-            let submersionArrays = SubmersionArrays(timestamp: submersionData?.timestamp ?? [], waterDepth: submersionData?.depth ?? [], waterTemperature: submersionData?.temperature ?? [])
+            let submersionArrays = WaterSubmersionData(timestamp: submersionData?.timestamp ?? [], depth: submersionData?.depth ?? [], temperature: submersionData?.temperature ?? [])
             let submersionDataforJSON = SubmersionDataForJSON(values: submersionArrays)
             
             // Combine the data
