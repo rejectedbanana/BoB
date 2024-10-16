@@ -17,11 +17,12 @@ struct LogbookDetail: View {
     
     // Strings to store exported name and data
     @State private var JSONName = ""
-    @State private var JSONContent = ""
+//    @State private var JSONContent = ""
     private var combinedData: StructuredData? {
-        return combineJSONs().structuredData
+        return combineJSONsIntoStructuredData()
     }
     
+    // encoders and decosers for JSON output
     let encoder = JSONEncoder()
     let decoder = JSONDecoder()
     
@@ -46,21 +47,24 @@ struct LogbookDetail: View {
                     showLocationJSON.toggle()
                 }
                 .sheet(isPresented: $showLocationJSON) {
-                    JSONView(jsonContent: entry.locationJSON ?? "No Location Data", title: "Location Data")
+//                    JSONView(jsonContent: entry.locationJSON ?? "No Location Data", title: "Location Data")
+                    StructuredDataTable(combinedData: combinedData, sensorType: "LOCATION")
                 }
                 
                 Button("View Motion Data") {
                     showMotionJSON.toggle()
                 }
                 .sheet(isPresented: $showMotionJSON) {
-                    JSONView(jsonContent: jsonString(for: "MOTION") ?? "No Motion Data", title: "Motion Data")
+//                    JSONView(jsonContent: jsonString(for: "MOTION") ?? "No Motion Data", title: "Motion Data")
+                    StructuredDataTable(combinedData: combinedData, sensorType: "MOTION")
                 }
                 
                 Button("View Submersion Data") {
                     showSubmersionJSON.toggle()
                 }
                 .sheet(isPresented: $showSubmersionJSON) {
-                    JSONView(jsonContent: entry.waterSubmersionJSON ?? "No Submersion Data", title: "Submersion Data")
+//                    JSONView(jsonContent: entry.waterSubmersionJSON ?? "No Submersion Data", title: "Submersion Data")
+                    StructuredDataTable(combinedData: combinedData, sensorType: "SUBMERSION")
                 }
             }
             
@@ -83,22 +87,23 @@ struct LogbookDetail: View {
         }
         .onAppear {
             self.JSONName = timeStampFormatter.exportNameFormat(entry.startDatetime ?? Date.now )+"_AWUData.json"
-            self.JSONContent = entry.motionJSON ?? "No JSON data"
+//            self.JSONContent = entry.motionJSON ?? "No JSON data"
         }
     }
 
-    // Combine the data from all the sensors into one structure
-    private func combineJSONs() -> (structuredData: StructuredData?, formattedLocationData: FormattedLocationData?, formattedMotionData: FormattedMotionData?, formattedSubmersionData: FormattedSubmersionData?) {
+    // Combine the data from all the sensors into one encodable structure
+    private func combineJSONsIntoStructuredData() -> StructuredData? {
         // Grab the JSON strings from CoreData
         guard let motionJSON = entry.motionJSON, let locationJSON = entry.locationJSON else {
             print("No motionJSON or locationJSON found")
-            return (structuredData: nil, formattedLocationData: nil, formattedMotionData: nil, formattedSubmersionData: nil)
+            return nil
         }
         let submersionJSON = entry.waterSubmersionJSON ?? "[]"
         
         // Turn JSON strings into data
         let locationData = Data(locationJSON.utf8)
         let locationDecoded = try? decoder.decode( LocationData.self, from: locationData)
+        
         
         let motionData = Data(motionJSON.utf8)
         let motionDecoded = try? decoder.decode( MotionData.self, from: motionData)
@@ -122,10 +127,10 @@ struct LogbookDetail: View {
             // Combine the data
             let structuredData = StructuredData(LOCATION: formattedLocationData, MOTION: formattedMotionData, SUBMERSION: formattedSubmersionData )
             
-            return (structuredData: structuredData, formattedLocationData: formattedLocationData, formattedMotionData: formattedMotionData, formattedSubmersionData: formattedSubmersionData)
+            return structuredData
         } catch {
             print("Error parsing or combining JSON: \(error)")
-            return (structuredData: nil, formattedLocationData: nil, formattedMotionData: nil, formattedSubmersionData: nil)
+            return nil
         }
     }
 

@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		210CB8262CAC8D700060DECA /* StructuredData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 210CB8252CAC8D700060DECA /* StructuredData.swift */; };
+		21355A2B2CB9A70700323D86 /* StructuredDataTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21355A2A2CB9A70700323D86 /* StructuredDataTable.swift */; };
 		21BBC6792CB05DCA0082B0F3 /* MotionData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97FC9EE52C1CFA1D0076F30E /* MotionData.swift */; };
 		21BBC67A2CB0922E0082B0F3 /* WaterSubmersionData.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCBA60C82C6D3F4200E01B1F /* WaterSubmersionData.swift */; };
 		3001E6FA2B8426E0003B09B1 /* MetadataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3001E6F92B8426E0003B09B1 /* MetadataManager.swift */; };
@@ -90,6 +91,7 @@
 
 /* Begin PBXFileReference section */
 		210CB8252CAC8D700060DECA /* StructuredData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StructuredData.swift; sourceTree = "<group>"; };
+		21355A2A2CB9A70700323D86 /* StructuredDataTable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StructuredDataTable.swift; sourceTree = "<group>"; };
 		3001E6F92B8426E0003B09B1 /* MetadataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetadataManager.swift; sourceTree = "<group>"; };
 		3011123E2B96AEBC0035D079 /* BoBTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BoBTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		3011124B2B96B17E0035D079 /* watchBoB Watch AppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "watchBoB Watch AppTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -189,6 +191,7 @@
 				97E505822B472F9700334D6F /* LogbookDetail.swift */,
 				9794676E2BEE8A0D00DF6E0B /* ListRow.swift */,
 				FC2C5C622C8CD93A00084262 /* JSONView.swift */,
+				21355A2A2CB9A70700323D86 /* StructuredDataTable.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -557,6 +560,7 @@
 				977E74CC2BE9895D009A36AD /* Bob.xcdatamodeld in Sources */,
 				97DF8E9B2AE195FA00A33A80 /* ContentView.swift in Sources */,
 				FC9AFC922C973B0C001BE4D6 /* JSONViewModel.swift in Sources */,
+				21355A2B2CB9A70700323D86 /* StructuredDataTable.swift in Sources */,
 				210CB8262CAC8D700060DECA /* StructuredData.swift in Sources */,
 				97DF8E992AE195FA00A33A80 /* BoBApp.swift in Sources */,
 				9794676F2BEE8A0D00DF6E0B /* ListRow.swift in Sources */,
