@@ -20,8 +20,11 @@ struct LogDataView: View {
     @ObservedObject var motionManager = MotionManager()
     @ObservedObject var waterSubmersionManager = WaterSubmersionManager.shared
     
-    // Toggle to show sampling message
-    @State private var showSamplingMessage: Bool = false
+    // Toggle to show start sampling message
+    @State private var showStartSamplingMessage: Bool = false
+    
+    // Toggle to show stop sampling message
+    @State private var showStopSamplingMessage: Bool = false
     
     // Toggle to turn data logging on and off
     @AppStorage("isSamplingActive") private var isLoggingData: Bool = false
@@ -88,13 +91,14 @@ struct LogDataView: View {
                     .padding(.leading, 50)
             }
             
-            if showSamplingMessage {
-                Text("Sampling started, waterlock on")
-                    .font(.headline)
-                    .foregroundColor(.green)
-                    .transition(.opacity)
-                    .padding(.vertical, 16)
-            }
+//            if showSamplingMessage {
+//                Text("WaterLock On")
+//                    .font(.headline)
+//                    .foregroundColor(.green)
+//                    .transition(.opacity)
+//                    .padding(.vertical, 16)
+//            }
+            
             Button {
                 isLoggingData.toggle()
                 
@@ -104,21 +108,39 @@ struct LogDataView: View {
                     
                     // Show the sampling message with animation
                     withAnimation {
-                        showSamplingMessage = true
+                        showStartSamplingMessage = true
                     }
                     
                     // Hide the message after 2 seconds
                     DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
                         withAnimation {
-                            showSamplingMessage = false
+                            showStartSamplingMessage = false
                         }
                     }
                 } else {
                     // Stop sampling
                     SamplingService.shared.stopSampling(motionManager: motionManager, locationManager: locationManager, metadataManager: metadataManager, waterSubmersionManager: waterSubmersionManager, context: moc, dismiss: dismiss.callAsFunction)
+                    
+                    // Show the sampling message with animation
+                    withAnimation {
+                        showStopSamplingMessage = true
+                    }
+                    
+                    // Hide the message after 2 seconds
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                        withAnimation {
+                            showStopSamplingMessage = false
+                        }
+                    }
                 }
             } label: {
                 Text(isLoggingData ? "Stop" : "Start")
+            }
+            .sheet(isPresented: $showStartSamplingMessage) {
+                StartSamplingMessageView()
+            }
+            .sheet(isPresented: $showStopSamplingMessage) {
+                StopSamplingMessageView()
             }
             .tint(.fandango)
             .frame(width: 160, height: 35)

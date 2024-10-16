@@ -133,7 +133,7 @@ struct LogbookDetail: View {
     private func convertCombinedDataToJSONString() -> String? {
         guard let combinedData = combinedData else { return nil }
         
-        encoder.outputFormatting = [.sortedKeys, .prettyPrinted, .withoutEscapingSlashes]
+        encoder.outputFormatting = [.sortedKeys, .withoutEscapingSlashes]
         do {
             let jsonData = try encoder.encode(combinedData)
             let jsonString = String(data: jsonData, encoding: .utf8)

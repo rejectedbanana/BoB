@@ -8,9 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		210CB8262CAC8D700060DECA /* StructuredData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 210CB8252CAC8D700060DECA /* StructuredData.swift */; };
+		2111BCA92CC0315B00AD6965 /* StartSamplingMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2111BCA82CC0315B00AD6965 /* StartSamplingMessageView.swift */; };
 		21355A2B2CB9A70700323D86 /* DataView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21355A2A2CB9A70700323D86 /* DataView.swift */; };
 		21BBC6792CB05DCA0082B0F3 /* MotionData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97FC9EE52C1CFA1D0076F30E /* MotionData.swift */; };
 		21BBC67A2CB0922E0082B0F3 /* WaterSubmersionData.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCBA60C82C6D3F4200E01B1F /* WaterSubmersionData.swift */; };
+		21D1B4E72CC0563900489182 /* StopSamplingMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21D1B4E62CC0563900489182 /* StopSamplingMessageView.swift */; };
 		3001E6FA2B8426E0003B09B1 /* MetadataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3001E6F92B8426E0003B09B1 /* MetadataManager.swift */; };
 		97349CEB2AF1679300021CA3 /* RawMotionRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97349CEA2AF1679300021CA3 /* RawMotionRow.swift */; };
 		9749DA442C0F532A00E2EA84 /* CoreDataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9797363F2AEB1AB4009BCFF0 /* CoreDataController.swift */; };
@@ -89,7 +91,9 @@
 
 /* Begin PBXFileReference section */
 		210CB8252CAC8D700060DECA /* StructuredData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StructuredData.swift; sourceTree = "<group>"; };
+		2111BCA82CC0315B00AD6965 /* StartSamplingMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartSamplingMessageView.swift; sourceTree = "<group>"; };
 		21355A2A2CB9A70700323D86 /* DataView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataView.swift; sourceTree = "<group>"; };
+		21D1B4E62CC0563900489182 /* StopSamplingMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StopSamplingMessageView.swift; sourceTree = "<group>"; };
 		3001E6F92B8426E0003B09B1 /* MetadataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetadataManager.swift; sourceTree = "<group>"; };
 		3011123E2B96AEBC0035D079 /* BoBTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BoBTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		3011124B2B96B17E0035D079 /* watchBoB Watch AppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "watchBoB Watch AppTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -339,6 +343,8 @@
 			children = (
 				97DF8EBC2AE1D9AE00A33A80 /* LogDataView.swift */,
 				97349CEA2AF1679300021CA3 /* RawMotionRow.swift */,
+				2111BCA82CC0315B00AD6965 /* StartSamplingMessageView.swift */,
+				21D1B4E62CC0563900489182 /* StopSamplingMessageView.swift */,
 			);
 			path = LogData;
 			sourceTree = "<group>";
@@ -566,12 +572,14 @@
 				97349CEB2AF1679300021CA3 /* RawMotionRow.swift in Sources */,
 				97B104A32AE7160200FE81DC /* LogbookDetail.swift in Sources */,
 				97DF8EAF2AE1968500A33A80 /* ContentView.swift in Sources */,
+				2111BCA92CC0315B00AD6965 /* StartSamplingMessageView.swift in Sources */,
 				FC9A2A212C73AE0E00820928 /* SamplingService.swift in Sources */,
 				97DF8EAD2AE1968500A33A80 /* watchBoBApp.swift in Sources */,
 				978D10672AE3049400310B26 /* LogbookView.swift in Sources */,
 				97DF8EBD2AE1D9AF00A33A80 /* LogDataView.swift in Sources */,
 				FCBA60C52C6BC20A00E01B1F /* WaterSubmersionManager.swift in Sources */,
 				FC9A2A1E2C739E0800820928 /* StartSamplingIntent.swift in Sources */,
+				21D1B4E72CC0563900489182 /* StopSamplingMessageView.swift in Sources */,
 				97CE319C2AED6ADE009335C9 /* LocationManager.swift in Sources */,
 				97B104AA2AE9771700FE81DC /* MotionManager.swift in Sources */,
 				97FC9EE62C1CFA1D0076F30E /* MotionData.swift in Sources */,
