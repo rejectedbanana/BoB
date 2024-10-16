@@ -17,7 +17,6 @@ struct LogbookDetail: View {
     
     // Strings to store exported name and data
     @State private var JSONName = ""
-//    @State private var JSONContent = ""
     private var combinedData: StructuredData? {
         return combineJSONsIntoStructuredData()
     }
@@ -47,24 +46,21 @@ struct LogbookDetail: View {
                     showLocationJSON.toggle()
                 }
                 .sheet(isPresented: $showLocationJSON) {
-//                    JSONView(jsonContent: entry.locationJSON ?? "No Location Data", title: "Location Data")
-                    StructuredDataTable(combinedData: combinedData, sensorType: "LOCATION")
+                    DataView(combinedData: combinedData, sensorType: "LOCATION")
                 }
                 
                 Button("View Motion Data") {
                     showMotionJSON.toggle()
                 }
                 .sheet(isPresented: $showMotionJSON) {
-//                    JSONView(jsonContent: jsonString(for: "MOTION") ?? "No Motion Data", title: "Motion Data")
-                    StructuredDataTable(combinedData: combinedData, sensorType: "MOTION")
+                    DataView(combinedData: combinedData, sensorType: "MOTION")
                 }
                 
                 Button("View Submersion Data") {
                     showSubmersionJSON.toggle()
                 }
                 .sheet(isPresented: $showSubmersionJSON) {
-//                    JSONView(jsonContent: entry.waterSubmersionJSON ?? "No Submersion Data", title: "Submersion Data")
-                    StructuredDataTable(combinedData: combinedData, sensorType: "SUBMERSION")
+                    DataView(combinedData: combinedData, sensorType: "SUBMERSION")
                 }
             }
             
@@ -87,7 +83,6 @@ struct LogbookDetail: View {
         }
         .onAppear {
             self.JSONName = timeStampFormatter.exportNameFormat(entry.startDatetime ?? Date.now )+"_AWUData.json"
-//            self.JSONContent = entry.motionJSON ?? "No JSON data"
         }
     }
 
@@ -161,21 +156,6 @@ struct LogbookDetail: View {
         }
         
         return fileURL
-    }
-    
-    // View the piece of the JSON that was prepared for export
-    private func jsonString(for sensorType: String) -> String? {
-        guard let combinedData = combinedData else { return nil }
-        
-        return "Some data string"
-        
-//        if let sensorData = combinedJSON[sensorType] as? [String: Any],
-//           let jsonData = try? JSONSerialization.data(withJSONObject: sensorData, options: [.sortedKeys, .prettyPrinted]),
-//           let jsonString = String(data: jsonData, encoding: .utf8) {
-//            return jsonString
-//        } else {
-//            return nil
-//        }
     }
 }
 

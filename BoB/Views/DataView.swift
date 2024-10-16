@@ -1,5 +1,5 @@
 //
-//  StructuredDataTable.swift
+//  DataView.swift
 //  BoB
 //
 //  Created by Kim Martini on 10/11/24.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct StructuredDataTable: View {
+struct DataView: View {
     let combinedData: StructuredData?
     let sensorType: String
     
@@ -285,7 +285,7 @@ struct StructuredDataTable: View {
     
     let combinedData = StructuredData(LOCATION: formattedLocationData, MOTION: formattedMotionData, SUBMERSION: formattedSubmersionData)
     
-    StructuredDataTable(combinedData: combinedData, sensorType: "SUBMERSION")
+    DataView(combinedData: combinedData, sensorType: "SUBMERSION")
 }
 
 
