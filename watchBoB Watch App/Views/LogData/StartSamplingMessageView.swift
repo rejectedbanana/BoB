@@ -22,7 +22,7 @@ struct StartSamplingMessageView: View {
                         .frame(width: 40, height: 40)
                         .foregroundColor(.blue)
                 }.padding(.bottom, 10)
-                Text("Water Lock on.")
+                Text("Water lock on.")
                     .font(.footnote)
                     .frame(maxWidth: .infinity, alignment: .center)
                     .foregroundColor(.white)

@@ -33,7 +33,7 @@ struct MotionData: Codable {
         let formattedRotationY = rotationRateY.map { $0.map { round( $0 * 1000000 ) / 1000000 } }
         let formattedRotationZ = rotationRateZ.map { $0.map { round( $0 * 1000000 ) / 1000000 } }
         let formattedMagneticFieldX = magneticFieldY.map { $0.map { round( $0 * 1000 ) / 1000 } }
-        let formattedMagneticFieldY = magneticFieldY.map { $0.map { round( $0 * 1000 ) / 10000 } }
+        let formattedMagneticFieldY = magneticFieldY.map { $0.map { round( $0 * 1000 ) / 1000 } }
         let formattedMagneticFieldZ = magneticFieldZ.map { $0.map { round( $0 * 1000 ) / 1000 } }
         // encode the formatted values
         try container.encode(formattedAccelerationX, forKey: .accelerationX)

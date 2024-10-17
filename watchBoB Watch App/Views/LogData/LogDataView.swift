@@ -81,23 +81,17 @@ struct LogDataView: View {
             // Dynamic water data
             if !waterSubmersionManager.waterSubmersionData.timestamp.isEmpty {
                 HStack {
-                    Text("\(waterSubmersionManager.waterSubmersionData.depth.last ?? 0.0) m")
+                    let depthString = String(format: "%.3f", waterSubmersionManager.waterSubmersionData.depth.last ?? 0.0)
+                    Text("\(depthString) m")
                     Spacer()
-                    Text("\(waterSubmersionManager.waterSubmersionData.temperature.last ?? 0.0) \(degree())C")
+                    let temperatureString = String(format: "%.2f", waterSubmersionManager.waterSubmersionData.temperature.last ?? 0.0)
+                    Text("\(temperatureString) \(degree())C")
                 }
                 .padding(.leading, 50)
             } else {
-                Text("No data yet")
+                Text("No data.")
                     .padding(.leading, 50)
             }
-            
-//            if showSamplingMessage {
-//                Text("WaterLock On")
-//                    .font(.headline)
-//                    .foregroundColor(.green)
-//                    .transition(.opacity)
-//                    .padding(.vertical, 16)
-//            }
             
             Button {
                 isLoggingData.toggle()
@@ -112,7 +106,7 @@ struct LogDataView: View {
                     }
                     
                     // Hide the message after 2 seconds
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
                         withAnimation {
                             showStartSamplingMessage = false
                         }
@@ -127,7 +121,7 @@ struct LogDataView: View {
                     }
                     
                     // Hide the message after 2 seconds
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
                         withAnimation {
                             showStopSamplingMessage = false
                         }
