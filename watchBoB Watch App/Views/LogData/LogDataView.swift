@@ -20,8 +20,11 @@ struct LogDataView: View {
     @ObservedObject var motionManager = MotionManager()
     @ObservedObject var waterSubmersionManager = WaterSubmersionManager.shared
     
-    // Toggle to show sampling message
-    @State private var showSamplingMessage: Bool = false
+    // Toggle to show start sampling message
+    @State private var showStartSamplingMessage: Bool = false
+    
+    // Toggle to show stop sampling message
+    @State private var showStopSamplingMessage: Bool = false
     
     // Toggle to turn data logging on and off
     @AppStorage("isSamplingActive") private var isLoggingData: Bool = false
@@ -76,24 +79,20 @@ struct LogDataView: View {
                 .padding(.leading, 5)
             
             // Dynamic water data
-            if let latestSample = waterSubmersionManager.waterSubmersionData.last {
+            if !waterSubmersionManager.waterSubmersionData.timestamp.isEmpty {
                 HStack {
-                    Text("\(latestSample.depth ?? 0.0) m")
+                    let depthString = String(format: "%.3f", waterSubmersionManager.waterSubmersionData.depth.last ?? 0.0)
+                    Text("\(depthString) m")
                     Spacer()
-                    Text("\(latestSample.temperature ?? 0.0) \(degree())C")
+                    let temperatureString = String(format: "%.2f", waterSubmersionManager.waterSubmersionData.temperature.last ?? 0.0)
+                    Text("\(temperatureString) \(degree())C")
                 }
                 .padding(.leading, 50)
             } else {
-                Text("No data yet")
+                Text("No data.")
                     .padding(.leading, 50)
             }
-            if showSamplingMessage {
-                Text("Sampling started, waterlock on")
-                    .font(.headline)
-                    .foregroundColor(.green)
-                    .transition(.opacity)
-                    .padding(.vertical, 16)
-            }
+            
             Button {
                 isLoggingData.toggle()
                 
@@ -103,21 +102,39 @@ struct LogDataView: View {
                     
                     // Show the sampling message with animation
                     withAnimation {
-                        showSamplingMessage = true
+                        showStartSamplingMessage = true
                     }
                     
                     // Hide the message after 2 seconds
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
                         withAnimation {
-                            showSamplingMessage = false
+                            showStartSamplingMessage = false
                         }
                     }
                 } else {
                     // Stop sampling
                     SamplingService.shared.stopSampling(motionManager: motionManager, locationManager: locationManager, metadataManager: metadataManager, waterSubmersionManager: waterSubmersionManager, context: moc, dismiss: dismiss.callAsFunction)
+                    
+                    // Show the sampling message with animation
+                    withAnimation {
+                        showStopSamplingMessage = true
+                    }
+                    
+                    // Hide the message after 2 seconds
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                        withAnimation {
+                            showStopSamplingMessage = false
+                        }
+                    }
                 }
             } label: {
                 Text(isLoggingData ? "Stop" : "Start")
+            }
+            .sheet(isPresented: $showStartSamplingMessage) {
+                StartSamplingMessageView()
+            }
+            .sheet(isPresented: $showStopSamplingMessage) {
+                StopSamplingMessageView()
             }
             .tint(.fandango)
             .frame(width: 160, height: 35)
@@ -136,9 +153,9 @@ struct LogDataView: View {
         }
         .navigationBarBackButtonHidden(isLoggingData)
         .padding(.top, 10)
-        .onReceive(waterSubmersionManager.$waterSubmersionData) { sample in
-            debugPrint("New submersion data received, updating view. \(sample)")
-        }
+//        .onReceive(waterSubmersionManager.$waterSubmersionData) { sample in
+//            debugPrint("New submersion data received, updating view. \(sample)")
+//        }
     }
     
     

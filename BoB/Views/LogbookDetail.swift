@@ -17,10 +17,13 @@ struct LogbookDetail: View {
     
     // Strings to store exported name and data
     @State private var JSONName = ""
-    @State private var JSONContent = ""
-    private var combinedJSON: [String: Any]? {
-        return combineJSON()
+    private var combinedData: StructuredData? {
+        return combineJSONsIntoStructuredData()
     }
+    
+    // encoders and decosers for JSON output
+    let encoder = JSONEncoder()
+    let decoder = JSONDecoder()
     
     // time stamp formatter
     let timeStampFormatter = TimeStampManager()
@@ -43,21 +46,21 @@ struct LogbookDetail: View {
                     showLocationJSON.toggle()
                 }
                 .sheet(isPresented: $showLocationJSON) {
-                    JSONView(jsonContent: jsonString(for: "LOCATION") ?? "No Location Data", title: "Location Data")
+                    DataView(combinedData: combinedData, sensorType: "LOCATION")
                 }
                 
                 Button("View Motion Data") {
                     showMotionJSON.toggle()
                 }
                 .sheet(isPresented: $showMotionJSON) {
-                    JSONView(jsonContent: jsonString(for: "MOTION") ?? "No Motion Data", title: "Motion Data")
+                    DataView(combinedData: combinedData, sensorType: "MOTION")
                 }
                 
                 Button("View Submersion Data") {
                     showSubmersionJSON.toggle()
                 }
                 .sheet(isPresented: $showSubmersionJSON) {
-                    JSONView(jsonContent: jsonString(for: "SUBMERSION") ?? "No Submersion Data", title: "Submersion Data")
+                    DataView(combinedData: combinedData, sensorType: "SUBMERSION")
                 }
             }
             
@@ -72,7 +75,7 @@ struct LogbookDetail: View {
         .navigationBarTitleDisplayMode(.inline)
         .navigationTitle("Details")
         .toolbar {
-            if let combinedJSONString = convertCombinedJSONToString() {
+            if let combinedJSONString = convertCombinedDataToJSONString() {
                 ShareLink(item: exportCombinedJSON(fileName: JSONName, content: combinedJSONString))
             } else {
                 Text("No data to share")
@@ -80,12 +83,11 @@ struct LogbookDetail: View {
         }
         .onAppear {
             self.JSONName = timeStampFormatter.exportNameFormat(entry.startDatetime ?? Date.now )+"_AWUData.json"
-            self.JSONContent = entry.motionJSON ?? "No JSON data"
         }
     }
 
-    // Combine the data from all the sensors
-    private func combineJSON() -> [String: Any]? {
+    // Combine the data from all the sensors into one encodable structure
+    private func combineJSONsIntoStructuredData() -> StructuredData? {
         // Grab the JSON strings from CoreData
         guard let motionJSON = entry.motionJSON, let locationJSON = entry.locationJSON else {
             print("No motionJSON or locationJSON found")
@@ -94,57 +96,46 @@ struct LogbookDetail: View {
         let submersionJSON = entry.waterSubmersionJSON ?? "[]"
         
         // Turn JSON strings into data
-        let motionData = Data(motionJSON.utf8)
         let locationData = Data(locationJSON.utf8)
+        let locationDecoded = try? decoder.decode( LocationData.self, from: locationData)
+        
+        
+        let motionData = Data(motionJSON.utf8)
+        let motionDecoded = try? decoder.decode( MotionData.self, from: motionData)
+        
         let submersionData = Data(submersionJSON.utf8)
+        let submersionDecoded = try? decoder.decode( WaterSubmersionData.self, from: submersionData)
         
         do {
-            let motionDataArray = try JSONSerialization.jsonObject(with: motionData, options: []) as? [[String: Any]] ?? []
-            let motionArray = motionDataArray.map { [$0["timestamp"], $0["accX"], $0["accY"], $0["accZ"], $0["gyrX"], $0["gyrY"], $0["gyrZ"], $0["magX"], $0["magY"], $0["magZ"]] }
+            // extract location data
+            let locationArrays = LocationData(timestamp: locationDecoded?.timestamp ?? [], latitude: locationDecoded?.latitude ?? [], longitude: locationDecoded?.longitude ?? [])
+            let formattedLocationData = FormattedLocationData(values: locationArrays)
             
-            let locationDataArray = try JSONSerialization.jsonObject(with: locationData, options: []) as? [[String: Any]] ?? []
-            let locationArray = locationDataArray.map { [$0["timestamp"], $0["latitude"], $0["longitude"]] }
+            // extract motion data
+            let motionArrays = MotionData(timestamp: motionDecoded?.timestamp ?? [], accelerationX: motionDecoded?.accelerationX ?? [], accelerationY: motionDecoded?.accelerationY ?? [], accelerationZ: motionDecoded?.accelerationZ ?? [], rotationRateX: motionDecoded?.rotationRateX ?? [], rotationRateY: motionDecoded?.rotationRateY ?? [], rotationRateZ: motionDecoded?.rotationRateZ ?? [], magneticFieldX: motionDecoded?.magneticFieldX ?? [], magneticFieldY: motionDecoded?.magneticFieldY ?? [], magneticFieldZ: motionDecoded?.magneticFieldZ ?? [])
+            let formattedMotionData = FormattedMotionData(values: motionArrays)
             
-            let submersionDataArray = try JSONSerialization.jsonObject(with: submersionData, options: []) as? [[String: Any]] ?? []
-            let submersionArray = submersionDataArray.map { [$0["timestamp"], $0["depth"], $0["temperature"]] }
+            // extract the submersion data
+            let submersionArrays = WaterSubmersionData(timestamp: submersionDecoded?.timestamp ?? [], depth: submersionDecoded?.depth ?? [], temperature: submersionDecoded?.temperature ?? [])
+            let formattedSubmersionData = FormattedSubmersionData(values: submersionArrays)
             
-            let structuredJSON: [String: Any] = [
-                "LOCATION": [
-                    "description": "Geographical location from either L1 and L5 GPS, GLONASS, Galileo, QZSS, and BeiDou (where available)",
-                    "sensor_id": "location",
-                    "labels": "timestamp,latitude,longitude",
-                    "units": "ISO8601, degrees, degrees",
-                    "values": locationArray
-                ],
-                "MOTION": [
-                    "description": "3-axis acceleration, rotation, and magnetic field from motion sensors",
-                    "sensor_id": "motion",
-                    "labels": ["timestamp, accelerationX, accelerationY, accelerationZ, rotationX, rotationY, rotationZ, magneticFieldX, magneticFieldY, magneticFieldZ"],
-                    "units": "ISO8601, m/s², m/s², m/s², rad/s, rad/s, rad/s, µT, µT, µT",
-                    "values": motionArray
-                ],
-                "SUBMERSION": [
-                    "description": "Water depth and temperature data from submersion sensors",
-                    "sensor_id": "submersion",
-                    "labels": "timestamp, water depth, water temperature",
-                    "units": "ISO8601, meters, °C",
-                    "values": submersionArray
-                ]
-            ]
+            // Combine the data
+            let structuredData = StructuredData(LOCATION: formattedLocationData, MOTION: formattedMotionData, SUBMERSION: formattedSubmersionData )
             
-            return structuredJSON
+            return structuredData
         } catch {
             print("Error parsing or combining JSON: \(error)")
             return nil
         }
     }
 
-    // Convert combined JSON to a string
-    private func convertCombinedJSONToString() -> String? {
-        guard let combinedJSON = combinedJSON else { return nil }
+    // Convert combined data to a string
+    private func convertCombinedDataToJSONString() -> String? {
+        guard let combinedData = combinedData else { return nil }
         
+        encoder.outputFormatting = [.sortedKeys, .withoutEscapingSlashes]
         do {
-            let jsonData = try JSONSerialization.data(withJSONObject: combinedJSON, options: [.sortedKeys])
+            let jsonData = try encoder.encode(combinedData)
             let jsonString = String(data: jsonData, encoding: .utf8)
             return jsonString
         } catch {
@@ -165,19 +156,6 @@ struct LogbookDetail: View {
         }
         
         return fileURL
-    }
-    
-    // View the piece of the JSON that was prepared for export
-    private func jsonString(for sensorType: String) -> String? {
-        guard let combinedJSON = combinedJSON else { return nil }
-        
-        if let sensorData = combinedJSON[sensorType] as? [String: Any],
-           let jsonData = try? JSONSerialization.data(withJSONObject: sensorData, options: [.sortedKeys, .prettyPrinted]),
-           let jsonString = String(data: jsonData, encoding: .utf8) {
-            return jsonString
-        } else {
-            return nil
-        }
     }
 }
 

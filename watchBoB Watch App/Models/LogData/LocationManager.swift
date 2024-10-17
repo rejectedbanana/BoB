@@ -14,8 +14,10 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
     @Published var authorizationStatus: CLAuthorizationStatus?
     @Published var location: CLLocationCoordinate2D?
     
-    @Published var sampledLocations: [LocationData] = []
+//    @Published var sampledLocations: [LocationData] = []
+    @Published var sampledLocations: LocationData = LocationData(timestamp: [], latitude: [], longitude: [])
     
+//    let timeStampFormatter = TimeStampManager()
     private var samplingTimer: Timer?
     
     override init() {
@@ -51,12 +53,22 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if let location = locations.first?.coordinate {
-            let locationData = LocationData(
-                timestamp: Date(),
-                latitude: round(location.latitude * 10000) / 10000, // 4 decimal places
-                longitude: round(location.longitude * 10000) / 10000 // 4 decimal places
-            )
-            sampledLocations.append(locationData)
+//            let locationData = LocationData(
+//                timestamp: Date(),
+//                latitude: round(location.latitude * 10000) / 10000, // 4 decimal places
+//                longitude: round(location.longitude * 10000) / 10000 // 4 decimal places
+//            )
+//            sampledLocations.append(locationData)
+            
+            // grab the data
+            let timestamp: String = ISO8601DateFormatter().string(from: Date())
+            let latitude: Double = round(location.latitude * 10000) / 10000
+            let longitude: Double = round(location.longitude * 10000) / 10000
+            
+            // append the data arrays
+            sampledLocations.timestamp.append(timestamp)
+            sampledLocations.latitude.append(latitude)
+            sampledLocations.longitude.append(longitude)
         }
     }
     
@@ -64,7 +76,7 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
         print("Failed to get location: \(error.localizedDescription)")
     }
     
-    func sampledLocationsToJSON() -> String? {
+    func convertArrayToJSONString() -> String? {
         let encoder = JSONEncoder()
         encoder.dateEncodingStrategy = .iso8601
         if let jsonData = try? encoder.encode(sampledLocations) {
@@ -74,6 +86,9 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
     }
     
     func clear() {
-        sampledLocations.removeAll()
+//        sampledLocations.removeAll()
+        sampledLocations.timestamp.removeAll()
+        sampledLocations.latitude.removeAll()
+        sampledLocations.longitude.removeAll()
     }
 }

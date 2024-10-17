@@ -16,7 +16,8 @@ struct JSONView: View {
     var body: some View {
         VStack {
             ScrollView {
-                Text(viewModel.truncatedJSONContent)
+//                Text(viewModel.truncatedJSONContent)
+                Text(jsonContent)
                     .padding()
                     .background(Color.black.opacity(0.05))
                     .cornerRadius(8)

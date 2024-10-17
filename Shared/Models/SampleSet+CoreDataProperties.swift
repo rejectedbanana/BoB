@@ -89,8 +89,8 @@ extension SampleSet {
     func getMinimumTemperature() -> Double {
         guard let json = waterSubmersionJSON, let data = json.data(using: .utf8) else { return Double.nan }
         do {
-            let submersionDataArray = try JSONSerialization.jsonObject(with: data, options: []) as? [[String: Any]] ?? []
-            let temperatures = submersionDataArray.compactMap { $0["temperature"] as? Double }
+            let temperatureData = try JSONDecoder().decode(WaterSubmersionData.self, from: data)
+            let temperatures = temperatureData.temperature
             return temperatures.min() ?? Double.nan
         } catch {
             print("Error parsing submersion JSON for temperature: \(error)")
@@ -101,8 +101,8 @@ extension SampleSet {
     func getMaximumDepth() -> Double {
         guard let json = waterSubmersionJSON, let data = json.data(using: .utf8) else { return Double.nan }
         do {
-            let submersionDataArray = try JSONSerialization.jsonObject(with: data, options: []) as? [[String: Any]] ?? []
-            let depths = submersionDataArray.compactMap { $0["depth"] as? Double }
+            let depthData = try JSONDecoder().decode(WaterSubmersionData.self, from: data)
+            let depths = depthData.depth
             return depths.max() ?? Double.nan
         } catch {
             print("Error parsing submersion JSON for depth: \(error)")
@@ -113,8 +113,8 @@ extension SampleSet {
     func getMotionDataCount() -> Int {
         guard let json = motionJSON, let data = json.data(using: .utf8) else { return 0 }
         do {
-            let motionDataArray = try JSONSerialization.jsonObject(with: data, options: []) as? [[String: Any]] ?? []
-            let accelerationX = motionDataArray.compactMap { $0["accX"] as? Double }
+            let motionData = try JSONDecoder().decode(MotionData.self, from: data)
+            let accelerationX = motionData.accelerationX
             return accelerationX.count
         } catch {
             print("Error parsing motion JSON for data count: \(error)")
