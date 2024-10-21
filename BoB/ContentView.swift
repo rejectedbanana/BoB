@@ -10,9 +10,14 @@ import CoreData
 import WatchConnectivity
 
 struct ContentView: View {
+    // Get a reference to the managed object context from the environment
     @Environment(\.managedObjectContext) var moc
+    // Fetch data from Core Data
     @FetchRequest(sortDescriptors: [SortDescriptor(\.startDatetime, order: .reverse)]) var logBookRecords: FetchedResults<SampleSet>
     @Environment(\.dismiss) var dismiss
+    
+    // Cloudkit sync trigger
+    @State private var isRefreshing = false
     
     var body: some View {
         NavigationStack {
@@ -27,16 +32,21 @@ struct ContentView: View {
                     }
                     .onDelete(perform: delete)
                 }
+                .refreshable {
+                    await refreshDataFromCloud()
+                }
                 .toolbar {
                     ToolbarItem(placement: .navigationBarTrailing) {
                         EditButton()
                     }
                     
                 }
+                .navigationTitle("Logbook")
             }
         }
     }
     
+    // function to delete Core Data Records
     func delete(at offsets: IndexSet) {
         for offset in offsets {
             let entry = logBookRecords[offset]
@@ -48,6 +58,24 @@ struct ContentView: View {
             print("Failed to delete log entry: \(error)")
         }
     }
+    
+    // function to refresh Core Data
+    private func refreshDataFromCloud() async {
+        // Set refreshing state
+        isRefreshing = true
+    
+        // Action to refresh data
+        debugPrint( "Refreshing data from CloudKit...")
+        // reloading doesn't work, but it looks like it's doing something!
+//        @FetchRequest(sortDescriptors: [SortDescriptor(\.startDatetime, order: .reverse)]) var logBookRecords: FetchedResults<SampleSet>
+        
+        // wait 1 second before reverting view
+        try? await Task.sleep(for: .seconds(2))
+        
+        // End refreshing state
+        isRefreshing = false
+    }
+    
 }
 
 #Preview {

@@ -827,7 +827,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = BoB/Info.plist;
-				INFOPLIST_KEY_NSMotionUsageDescription = "Using motion in the app to find waves";
+				INFOPLIST_KEY_NSMotionUsageDescription = "Your location is used to record latitude and longitude to geolocate motion and submersion data.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -862,7 +862,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = BoB/Info.plist;
-				INFOPLIST_KEY_NSMotionUsageDescription = "Using motion in the app to find waves";
+				INFOPLIST_KEY_NSMotionUsageDescription = "Your location is used to record latitude and longitude to geolocate motion and submersion data.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -896,8 +896,8 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "watchBoB-Watch-App-Info.plist";
-				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Bob uses the location data to mark the start and end coordinates of a LogBook entry when taking data";
-				INFOPLIST_KEY_NSMotionUsageDescription = "Using accelerometer data to show watch motion";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Your location is used to record latitude and longitude to geolocate motion and submersion data.";
+				INFOPLIST_KEY_NSMotionUsageDescription = "Allow motion data to record raw data from the watch accelerometer, gyroscope and magnetic field sensor. ";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.TiniScientific.BoB;
 				INFOPLIST_KEY_WKRunsIndependentlyOfCompanionApp = YES;
@@ -930,8 +930,8 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "watchBoB-Watch-App-Info.plist";
-				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Bob uses the location data to mark the start and end coordinates of a LogBook entry when taking data";
-				INFOPLIST_KEY_NSMotionUsageDescription = "Using accelerometer data to show watch motion";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Your location is used to record latitude and longitude to geolocate motion and submersion data.";
+				INFOPLIST_KEY_NSMotionUsageDescription = "Allow motion data to record raw data from the watch accelerometer, gyroscope and magnetic field sensor. ";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.TiniScientific.BoB;
 				INFOPLIST_KEY_WKRunsIndependentlyOfCompanionApp = YES;
