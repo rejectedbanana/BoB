@@ -27,7 +27,7 @@ Here are instructions from Apple on how to run this code on your devices, you sh
 If you run into issues, please reach out to me at kmartini@tiniscientific.com
 
 ## How to use the app
-- Open the app of your watch. 
+- Open the app on your watch. 
 
 - Tap the "Start Sampling Button!
 
