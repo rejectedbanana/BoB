@@ -17,6 +17,8 @@ Submersion - Water temperature and depth sensors
 
 Location - Latitude and Longitude from L1 and L5 GPS, GLONASS, Galileo, QZSS, or BeiDou (whichever is available where you are)
 
+More info on this project: https://experiment.com/projects/can-we-use-a-smartwatch-for-coastal-monitoring-and-research
+
 ## How to install and run the code
 This code is written in SwiftUI, and during this development stage, only runs on Apple Products. To install this code, you will need a computer running XCode, an Apple iPhone, and an Apple Watch. To get submersion data, you will need an Apple Watch Ultra which has the temperature and pressure sensors. 
 
