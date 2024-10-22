@@ -11,11 +11,11 @@ Through the WatchOS app, the Apple Watch logs environmental data from the motion
 This app is initially designed by oceanographers as a low-cost sensor to meaure properties of oceans and lakes such as water temperature, depth, wave height and wave period. But with that many sensors that are used in so many areas of science, the applications are endless!
 
 ### Apple Watch Sensors
-Motion - 3-axis accelerometer, gyroscope and magnetic field sensor (compass)
+- Motion - 3-axis accelerometer, gyroscope and magnetic field sensor (compass)
 
-Submersion - Water temperature and depth sensors
+- Submersion - Water temperature and depth sensors
 
-Location - Latitude and Longitude from L1 and L5 GPS, GLONASS, Galileo, QZSS, or BeiDou (whichever is available where you are)
+- Location - Latitude and Longitude from L1 and L5 GPS, GLONASS, Galileo, QZSS, or BeiDou (whichever is available where you are)
 
 More info on this project: https://experiment.com/projects/can-we-use-a-smartwatch-for-coastal-monitoring-and-research
 
