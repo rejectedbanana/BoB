@@ -22,6 +22,10 @@ More info on this project: https://experiment.com/projects/can-we-use-a-smartwat
 ## How to install and run the code
 This code is written in SwiftUI, and during this development stage, only runs on Apple Products. To install this code, you will need a computer running XCode, an Apple iPhone, and an Apple Watch. To get submersion data, you will need an Apple Watch Ultra which has the temperature and pressure sensors. 
 
+Here are instructions from Apple on how to run this code on your devices, you should be able to do this without a developer license https://developer.apple.com/documentation/xcode/running-your-app-in-simulator-or-on-a-device
+
+If you run into issues, please reach out to me at kmartini@tiniscientific.com
+
 ## How to use the app
 - Open the app of your watch. 
 
