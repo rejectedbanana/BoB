@@ -37,7 +37,21 @@ This code is written in SwiftUI, and during this development stage, only runs on
 
 - Click on the record you choose in the LogBook list for a detailed view.
 
-- To export, tap the "Share" icon in the upper righthand corner of the "Details" view. 
+- To export, tap the "Share" icon in the upper righthand corner of the "Details" view.
+
+## Screenshots
+### Watch App
+<p float="center">
+<img src="https://github.com/rejectedbanana/BoB/blob/main/ScreenShots/WatchBoBContentView.PNG" width=200>
+<img src="https://github.com/rejectedbanana/BoB/blob/main/ScreenShots/WatchBoBSamplingView.PNG" width=200>
+</p>
+
+### Phone App
+<p float="center">
+<img src="https://github.com/rejectedbanana/BoB/blob/main/ScreenShots/BoBLogbookView.PNG" width=200>
+<img src="https://github.com/rejectedbanana/BoB/blob/main/ScreenShots/BoBDetailView.PNG" width=200>
+<img src="https://github.com/rejectedbanana/BoB/blob/main/ScreenShots/BoBDetailDataView.PNG" width=200>
+</p>
 
 ## Coders and Collaborators
 Thanks to the coders who helped along the way with this development as I am learning SwiftUI: Hasan K Armoush via DevSignal, Phil Parham
