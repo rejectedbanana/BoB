@@ -37,7 +37,7 @@ struct LogbookDetail: View {
                 DetailRow(header: "Sampling Frequency", content: "10 Hz")
                 DetailRow(header: "Min Temp", content: entry.getMinimumTemperature().isNaN ? "no submersion data" : String(format: "%.1f °C", entry.getMinimumTemperature()) )
                 DetailRow(header: "Max Depth", content: entry.getMaximumDepth().isNaN ? "no submersion data" : String(format: "%.1f m", entry.getMaximumDepth()))
-                DetailRow(header: "Source", content: "Kim's Apple Watch")
+                DetailRow(header: "Source", content: entry.deviceName ?? "Unknown")
             }
             
             Section("Data Viewer") {
