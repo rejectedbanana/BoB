@@ -67,8 +67,8 @@ class MotionManager: NSObject, ObservableObject {
         motionData.rotationRateY.append(gyrY)
         motionData.rotationRateZ.append(gyrZ)
         motionData.magneticFieldX.append(magX)
-        motionData.magneticFieldY.append(magX)
-        motionData.magneticFieldZ.append(magX)
+        motionData.magneticFieldY.append(magY)
+        motionData.magneticFieldZ.append(magZ)
         
         
     }
