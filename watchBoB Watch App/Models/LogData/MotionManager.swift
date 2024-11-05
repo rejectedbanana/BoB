@@ -24,7 +24,7 @@ class MotionManager: NSObject, ObservableObject {
 
     let timeStampFormatter = TimeStampManager()
     @Published var timeStamp = Date()
-    @Published var elapsedTime = "00:00"
+    @Published var elapsedTime = "00:00.0"
     var timer = Timer()
     var startTime = Date()
 
@@ -45,7 +45,7 @@ class MotionManager: NSObject, ObservableObject {
         }
         // grab the timestamps
         timeStamp = Date()
-        elapsedTime = String(format: "%.0f", Date().timeIntervalSince(startTime))
+        elapsedTime = String(format: "%.1f", Date().timeIntervalSince(startTime))
         
         // append the arrays
         motionData.timestamp.append(timeStampFormatter.ISO8601Format(timeStamp))
@@ -105,7 +105,7 @@ class MotionManager: NSObject, ObservableObject {
         magX = 0.0
         magY = 0.0
         magZ = 0.0
-        elapsedTime = "00:00"
+        elapsedTime = "00:00.0"
         motionData.timestamp.removeAll()
         motionData.accelerationX.removeAll()
         motionData.accelerationY.removeAll()
