@@ -8,6 +8,7 @@
 import Foundation
 import SwiftUI
 import CoreLocation
+import WatchKit
 
 struct LogDataView: View {
     // Get a reference to the managed object context from the environment.
@@ -29,69 +30,69 @@ struct LogDataView: View {
     // Toggle to turn data logging on and off
     @AppStorage("isSamplingActive") private var isLoggingData: Bool = false
     
+    // Get the screen width
+    private var isAppleWatchUltra: Bool {
+        return determineIfAppleWatchUltra()
+    }
+    
     var body: some View {
-        VStack {
+        VStack(alignment: .leading) {
             
             // Static time/location Header
             Text("Time, Lat, Lon")
-                .frame(maxWidth: .infinity, alignment: .leading)
                 .foregroundColor(.silver)
-                .padding(.leading, 5)
+                .padding(.leading, isAppleWatchUltra ? 5 : 0)
             
             // Dynamic time/location data
             HStack{
                 Text(motionManager.elapsedTime)
-                    .frame(width: 70)
+                
                 Spacer()
+                
                 switch locationManager.locationManager.authorizationStatus {
                 case .authorizedWhenInUse:
                     let currentLat = locationManager.locationManager.location?.coordinate.latitude ?? Double.nan
                     let currentLon = locationManager.locationManager.location?.coordinate.longitude ?? Double.nan
                     Text(String(format: "%.2f", currentLat) + ", " + String(format: "%.2f", currentLon))
-                    
                 case .restricted, .denied:
                     Text("Denied.")
-                    
                 case .notDetermined:
                     Text("Finding...")
-                    
                 default:
                     ProgressView()
                 }
             }
-            .padding(.leading, 2)
             
             // Static motion header
             Text("Motion: x, y, z")
-                .frame(maxWidth: .infinity, alignment: .leading)
                 .foregroundColor(.silver)
-                .padding(.leading, 5)
             
             // Dynamic motion data
-            RawMotionRow(title: "Acc", xValue: motionManager.accX, yValue: motionManager.accY, zValue: motionManager.accZ, stringFormat: "%4.2f")
-            RawMotionRow(title: "Gyr", xValue: motionManager.gyrX, yValue: motionManager.gyrY, zValue: motionManager.gyrZ, stringFormat: "%4.2f")
-            RawMotionRow(title: "Mag", xValue: motionManager.magX, yValue: motionManager.magY, zValue: motionManager.magZ, stringFormat: "%3.1f")
+            RawMotionRow(title: "Acc", xValue: motionManager.accX, yValue: motionManager.accY, zValue: motionManager.accZ, stringFormat: isAppleWatchUltra ? "%4.2f" :"%4.1f")
+            RawMotionRow(title: "Gyr", xValue: motionManager.gyrX, yValue: motionManager.gyrY, zValue: motionManager.gyrZ, stringFormat:  isAppleWatchUltra ? "%4.2f" :"%4.1f")
+            RawMotionRow(title: "Mag", xValue: motionManager.magX, yValue: motionManager.magY, zValue: motionManager.magZ, stringFormat:  isAppleWatchUltra ? "%3.1f" :"%3.0f")
             
-            // Static water data header
-            Text("Water: depth, temp")
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .foregroundColor(.silver)
-                .padding(.leading, 5)
-            
-            // Dynamic water data
-            if !waterSubmersionManager.waterSubmersionData.timestamp.isEmpty {
-                HStack {
-                    let depthString = String(format: "%.3f", waterSubmersionManager.waterSubmersionData.depth.last ?? 0.0)
-                    Text("\(depthString) m")
-                    Spacer()
-                    let temperatureString = String(format: "%.2f", waterSubmersionManager.waterSubmersionData.temperature.last ?? 0.0)
-                    Text("\(temperatureString) \(degree())C")
+            // Only display submersion data if an Apple Watch Ultra
+            if isAppleWatchUltra {
+                // Static water data header
+                Text("Water: depth, temp")
+                    .foregroundColor(.silver)
+                
+                // Dynamic water data
+                if !waterSubmersionManager.waterSubmersionData.timestamp.isEmpty {
+                    HStack {
+                        let depthString = String(format: "%.3f", waterSubmersionManager.waterSubmersionData.depth.last ?? 0.0)
+                        Text("\(depthString) m")
+                        Spacer()
+                        let temperatureString = String(format: "%.2f", waterSubmersionManager.waterSubmersionData.temperature.last ?? 0.0)
+                        Text("\(temperatureString) \(degree())C")
+                    }
+                } else {
+                    Text("No data.")
                 }
-                .padding(.leading, 50)
-            } else {
-                Text("No data.")
-                    .padding(.leading, 50)
             }
+            
+            Spacer()
             
             Button {
                 isLoggingData.toggle()
@@ -137,9 +138,9 @@ struct LogDataView: View {
                 StopSamplingMessageView()
             }
             .tint(.fandango)
-            .frame(width: 160, height: 35)
+            .frame(maxWidth: .infinity)
             .buttonStyle(.borderedProminent)
-            .padding(.top, 10)
+            .controlSize(.small)
         }
         .onAppear {
             motionManager.clear()
@@ -152,13 +153,19 @@ struct LogDataView: View {
             waterSubmersionManager.clear()
         }
         .navigationBarBackButtonHidden(isLoggingData)
-        .padding(.top, 10)
-//        .onReceive(waterSubmersionManager.$waterSubmersionData) { sample in
-//            debugPrint("New submersion data received, updating view. \(sample)")
-//        }
+//        .border(Color.yellow)
+//        .padding(.top, 10)
+
     }
     
-    
+    private func determineIfAppleWatchUltra() -> Bool {
+        let screenWidth = WKInterfaceDevice.current().screenBounds.width
+        if screenWidth > 200 {
+            return true
+        } else {
+            return false
+        }
+    }
 }
 
 #Preview {

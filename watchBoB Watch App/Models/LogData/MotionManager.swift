@@ -24,7 +24,7 @@ class MotionManager: NSObject, ObservableObject {
 
     let timeStampFormatter = TimeStampManager()
     @Published var timeStamp = Date()
-    @Published var elapsedTime = "00:00.0"
+    @Published var elapsedTime = "00:00"
     var timer = Timer()
     var startTime = Date()
 
@@ -105,7 +105,7 @@ class MotionManager: NSObject, ObservableObject {
         magX = 0.0
         magY = 0.0
         magZ = 0.0
-        elapsedTime = "00:00.0"
+        elapsedTime = "00:00"
         motionData.timestamp.removeAll()
         motionData.accelerationX.removeAll()
         motionData.accelerationY.removeAll()
