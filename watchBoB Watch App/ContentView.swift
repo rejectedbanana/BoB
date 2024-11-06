@@ -29,7 +29,6 @@ struct ContentView: View {
                         .foregroundColor(.white)
                         .frame(maxWidth: .infinity, alignment: .trailing)
                         .padding(.leading)
-                   
                 }
                 
                 // Sampling Button

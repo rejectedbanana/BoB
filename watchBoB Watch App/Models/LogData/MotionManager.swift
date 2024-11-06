@@ -7,10 +7,9 @@
 
 import Foundation
 import CoreMotion
-import CoreData
+
 class MotionManager: NSObject, ObservableObject {
     var motionManager: CMMotionManager? = CMMotionManager()
-//    @Published var sampledLocations: [LocationData] = []
     var motionData: MotionData = MotionData(timestamp: [], accelerationX: [], accelerationY: [], accelerationZ: [], rotationRateX: [], rotationRateY: [], rotationRateZ: [], magneticFieldX: [], magneticFieldY: [], magneticFieldZ: [])
 
     @Published var accX = 0.0
@@ -25,11 +24,12 @@ class MotionManager: NSObject, ObservableObject {
 
     let timeStampFormatter = TimeStampManager()
     @Published var timeStamp = Date()
-    @Published var elapsedTime = "00:00.00"
+    @Published var elapsedTime = "00:00"
     var timer = Timer()
     var startTime = Date()
 
     @objc private func sampleSensors() {
+        // grab the motion data
         if let data = motionManager?.accelerometerData {
             accX = data.acceleration.x
             accY = data.acceleration.y
@@ -43,22 +43,11 @@ class MotionManager: NSObject, ObservableObject {
             magY = data.magneticField.field.y
             magZ = data.magneticField.field.z
         }
+        // grab the timestamps
         timeStamp = Date()
-        elapsedTime = String(format: "%.2f", Date().timeIntervalSince(startTime))
-
-//        let newMotionData = MotionData(
-//            timestamp: timeStampFormatter.ISO8601Format(timeStamp),
-//            accX: accX,
-//            accY: accY,
-//            accZ: accZ,
-//            gyrX: gyrX,
-//            gyrY: gyrY,
-//            gyrZ: gyrZ,
-//            magX: magX,
-//            magY: magY,
-//            magZ: magZ
-//        )
-//        motionData.append(newMotionData)
+        elapsedTime = String(format: "%.1f", Date().timeIntervalSince(startTime))
+        
+        // append the arrays
         motionData.timestamp.append(timeStampFormatter.ISO8601Format(timeStamp))
         motionData.accelerationX.append(accX)
         motionData.accelerationY.append(accY)
@@ -67,8 +56,8 @@ class MotionManager: NSObject, ObservableObject {
         motionData.rotationRateY.append(gyrY)
         motionData.rotationRateZ.append(gyrZ)
         motionData.magneticFieldX.append(magX)
-        motionData.magneticFieldY.append(magX)
-        motionData.magneticFieldZ.append(magX)
+        motionData.magneticFieldY.append(magY)
+        motionData.magneticFieldZ.append(magZ)
         
         
     }
@@ -116,7 +105,7 @@ class MotionManager: NSObject, ObservableObject {
         magX = 0.0
         magY = 0.0
         magZ = 0.0
-        elapsedTime = "00:00.00"
+        elapsedTime = "00:00"
         motionData.timestamp.removeAll()
         motionData.accelerationX.removeAll()
         motionData.accelerationY.removeAll()

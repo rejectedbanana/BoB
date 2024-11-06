@@ -71,7 +71,7 @@ struct DataView: View {
                                 
                                 Text("Rot: \(String(format: "%.6f", motion.gyrX)), \(String(format: "%.6f", motion.gyrY)), \(String(format: "%.6f", motion.gyrZ))")
                                 
-                                Text("Mag: \(String(format: "%.4f", motion.gyrX)), \(String(format: "%.4f", motion.gyrY)), \(String(format: "%.4f", motion.gyrZ))")
+                                Text("Mag: \(String(format: "%.4f", motion.magX)), \(String(format: "%.4f", motion.magY)), \(String(format: "%.4f", motion.magZ))")
                             }
                         }
                         .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
