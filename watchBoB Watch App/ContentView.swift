@@ -14,8 +14,7 @@ struct ContentView: View {
     
     var body: some View {
         NavigationView {
-            ScrollView {
-                
+            VStack {
                 // Header
                 HStack {
                     HStack {
@@ -31,39 +30,34 @@ struct ContentView: View {
                         .padding(.leading)
                 }
                 
-                // Sampling Button
-                NavigationLink(destination: LogDataView() ) {
-                    HStack {
-                        Text("Start Sampling")
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                            .font(.headline)
-                        Image(systemName: "waveform")
+                List {
+                    // Sampling Button
+                    NavigationLink(destination: LogDataView() ) {
+                        HStack {
+                            Text("Start Sampling")
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                                .font(.headline)
+                            Image(systemName: "waveform")
+                        }
+                        .padding(.top, 10)
+                        .padding(.bottom, 80)
                     }
-                    .padding(.bottom, 60)
-                }
-                .tint(.fandango)
-                .buttonBorderShape(.roundedRectangle(radius: 10))
-                .cornerRadius(10)
-                .buttonStyle(.borderedProminent)
-                .padding(.bottom, 20)
-                .padding(.top, 10)
-                
-                // Review Data
-                NavigationLink(destination: LogbookView() ) {
-                    HStack {
-                        Text("Logbook")
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                            .font(.headline)
-                        Image(systemName: "list.clipboard")
+                    .listItemTint(.fandango)
+                        
+                    // Review Data
+                    NavigationLink(destination: LogbookView() ) {
+                        HStack {
+                            Text("Logbook")
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                                .font(.headline)
+                            Image(systemName: "list.clipboard")
+                        }
+                        .padding(.top, 10)
+                        .padding(.bottom, 80)
                     }
-                    .padding(.bottom, 60)
+                    .listItemTint(.lightRed)
                 }
-                .tint(.lightRed)
-                .buttonBorderShape(.roundedRectangle(radius: 10))
-                .cornerRadius(10)
-                .buttonStyle(.borderedProminent)
-                .padding(.bottom, 20)
-                
+                .listStyle(CarouselListStyle())
             }
         }
         .navigationTitle("BoB")
