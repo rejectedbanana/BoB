@@ -95,6 +95,11 @@ class WaterSubmersionManager: NSObject, ObservableObject {
         
     }
     
+    // determine if water submersion is available
+    func isWaterSubmersionAvailable() -> Bool {
+        CMWaterSubmersionManager.waterSubmersionAvailable
+    }
+    
     // explicitly start a runtime session
     func startDiveSession() {
         debugPrint("[WKExtendedRuntimeSession] *** Starting a dive session. ***")

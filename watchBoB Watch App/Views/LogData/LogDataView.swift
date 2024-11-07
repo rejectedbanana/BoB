@@ -15,7 +15,7 @@ struct LogDataView: View {
     @Environment(\.managedObjectContext) var moc
     @Environment(\.dismiss) var dismiss
 
-    // pull in managers to take meta, location, motion and waterSubmersion data
+    // pull in managers to take meta, location, motion and submersion data
     @ObservedObject private var metadataManager = MetadataManager()
     @StateObject var locationManager = LocationManager()
     @ObservedObject var motionManager = MotionManager()
@@ -31,9 +31,12 @@ struct LogDataView: View {
     @AppStorage("isSamplingActive") private var isLoggingData: Bool = false
     
     // Get the screen width
-    private var isAppleWatchUltra: Bool {
-        return determineIfAppleWatchUltra()
+    private var bigScreen: Bool {
+        return isBigScreen()
     }
+    
+    // check if water submersion is available
+    @State var waterSubmersionAvailable: Bool = WaterSubmersionManager.shared.isWaterSubmersionAvailable()
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -41,7 +44,7 @@ struct LogDataView: View {
             // Static time/location Header
             Text("Time, Lat, Lon")
                 .foregroundColor(.silver)
-                .padding(.leading, isAppleWatchUltra ? 5 : 0)
+                .padding(.leading, bigScreen ? 5 : 0)
             
             // Dynamic time/location data
             HStack{
@@ -68,12 +71,12 @@ struct LogDataView: View {
                 .foregroundColor(.silver)
             
             // Dynamic motion data
-            RawMotionRow(title: "Acc", xValue: motionManager.accX, yValue: motionManager.accY, zValue: motionManager.accZ, stringFormat: isAppleWatchUltra ? "%4.2f" :"%4.1f")
-            RawMotionRow(title: "Gyr", xValue: motionManager.gyrX, yValue: motionManager.gyrY, zValue: motionManager.gyrZ, stringFormat:  isAppleWatchUltra ? "%4.2f" :"%4.1f")
-            RawMotionRow(title: "Mag", xValue: motionManager.magX, yValue: motionManager.magY, zValue: motionManager.magZ, stringFormat:  isAppleWatchUltra ? "%3.1f" :"%3.0f")
+            RawMotionRow(title: "Acc", xValue: motionManager.accX, yValue: motionManager.accY, zValue: motionManager.accZ, stringFormat: bigScreen ? "%4.2f" :"%4.1f")
+            RawMotionRow(title: "Gyr", xValue: motionManager.gyrX, yValue: motionManager.gyrY, zValue: motionManager.gyrZ, stringFormat:  bigScreen ? "%4.2f" :"%4.1f")
+            RawMotionRow(title: "Mag", xValue: motionManager.magX, yValue: motionManager.magY, zValue: motionManager.magZ, stringFormat:  bigScreen ? "%3.1f" :"%3.0f")
             
             // Only display submersion data if an Apple Watch Ultra
-            if isAppleWatchUltra {
+            if waterSubmersionAvailable {
                 // Static water data header
                 Text("Water: depth, temp")
                     .foregroundColor(.silver)
@@ -158,7 +161,7 @@ struct LogDataView: View {
 
     }
     
-    private func determineIfAppleWatchUltra() -> Bool {
+    private func isBigScreen() -> Bool {
         let screenWidth = WKInterfaceDevice.current().screenBounds.width
         if screenWidth > 200 {
             return true
@@ -168,6 +171,6 @@ struct LogDataView: View {
     }
 }
 
-#Preview {
+#Preview() {
     LogDataView()
 }
