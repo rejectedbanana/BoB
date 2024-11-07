@@ -137,6 +137,7 @@ class WaterSubmersionManager: NSObject, ObservableObject {
         self.extendedRuntimeSession = session
         diveSessionRunning = true
         
+        // automatically enable waterlock
         enableWaterLock()
         
         debugPrint("[WKExtendedRuntimeSession] *** Dive session started. Submerged to 1 meter. ***")
