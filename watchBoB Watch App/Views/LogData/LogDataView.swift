@@ -15,7 +15,7 @@ struct LogDataView: View {
     @Environment(\.managedObjectContext) var moc
     @Environment(\.dismiss) var dismiss
 
-    // pull in managers to take meta, location, motion and waterSubmersion data
+    // pull in managers to take meta, location, motion and submersion data
     @ObservedObject private var metadataManager = MetadataManager()
     @StateObject var locationManager = LocationManager()
     @ObservedObject var motionManager = MotionManager()
@@ -34,6 +34,9 @@ struct LogDataView: View {
     private var isAppleWatchUltra: Bool {
         return determineIfAppleWatchUltra()
     }
+    
+    // check if water submersion is available
+    @State var waterSubmersionAvailable: Bool = WaterSubmersionManager.shared.isWaterSubmersionAvailable()
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -73,7 +76,7 @@ struct LogDataView: View {
             RawMotionRow(title: "Mag", xValue: motionManager.magX, yValue: motionManager.magY, zValue: motionManager.magZ, stringFormat:  isAppleWatchUltra ? "%3.1f" :"%3.0f")
             
             // Only display submersion data if an Apple Watch Ultra
-            if isAppleWatchUltra {
+            if waterSubmersionAvailable {
                 // Static water data header
                 Text("Water: depth, temp")
                     .foregroundColor(.silver)
