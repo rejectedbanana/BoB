@@ -9,7 +9,7 @@ import SwiftUI
 
 struct StopSamplingMessageView: View {
     var body: some View {
-        NavigationView {
+//        NavigationView {
             VStack(alignment: .center) {
                 ZStack {
                     Circle()
@@ -42,8 +42,8 @@ struct StopSamplingMessageView: View {
                 Spacer()
             }
             .transition(.opacity)
-        }
-        .toolbar(.hidden, for: .navigationBar)
+//        }
+//        .toolbar(.hidden, for: .navigationBar)
     }
 }
 
