@@ -135,7 +135,11 @@ struct LogDataView: View {
                 Text(isLoggingData ? "Stop" : "Start")
             }
             .sheet(isPresented: $showStartSamplingMessage) {
-                StartSamplingMessageView()
+                if waterSubmersionAvailable {
+                    StartSamplingMessageView()
+                } else {
+                    WaterlockInstructionsView()
+                }
             }
             .sheet(isPresented: $showStopSamplingMessage) {
                 StopSamplingMessageView()

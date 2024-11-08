@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		210CB8262CAC8D700060DECA /* StructuredData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 210CB8252CAC8D700060DECA /* StructuredData.swift */; };
 		2111BCA92CC0315B00AD6965 /* StartSamplingMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2111BCA82CC0315B00AD6965 /* StartSamplingMessageView.swift */; };
+		2132F3B02CDE8DF00041C5A3 /* WaterlockInstructionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2132F3AF2CDE8DF00041C5A3 /* WaterlockInstructionsView.swift */; };
 		21355A2B2CB9A70700323D86 /* DataView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21355A2A2CB9A70700323D86 /* DataView.swift */; };
 		21BBC6792CB05DCA0082B0F3 /* MotionData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97FC9EE52C1CFA1D0076F30E /* MotionData.swift */; };
 		21BBC67A2CB0922E0082B0F3 /* WaterSubmersionData.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCBA60C82C6D3F4200E01B1F /* WaterSubmersionData.swift */; };
@@ -78,6 +79,7 @@
 /* Begin PBXFileReference section */
 		210CB8252CAC8D700060DECA /* StructuredData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StructuredData.swift; sourceTree = "<group>"; };
 		2111BCA82CC0315B00AD6965 /* StartSamplingMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartSamplingMessageView.swift; sourceTree = "<group>"; };
+		2132F3AF2CDE8DF00041C5A3 /* WaterlockInstructionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaterlockInstructionsView.swift; sourceTree = "<group>"; };
 		21355A2A2CB9A70700323D86 /* DataView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataView.swift; sourceTree = "<group>"; };
 		21D1B4E62CC0563900489182 /* StopSamplingMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StopSamplingMessageView.swift; sourceTree = "<group>"; };
 		3001E6F92B8426E0003B09B1 /* MetadataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetadataManager.swift; sourceTree = "<group>"; };
@@ -312,6 +314,7 @@
 				97DF8EBC2AE1D9AE00A33A80 /* LogDataView.swift */,
 				97349CEA2AF1679300021CA3 /* RawMotionRow.swift */,
 				2111BCA82CC0315B00AD6965 /* StartSamplingMessageView.swift */,
+				2132F3AF2CDE8DF00041C5A3 /* WaterlockInstructionsView.swift */,
 				21D1B4E62CC0563900489182 /* StopSamplingMessageView.swift */,
 			);
 			path = LogData;
@@ -485,6 +488,7 @@
 				FCBA60C92C6D3F4A00E01B1F /* WaterSubmersionData.swift in Sources */,
 				979736402AEB1AB4009BCFF0 /* CoreDataController.swift in Sources */,
 				978D107A2AE70F8F00310B26 /* LogbookRow.swift in Sources */,
+				2132F3B02CDE8DF00041C5A3 /* WaterlockInstructionsView.swift in Sources */,
 				3001E6FA2B8426E0003B09B1 /* MetadataManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
