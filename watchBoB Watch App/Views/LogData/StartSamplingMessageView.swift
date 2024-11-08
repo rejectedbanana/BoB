@@ -9,7 +9,7 @@ import SwiftUI
 
 struct StartSamplingMessageView: View {
     var body: some View {
-        NavigationView {
+//        NavigationView {
             VStack(alignment: .center) {
                 ZStack {
                     Circle()
@@ -35,8 +35,8 @@ struct StartSamplingMessageView: View {
             }
             .transition(.opacity)
             .padding(.all, 10)
-        }
-        .toolbar(.hidden, for: .navigationBar )
+//        }
+//        .toolbar(.hidden, for: .navigationBar )
     }
 }
 
