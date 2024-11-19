@@ -24,11 +24,11 @@ struct DataView: View {
     private let dataTitle: String = ""
     private var dataLabels: String {
         switch sensorType {
-        case "LOCATION":
+        case "location":
             return "timestamp [ISO8601], latitude [°N], longitude [°E]"
-            case "MOTION":
+            case "motion":
             return " timestamp [ISO8601]\n acceleration X, Y, Z [m/s²]\n angular velocity X, Y, Z [rad/s]\n magnetic field X, Y, Z [µT]"
-        case "SUBMERSION":
+        case "submersion":
             return "timestamp [ISO8601], depth [m], temperature [°C]"
         default:
             return ""
@@ -52,7 +52,7 @@ struct DataView: View {
             // scrollable data view
             ScrollView {
                 switch sensorType {
-                case "LOCATION":
+                case "location":
                     LazyVStack(alignment: .leading) {
                         ForEach(locations) { location in
                             Text("\( location.timestamp ), \( String(format: "%.4f", location.latitude) ), \( String( format: "%.2f", location.longitude) )")
@@ -61,7 +61,7 @@ struct DataView: View {
                     }
                     .padding(.all, 10)
                     
-                case "MOTION":
+                case "motion":
                     LazyVStack() {
                         ForEach(motions) { motion in
                             VStack(alignment: .leading) {
@@ -78,7 +78,7 @@ struct DataView: View {
                     }
                     .padding(.all, 15)
                     
-                case "SUBMERSION":
+                case "submersion":
                     LazyVStack() {
                         ForEach(submersions) { submersion in
                             Text("\( submersion.timestamp ), \( String(format: "%.2f", submersion.depth) ), \( String( format: "%.2f", submersion.temperature) )")
@@ -103,9 +103,9 @@ struct DataView: View {
     
     // FUNCTIONS TO CONVERT ARRAYS TO STRUCTURES
     private func convertToLocationArray() -> [Locations] {
-        let timestamp = combinedData?.LOCATION.values.timestamp.map(\.self) ?? []
-        let latitude = combinedData?.LOCATION.values.latitude.map(\.self) ?? []
-        let longitude = combinedData?.LOCATION.values.longitude.map(\.self) ?? []
+        let timestamp = combinedData?.location.values.timestamp.map(\.self) ?? []
+        let latitude = combinedData?.location.values.latitude.map(\.self) ?? []
+        let longitude = combinedData?.location.values.longitude.map(\.self) ?? []
         
         var locationArray: [Locations] = []
         
@@ -123,16 +123,16 @@ struct DataView: View {
     }
     
     private func convertToMotionArray() -> [Motions] {
-        let timestamp = combinedData?.MOTION.values.timestamp.map(\.self) ?? []
-        let accX = combinedData?.MOTION.values.accelerationX.map(\.self) ?? []
-        let accY = combinedData?.MOTION.values.accelerationY.map(\.self) ?? []
-        let accZ = combinedData?.MOTION.values.accelerationZ.map(\.self) ?? []
-        let gyrX = combinedData?.MOTION.values.rotationRateX.map(\.self) ?? []
-        let gyrY = combinedData?.MOTION.values.rotationRateY.map(\.self) ?? []
-        let gyrZ = combinedData?.MOTION.values.rotationRateZ.map(\.self) ?? []
-        let magX = combinedData?.MOTION.values.magneticFieldX.map(\.self) ?? []
-        let magY = combinedData?.MOTION.values.magneticFieldY.map(\.self) ?? []
-        let magZ = combinedData?.MOTION.values.magneticFieldZ.map(\.self) ?? []
+        let timestamp = combinedData?.motion.values.timestamp.map(\.self) ?? []
+        let accX = combinedData?.motion.values.accelerationX.map(\.self) ?? []
+        let accY = combinedData?.motion.values.accelerationY.map(\.self) ?? []
+        let accZ = combinedData?.motion.values.accelerationZ.map(\.self) ?? []
+        let gyrX = combinedData?.motion.values.rotationRateX.map(\.self) ?? []
+        let gyrY = combinedData?.motion.values.rotationRateY.map(\.self) ?? []
+        let gyrZ = combinedData?.motion.values.rotationRateZ.map(\.self) ?? []
+        let magX = combinedData?.motion.values.magneticFieldX.map(\.self) ?? []
+        let magY = combinedData?.motion.values.magneticFieldY.map(\.self) ?? []
+        let magZ = combinedData?.motion.values.magneticFieldZ.map(\.self) ?? []
         
         var motionArray: [Motions] = []
         
@@ -156,9 +156,9 @@ struct DataView: View {
     }
     
     private func convertToSubmersionArray() -> [Submersion] {
-        let timestamp = combinedData?.SUBMERSION.values.timestamp.map(\.self) ?? []
-        let depth = combinedData?.SUBMERSION.values.depth.map(\.self) ?? []
-        let temperature = combinedData?.SUBMERSION.values.temperature.map(\.self) ?? []
+        let timestamp = combinedData?.submersion.values.timestamp.map(\.self) ?? []
+        let depth = combinedData?.submersion.values.depth.map(\.self) ?? []
+        let temperature = combinedData?.submersion.values.temperature.map(\.self) ?? []
         
         var submersionArray: [Submersion] = []
         
@@ -283,9 +283,9 @@ struct DataView: View {
     let formattedSubmersionData = FormattedSubmersionData(values: submersionData)
     
     
-    let combinedData = StructuredData(LOCATION: formattedLocationData, MOTION: formattedMotionData, SUBMERSION: formattedSubmersionData)
+    let combinedData = StructuredData(location: formattedLocationData, motion: formattedMotionData, submersion: formattedSubmersionData)
     
-    DataView(combinedData: combinedData, sensorType: "SUBMERSION")
+    DataView(combinedData: combinedData, sensorType: "submersion")
 }
 
 

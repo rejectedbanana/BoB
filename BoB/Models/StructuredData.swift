@@ -8,9 +8,9 @@
 import Foundation
 
 struct StructuredData: Codable {
-    let LOCATION: FormattedLocationData
-    let MOTION: FormattedMotionData
-    let SUBMERSION: FormattedSubmersionData
+    let location: FormattedLocationData
+    let motion: FormattedMotionData
+    let submersion: FormattedSubmersionData
 }
 
 struct FormattedLocationData: Codable {
