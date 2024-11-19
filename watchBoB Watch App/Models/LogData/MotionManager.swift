@@ -10,7 +10,7 @@ import CoreMotion
 
 class MotionManager: NSObject, ObservableObject {
     var motionManager: CMMotionManager? = CMMotionManager()
-    var motionData: MotionData = MotionData(timestamp: [], accelerationX: [], accelerationY: [], accelerationZ: [], rotationRateX: [], rotationRateY: [], rotationRateZ: [], magneticFieldX: [], magneticFieldY: [], magneticFieldZ: [])
+    var motionData: MotionData = MotionData(timestamp: [], accelerationX: [], accelerationY: [], accelerationZ: [], angularVelocityX: [], angularVelocityY: [], angularVelocityZ: [], magneticFieldX: [], magneticFieldY: [], magneticFieldZ: [])
 
     @Published var accX = 0.0
     @Published var accY = 0.0
@@ -52,9 +52,9 @@ class MotionManager: NSObject, ObservableObject {
         motionData.accelerationX.append(accX)
         motionData.accelerationY.append(accY)
         motionData.accelerationZ.append(accZ)
-        motionData.rotationRateX.append(gyrX)
-        motionData.rotationRateY.append(gyrY)
-        motionData.rotationRateZ.append(gyrZ)
+        motionData.angularVelocityX.append(gyrX)
+        motionData.angularVelocityY.append(gyrY)
+        motionData.angularVelocityZ.append(gyrZ)
         motionData.magneticFieldX.append(magX)
         motionData.magneticFieldY.append(magY)
         motionData.magneticFieldZ.append(magZ)
@@ -110,9 +110,9 @@ class MotionManager: NSObject, ObservableObject {
         motionData.accelerationX.removeAll()
         motionData.accelerationY.removeAll()
         motionData.accelerationZ.removeAll()
-        motionData.rotationRateX.removeAll()
-        motionData.rotationRateY.removeAll()
-        motionData.rotationRateZ.removeAll()
+        motionData.angularVelocityX.removeAll()
+        motionData.angularVelocityY.removeAll()
+        motionData.angularVelocityZ.removeAll()
         motionData.magneticFieldX.removeAll()
         motionData.magneticFieldY.removeAll()
         motionData.magneticFieldZ.removeAll()

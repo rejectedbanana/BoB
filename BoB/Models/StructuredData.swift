@@ -8,9 +8,9 @@
 import Foundation
 
 struct StructuredData: Codable {
-    let LOCATION: FormattedLocationData
-    let MOTION: FormattedMotionData
-    let SUBMERSION: FormattedSubmersionData
+    let location: FormattedLocationData
+    let motion: FormattedMotionData
+    let submersion: FormattedSubmersionData
 }
 
 struct FormattedLocationData: Codable {
@@ -39,7 +39,7 @@ struct FormattedMotionData: Codable {
     init( values: MotionData ) {
         self.sensor_id = "motion"
         self.description = "3-axis acceleration, angular velocity, and magnetic field from motion sensors"
-        self.labels = ["timestamp,accelerationX,accelerationY,accelerationZ,angularVelocityX,angularVelocityY,angularVelocityZ,magneticFieldX,magneticFieldY, magneticFieldZ"]
+        self.labels = ["timestamp,accelerationX,accelerationY,accelerationZ,angularVelocityX,angularVelocityY,angularVelocityZ,magneticFieldX,magneticFieldY,magneticFieldZ"]
         self.units = ["ISO8601,m/s²,m/s²,m/s²,rad/s,rad/s,rad/s,µT,µT,µT"]
         self.values = values
     }
@@ -55,7 +55,7 @@ struct FormattedSubmersionData: Codable {
     init( values: WaterSubmersionData ) {
         self.description = "Submersion data from water depth and water temperature sensors"
         self.sensor_id = "submersion"
-        self.labels = ["timestamp,waterDepth,waterTemperature"]
+        self.labels = ["timestamp,depth,temperature"]
         self.units = ["ISO8601,meters,°C"]
         self.values = values
     }

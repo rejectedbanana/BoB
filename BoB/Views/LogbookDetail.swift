@@ -46,21 +46,21 @@ struct LogbookDetail: View {
                     showLocationJSON.toggle()
                 }
                 .sheet(isPresented: $showLocationJSON) {
-                    DataView(combinedData: combinedData, sensorType: "LOCATION")
+                    DataView(combinedData: combinedData, sensorType: "location")
                 }
                 
                 Button("View Motion Data") {
                     showMotionJSON.toggle()
                 }
                 .sheet(isPresented: $showMotionJSON) {
-                    DataView(combinedData: combinedData, sensorType: "MOTION")
+                    DataView(combinedData: combinedData, sensorType: "motion")
                 }
                 
                 Button("View Submersion Data") {
                     showSubmersionJSON.toggle()
                 }
                 .sheet(isPresented: $showSubmersionJSON) {
-                    DataView(combinedData: combinedData, sensorType: "SUBMERSION")
+                    DataView(combinedData: combinedData, sensorType: "submersion")
                 }
             }
             
@@ -112,7 +112,7 @@ struct LogbookDetail: View {
             let formattedLocationData = FormattedLocationData(values: locationArrays)
             
             // extract motion data
-            let motionArrays = MotionData(timestamp: motionDecoded?.timestamp ?? [], accelerationX: motionDecoded?.accelerationX ?? [], accelerationY: motionDecoded?.accelerationY ?? [], accelerationZ: motionDecoded?.accelerationZ ?? [], rotationRateX: motionDecoded?.rotationRateX ?? [], rotationRateY: motionDecoded?.rotationRateY ?? [], rotationRateZ: motionDecoded?.rotationRateZ ?? [], magneticFieldX: motionDecoded?.magneticFieldX ?? [], magneticFieldY: motionDecoded?.magneticFieldY ?? [], magneticFieldZ: motionDecoded?.magneticFieldZ ?? [])
+            let motionArrays = MotionData(timestamp: motionDecoded?.timestamp ?? [], accelerationX: motionDecoded?.accelerationX ?? [], accelerationY: motionDecoded?.accelerationY ?? [], accelerationZ: motionDecoded?.accelerationZ ?? [], angularVelocityX: motionDecoded?.angularVelocityX ?? [], angularVelocityY: motionDecoded?.angularVelocityY ?? [], angularVelocityZ: motionDecoded?.angularVelocityZ ?? [], magneticFieldX: motionDecoded?.magneticFieldX ?? [], magneticFieldY: motionDecoded?.magneticFieldY ?? [], magneticFieldZ: motionDecoded?.magneticFieldZ ?? [])
             let formattedMotionData = FormattedMotionData(values: motionArrays)
             
             // extract the submersion data
@@ -120,7 +120,7 @@ struct LogbookDetail: View {
             let formattedSubmersionData = FormattedSubmersionData(values: submersionArrays)
             
             // Combine the data
-            let structuredData = StructuredData(LOCATION: formattedLocationData, MOTION: formattedMotionData, SUBMERSION: formattedSubmersionData )
+            let structuredData = StructuredData(location: formattedLocationData, motion: formattedMotionData, submersion: formattedSubmersionData )
             
             return structuredData
         } catch {
