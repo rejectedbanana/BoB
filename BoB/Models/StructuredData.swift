@@ -39,7 +39,7 @@ struct FormattedMotionData: Codable {
     init( values: MotionData ) {
         self.sensor_id = "motion"
         self.description = "3-axis acceleration, angular velocity, and magnetic field from motion sensors"
-        self.labels = ["timestamp,accelerationX,accelerationY,accelerationZ,angularVelocityX,angularVelocityY,angularVelocityZ,magneticFieldX,magneticFieldY, magneticFieldZ"]
+        self.labels = ["timestamp,accelerationX,accelerationY,accelerationZ,angularVelocityX,angularVelocityY,angularVelocityZ,magneticFieldX,magneticFieldY,magneticFieldZ"]
         self.units = ["ISO8601,m/s²,m/s²,m/s²,rad/s,rad/s,rad/s,µT,µT,µT"]
         self.values = values
     }

@@ -112,7 +112,7 @@ struct LogbookDetail: View {
             let formattedLocationData = FormattedLocationData(values: locationArrays)
             
             // extract motion data
-            let motionArrays = MotionData(timestamp: motionDecoded?.timestamp ?? [], accelerationX: motionDecoded?.accelerationX ?? [], accelerationY: motionDecoded?.accelerationY ?? [], accelerationZ: motionDecoded?.accelerationZ ?? [], rotationRateX: motionDecoded?.rotationRateX ?? [], rotationRateY: motionDecoded?.rotationRateY ?? [], rotationRateZ: motionDecoded?.rotationRateZ ?? [], magneticFieldX: motionDecoded?.magneticFieldX ?? [], magneticFieldY: motionDecoded?.magneticFieldY ?? [], magneticFieldZ: motionDecoded?.magneticFieldZ ?? [])
+            let motionArrays = MotionData(timestamp: motionDecoded?.timestamp ?? [], accelerationX: motionDecoded?.accelerationX ?? [], accelerationY: motionDecoded?.accelerationY ?? [], accelerationZ: motionDecoded?.accelerationZ ?? [], angularVelocityX: motionDecoded?.angularVelocityX ?? [], angularVelocityY: motionDecoded?.angularVelocityY ?? [], angularVelocityZ: motionDecoded?.angularVelocityZ ?? [], magneticFieldX: motionDecoded?.magneticFieldX ?? [], magneticFieldY: motionDecoded?.magneticFieldY ?? [], magneticFieldZ: motionDecoded?.magneticFieldZ ?? [])
             let formattedMotionData = FormattedMotionData(values: motionArrays)
             
             // extract the submersion data

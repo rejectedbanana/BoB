@@ -127,9 +127,9 @@ struct DataView: View {
         let accX = combinedData?.motion.values.accelerationX.map(\.self) ?? []
         let accY = combinedData?.motion.values.accelerationY.map(\.self) ?? []
         let accZ = combinedData?.motion.values.accelerationZ.map(\.self) ?? []
-        let gyrX = combinedData?.motion.values.rotationRateX.map(\.self) ?? []
-        let gyrY = combinedData?.motion.values.rotationRateY.map(\.self) ?? []
-        let gyrZ = combinedData?.motion.values.rotationRateZ.map(\.self) ?? []
+        let gyrX = combinedData?.motion.values.angularVelocityX.map(\.self) ?? []
+        let gyrY = combinedData?.motion.values.angularVelocityY.map(\.self) ?? []
+        let gyrZ = combinedData?.motion.values.angularVelocityZ.map(\.self) ?? []
         let magX = combinedData?.motion.values.magneticFieldX.map(\.self) ?? []
         let magY = combinedData?.motion.values.magneticFieldY.map(\.self) ?? []
         let magZ = combinedData?.motion.values.magneticFieldZ.map(\.self) ?? []
@@ -222,19 +222,19 @@ struct DataView: View {
             -0.983765,
             -0.983887
             ],
-        rotationRateX: [
+        angularVelocityX: [
             0,
             -0.003927,
             -0.004953,
             -0.005319
             ],
-        rotationRateY: [
+        angularVelocityY: [
             0,
             0.002478,
             0.00736,
             0.004074
         ],
-        rotationRateZ: [
+        angularVelocityZ: [
             0,
             -0.002045,
             3.1e-05,
