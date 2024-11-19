@@ -55,7 +55,7 @@ struct FormattedSubmersionData: Codable {
     init( values: WaterSubmersionData ) {
         self.description = "Submersion data from water depth and water temperature sensors"
         self.sensor_id = "submersion"
-        self.labels = ["timestamp,waterDepth,waterTemperature"]
+        self.labels = ["timestamp,depth,temperature"]
         self.units = ["ISO8601,meters,°C"]
         self.values = values
     }
