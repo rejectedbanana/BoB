@@ -19,19 +19,18 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
     
     // set up the timer
     private var samplingTimer: Timer?
-    private var samplingInterval: TimeInterval = 1.0
     
-    // format time
-    // let timeStampFormatter = TimeStampManager()
+    // load timestamp formatter
+    let timeStampFormatter = TimeStampManager()
     
     override init() {
         super.init()
         locationManager.delegate = self
     }
     
-    func startSamplingGPS() {
+    func startSamplingGPS(_ sampleInterval: Double) {
         locationManager.requestWhenInUseAuthorization()
-        samplingTimer = Timer.scheduledTimer(withTimeInterval: samplingInterval, repeats: true) { _ in
+        samplingTimer = Timer.scheduledTimer(withTimeInterval: sampleInterval, repeats: true) { _ in
             self.locationManager.requestLocation()
         }
     }
@@ -59,7 +58,7 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
         if let location = locations.first?.coordinate {
 
             // grab the data
-            let timestamp: String = ISO8601DateFormatter().string(from: Date())
+            let timestamp: String = timeStampFormatter.ISO8601Format(Date())
             let latitude: Double = location.latitude
             let longitude: Double = location.longitude
             
