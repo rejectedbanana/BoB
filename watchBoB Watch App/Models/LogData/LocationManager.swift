@@ -9,16 +9,20 @@ import Foundation
 import CoreLocation
 
 class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
+    // set up location
     var locationManager = CLLocationManager()
-    
     @Published var authorizationStatus: CLAuthorizationStatus?
     @Published var location: CLLocationCoordinate2D?
     
-//    @Published var sampledLocations: [LocationData] = []
+    // make data to fill in
     @Published var sampledLocations: LocationData = LocationData(timestamp: [], latitude: [], longitude: [])
     
-//    let timeStampFormatter = TimeStampManager()
+    // set up the timer
     private var samplingTimer: Timer?
+    private var samplingInterval: TimeInterval = 1.0
+    
+    // format time
+    // let timeStampFormatter = TimeStampManager()
     
     override init() {
         super.init()
@@ -27,7 +31,7 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
     
     func startSamplingGPS() {
         locationManager.requestWhenInUseAuthorization()
-        samplingTimer = Timer.scheduledTimer(withTimeInterval: 10.0, repeats: true) { _ in
+        samplingTimer = Timer.scheduledTimer(withTimeInterval: samplingInterval, repeats: true) { _ in
             self.locationManager.requestLocation()
         }
     }
@@ -53,17 +57,11 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if let location = locations.first?.coordinate {
-//            let locationData = LocationData(
-//                timestamp: Date(),
-//                latitude: round(location.latitude * 10000) / 10000, // 4 decimal places
-//                longitude: round(location.longitude * 10000) / 10000 // 4 decimal places
-//            )
-//            sampledLocations.append(locationData)
-            
+
             // grab the data
             let timestamp: String = ISO8601DateFormatter().string(from: Date())
-            let latitude: Double = round(location.latitude * 10000) / 10000
-            let longitude: Double = round(location.longitude * 10000) / 10000
+            let latitude: Double = location.latitude
+            let longitude: Double = location.longitude
             
             // append the data arrays
             sampledLocations.timestamp.append(timestamp)
