@@ -1,14 +1,14 @@
 # BoB
 **Did you know that Apple Watches have the same sensors that scientists already use to study the ocean and the earth?**
 
-This is an app that turns your watch into a scientific instrument, gathering environmental data with anyone, anytime, anywhere.
+This is an app that turns your watch into a scientific instrument, gathering environmental data from anyone, anytime, anywhere.
 
 ## Project Description
-This app uses the sensors on your Apple Watch to log location, motion and submersion data for environmental monitoring
+This app uses the sensors on your Apple Watch to log location, motion, and submersion data for environmental monitoring
 
-Through the WatchOS app, the Apple Watch logs environmental data from the motion, submersion and location sensors. That data is then uploaded to the cloud, and shared with the companion phone all. The iPhone app is used to view and share the data. Data is output as a machine readable JSON via AirDrop, email or any app on your phone that can share data. 
+Through the WatchOS app, the Apple Watch logs environmental data from the motion, submersion, and location sensors. That data is then uploaded to the cloud and shared with the companion phone app. The iPhone app is used to view and share the data. Data is output as a machine readable JSON via AirDrop, email, or any app on your phone that can share data. 
 
-This app is initially designed by oceanographers as a low-cost sensor to meaure properties of oceans and lakes such as water temperature, depth, wave height and wave period. But with that many sensors that are used in so many areas of science, the applications are endless!
+This app is initially designed by oceanographers as a low-cost sensor to meaure properties of oceans and lakes such as water temperature, depth, wave height, and wave period. But with that many sensors that are used in so many areas of science, the applications are endless!
 
 ### Apple Watch Sensors
 - Motion - 3-axis accelerometer, gyroscope and magnetic field sensor (compass)
@@ -29,7 +29,7 @@ If you run into issues, please reach out to me at kmartini@tiniscientific.com
 ## How to use the app
 - Open the app on your watch. 
 
-- Tap the "Start Sampling Button!
+- Tap the "Start Sampling Button"!
 
 - On the next screen, tap the "Start" Button.
 
@@ -58,8 +58,9 @@ If you run into issues, please reach out to me at kmartini@tiniscientific.com
 </p>
 
 ## Coders and Collaborators
-Thanks to the coders who helped along the way with this development as I am learning SwiftUI: Hasan K Armoush via DevSignal, Phil Parham
+Thanks to the coders who helped along the way with this development as I am learning SwiftUI: Hasan K Armoush via DevSignal and Phil Parham.
 
-And to our alpha testers Virginia Schutte, Michelle Weirathmueller
+And to our alpha testers Virginia Schutte and Michelle Weirathmueller.
 
 ## License
+See MIT License tab above.
