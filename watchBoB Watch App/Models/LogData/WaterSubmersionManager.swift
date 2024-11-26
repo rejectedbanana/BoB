@@ -19,6 +19,9 @@ class WaterSubmersionManager: NSObject, ObservableObject {
     @Published var diveSessionRunning: Bool = false
     @Published var waterSubmersionData: WaterSubmersionData = WaterSubmersionData(timestamp: [], depth: [], temperature: [])
     
+    // load timestamp formatter
+    let timeStampFormatter = TimeStampManager()
+    
     // Instantiate the submersion manager
     private var submersionManager: CMWaterSubmersionManager?
     
@@ -86,8 +89,7 @@ class WaterSubmersionManager: NSObject, ObservableObject {
             return
         }
         // grab the timestamp
-        let iso8601Formatter = ISO8601DateFormatter()
-        let timestamp = iso8601Formatter.string(from: Date())
+        let timestamp: String = timeStampFormatter.ISO8601Format(Date())
         
         waterSubmersionData.timestamp.append(timestamp)
         waterSubmersionData.depth.append(depth)
