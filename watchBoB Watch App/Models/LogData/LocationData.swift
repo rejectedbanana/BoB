@@ -18,9 +18,14 @@ struct LocationData: Codable {
         // encode the timestamp
         try container.encode(timestamp, forKey: .timestamp)
         
-        // format latitude and longitude to 4 decimal places
-        let formattedLatitude = latitude.map { $0.map { round( $0 * 10000 ) / 10000 } }
-        let formattedLongitude = longitude.map { $0.map { round( $0 * 10000 ) / 10000 } }
+        // format latitude and longitude to 8 decimal places
+        // This give accuracy to 1 m, with a location noise level of 1e-6 degrees latitude or longitude
+        // location is GPS plus help from local mobile networks
+        let decimalPlaces: Double = 8
+        var multiplier: Double = pow(10, decimalPlaces+1)
+        let formattedLatitude = latitude.map { $0.map { round( $0 * multiplier ) / multiplier } }
+        let formattedLongitude = longitude.map { $0.map { round( $0 * multiplier ) / multiplier } }
+        
         // encode the formatted values
         try container.encode(formattedLatitude, forKey: .latitude)
         try container.encode(formattedLongitude, forKey: .longitude)

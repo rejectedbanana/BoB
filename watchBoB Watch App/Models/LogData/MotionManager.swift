@@ -58,11 +58,9 @@ class MotionManager: NSObject, ObservableObject {
         motionData.magneticFieldX.append(magX)
         motionData.magneticFieldY.append(magY)
         motionData.magneticFieldZ.append(magZ)
-        
-        
     }
 
-    func startLogging(_ freq: Double) {
+    func startLogging(_ samplingInterval: Double) {
         if motionManager!.isAccelerometerAvailable {
             motionManager?.startAccelerometerUpdates()
         }
@@ -70,7 +68,7 @@ class MotionManager: NSObject, ObservableObject {
             motionManager?.startDeviceMotionUpdates(using: .xTrueNorthZVertical)
         }
         startTime = Date()
-        timer = Timer.scheduledTimer(timeInterval: 1.0 / freq, target: self, selector: #selector(sampleSensors), userInfo: nil, repeats: true)
+        timer = Timer.scheduledTimer(timeInterval: samplingInterval, target: self, selector: #selector(sampleSensors), userInfo: nil, repeats: true)
     }
 
     func stopLogging() {

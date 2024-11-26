@@ -16,8 +16,8 @@ class SamplingService {
 
     func startSampling(motionManager: MotionManager, locationManager: LocationManager, metadataManager: MetadataManager, waterSubmersionManager: WaterSubmersionManager) {
         metadataManager.startLogging()
-        motionManager.startLogging(10)
-        locationManager.startSamplingGPS()
+        motionManager.startLogging(0.1)
+        locationManager.startSamplingGPS(1.0)
         // Commented below since we're handling automatic
         waterSubmersionManager.startDiveSession()
         
