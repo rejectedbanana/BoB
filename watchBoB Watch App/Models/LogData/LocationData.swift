@@ -22,7 +22,7 @@ struct LocationData: Codable {
         // This give accuracy to 1 m, with a location noise level of 1e-6 degrees latitude or longitude
         // location is GPS plus help from local mobile networks
         let decimalPlaces: Double = 8
-        var multiplier: Double = pow(10, decimalPlaces+1)
+        let multiplier: Double = pow(10, decimalPlaces+1)
         let formattedLatitude = latitude.map { $0.map { round( $0 * multiplier ) / multiplier } }
         let formattedLongitude = longitude.map { $0.map { round( $0 * multiplier ) / multiplier } }
         
