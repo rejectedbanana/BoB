@@ -78,6 +78,12 @@ class WaterSubmersionManager: NSObject, ObservableObject {
     @MainActor
     private func addSubmersionSample(measurement: CMWaterSubmersionMeasurement?, temperature: CMWaterTemperature?) {
         
+        // grab the water depth
+        guard let depth = measurement?.depth?.value else {
+            debugPrint("No depth data available")
+            return
+        }
+        
         // grab the temperature timestamp
         guard let ttimestamp = temperature?.date else {
             debugPrint("No temperature timestamp available")
@@ -96,11 +102,6 @@ class WaterSubmersionManager: NSObject, ObservableObject {
             return
         }
                 
-        // grab the water depth
-        guard let depth = measurement?.depth?.value else {
-            debugPrint("No depth data available")
-            return
-        }
         // grab the water temperature
         guard let temperature = temperature?.temperature.value else {
             debugPrint("No temperature data available")
@@ -244,12 +245,21 @@ extension WaterSubmersionManager: CMWaterSubmersionManagerDelegate {
                 fatalError("*** An unknown measurement depth state: \(measurement.submersionState)")
             }
             
-            // Output pressre and depth values for debugging
-            let mdate = measurement.date
-            let depth = measurement.depth
-            let pressure = measurement.pressure
-            let currentMeasurement = "\(mdate): \(depth?.value ?? Double.nan) \(depth?.unit ?? .meters), \(pressure?.value ?? Double.nan) \(pressure?.unit ?? .hectopascals)"
-            debugPrint("*** Submersion: \(currentMeasurement) ***")
+            if submerged == true {
+                // Output depth and pressure  values for debugging
+                let mdate = measurement.date
+                let depth = measurement.depth
+                let currentDepth = "\(mdate): \(depth?.value ?? Double.nan) \(depth?.unit ?? .meters)"
+                debugPrint("*** Depth: \(currentDepth) ***")
+                let pressure = measurement.pressure
+                let currentPressure = "\(mdate): \(pressure?.value ?? Double.nan) \(pressure?.unit ?? .hectopascals)"
+                debugPrint("*** Pressure: \(currentPressure) ***")
+                let surfacePressure = measurement.surfacePressure
+                let currentSurfacePressure = "\(mdate): \(surfacePressure.value) \(surfacePressure.unit)"
+                debugPrint("*** Surface Pressure: \(currentSurfacePressure) ***")
+                let calculatedPressure = (surfacePressure.value - (pressure?.value ?? 0.0))/100 // 1 hPa = 0.01 dbar
+                debugPrint("*** Calculated Pressure: \(calculatedPressure) dbar ***")
+            }
             
             Task {
                 await set(measurement: measurement)
