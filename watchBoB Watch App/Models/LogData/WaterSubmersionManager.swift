@@ -218,7 +218,8 @@ extension WaterSubmersionManager: CMWaterSubmersionManagerDelegate {
                 diveSessionRunning = true
             } else {
                 debugPrint("Watch is not submerged. Pausing data collection.")
-                diveSessionRunning = false
+//                diveSessionRunning = true
+//                isSubmerged = false
             }
         }
     }
