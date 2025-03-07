@@ -9,47 +9,33 @@ import Foundation
 
 class TimeStampManager: ObservableObject {
     
-    // Human friendly format used in views
+    // Human friendly format used in application views
     func viewFormat(_ date: Date) -> String {
         let formatter = DateFormatter()
         formatter.dateFormat = "MMM d y, HH:mm:ss"
         return formatter.string(from: date)
     }
     
-    // Computer Timfriendly format used for exporting and naming
+    // Computer friendly format used for naming exported files
     func exportNameFormat(_ date: Date) -> String {
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyyMMdd_HHmmss"
         return formatter.string(from: date)
     }
     
-    // Used for timestamp in the CSV
+    // Data science friendly format for storing timestamps
     func ISO8601Format(_ date: Date) -> String {
         let formatter = ISO8601DateFormatter()
         formatter.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
         return formatter.string(from: date)
     }
     
-    // Elapsed Time
+    // Elapsed Time for 
     func elapsedTime(elapsedTime: TimeInterval) -> String {
         let formatter = DateComponentsFormatter()
         formatter.unitsStyle = .positional
         formatter.allowedUnits = [.hour, .minute, .second]
         return formatter.string(from: elapsedTime) ?? "00:00:00"
-    }
-    
-    func formattedTime(from timestamp: String) -> String {
-        let inputFormatter = DateFormatter()
-        inputFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ" // Adjust the format to match your input timestamp
-        
-        let outputFormatter = DateFormatter()
-        outputFormatter.dateFormat = "HH:mm:ss"
-        
-        if let date = inputFormatter.date(from: timestamp) {
-            return outputFormatter.string(from: date)
-        } else {
-            return "Invalid Date"
-        }
     }
     
 }

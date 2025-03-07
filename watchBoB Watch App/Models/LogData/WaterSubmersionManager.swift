@@ -83,15 +83,33 @@ class WaterSubmersionManager: NSObject, ObservableObject {
             debugPrint("No depth data available")
             return
         }
+        
+        // grab the temperature timestamp
+        guard let ttimestamp = temperature?.date else {
+            debugPrint("No temperature timestamp available")
+            return
+        }
+        
+        // grab the pressure timestamp
+        guard let ptimestamp = measurement?.date else {
+            debugPrint("No pressure timestamp available")
+            return
+        }
+        
+        // determine if the timestamp is unique, exit otherwise (takes into account temp and pressure are measured at the same time, but queried at different times)
+        if ttimestamp == ptimestamp {
+            debugPrint("Pressure and temperature timestamps are identical.")
+            return
+        }
+                
         // grab the water temperature
         guard let temperature = temperature?.temperature.value else {
             debugPrint("No temperature data available")
             return
         }
-        // grab the timestamp
-        let timestamp: String = timeStampFormatter.ISO8601Format(Date())
         
-        waterSubmersionData.timestamp.append(timestamp)
+        // append the data
+        waterSubmersionData.timestamp.append(timeStampFormatter.ISO8601Format(ptimestamp))
         waterSubmersionData.depth.append(depth)
         waterSubmersionData.temperature.append(temperature)
         
@@ -200,7 +218,8 @@ extension WaterSubmersionManager: CMWaterSubmersionManagerDelegate {
                 diveSessionRunning = true
             } else {
                 debugPrint("Watch is not submerged. Pausing data collection.")
-                diveSessionRunning = false
+//                diveSessionRunning = true
+//                isSubmerged = false
             }
         }
     }
@@ -208,7 +227,7 @@ extension WaterSubmersionManager: CMWaterSubmersionManagerDelegate {
     // receive submersion measurement update (surface pressure, water pressure, depth, submersion state)
     nonisolated func manager(_ manager: CMWaterSubmersionManager, didUpdate measurement: CMWaterSubmersionMeasurement) {
         if diveSessionRunning {
-            debugPrint("[Measurement] *** Received a depth measurement. ***")
+            
             let submerged: Bool?
             switch measurement.submersionState {
             case .unknown:
@@ -227,12 +246,28 @@ extension WaterSubmersionManager: CMWaterSubmersionManagerDelegate {
                 fatalError("*** An unknown measurement depth state: \(measurement.submersionState)")
             }
             
+            if submerged == true {
+                // Output depth and pressure  values for debugging
+                let mdate = measurement.date
+                let depth = measurement.depth
+                let currentDepth = "\(mdate): \(depth?.value ?? Double.nan) \(depth?.unit ?? .meters)"
+                debugPrint("*** Depth: \(currentDepth) ***")
+                let pressure = measurement.pressure
+                let currentPressure = "\(mdate): \(pressure?.value ?? Double.nan) \(pressure?.unit ?? .hectopascals)"
+                debugPrint("*** Pressure: \(currentPressure) ***")
+                let surfacePressure = measurement.surfacePressure
+                let currentSurfacePressure = "\(mdate): \(surfacePressure.value) \(surfacePressure.unit)"
+                debugPrint("*** Surface Pressure: \(currentSurfacePressure) ***")
+                let calculatedPressure = (surfacePressure.value - (pressure?.value ?? 0.0))/100 // 1 hPa = 0.01 dbar
+                debugPrint("*** Calculated Pressure: \(calculatedPressure) dbar ***")
+            }
+            
             Task {
                 await set(measurement: measurement)
                 if let submerged = submerged {
                     await set(submerged: submerged)
                 }
-                // add a measurement
+                // add the pressure measurement and the pressure timestamp
                 await addSubmersionSample(measurement: measurement, temperature: self.temperature)
             }
         }
@@ -241,15 +276,16 @@ extension WaterSubmersionManager: CMWaterSubmersionManagerDelegate {
     // receive temperature measurement update (temperature, temperature uncertainty)
     nonisolated func manager(_ manager: CMWaterSubmersionManager, didUpdate measurement: CMWaterTemperature) {
         if diveSessionRunning {
+            let mdate = measurement.date
             let temp = measurement.temperature
             let uncertainty = measurement.temperatureUncertainty
-            let currentTemperature = "\(temp.value) +/- \(uncertainty.value) \(temp.unit)"
+            let currentTemperature = "\(mdate): \(temp.value) +/- \(uncertainty.value) \(temp.unit)"
             
             debugPrint("*** Temperature: \(currentTemperature) ***")
             
             Task {
                 await set(temperature: measurement)
-                // add a measurement
+                // add the temperature measurement and the temperature timestamp
                 await addSubmersionSample(measurement: self.measurement, temperature: measurement)
             }
         }
