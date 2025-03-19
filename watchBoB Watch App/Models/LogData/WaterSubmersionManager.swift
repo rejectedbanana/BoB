@@ -315,18 +315,18 @@ extension WaterSubmersionManager: WKExtendedRuntimeSessionDelegate {
     func extendedRuntimeSession(_ extendedRuntimeSession: WKExtendedRuntimeSession, didInvalidateWith reason: WKExtendedRuntimeSessionInvalidationReason, error: Error?) {
         // Track when your session ends.
         // Also handle errors here.
-        debugPrint("[WKExtendedRuntimeSession] *** Session invalidated with reason: \(reason.rawValue) and error: \(error?.localizedDescription ?? "nil") ***")
+        debugPrint("[WKExtendedRuntimeSession] *** Submersion Session invalidated with reason: \(reason.rawValue) and error: \(error?.localizedDescription ?? "nil") ***")
 //        stopDiveSession()
     }
     
     func extendedRuntimeSessionDidStart(_ extendedRuntimeSession: WKExtendedRuntimeSession) {
         // Track when your session starts.
-        debugPrint("[WKExtendedRuntimeSession] *** Session started. ***")
+        debugPrint("[WKExtendedRuntimeSession] *** Submersion Session started. ***")
     }
     
     func extendedRuntimeSessionWillExpire(_ extendedRuntimeSession: WKExtendedRuntimeSession) {
         // Finish and clean up any tasks before the session ends.
-        debugPrint("[WKExtendedRuntimeSession] *** Session will expire. ***")
+        debugPrint("[WKExtendedRuntimeSession] *** Submersion Session will expire. ***")
 //        stopDiveSession()
     }
 }
