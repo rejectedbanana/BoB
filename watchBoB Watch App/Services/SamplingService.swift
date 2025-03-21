@@ -16,7 +16,7 @@ class SamplingService {
 
     func startSampling(motionManager: MotionManager, locationManager: LocationManager, metadataManager: MetadataManager, waterSubmersionManager: WaterSubmersionManager) {
         metadataManager.startLogging()
-        motionManager.startLogging(0.1)
+        motionManager.startLogging(0.2)
         locationManager.startSamplingGPS(1.0)
         // Commented below since we're handling automatic
         waterSubmersionManager.startDiveSession()
@@ -27,6 +27,8 @@ class SamplingService {
         metadataManager.deviceLocalizedModel = device.localizedModel
         metadataManager.deviceSystemVersion = device.systemVersion
         metadataManager.deviceManufacturer = "Apple Inc."
+        
+        debugPrint("[Sampling Service] Start sampling...")
     }
 
     func stopSampling(motionManager: MotionManager, locationManager: LocationManager, metadataManager: MetadataManager, waterSubmersionManager: WaterSubmersionManager, context: NSManagedObjectContext, dismiss: (() -> Void)?) {
@@ -59,9 +61,12 @@ class SamplingService {
 
         do {
             try context.save()
+            debugPrint("CoreData successgully saved log entry.")
         } catch {
             print("Failed to save log entry: \(error)")
         }
+        
+        debugPrint("[SamplingService] Sampling stopped.")
         
         dismiss?()
     }
