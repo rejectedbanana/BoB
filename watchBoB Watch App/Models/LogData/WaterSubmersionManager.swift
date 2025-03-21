@@ -124,17 +124,8 @@ class WaterSubmersionManager: NSObject, ObservableObject {
     func startDiveSession() {
         debugPrint("[WKExtendedRuntimeSession] *** Starting a dive session. ***")
         
-        // create the extended runtime session here because you can't pass it in from SamplingService
-        let session = WKExtendedRuntimeSession()
-        
-        // Assign a delegate to the session
-        session.delegate = self
-        
-        // Start the session
-        session.start()
-        
-        // Pass the extended runtime session back to the manager class
-        self.extendedRuntimeSession = session
+        // create and start the extended runtime session
+        startNewExtendedRuntimeSession()
         
         // Start the dive session
         diveSessionRunning = true
@@ -146,10 +137,25 @@ class WaterSubmersionManager: NSObject, ObservableObject {
         // 3. Your app remains in the CMWaterSubmersionEvent.State.notSubmerged for 10 minutes
     }
     
+    // create a new extended runtime session
+    func startNewExtendedRuntimeSession() {
+        // create the extended runtime session here because you can't pass it in from SamplingService
+        let session = WKExtendedRuntimeSession()
+        
+        // Assign a delegate to the session
+        session.delegate = self
+        
+        // Start the session
+        session.start()
+        
+        // Pass the extended runtime session back to the manager class
+        self.extendedRuntimeSession = session
+    }
+    
     // explicitly end the runtime session
     func stopDiveSession() {
         // Stop the dive session
-        debugPrint("[WKExtendedRuntimeSession] *** Stopping dive session. ***")
+        debugPrint("[Submersion Manager] *** Stopping dive session. ***")
         diveSessionRunning = false
         
         // Stop the extended runtime session
@@ -229,11 +235,6 @@ extension WaterSubmersionManager: CMWaterSubmersionManagerDelegate {
                 debugPrint("Watch is submerged. Starting data collection.")
                 diveSessionRunning = true
             }
-//            } else {
-//                debugPrint("Watch is not submerged. Pausing data collection.")
-//                diveSessionRunning = true
-//                isSubmerged = false
-//            }
         }
     }
     
@@ -316,7 +317,12 @@ extension WaterSubmersionManager: WKExtendedRuntimeSessionDelegate {
         // Track when your session ends.
         // Also handle errors here.
         debugPrint("[WKExtendedRuntimeSession] *** Submersion Session invalidated with reason: \(reason.rawValue) and error: \(error?.localizedDescription ?? "nil") ***")
-//        stopDiveSession()
+        
+//        // If need to manually restart WKExtendedRuntime Session
+//        if diveSessionRunning {
+//            self.startNewExtendedRuntimeSession()
+//            debugPrint("New extended runtime session started.")
+//        }
     }
     
     func extendedRuntimeSessionDidStart(_ extendedRuntimeSession: WKExtendedRuntimeSession) {
@@ -325,8 +331,14 @@ extension WaterSubmersionManager: WKExtendedRuntimeSessionDelegate {
     }
     
     func extendedRuntimeSessionWillExpire(_ extendedRuntimeSession: WKExtendedRuntimeSession) {
-        // Finish and clean up any tasks before the session ends.
+        // Track when the session is about to end.
         debugPrint("[WKExtendedRuntimeSession] *** Submersion Session will expire. ***")
-//        stopDiveSession()
+        
+        // Finish and clean up any tasks before the session ends.
+        // Start a new session before this one expires
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            self.startNewExtendedRuntimeSession()
+            debugPrint("New extended runtime session started.")
+        }
     }
 }
