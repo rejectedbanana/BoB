@@ -124,18 +124,11 @@ class WaterSubmersionManager: NSObject, ObservableObject {
     func startDiveSession() {
         debugPrint("[WKExtendedRuntimeSession] *** Starting a dive session. ***")
         
-        // create the extended runtime session here because you can't pass it in from SamplingService
-        let session = WKExtendedRuntimeSession()
+        // create and start the extended runtime session
+        startNewExtendedRuntimeSession()
         
-        // Assign a delegate to the session
-        session.delegate = self
-        
-        // Start the session
-        session.start()
-
-        self.extendedRuntimeSession = session
+        // Start the dive session
         diveSessionRunning = true
-        
         debugPrint("[WKExtendedRuntimeSession] *** Dive session started. Waiting for submersion... ***")
         
         // runs until you
@@ -144,11 +137,32 @@ class WaterSubmersionManager: NSObject, ObservableObject {
         // 3. Your app remains in the CMWaterSubmersionEvent.State.notSubmerged for 10 minutes
     }
     
+    // create a new extended runtime session
+    func startNewExtendedRuntimeSession() {
+        // create the extended runtime session here because you can't pass it in from SamplingService
+        let session = WKExtendedRuntimeSession()
+        
+        // Assign a delegate to the session
+        session.delegate = self
+        
+        // Start the session
+        session.start()
+        
+        // Pass the extended runtime session back to the manager class
+        self.extendedRuntimeSession = session
+    }
+    
     // explicitly end the runtime session
     func stopDiveSession() {
-        debugPrint("[WKExtendedRuntimeSession] *** Stopping dive session. ***")
+        // Stop the dive session
+        debugPrint("[Submersion Manager] *** Stopping dive session. ***")
         diveSessionRunning = false
+        
+        // Stop the extended runtime session
         extendedRuntimeSession?.invalidate()
+        debugPrint("[WKExtendedRuntimeSession] *** Extended runtime session invalidated. ***")
+        
+        // Reset the extended runtime session
         extendedRuntimeSession = nil
     }
 
@@ -159,13 +173,17 @@ class WaterSubmersionManager: NSObject, ObservableObject {
         // assign a delegate to the session
         session.delegate = self
         
+        // Pass the extended runtime session back to the manager class
         self.extendedRuntimeSession = session
+        
+        // Start the dive session
         diveSessionRunning = true
+        debugPrint("[WKExtendedRuntimeSession] *** Dive session started. Submerged to 1 meter. ***")
         
         // automatically enable waterlock
         enableWaterLock()
+        debugPrint("[WKExtendedRuntimeSession] *** Water lock enabled. ***")
         
-        debugPrint("[WKExtendedRuntimeSession] *** Dive session started. Submerged to 1 meter. ***")
     }
     
     func enableWaterLock() {
@@ -185,7 +203,7 @@ class WaterSubmersionManager: NSObject, ObservableObject {
             let jsonString = String(data: jsonData, encoding: .utf8)
             return jsonString
         } catch {
-            print("Failed to encode submersion data: \(error)")
+            print("[Encoder] Failed to encode submersion data: \(error)")
             return nil
         }
     }
@@ -216,10 +234,6 @@ extension WaterSubmersionManager: CMWaterSubmersionManagerDelegate {
                 await set(submerged: submerged)
                 debugPrint("Watch is submerged. Starting data collection.")
                 diveSessionRunning = true
-            } else {
-                debugPrint("Watch is not submerged. Pausing data collection.")
-//                diveSessionRunning = true
-//                isSubmerged = false
             }
         }
     }
@@ -231,19 +245,19 @@ extension WaterSubmersionManager: CMWaterSubmersionManagerDelegate {
             let submerged: Bool?
             switch measurement.submersionState {
             case .unknown:
-                debugPrint("*** Unknown Depth ***")
+                debugPrint("[Dive Session] *** Unknown Depth ***")
                 submerged = nil
             case .notSubmerged:
-                debugPrint("*** Not Submerged ***")
+                debugPrint("[Dive Session] *** Not Submerged ***")
                 submerged = false
             case .submergedShallow, .submergedDeep, .approachingMaxDepth, .pastMaxDepth:
-                debugPrint("*** Submerged State: \(measurement.submersionState) ***")
+                debugPrint("[Dive Session] *** Submerged State: \(measurement.submersionState) ***")
                 submerged = true
             case .sensorDepthError:
-                debugPrint("*** A depth error has occurred. ***")
+                debugPrint("[Dive Session] *** A depth error has occurred. ***")
                 submerged = nil
             @unknown default:
-                fatalError("*** An unknown measurement depth state: \(measurement.submersionState)")
+                fatalError("[Dive Session] *** An unknown measurement depth state: \(measurement.submersionState)")
             }
             
             if submerged == true {
@@ -251,15 +265,15 @@ extension WaterSubmersionManager: CMWaterSubmersionManagerDelegate {
                 let mdate = measurement.date
                 let depth = measurement.depth
                 let currentDepth = "\(mdate): \(depth?.value ?? Double.nan) \(depth?.unit ?? .meters)"
-                debugPrint("*** Depth: \(currentDepth) ***")
+                debugPrint("[Submerged] *** Depth: \(currentDepth) ***")
                 let pressure = measurement.pressure
                 let currentPressure = "\(mdate): \(pressure?.value ?? Double.nan) \(pressure?.unit ?? .hectopascals)"
-                debugPrint("*** Pressure: \(currentPressure) ***")
-                let surfacePressure = measurement.surfacePressure
-                let currentSurfacePressure = "\(mdate): \(surfacePressure.value) \(surfacePressure.unit)"
-                debugPrint("*** Surface Pressure: \(currentSurfacePressure) ***")
-                let calculatedPressure = (surfacePressure.value - (pressure?.value ?? 0.0))/100 // 1 hPa = 0.01 dbar
-                debugPrint("*** Calculated Pressure: \(calculatedPressure) dbar ***")
+                debugPrint("[Submerged] *** Pressure: \(currentPressure) ***")
+//                let surfacePressure = measurement.surfacePressure
+//                let currentSurfacePressure = "\(mdate): \(surfacePressure.value) \(surfacePressure.unit)"
+//                debugPrint("*** [Submerged] Surface Pressure: \(currentSurfacePressure) ***")
+//                let calculatedPressure = (surfacePressure.value - (pressure?.value ?? 0.0))/100 // 1 hPa = 0.01 dbar
+//                debugPrint("*** [Submerged] Calculated Pressure: \(calculatedPressure) dbar ***")
             }
             
             Task {
@@ -281,7 +295,7 @@ extension WaterSubmersionManager: CMWaterSubmersionManagerDelegate {
             let uncertainty = measurement.temperatureUncertainty
             let currentTemperature = "\(mdate): \(temp.value) +/- \(uncertainty.value) \(temp.unit)"
             
-            debugPrint("*** Temperature: \(currentTemperature) ***")
+            debugPrint("[Submerged] *** Temperature: \(currentTemperature) ***")
             
             Task {
                 await set(temperature: measurement)
@@ -292,23 +306,39 @@ extension WaterSubmersionManager: CMWaterSubmersionManagerDelegate {
     }
     
     nonisolated func manager(_ manager: CMWaterSubmersionManager, errorOccurred error: Error) {
-        debugPrint("*** An error occurred: \(error.localizedDescription) ***")
+        debugPrint("[Submersion Manager] *** An error occurred: \(error.localizedDescription) ***")
     }
 }
 
 // notifies when something interesting happns with WKExtendedRuntimeSession
+// MARK:- Extended Runtime Session Delegate Methods
 extension WaterSubmersionManager: WKExtendedRuntimeSessionDelegate {
     func extendedRuntimeSession(_ extendedRuntimeSession: WKExtendedRuntimeSession, didInvalidateWith reason: WKExtendedRuntimeSessionInvalidationReason, error: Error?) {
-        debugPrint("[WKExtendedRuntimeSession] *** Session invalidated with reason: \(reason.rawValue) and error: \(error?.localizedDescription ?? "nil") ***")
-        stopDiveSession()
+        // Track when your session ends.
+        // Also handle errors here.
+        debugPrint("[WKExtendedRuntimeSession] *** Submersion Session invalidated with reason: \(reason.rawValue) and error: \(error?.localizedDescription ?? "nil") ***")
+        
+//        // If need to manually restart WKExtendedRuntime Session
+//        if diveSessionRunning {
+//            self.startNewExtendedRuntimeSession()
+//            debugPrint("New extended runtime session started.")
+//        }
     }
     
     func extendedRuntimeSessionDidStart(_ extendedRuntimeSession: WKExtendedRuntimeSession) {
-        debugPrint("[WKExtendedRuntimeSession] *** Session started. ***")
+        // Track when your session starts.
+        debugPrint("[WKExtendedRuntimeSession] *** Submersion Session started. ***")
     }
     
     func extendedRuntimeSessionWillExpire(_ extendedRuntimeSession: WKExtendedRuntimeSession) {
-        debugPrint("[WKExtendedRuntimeSession] *** Session will expire. ***")
-        stopDiveSession()
+        // Track when the session is about to end.
+        debugPrint("[WKExtendedRuntimeSession] *** Submersion Session will expire. ***")
+        
+        // Finish and clean up any tasks before the session ends.
+        // Start a new session before this one expires
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            self.startNewExtendedRuntimeSession()
+            debugPrint("New extended runtime session started.")
+        }
     }
 }

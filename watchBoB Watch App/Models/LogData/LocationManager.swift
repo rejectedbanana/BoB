@@ -30,6 +30,7 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
     
     func startSamplingGPS(_ sampleInterval: Double) {
         locationManager.requestWhenInUseAuthorization()
+        locationManager.allowsBackgroundLocationUpdates = true
         samplingTimer = Timer.scheduledTimer(withTimeInterval: sampleInterval, repeats: true) { _ in
             self.locationManager.requestLocation()
         }
@@ -38,6 +39,7 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
     func stopSamplingGPS() {
         samplingTimer?.invalidate()
         samplingTimer = nil
+        locationManager.allowsBackgroundLocationUpdates = false
     }
     
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
