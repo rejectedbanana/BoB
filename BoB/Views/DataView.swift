@@ -39,7 +39,7 @@ struct DataView: View {
         // use lazy vstacks to view data
         VStack {
             // dynamic headers
-            Text("\(sensorType) DATA")
+            Text("\(sensorType.capitalized) Data")
                 .frame(maxWidth: .infinity, alignment: .center)
                 .padding()
                 .font(.title)
