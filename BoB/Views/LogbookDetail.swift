@@ -30,6 +30,12 @@ struct LogbookDetail: View {
     
     var body: some View {
         List {
+            Section("Deployment Map") {
+                DataMap(combinedData: combinedData)
+                    .frame(height: 250)
+                    .listRowInsets(EdgeInsets())
+            }
+            
             Section("Deployment Details") {
                 DetailRow(header: "Start Time", content: timeStampFormatter.viewFormat(entry.startDatetime ?? Date(timeIntervalSince1970: 0)))
                 DetailRow(header: "End Time", content: timeStampFormatter.viewFormat(entry.stopDatetime ?? Date(timeIntervalSince1970: 0)))

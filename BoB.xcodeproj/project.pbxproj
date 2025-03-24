@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		210CB8262CAC8D700060DECA /* StructuredData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 210CB8252CAC8D700060DECA /* StructuredData.swift */; };
 		2111BCA92CC0315B00AD6965 /* StartSamplingMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2111BCA82CC0315B00AD6965 /* StartSamplingMessageView.swift */; };
+		2116A8A12D920F3900B1D36C /* DataMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2116A8A02D920F3900B1D36C /* DataMap.swift */; };
 		2132F3B02CDE8DF00041C5A3 /* WaterlockInstructionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2132F3AF2CDE8DF00041C5A3 /* WaterlockInstructionsView.swift */; };
 		21355A2B2CB9A70700323D86 /* DataView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21355A2A2CB9A70700323D86 /* DataView.swift */; };
 		21BBC6792CB05DCA0082B0F3 /* MotionData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97FC9EE52C1CFA1D0076F30E /* MotionData.swift */; };
@@ -79,6 +80,7 @@
 /* Begin PBXFileReference section */
 		210CB8252CAC8D700060DECA /* StructuredData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StructuredData.swift; sourceTree = "<group>"; };
 		2111BCA82CC0315B00AD6965 /* StartSamplingMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartSamplingMessageView.swift; sourceTree = "<group>"; };
+		2116A8A02D920F3900B1D36C /* DataMap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataMap.swift; sourceTree = "<group>"; };
 		2132F3AF2CDE8DF00041C5A3 /* WaterlockInstructionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaterlockInstructionsView.swift; sourceTree = "<group>"; };
 		21355A2A2CB9A70700323D86 /* DataView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataView.swift; sourceTree = "<group>"; };
 		21D1B4E62CC0563900489182 /* StopSamplingMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StopSamplingMessageView.swift; sourceTree = "<group>"; };
@@ -161,6 +163,7 @@
 			isa = PBXGroup;
 			children = (
 				97E505822B472F9700334D6F /* LogbookDetail.swift */,
+				2116A8A02D920F3900B1D36C /* DataMap.swift */,
 				9794676E2BEE8A0D00DF6E0B /* ListRow.swift */,
 				21355A2A2CB9A70700323D86 /* DataView.swift */,
 			);
@@ -458,6 +461,7 @@
 				21355A2B2CB9A70700323D86 /* DataView.swift in Sources */,
 				210CB8262CAC8D700060DECA /* StructuredData.swift in Sources */,
 				97DF8E992AE195FA00A33A80 /* BoBApp.swift in Sources */,
+				2116A8A12D920F3900B1D36C /* DataMap.swift in Sources */,
 				9794676F2BEE8A0D00DF6E0B /* ListRow.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
