@@ -40,7 +40,7 @@ struct LogbookDetail: View {
                 DetailRow(header: "Start Time", content: timeStampFormatter.viewFormat(entry.startDatetime ?? Date(timeIntervalSince1970: 0)))
                 DetailRow(header: "End Time", content: timeStampFormatter.viewFormat(entry.stopDatetime ?? Date(timeIntervalSince1970: 0)))
                 DetailRow(header: "Samples", content: "\(entry.getMotionDataCount())")
-                DetailRow(header: "Sampling Frequency", content: "10 Hz")
+                DetailRow(header: "Sampling Frequency", content: "4 Hz")
                 DetailRow(header: "Min Temp", content: entry.getMinimumTemperature().isNaN ? "no submersion data" : String(format: "%.1f °C", entry.getMinimumTemperature()) )
                 DetailRow(header: "Max Depth", content: entry.getMaximumDepth().isNaN ? "no submersion data" : String(format: "%.1f m", entry.getMaximumDepth()))
                 DetailRow(header: "Source", content: entry.deviceName ?? "Unknown")

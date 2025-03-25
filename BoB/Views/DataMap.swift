@@ -40,13 +40,23 @@ struct DataMap: View {
             
             // Start pin
             if let start = coordinates.first {
-                Marker("Start", coordinate: start.locationCoordinate)
+                let markerLabel = """
+                \(formattedCoordinate(start.locationCoordinate.latitude)) °N
+                \(formattedCoordinate(start.locationCoordinate.longitude)) °E
+                """
+                
+                Marker(markerLabel, coordinate: start.locationCoordinate)
                     .tint(.green)
             }
             
             // End pin
             if let end = coordinates.last {
-                Marker("End", coordinate: end.locationCoordinate)
+                let markerLabel = """
+                \(formattedCoordinate(end.locationCoordinate.latitude)) °N
+                \(formattedCoordinate(end.locationCoordinate.longitude)) °E
+                """
+                
+                Marker(markerLabel, coordinate: end.locationCoordinate)
                     .tint(.red)
             }
         }
@@ -58,6 +68,10 @@ struct DataMap: View {
         .mapStyle(.standard)
         .ignoresSafeArea()
         
+    }
+    
+    private func formattedCoordinate(_ coordinate: Double) -> String {
+        String(format: "%.4f", coordinate)
     }
     
     // FUNCTIONS TO CONVERT LOCATION ARRAYS TO A COORDINATE STRUCTURES

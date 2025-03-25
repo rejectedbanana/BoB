@@ -23,7 +23,7 @@ struct LogbookDetail: View {
                 DetailRow(header: "Start Coordinates", content: String(format: "%0.3f", record.startLatitude)+" N,"+String(format: "%0.3f", record.startLongitude)+" E")
                 DetailRow(header: "End Coordinates", content: String(format: "%0.3f", record.stopLatitude)+" N,"+String(format: "%0.3f", record.stopLongitude)+" E")
                 DetailRow(header: "Samples", content: "\(record.getMotionDataCount())")
-                DetailRow(header: "Sampling Frequency", content: "10 Hz")
+                DetailRow(header: "Sampling Frequency", content: "4 Hz")
             }
         }
     }
