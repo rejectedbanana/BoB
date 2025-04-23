@@ -10,6 +10,8 @@
 		210CB8262CAC8D700060DECA /* StructuredData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 210CB8252CAC8D700060DECA /* StructuredData.swift */; };
 		2111BCA92CC0315B00AD6965 /* StartSamplingMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2111BCA82CC0315B00AD6965 /* StartSamplingMessageView.swift */; };
 		2116A8A12D920F3900B1D36C /* DataMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2116A8A02D920F3900B1D36C /* DataMap.swift */; };
+		2116A8A32D93262400B1D36C /* SubmersionChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2116A8A22D93262400B1D36C /* SubmersionChart.swift */; };
+		2121D2A52D9C917A00512A36 /* TimeSeriesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2121D2A42D9C917A00512A36 /* TimeSeriesView.swift */; };
 		2132F3B02CDE8DF00041C5A3 /* WaterlockInstructionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2132F3AF2CDE8DF00041C5A3 /* WaterlockInstructionsView.swift */; };
 		21355A2B2CB9A70700323D86 /* DataView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21355A2A2CB9A70700323D86 /* DataView.swift */; };
 		21BBC6792CB05DCA0082B0F3 /* MotionData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97FC9EE52C1CFA1D0076F30E /* MotionData.swift */; };
@@ -81,6 +83,8 @@
 		210CB8252CAC8D700060DECA /* StructuredData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StructuredData.swift; sourceTree = "<group>"; };
 		2111BCA82CC0315B00AD6965 /* StartSamplingMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartSamplingMessageView.swift; sourceTree = "<group>"; };
 		2116A8A02D920F3900B1D36C /* DataMap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataMap.swift; sourceTree = "<group>"; };
+		2116A8A22D93262400B1D36C /* SubmersionChart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubmersionChart.swift; sourceTree = "<group>"; };
+		2121D2A42D9C917A00512A36 /* TimeSeriesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeSeriesView.swift; sourceTree = "<group>"; };
 		2132F3AF2CDE8DF00041C5A3 /* WaterlockInstructionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaterlockInstructionsView.swift; sourceTree = "<group>"; };
 		21355A2A2CB9A70700323D86 /* DataView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataView.swift; sourceTree = "<group>"; };
 		21D1B4E62CC0563900489182 /* StopSamplingMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StopSamplingMessageView.swift; sourceTree = "<group>"; };
@@ -163,9 +167,11 @@
 			isa = PBXGroup;
 			children = (
 				97E505822B472F9700334D6F /* LogbookDetail.swift */,
-				2116A8A02D920F3900B1D36C /* DataMap.swift */,
 				9794676E2BEE8A0D00DF6E0B /* ListRow.swift */,
 				21355A2A2CB9A70700323D86 /* DataView.swift */,
+				2116A8A02D920F3900B1D36C /* DataMap.swift */,
+				2116A8A22D93262400B1D36C /* SubmersionChart.swift */,
+				2121D2A42D9C917A00512A36 /* TimeSeriesView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -457,6 +463,8 @@
 				97E505832B472F9700334D6F /* LogbookDetail.swift in Sources */,
 				21BBC6792CB05DCA0082B0F3 /* MotionData.swift in Sources */,
 				977E74CC2BE9895D009A36AD /* Bob.xcdatamodeld in Sources */,
+				2116A8A32D93262400B1D36C /* SubmersionChart.swift in Sources */,
+				2121D2A52D9C917A00512A36 /* TimeSeriesView.swift in Sources */,
 				97DF8E9B2AE195FA00A33A80 /* ContentView.swift in Sources */,
 				21355A2B2CB9A70700323D86 /* DataView.swift in Sources */,
 				210CB8262CAC8D700060DECA /* StructuredData.swift in Sources */,

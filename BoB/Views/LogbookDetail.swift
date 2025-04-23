@@ -15,6 +15,8 @@ struct LogbookDetail: View {
     @State private var showLocationJSON = false
     @State private var showSubmersionJSON = false
     
+    @State private var showSubmersionPlot = false
+    
     // Strings to store exported name and data
     @State private var JSONName = ""
     private var combinedData: StructuredData? {
@@ -46,7 +48,23 @@ struct LogbookDetail: View {
                 DetailRow(header: "Source", content: entry.deviceName ?? "Unknown")
             }
             
-            Section("Data Viewer") {
+            Section("Data Plots") {
+                TimeSeriesView(
+                    x: convertISO8601DatesToDateArray(dateStrings: combinedData?.submersion.values.timestamp ?? [timeStampFormatter.ISO8601Format(Date.now)]),
+                    y: combinedData?.submersion.values.temperature ?? [0.1],
+                    yVariable: "Temperature",
+                    yUnit: "° C"
+                )
+                    
+                TimeSeriesView(
+                    x: convertISO8601DatesToDateArray(dateStrings: combinedData?.submersion.values.timestamp ?? []),
+                    y: combinedData?.submersion.values.depth ?? [],
+                    yVariable: "Depth",
+                    yUnit: "meters"
+                )
+            }
+            
+            Section("Raw Data Viewer") {
                 // Buttons for viewing JSON data
                 Button("View Location Data") {
                     showLocationJSON.toggle()
@@ -78,6 +96,7 @@ struct LogbookDetail: View {
                 DetailRow(header: "Software Version", content: entry.deviceSystemVersion ?? "Unknown")
             }
         }
+        .listStyle(.sidebar)
         .navigationBarTitleDisplayMode(.inline)
         .navigationTitle("Details")
         .toolbar {
@@ -91,7 +110,7 @@ struct LogbookDetail: View {
             self.JSONName = timeStampFormatter.exportNameFormat(entry.startDatetime ?? Date.now )+"_AWUData.json"
         }
     }
-
+    
     // Combine the data from all the sensors into one encodable structure
     private func combineJSONsIntoStructuredData() -> StructuredData? {
         // Grab the JSON strings from CoreData
@@ -162,6 +181,18 @@ struct LogbookDetail: View {
         }
         
         return fileURL
+    }
+    
+    // change array of string dates to a date array
+    private func convertISO8601DatesToDateArray(dateStrings: [String]) -> [Date] {
+        var dateArray: [Date] = []
+        
+        for dateString in dateStrings {
+            if let date = timeStampFormatter.ISO8601StringtoDate(dateString) {
+                dateArray.append(date)
+            }
+        }
+        return dateArray
     }
 }
 

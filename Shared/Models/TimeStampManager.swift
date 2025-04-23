@@ -30,12 +30,18 @@ class TimeStampManager: ObservableObject {
         return formatter.string(from: date)
     }
     
-    // Elapsed Time for 
+    // Elapsed Time for logging view
     func elapsedTime(elapsedTime: TimeInterval) -> String {
         let formatter = DateComponentsFormatter()
         formatter.unitsStyle = .positional
         formatter.allowedUnits = [.hour, .minute, .second]
         return formatter.string(from: elapsedTime) ?? "00:00:00"
+    }
+    
+    // Change the ISO string back to a date
+    func ISO8601StringtoDate(_ isoString: String) -> Date? {
+        let formatter = ISO8601DateFormatter()
+        return formatter.date(from: isoString)
     }
     
 }
