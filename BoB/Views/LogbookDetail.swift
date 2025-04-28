@@ -7,6 +7,10 @@
 
 import SwiftUI
 
+struct locationArray: Codable {
+    
+}
+
 struct LogbookDetail: View {
     let entry: SampleSet
     
@@ -14,14 +18,18 @@ struct LogbookDetail: View {
     @State private var showMotionJSON = false
     @State private var showLocationJSON = false
     @State private var showSubmersionJSON = false
-    
     @State private var showSubmersionPlot = false
     
     // Strings to store exported name and data
-    @State private var JSONName = ""
+    private var locationData: [LocationData] {
+        return entryToLocationData()
+    }
+    
+    
     private var combinedData: StructuredData? {
         return combineJSONsIntoStructuredData()
     }
+    @State private var JSONName = ""
     
     // encoders and decosers for JSON output
     let encoder = JSONEncoder()
@@ -33,7 +41,7 @@ struct LogbookDetail: View {
     var body: some View {
         List {
             Section("Deployment Map") {
-                DataMap(combinedData: combinedData)
+                DataMap(locationData: locationData)
                     .frame(height: 250)
                     .listRowInsets(EdgeInsets())
             }
@@ -49,19 +57,19 @@ struct LogbookDetail: View {
             }
             
             Section("Data Plots") {
-                TimeSeriesView(
-                    x: convertISO8601DatesToDateArray(dateStrings: combinedData?.submersion.values.timestamp ?? [timeStampFormatter.ISO8601Format(Date.now)]),
-                    y: combinedData?.submersion.values.temperature ?? [0.1],
-                    yVariable: "Temperature",
-                    yUnit: "° C"
-                )
-                    
-                TimeSeriesView(
-                    x: convertISO8601DatesToDateArray(dateStrings: combinedData?.submersion.values.timestamp ?? []),
-                    y: combinedData?.submersion.values.depth ?? [],
-                    yVariable: "Depth",
-                    yUnit: "meters"
-                )
+//                TimeSeriesView(
+//                    x: convertISO8601DatesToDateArray(dateStrings: combinedData?.submersion.values.timestamp ?? [timeStampFormatter.ISO8601Format(Date.now)]),
+//                    y: combinedData?.submersion.values.temperature ?? [0.1],
+//                    yVariable: "Temperature",
+//                    yUnit: "° C"
+//                )
+//                    
+//                TimeSeriesView(
+//                    x: convertISO8601DatesToDateArray(dateStrings: combinedData?.submersion.values.timestamp ?? []),
+//                    y: combinedData?.submersion.values.depth ?? [],
+//                    yVariable: "Depth",
+//                    yUnit: "meters"
+//                )
             }
             
             Section("Raw Data Viewer") {
@@ -111,6 +119,25 @@ struct LogbookDetail: View {
         }
     }
     
+    // Convert the logged data in SampleSet back into [LocationData] array
+    private func entryToLocationData() -> [LocationData] {
+        guard let locationJSONString = entry.locationJSON else {
+            print("No locationJSON found")
+            return [LocationData(timestamp: "", latitude: Double.nan, longitude: Double.nan)]
+        }
+        
+        let locationData = locationJSONString.data(using: .utf8) ?? Data()
+        
+        do {
+            let locationDecoded = try decoder.decode([LocationData].self, from: locationData)
+            
+            return locationDecoded
+        } catch {
+            print( "Location JSON not decoded.")
+            return [LocationData(timestamp: "", latitude: Double.nan, longitude: Double.nan)]
+        }
+    }
+    
     // Combine the data from all the sensors into one encodable structure
     private func combineJSONsIntoStructuredData() -> StructuredData? {
         // Grab the JSON strings from CoreData
@@ -121,9 +148,7 @@ struct LogbookDetail: View {
         let submersionJSON = entry.waterSubmersionJSON ?? "[]"
         
         // Turn JSON strings into data
-        let locationData = Data(locationJSON.utf8)
-        let locationDecoded = try? decoder.decode( LocationData.self, from: locationData)
-        
+        let locationData = locationJSON.data(using: .utf8) ?? Data()
         
         let motionData = Data(motionJSON.utf8)
         let motionDecoded = try? decoder.decode( MotionData.self, from: motionData)
@@ -133,8 +158,17 @@ struct LogbookDetail: View {
         
         do {
             // extract location data
-            let locationArrays = LocationData(timestamp: locationDecoded?.timestamp ?? [], latitude: locationDecoded?.latitude ?? [], longitude: locationDecoded?.longitude ?? [])
-            let formattedLocationData = FormattedLocationData(values: locationArrays)
+            // decode the location data and transform it
+            let locationDecoded = try decoder.decode([LocationData].self, from: locationData)
+            // turn values into arrays so the saved JSON is smaller
+            var locationArray: LocationArrays = LocationArrays(timestamp: [], latitude: [], longitude: [])
+            for location in locationDecoded {
+                locationArray.timestamp.append(location.timestamp)
+                locationArray.latitude.append(location.latitude)
+                locationArray.longitude.append(location.longitude)
+            }
+            // Prep for saving as a JSON
+            let formattedLocationData = FormattedLocationData(values: locationArray)
             
             // extract motion data
             let motionArrays = MotionData(timestamp: motionDecoded?.timestamp ?? [], accelerationX: motionDecoded?.accelerationX ?? [], accelerationY: motionDecoded?.accelerationY ?? [], accelerationZ: motionDecoded?.accelerationZ ?? [], angularVelocityX: motionDecoded?.angularVelocityX ?? [], angularVelocityY: motionDecoded?.angularVelocityY ?? [], angularVelocityZ: motionDecoded?.angularVelocityZ ?? [], magneticFieldX: motionDecoded?.magneticFieldX ?? [], magneticFieldY: motionDecoded?.magneticFieldY ?? [], magneticFieldZ: motionDecoded?.magneticFieldZ ?? [])

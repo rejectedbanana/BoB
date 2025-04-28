@@ -8,8 +8,8 @@
 import SwiftUI
 import MapKit
 
-struct Coordinate: Identifiable {
-    let id = UUID()
+struct Coordinate {
+    let timestamp: String
     let latitude: Double
     let longitude: Double
     
@@ -19,10 +19,10 @@ struct Coordinate: Identifiable {
 }
 
 struct DataMap: View {
-    let combinedData: StructuredData?
+    let locationData: [LocationData]
     
     private var coordinates: [Coordinate] {
-        return convertLocationToCoordinates()
+        return convertLocationDataToCoordinates()
     }
     
     @State private var region = MKCoordinateRegion(
@@ -74,19 +74,11 @@ struct DataMap: View {
         String(format: "%.4f", coordinate)
     }
     
-    // FUNCTIONS TO CONVERT LOCATION ARRAYS TO A COORDINATE STRUCTURES
-    private func convertLocationToCoordinates() -> [Coordinate] {
-        let timestamp = combinedData?.location.values.timestamp.map(\.self) ?? []
-        let latitude = combinedData?.location.values.latitude.map(\.self) ?? []
-        let longitude = combinedData?.location.values.longitude.map(\.self) ?? []
-        
+    private func convertLocationDataToCoordinates() -> [Coordinate] {
         var coordinateArray: [Coordinate] = []
-        
-        for index in timestamp.indices {
-            let newLocation = Coordinate(
-                latitude: latitude[index] ?? Double.nan,
-                longitude: longitude[index] ?? Double.nan
-            )
+
+        for location in locationData {
+            let newLocation = Coordinate(timestamp: location.timestamp, latitude: location.latitude ?? Double.nan, longitude: location.longitude ?? Double.nan)
             coordinateArray.append(newLocation)
         }
         

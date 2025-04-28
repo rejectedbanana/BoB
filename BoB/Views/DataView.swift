@@ -106,6 +106,7 @@ struct DataView: View {
         let timestamp = combinedData?.location.values.timestamp.map(\.self) ?? []
         let latitude = combinedData?.location.values.latitude.map(\.self) ?? []
         let longitude = combinedData?.location.values.longitude.map(\.self) ?? []
+//        let locationData = combinedData?.location.values ?? []
         
         var locationArray: [Locations] = []
         
@@ -118,6 +119,10 @@ struct DataView: View {
             
             locationArray.append(newLocation)
         }
+//        for location in locationData {
+//            let newLocation = Locations(timestamp: location.timestamp, latitude: location.latitude ?? Double.nan, longitude: location.longitude ?? Double.nan)
+//            locationArray.append(newLocation)
+//        }
         
         return locationArray
     }
@@ -176,117 +181,117 @@ struct DataView: View {
     }
 }
 
-#Preview {
-    let locationData = LocationData(
-        timestamp:  [
-            "2024-10-08T20:12:25Z",
-            "2024-10-08T20:12:25Z",
-            "2024-10-08T20:12:36Z",
-            "2024-10-08T20:12:36Z"
-          ],
-        latitude: [
-            47.6815,
-            47.6815,
-            47.6815,
-            47.6815
-          ],
-        longitude: [
-            -122.2835,
-            -122.2835,
-            -122.2835,
-            -122.2835
-          ])
-    let formattedLocationData = FormattedLocationData(values: locationData)
-    
-    let motionData = MotionData(
-        timestamp: [
-        "2024-10-08T20:12:27.058Z",
-        "2024-10-08T20:12:27.159Z",
-        "2024-10-08T20:12:27.258Z",
-        "2024-10-08T20:12:27.358Z"
-        ],
-        accelerationX: [
-        0,
-        0.18251,
-        0.18306,
-        0.183197],
-        accelerationY: [
-            0,
-            0.068802,
-            0.0681,
-            0.067474
-        ],
-        accelerationZ: [
-            0,
-            -0.981995,
-            -0.983765,
-            -0.983887
-            ],
-        angularVelocityX: [
-            0,
-            -0.003927,
-            -0.004953,
-            -0.005319
-            ],
-        angularVelocityY: [
-            0,
-            0.002478,
-            0.00736,
-            0.004074
-        ],
-        angularVelocityZ: [
-            0,
-            -0.002045,
-            3.1e-05,
-            0.001287
-            ],
-        magneticFieldX: [
-            0,
-            0.248,
-            0.246,
-            0.243
-            ],
-        magneticFieldY: [
-            0,
-            0.0248,
-            0.0246,
-            0.0243
-            ],
-        magneticFieldZ: [
-            0,
-            2.477,
-            2.464,
-            2.429
-            ]
-    )
-    let formattedMotionData = FormattedMotionData(values: motionData)
-    
-    let submersionData = WaterSubmersionData(
-        timestamp:  [
-        "2024-10-08T20:12:29Z",
-        "2024-10-08T20:12:30Z",
-        "2024-10-08T20:12:30Z",
-        "2024-10-08T20:12:30Z"
-        ],
-        depth: [
-        0.124,
-        0.124,
-        0.131,
-        0.131
-        ],
-        temperature: [
-            20.41,
-            20.41,
-            20.41,
-            20.41]
-    )
-    let formattedSubmersionData = FormattedSubmersionData(values: submersionData)
-    
-    
-    let combinedData = StructuredData(location: formattedLocationData, motion: formattedMotionData, submersion: formattedSubmersionData)
-    
-    DataView(combinedData: combinedData, sensorType: "submersion")
-}
+//#Preview {
+//    let locationData = LocationData(
+//        timestamp:  [
+//            "2024-10-08T20:12:25Z",
+//            "2024-10-08T20:12:25Z",
+//            "2024-10-08T20:12:36Z",
+//            "2024-10-08T20:12:36Z"
+//          ],
+//        latitude: [
+//            47.6815,
+//            47.6815,
+//            47.6815,
+//            47.6815
+//          ],
+//        longitude: [
+//            -122.2835,
+//            -122.2835,
+//            -122.2835,
+//            -122.2835
+//          ])
+//    let formattedLocationData = FormattedLocationData(values: locationData)
+//    
+//    let motionData = MotionData(
+//        timestamp: [
+//        "2024-10-08T20:12:27.058Z",
+//        "2024-10-08T20:12:27.159Z",
+//        "2024-10-08T20:12:27.258Z",
+//        "2024-10-08T20:12:27.358Z"
+//        ],
+//        accelerationX: [
+//        0,
+//        0.18251,
+//        0.18306,
+//        0.183197],
+//        accelerationY: [
+//            0,
+//            0.068802,
+//            0.0681,
+//            0.067474
+//        ],
+//        accelerationZ: [
+//            0,
+//            -0.981995,
+//            -0.983765,
+//            -0.983887
+//            ],
+//        angularVelocityX: [
+//            0,
+//            -0.003927,
+//            -0.004953,
+//            -0.005319
+//            ],
+//        angularVelocityY: [
+//            0,
+//            0.002478,
+//            0.00736,
+//            0.004074
+//        ],
+//        angularVelocityZ: [
+//            0,
+//            -0.002045,
+//            3.1e-05,
+//            0.001287
+//            ],
+//        magneticFieldX: [
+//            0,
+//            0.248,
+//            0.246,
+//            0.243
+//            ],
+//        magneticFieldY: [
+//            0,
+//            0.0248,
+//            0.0246,
+//            0.0243
+//            ],
+//        magneticFieldZ: [
+//            0,
+//            2.477,
+//            2.464,
+//            2.429
+//            ]
+//    )
+//    let formattedMotionData = FormattedMotionData(values: motionData)
+//    
+//    let submersionData = WaterSubmersionData(
+//        timestamp:  [
+//        "2024-10-08T20:12:29Z",
+//        "2024-10-08T20:12:30Z",
+//        "2024-10-08T20:12:30Z",
+//        "2024-10-08T20:12:30Z"
+//        ],
+//        depth: [
+//        0.124,
+//        0.124,
+//        0.131,
+//        0.131
+//        ],
+//        temperature: [
+//            20.41,
+//            20.41,
+//            20.41,
+//            20.41]
+//    )
+//    let formattedSubmersionData = FormattedSubmersionData(values: submersionData)
+//    
+//    
+//    let combinedData = StructuredData(location: formattedLocationData, motion: formattedMotionData, submersion: formattedSubmersionData)
+//    
+//    DataView(combinedData: combinedData, sensorType: "submersion")
+//}
 
 
 private struct Locations: Identifiable {

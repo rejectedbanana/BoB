@@ -18,9 +18,9 @@ struct FormattedLocationData: Codable {
     let description: String
     let labels: [String]
     let units: [String]
-    let values: LocationData
+    let values: LocationArrays
     
-    init( values: LocationData ) {
+    init( values: LocationArrays ) {
         self.sensor_id = "location"
         self.description = "Geographical location from L1 and L5 GPS, GLONASS, Galileo, QZSS, or BeiDou"
         self.labels = ["timestamp,latitude,longitude"]
