@@ -50,9 +50,9 @@ struct FormattedSubmersionData: Codable {
     let description: String
     let labels: [String]
     let units: [String]
-    let values: WaterSubmersionData
+    let values: WaterSubmersionArrays
     
-    init( values: WaterSubmersionData ) {
+    init( values: WaterSubmersionArrays ) {
         self.description = "Submersion data from water depth and water temperature sensors"
         self.sensor_id = "submersion"
         self.labels = ["timestamp,depth,temperature"]

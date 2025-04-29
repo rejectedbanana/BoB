@@ -82,12 +82,12 @@ struct LogDataView: View {
                     .foregroundColor(.silver)
                 
                 // Dynamic water data
-                if !waterSubmersionManager.waterSubmersionData.timestamp.isEmpty {
+                if !waterSubmersionManager.waterSubmersionData.isEmpty {
                     HStack {
-                        let depthString = String(format: "%.3f", waterSubmersionManager.waterSubmersionData.depth.last ?? 0.0)
+                        let depthString = String(format: "%.3f", waterSubmersionManager.waterSubmersionData.last?.depth ?? 0.0)
                         Text("\(depthString) m")
                         Spacer()
-                        let temperatureString = String(format: "%.2f", waterSubmersionManager.waterSubmersionData.temperature.last ?? 0.0)
+                        let temperatureString = String(format: "%.2f", waterSubmersionManager.waterSubmersionData.last?.temperature ?? 0.0)
                         Text("\(temperatureString) \(degree())C")
                     }
                 } else {

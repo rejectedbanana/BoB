@@ -150,8 +150,9 @@ struct LogbookDetail: View {
 //        let motionDecoded = try? decoder.decode( MotionData.self, from: motionData)
         let motionData = motionJSON.data(using: .utf8) ?? Data()
         
-        let submersionData = Data(submersionJSON.utf8)
-        let submersionDecoded = try? decoder.decode( WaterSubmersionData.self, from: submersionData)
+//        let submersionData = Data(submersionJSON.utf8)
+//        let submersionDecoded = try? decoder.decode( WaterSubmersionData.self, from: submersionData)
+        let submersionData = submersionJSON.data(using: .utf8) ?? Data()
         
         do {
             // extract location data
@@ -189,8 +190,17 @@ struct LogbookDetail: View {
             let formattedMotionData = FormattedMotionData(values: motionArray)
             
             // extract the submersion data
-            let submersionArrays = WaterSubmersionData(timestamp: submersionDecoded?.timestamp ?? [], depth: submersionDecoded?.depth ?? [], temperature: submersionDecoded?.temperature ?? [])
-            let formattedSubmersionData = FormattedSubmersionData(values: submersionArrays)
+//            let submersionArrays = WaterSubmersionData(timestamp: submersionDecoded?.timestamp ?? [], depth: submersionDecoded?.depth ?? [], temperature: submersionDecoded?.temperature ?? [])
+//            let formattedSubmersionData = FormattedSubmersionData(values: submersionArrays)
+            // decode the submersion data and transform it
+            let submersionDecoded = try decoder.decode([WaterSubmersionData].self, from: submersionData)
+            var submersionArray: WaterSubmersionArrays = WaterSubmersionArrays(timestamp: [], depth: [], temperature: [])
+            for submersion in submersionDecoded {
+                submersionArray.timestamp.append(submersion.timestamp)
+                submersionArray.depth.append(submersion.depth ?? Double.nan)
+                submersionArray.temperature.append(submersion.temperature ?? Double.nan)
+            }
+            let formattedSubmersionData = FormattedSubmersionData(values: submersionArray)
             
             // Combine the data
             let structuredData = StructuredData(location: formattedLocationData, motion: formattedMotionData, submersion: formattedSubmersionData )

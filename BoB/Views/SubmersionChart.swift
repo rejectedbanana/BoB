@@ -15,7 +15,7 @@ import Charts
 //}
 
 struct SubmersionChart: View {
-    let data: WaterSubmersionData
+    let data: WaterSubmersionArrays
     let timeStampManager = TimeStampManager()
     
     private var tempPoints: [Point] {
@@ -78,7 +78,7 @@ struct SubmersionChart: View {
 }
 
 #Preview {
-    let submersionData = WaterSubmersionData(
+    let submersionData = WaterSubmersionArrays(
         timestamp:  ["2024-10-08T20:12:00Z","2024-10-08T20:13:00Z","2024-10-08T20:14:00Z","2024-10-08T20:15:00Z"],
         depth: [0.124,0.124,0.131,0.131],
         temperature: [18,19,20,19.5]
