@@ -15,7 +15,6 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
     @Published var location: CLLocationCoordinate2D?
     
     // make data to fill in
-//    @Published var sampledLocations: LocationData = LocationData(timestamp: [], latitude: [], longitude: [])
     @Published var sampledLocations: [LocationData] = []
     
     // set up the timer
@@ -59,23 +58,12 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if let location = locations.first?.coordinate {
-//            // grab the data
-//            let timestamp: String = timeStampFormatter.ISO8601Format(Date())
-//            let latitude: Double = location.latitude
-//            let longitude: Double = location.longitude
-//            
-//            // append the data arrays
-//            sampledLocations.timestamp.append(timestamp)
-//            sampledLocations.latitude.append(latitude)
-//            sampledLocations.longitude.append(longitude)
-            
             // grab the data
             let sampledLocation = LocationData(
                 timestamp: timeStampFormatter.ISO8601Format(Date()),
                 latitude: location.latitude,
                 longitude: location.longitude
             )
-            
             // append the array
             sampledLocations.append(sampledLocation)
         }
@@ -95,9 +83,6 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
     }
     
     func clear() {
-//        sampledLocations.timestamp.removeAll()
-//        sampledLocations.latitude.removeAll()
-//        sampledLocations.longitude.removeAll()
         sampledLocations.removeAll()
     }
 }

@@ -30,7 +30,7 @@ struct LocationData: Codable {
 }
 
 
-// Location structure for use in a compact JSON
+// Location structure for export to a compact JSON
 struct LocationArrays: Codable {
     var timestamp: [String?]
     var latitude: [Double?]

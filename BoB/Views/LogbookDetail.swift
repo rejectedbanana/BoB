@@ -145,13 +145,7 @@ struct LogbookDetail: View {
         
         // Turn JSON strings into data
         let locationData = locationJSON.data(using: .utf8) ?? Data()
-        
-//        let motionData = Data(motionJSON.utf8)
-//        let motionDecoded = try? decoder.decode( MotionData.self, from: motionData)
         let motionData = motionJSON.data(using: .utf8) ?? Data()
-        
-//        let submersionData = Data(submersionJSON.utf8)
-//        let submersionDecoded = try? decoder.decode( WaterSubmersionData.self, from: submersionData)
         let submersionData = submersionJSON.data(using: .utf8) ?? Data()
         
         do {
@@ -169,8 +163,6 @@ struct LogbookDetail: View {
             let formattedLocationData = FormattedLocationData(values: locationArray)
             
             // extract motion data
-//            let motionArrays = MotionData(timestamp: motionDecoded?.timestamp ?? [], accelerationX: motionDecoded?.accelerationX ?? [], accelerationY: motionDecoded?.accelerationY ?? [], accelerationZ: motionDecoded?.accelerationZ ?? [], angularVelocityX: motionDecoded?.angularVelocityX ?? [], angularVelocityY: motionDecoded?.angularVelocityY ?? [], angularVelocityZ: motionDecoded?.angularVelocityZ ?? [], magneticFieldX: motionDecoded?.magneticFieldX ?? [], magneticFieldY: motionDecoded?.magneticFieldY ?? [], magneticFieldZ: motionDecoded?.magneticFieldZ ?? [])
-//            let formattedMotionData = FormattedMotionData(values: motionArrays)
             // decode the motion data and transform it
             let motionDecoded = try decoder.decode([MotionData].self, from: motionData)
             var motionArray: MotionArrays = MotionArrays(timestamp: [], accelerationX: [], accelerationY: [], accelerationZ: [], angularVelocityX: [], angularVelocityY: [], angularVelocityZ: [], magneticFieldX: [], magneticFieldY: [], magneticFieldZ: [])
@@ -190,8 +182,6 @@ struct LogbookDetail: View {
             let formattedMotionData = FormattedMotionData(values: motionArray)
             
             // extract the submersion data
-//            let submersionArrays = WaterSubmersionData(timestamp: submersionDecoded?.timestamp ?? [], depth: submersionDecoded?.depth ?? [], temperature: submersionDecoded?.temperature ?? [])
-//            let formattedSubmersionData = FormattedSubmersionData(values: submersionArrays)
             // decode the submersion data and transform it
             let submersionDecoded = try decoder.decode([WaterSubmersionData].self, from: submersionData)
             var submersionArray: WaterSubmersionArrays = WaterSubmersionArrays(timestamp: [], depth: [], temperature: [])

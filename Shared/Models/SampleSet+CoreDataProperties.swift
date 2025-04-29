@@ -90,8 +90,6 @@ extension SampleSet {
         guard let json = waterSubmersionJSON, let data = json.data(using: .utf8) else { return Double.nan }
         do {
             let temperatureData = try JSONDecoder().decode([WaterSubmersionData].self, from: data)
-//            let temperatures = temperatureData.temperature
-//            return temperatures.min() ?? Double.nan
             let minTemp = temperatureData.map({ $0.temperature ?? Double.nan }).min()
             return minTemp ?? Double.nan
         } catch {
@@ -104,8 +102,6 @@ extension SampleSet {
         guard let json = waterSubmersionJSON, let data = json.data(using: .utf8) else { return Double.nan }
         do {
             let depthData = try JSONDecoder().decode([WaterSubmersionData].self, from: data)
-//            let depths = depthData.depth
-//            return depths.max() ?? Double.nan
             let maxDepth = depthData.map( { $0.depth ?? Double.nan } ).max()
             return maxDepth ?? Double.nan
         } catch {

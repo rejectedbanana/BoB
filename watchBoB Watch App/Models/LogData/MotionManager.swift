@@ -11,8 +11,7 @@ import CoreMotion
 class MotionManager: NSObject, ObservableObject {
     // set up Motion Manager
     var motionManager: CMMotionManager? = CMMotionManager()
-    // make data to fill in
-//    var motionData: MotionData = MotionDa/*ta(timestamp: [], accelerationX: [], accelerationY: [], accelerationZ: [], angularVelocityX: [], angularVelocityY: [], angularVel*/ocityZ: [], magneticFieldX: [], magneticFieldY: [], magneticFieldZ: [])
+    // make empty structure to hold data
     var motionData: [MotionData] = []
 
     @Published var accX = 0.0
@@ -49,18 +48,6 @@ class MotionManager: NSObject, ObservableObject {
         // grab the timestamps
         timeStamp = Date()
         elapsedTime = String(format: "%.1f", Date().timeIntervalSince(startTime))
-        
-//        // append the arrays
-//        motionData.timestamp.append(timeStampFormatter.ISO8601Format(timeStamp))
-//        motionData.accelerationX.append(accX)
-//        motionData.accelerationY.append(accY)
-//        motionData.accelerationZ.append(accZ)
-//        motionData.angularVelocityX.append(gyrX)
-//        motionData.angularVelocityY.append(gyrY)
-//        motionData.angularVelocityZ.append(gyrZ)
-//        motionData.magneticFieldX.append(magX)
-//        motionData.magneticFieldY.append(magY)
-//        motionData.magneticFieldZ.append(magZ)
         
         // grab the data
         let sampledMotion = MotionData(
@@ -104,18 +91,13 @@ class MotionManager: NSObject, ObservableObject {
     func convertArrayToJSONString() -> String? {
         let encoder = JSONEncoder()
         encoder.dateEncodingStrategy = .iso8601
-        if let jsonData = try? encoder.encode(motionData) {
+        do {
+            let jsonData = try encoder.encode(motionData)
             return String(data: jsonData, encoding: .utf8)
+        } catch {
+            print( "Error encoding motion sensor data to JSON: \(error)")
+            return nil
         }
-        debugPrint("motion data not encoded")
-        return nil
-//        do {
-//            let jsonData = try encoder.encode(motionData)
-//            return String(data: jsonData, encoding: .utf8)
-//        } catch {
-//            print("Error encoding sensor data to JSON: \(error)")
-//            return nil
-//        }
     }
 
     func clear() {
@@ -129,16 +111,6 @@ class MotionManager: NSObject, ObservableObject {
         magY = 0.0
         magZ = 0.0
         elapsedTime = "00:00"
-//        motionData.timestamp.removeAll()
-//        motionData.accelerationX.removeAll()
-//        motionData.accelerationY.removeAll()
-//        motionData.accelerationZ.removeAll()
-//        motionData.angularVelocityX.removeAll()
-//        motionData.angularVelocityY.removeAll()
-//        motionData.angularVelocityZ.removeAll()
-//        motionData.magneticFieldX.removeAll()
-//        motionData.magneticFieldY.removeAll()
-//        motionData.magneticFieldZ.removeAll()
         motionData.removeAll()
     }
 }

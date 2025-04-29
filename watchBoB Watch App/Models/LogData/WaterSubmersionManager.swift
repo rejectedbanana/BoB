@@ -19,7 +19,6 @@ class WaterSubmersionManager: NSObject, ObservableObject {
     @Published var diveSessionRunning: Bool = false
     
     // make data to fill in
-//    @Published var waterSubmersionData: WaterSubmersionData = WaterSubmersionData(timestamp: [], depth: [], temperature: [])
     @Published var waterSubmersionData: [WaterSubmersionData] = []
     
     // load timestamp formatter
@@ -73,9 +72,6 @@ class WaterSubmersionManager: NSObject, ObservableObject {
         isSubmerged = false
         measurement = nil
         temperature = nil
-//        waterSubmersionData.timestamp.removeAll()
-//        waterSubmersionData.depth.removeAll()
-//        waterSubmersionData.temperature.removeAll()
         waterSubmersionData.removeAll()
     }
     
@@ -112,11 +108,8 @@ class WaterSubmersionManager: NSObject, ObservableObject {
             return
         }
         
-//        // append the data
-//        waterSubmersionData.timestamp.append(timeStampFormatter.ISO8601Format(ptimestamp))
-//        waterSubmersionData.depth.append(depth)
-//        waterSubmersionData.temperature.append(temperature)
-        // grab the data
+
+        // put the data into a structure
         let sampledSubmersion = WaterSubmersionData(
             timestamp: timeStampFormatter.ISO8601Format(ptimestamp),
             depth: depth,
