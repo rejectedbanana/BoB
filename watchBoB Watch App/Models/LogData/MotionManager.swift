@@ -9,8 +9,11 @@ import Foundation
 import CoreMotion
 
 class MotionManager: NSObject, ObservableObject {
+    // set up Motion Manager
     var motionManager: CMMotionManager? = CMMotionManager()
-    var motionData: MotionData = MotionData(timestamp: [], accelerationX: [], accelerationY: [], accelerationZ: [], angularVelocityX: [], angularVelocityY: [], angularVelocityZ: [], magneticFieldX: [], magneticFieldY: [], magneticFieldZ: [])
+    // make data to fill in
+//    var motionData: MotionData = MotionDa/*ta(timestamp: [], accelerationX: [], accelerationY: [], accelerationZ: [], angularVelocityX: [], angularVelocityY: [], angularVel*/ocityZ: [], magneticFieldX: [], magneticFieldY: [], magneticFieldZ: [])
+    var motionData: [MotionData] = []
 
     @Published var accX = 0.0
     @Published var accY = 0.0
@@ -47,17 +50,34 @@ class MotionManager: NSObject, ObservableObject {
         timeStamp = Date()
         elapsedTime = String(format: "%.1f", Date().timeIntervalSince(startTime))
         
-        // append the arrays
-        motionData.timestamp.append(timeStampFormatter.ISO8601Format(timeStamp))
-        motionData.accelerationX.append(accX)
-        motionData.accelerationY.append(accY)
-        motionData.accelerationZ.append(accZ)
-        motionData.angularVelocityX.append(gyrX)
-        motionData.angularVelocityY.append(gyrY)
-        motionData.angularVelocityZ.append(gyrZ)
-        motionData.magneticFieldX.append(magX)
-        motionData.magneticFieldY.append(magY)
-        motionData.magneticFieldZ.append(magZ)
+//        // append the arrays
+//        motionData.timestamp.append(timeStampFormatter.ISO8601Format(timeStamp))
+//        motionData.accelerationX.append(accX)
+//        motionData.accelerationY.append(accY)
+//        motionData.accelerationZ.append(accZ)
+//        motionData.angularVelocityX.append(gyrX)
+//        motionData.angularVelocityY.append(gyrY)
+//        motionData.angularVelocityZ.append(gyrZ)
+//        motionData.magneticFieldX.append(magX)
+//        motionData.magneticFieldY.append(magY)
+//        motionData.magneticFieldZ.append(magZ)
+        
+        // grab the data
+        let sampledMotion = MotionData(
+            timestamp: timeStampFormatter.ISO8601Format(timeStamp),
+            accelerationX: accX,
+            accelerationY: accY,
+            accelerationZ: accZ,
+            angularVelocityX: gyrX,
+            angularVelocityY: gyrY,
+            angularVelocityZ: gyrZ,
+            magneticFieldX: magX,
+            magneticFieldY: magY,
+            magneticFieldZ: magZ
+        )
+        
+        // append the array
+        motionData.append(sampledMotion)
     }
 
     func startLogging(_ samplingInterval: Double) {
@@ -84,13 +104,18 @@ class MotionManager: NSObject, ObservableObject {
     func convertArrayToJSONString() -> String? {
         let encoder = JSONEncoder()
         encoder.dateEncodingStrategy = .iso8601
-        do {
-            let jsonData = try encoder.encode(motionData)
+        if let jsonData = try? encoder.encode(motionData) {
             return String(data: jsonData, encoding: .utf8)
-        } catch {
-            print("Error encoding sensor data to JSON: \(error)")
-            return nil
         }
+        debugPrint("motion data not encoded")
+        return nil
+//        do {
+//            let jsonData = try encoder.encode(motionData)
+//            return String(data: jsonData, encoding: .utf8)
+//        } catch {
+//            print("Error encoding sensor data to JSON: \(error)")
+//            return nil
+//        }
     }
 
     func clear() {
@@ -104,15 +129,16 @@ class MotionManager: NSObject, ObservableObject {
         magY = 0.0
         magZ = 0.0
         elapsedTime = "00:00"
-        motionData.timestamp.removeAll()
-        motionData.accelerationX.removeAll()
-        motionData.accelerationY.removeAll()
-        motionData.accelerationZ.removeAll()
-        motionData.angularVelocityX.removeAll()
-        motionData.angularVelocityY.removeAll()
-        motionData.angularVelocityZ.removeAll()
-        motionData.magneticFieldX.removeAll()
-        motionData.magneticFieldY.removeAll()
-        motionData.magneticFieldZ.removeAll()
+//        motionData.timestamp.removeAll()
+//        motionData.accelerationX.removeAll()
+//        motionData.accelerationY.removeAll()
+//        motionData.accelerationZ.removeAll()
+//        motionData.angularVelocityX.removeAll()
+//        motionData.angularVelocityY.removeAll()
+//        motionData.angularVelocityZ.removeAll()
+//        motionData.magneticFieldX.removeAll()
+//        motionData.magneticFieldY.removeAll()
+//        motionData.magneticFieldZ.removeAll()
+        motionData.removeAll()
     }
 }

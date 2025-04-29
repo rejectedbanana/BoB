@@ -7,10 +7,6 @@
 
 import SwiftUI
 
-struct locationArray: Codable {
-    
-}
-
 struct LogbookDetail: View {
     let entry: SampleSet
     
@@ -150,8 +146,9 @@ struct LogbookDetail: View {
         // Turn JSON strings into data
         let locationData = locationJSON.data(using: .utf8) ?? Data()
         
-        let motionData = Data(motionJSON.utf8)
-        let motionDecoded = try? decoder.decode( MotionData.self, from: motionData)
+//        let motionData = Data(motionJSON.utf8)
+//        let motionDecoded = try? decoder.decode( MotionData.self, from: motionData)
+        let motionData = motionJSON.data(using: .utf8) ?? Data()
         
         let submersionData = Data(submersionJSON.utf8)
         let submersionDecoded = try? decoder.decode( WaterSubmersionData.self, from: submersionData)
@@ -167,12 +164,29 @@ struct LogbookDetail: View {
                 locationArray.latitude.append(location.latitude)
                 locationArray.longitude.append(location.longitude)
             }
-            // Prep for saving as a JSON
+            // Reformat for saving as a compact JSON
             let formattedLocationData = FormattedLocationData(values: locationArray)
             
             // extract motion data
-            let motionArrays = MotionData(timestamp: motionDecoded?.timestamp ?? [], accelerationX: motionDecoded?.accelerationX ?? [], accelerationY: motionDecoded?.accelerationY ?? [], accelerationZ: motionDecoded?.accelerationZ ?? [], angularVelocityX: motionDecoded?.angularVelocityX ?? [], angularVelocityY: motionDecoded?.angularVelocityY ?? [], angularVelocityZ: motionDecoded?.angularVelocityZ ?? [], magneticFieldX: motionDecoded?.magneticFieldX ?? [], magneticFieldY: motionDecoded?.magneticFieldY ?? [], magneticFieldZ: motionDecoded?.magneticFieldZ ?? [])
-            let formattedMotionData = FormattedMotionData(values: motionArrays)
+//            let motionArrays = MotionData(timestamp: motionDecoded?.timestamp ?? [], accelerationX: motionDecoded?.accelerationX ?? [], accelerationY: motionDecoded?.accelerationY ?? [], accelerationZ: motionDecoded?.accelerationZ ?? [], angularVelocityX: motionDecoded?.angularVelocityX ?? [], angularVelocityY: motionDecoded?.angularVelocityY ?? [], angularVelocityZ: motionDecoded?.angularVelocityZ ?? [], magneticFieldX: motionDecoded?.magneticFieldX ?? [], magneticFieldY: motionDecoded?.magneticFieldY ?? [], magneticFieldZ: motionDecoded?.magneticFieldZ ?? [])
+//            let formattedMotionData = FormattedMotionData(values: motionArrays)
+            // decode the motion data and transform it
+            let motionDecoded = try decoder.decode([MotionData].self, from: motionData)
+            var motionArray: MotionArrays = MotionArrays(timestamp: [], accelerationX: [], accelerationY: [], accelerationZ: [], angularVelocityX: [], angularVelocityY: [], angularVelocityZ: [], magneticFieldX: [], magneticFieldY: [], magneticFieldZ: [])
+            for motion in motionDecoded {
+                motionArray.timestamp.append(motion.timestamp)
+                motionArray.accelerationX.append(motion.accelerationX)
+                motionArray.accelerationY.append(motion.accelerationY)
+                motionArray.accelerationZ.append(motion.accelerationZ)
+                motionArray.angularVelocityX.append(motion.angularVelocityX)
+                motionArray.angularVelocityY.append(motion.angularVelocityY)
+                motionArray.angularVelocityZ.append(motion.angularVelocityZ)
+                motionArray.magneticFieldX.append(motion.magneticFieldX)
+                motionArray.magneticFieldY.append(motion.magneticFieldY)
+                motionArray.magneticFieldZ.append(motion.magneticFieldZ)
+            }
+            // Reformat for saving as a compact JSON
+            let formattedMotionData = FormattedMotionData(values: motionArray)
             
             // extract the submersion data
             let submersionArrays = WaterSubmersionData(timestamp: submersionDecoded?.timestamp ?? [], depth: submersionDecoded?.depth ?? [], temperature: submersionDecoded?.temperature ?? [])

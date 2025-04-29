@@ -113,9 +113,8 @@ extension SampleSet {
     func getMotionDataCount() -> Int {
         guard let json = motionJSON, let data = json.data(using: .utf8) else { return 0 }
         do {
-            let motionData = try JSONDecoder().decode(MotionData.self, from: data)
-            let accelerationX = motionData.accelerationX
-            return accelerationX.count
+            let motionData = try JSONDecoder().decode([MotionData].self, from: data)
+            return motionData.count
         } catch {
             print("Error parsing motion JSON for data count: \(error)")
             return 0

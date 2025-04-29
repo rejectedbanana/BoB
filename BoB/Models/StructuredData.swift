@@ -34,9 +34,9 @@ struct FormattedMotionData: Codable {
     let description: String
     let labels: [String]
     let units: [String]
-    let values: MotionData
+    let values: MotionArrays
     
-    init( values: MotionData ) {
+    init( values: MotionArrays ) {
         self.sensor_id = "motion"
         self.description = "3-axis acceleration, angular velocity, and magnetic field from motion sensors"
         self.labels = ["timestamp,accelerationX,accelerationY,accelerationZ,angularVelocityX,angularVelocityY,angularVelocityZ,magneticFieldX,magneticFieldY,magneticFieldZ"]
