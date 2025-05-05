@@ -34,7 +34,7 @@ class JSONExportManager: ObservableObject {
         return combineDataIntoStructuredData(locationDecoded: locationData, motionDecoded: motionData, submersionDecoded: submersionData) ?? nil
     }
     
-    // class meothods
+    // class methods
     func entryToLocationData(_ entry: SampleSet) -> [LocationData] {
         guard let locationJSON = entry.locationJSON else {
             print("No location JSON found in Core Data entry")

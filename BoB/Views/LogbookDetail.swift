@@ -24,25 +24,16 @@ struct LogbookDetail: View {
     private var locationData: [LocationData] {
         return jsonExportManager.locationData
     }
-    
     private var motionData: [MotionData] {
         return jsonExportManager.motionData
     }
-    
     private var submersionData: [WaterSubmersionData] {
         return jsonExportManager.submersionData
     }
-    
-    
     private var combinedData: StructuredData? {
-//        return combineJSONsIntoStructuredData()
         return jsonExportManager.exportableData
     }
     @State private var JSONName = ""
-    
-    // encoders and decosers for JSON output
-    let encoder = JSONEncoder()
-    let decoder = JSONDecoder()
     
     // time stamp formatter
     let timeStampFormatter = TimeStampManager()
@@ -117,8 +108,6 @@ struct LogbookDetail: View {
         .navigationBarTitleDisplayMode(.inline)
         .navigationTitle("Details")
         .toolbar {
-//            if let combinedJSONString = convertCombinedDataToJSONString() {
-//                ShareLink(item: exportCombinedJSON(fileName: JSONName, content: combinedJSONString))
             if let combinedJSONString = jsonExportManager.convertStructuredDataToJSONString(combinedData) {
                 ShareLink(item: jsonExportManager.exportJSON(fileName: JSONName, content: combinedJSONString))
             } else {
@@ -129,105 +118,6 @@ struct LogbookDetail: View {
             self.JSONName = timeStampFormatter.exportNameFormat(entry.startDatetime ?? Date.now )+"_AWUData.json"
         }
     }
-    
-
-    
-//    // Combine the data from all the sensors into one encodable structure
-//    private func combineJSONsIntoStructuredData() -> StructuredData? {
-//        // Grab the JSON strings from CoreData
-//        guard let motionJSON = entry.motionJSON, let locationJSON = entry.locationJSON else {
-//            print("No motionJSON or locationJSON found")
-//            return nil
-//        }
-//        let submersionJSON = entry.waterSubmersionJSON ?? "[]"
-//        
-//        // Turn JSON strings into data
-//        let locationData = locationJSON.data(using: .utf8) ?? Data()
-//        let motionData = motionJSON.data(using: .utf8) ?? Data()
-//        let submersionData = submersionJSON.data(using: .utf8) ?? Data()
-//        
-//        do {
-//            // extract location data
-//            // decode the location data and transform it
-//            let locationDecoded = try decoder.decode([LocationData].self, from: locationData)
-//            // turn values into arrays so the saved JSON is smaller
-//            var locationArray: LocationArrays = LocationArrays(timestamp: [], latitude: [], longitude: [])
-//            for location in locationDecoded {
-//                locationArray.timestamp.append(location.timestamp)
-//                locationArray.latitude.append(location.latitude)
-//                locationArray.longitude.append(location.longitude)
-//            }
-//            // Reformat for saving as a compact JSON
-//            let formattedLocationData = FormattedLocationData(values: locationArray)
-//            
-//            // extract motion data
-//            // decode the motion data and transform it
-//            let motionDecoded = try decoder.decode([MotionData].self, from: motionData)
-//            var motionArray: MotionArrays = MotionArrays(timestamp: [], accelerationX: [], accelerationY: [], accelerationZ: [], angularVelocityX: [], angularVelocityY: [], angularVelocityZ: [], magneticFieldX: [], magneticFieldY: [], magneticFieldZ: [])
-//            for motion in motionDecoded {
-//                motionArray.timestamp.append(motion.timestamp)
-//                motionArray.accelerationX.append(motion.accelerationX)
-//                motionArray.accelerationY.append(motion.accelerationY)
-//                motionArray.accelerationZ.append(motion.accelerationZ)
-//                motionArray.angularVelocityX.append(motion.angularVelocityX)
-//                motionArray.angularVelocityY.append(motion.angularVelocityY)
-//                motionArray.angularVelocityZ.append(motion.angularVelocityZ)
-//                motionArray.magneticFieldX.append(motion.magneticFieldX)
-//                motionArray.magneticFieldY.append(motion.magneticFieldY)
-//                motionArray.magneticFieldZ.append(motion.magneticFieldZ)
-//            }
-//            // Reformat for saving as a compact JSON
-//            let formattedMotionData = FormattedMotionData(values: motionArray)
-//            
-//            // extract the submersion data
-//            // decode the submersion data and transform it
-//            let submersionDecoded = try decoder.decode([WaterSubmersionData].self, from: submersionData)
-//            var submersionArray: WaterSubmersionArrays = WaterSubmersionArrays(timestamp: [], depth: [], temperature: [])
-//            for submersion in submersionDecoded {
-//                submersionArray.timestamp.append(submersion.timestamp)
-//                submersionArray.depth.append(submersion.depth ?? Double.nan)
-//                submersionArray.temperature.append(submersion.temperature ?? Double.nan)
-//            }
-//            let formattedSubmersionData = FormattedSubmersionData(values: submersionArray)
-//            
-//            // Combine the data
-//            let structuredData = StructuredData(location: formattedLocationData, motion: formattedMotionData, submersion: formattedSubmersionData )
-//            
-//            return structuredData
-//        } catch {
-//            print("Error parsing or combining JSON: \(error)")
-//            return nil
-//        }
-//    }
-
-//    // Convert combined data to a string
-//    private func convertCombinedDataToJSONString() -> String? {
-//        guard let combinedData = combinedData else { return nil }
-//        
-//        encoder.outputFormatting = [.sortedKeys, .withoutEscapingSlashes]
-//        do {
-//            let jsonData = try encoder.encode(combinedData)
-//            let jsonString = String(data: jsonData, encoding: .utf8)
-//            return jsonString
-//        } catch {
-//            print("Error converting combined JSON to string: \(error)")
-//            return nil
-//        }
-//    }
-    
-//    // Temporarily save the CombinedJSON to document storage for export
-//    func exportCombinedJSON(fileName: String, content: String) -> URL {
-//        let documentsDirectory = URL.documentsDirectory
-//        let fileURL = documentsDirectory.appending(path: fileName)
-//        
-//        do {
-//            try content.write(to: fileURL, atomically: true, encoding: .utf8)
-//        } catch {
-//            print("Failed to write combined JSON: \(error.localizedDescription)")
-//        }
-//        
-//        return fileURL
-//    }
     
     // change array of string dates to a date array
     private func convertISO8601DatesToDateArray(dateStrings: [String]) -> [Date] {
