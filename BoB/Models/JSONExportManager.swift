@@ -85,7 +85,6 @@ class JSONExportManager: ObservableObject {
     
     func combineDataIntoStructuredData(locationDecoded: [LocationData], motionDecoded: [MotionData], submersionDecoded: [WaterSubmersionData]) -> StructuredData? {
         
-        
         // Make the structures to fill
         var structuredData: StructuredData?
         var locationArray: LocationArrays = LocationArrays(timestamp: [], latitude: [], longitude: [])

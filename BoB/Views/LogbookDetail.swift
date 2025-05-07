@@ -78,7 +78,6 @@ struct LogbookDetail: View {
                     showLocationJSON.toggle()
                 }
                 .sheet(isPresented: $showLocationJSON) {
-//                    DataView(combinedData: combinedData, sensorType: "location")
                     LocationTable(locationData: locationData)
                 }
                 
@@ -86,7 +85,6 @@ struct LogbookDetail: View {
                     showMotionJSON.toggle()
                 }
                 .sheet(isPresented: $showMotionJSON) {
-//                    DataView(combinedData: combinedData, sensorType: "motion")
                     MotionTable(motionData: motionData)
                 }
                 
@@ -94,7 +92,6 @@ struct LogbookDetail: View {
                     showSubmersionJSON.toggle()
                 }
                 .sheet(isPresented: $showSubmersionJSON) {
-//                    DataView(combinedData: combinedData, sensorType: "submersion")
                     SubmersionTable(submersionData: submersionData)
                 }
             }
