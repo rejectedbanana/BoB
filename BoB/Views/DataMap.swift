@@ -87,6 +87,13 @@ struct DataMap: View {
     
 }
 
-//#Preview {
-//    DataMap()
-//}
+#Preview {
+  let sampleLocationData = [
+    LocationData(timestamp: "2025-05-05T23:25:47.008Z", latitude: 46.85273524379032, longitude: -121.76021503897891),
+    LocationData(timestamp: "2025-05-05T23:25:47.020Z", latitude: 46.85273524379032-0.00001, longitude: -121.76021503897891+0.00003),
+    LocationData(timestamp: "2025-05-05T23:25:51.872Z", latitude: 46.85273524379032+0.00001, longitude: -121.76021503897891+0.00001),
+    LocationData(timestamp: "2025-05-05T23:25:51.877Z", latitude: 46.85273524379032+0.00001, longitude: -121.76021503897891-0.00003)
+  ]
+    
+    DataMap(locationData: sampleLocationData )
+}

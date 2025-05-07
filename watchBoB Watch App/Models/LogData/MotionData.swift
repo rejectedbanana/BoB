@@ -8,7 +8,8 @@
 import Foundation
 
 // Motion structure to use inside swift
-struct MotionData: Codable {
+struct MotionData: Codable, Identifiable {
+    let id = UUID()
     var timestamp: String
     var accelerationX: Double?
     var accelerationY: Double?

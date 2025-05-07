@@ -8,7 +8,8 @@
 import Foundation
 
 // Submersion structure for use inside swift
-struct WaterSubmersionData: Codable {
+struct WaterSubmersionData: Codable, Identifiable {
+    let id = UUID()
     var timestamp: String
     var depth: Double?
     var temperature: Double?

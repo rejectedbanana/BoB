@@ -78,21 +78,24 @@ struct LogbookDetail: View {
                     showLocationJSON.toggle()
                 }
                 .sheet(isPresented: $showLocationJSON) {
-                    DataView(combinedData: combinedData, sensorType: "location")
+//                    DataView(combinedData: combinedData, sensorType: "location")
+                    LocationTable(locationData: locationData)
                 }
                 
                 Button("View Motion Data") {
                     showMotionJSON.toggle()
                 }
                 .sheet(isPresented: $showMotionJSON) {
-                    DataView(combinedData: combinedData, sensorType: "motion")
+//                    DataView(combinedData: combinedData, sensorType: "motion")
+                    MotionTable(motionData: motionData)
                 }
                 
                 Button("View Submersion Data") {
                     showSubmersionJSON.toggle()
                 }
                 .sheet(isPresented: $showSubmersionJSON) {
-                    DataView(combinedData: combinedData, sensorType: "submersion")
+//                    DataView(combinedData: combinedData, sensorType: "submersion")
+                    SubmersionTable(submersionData: submersionData)
                 }
             }
             

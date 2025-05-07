@@ -8,7 +8,8 @@
 import Foundation
 
 // Location structure for use inside swift
-struct LocationData: Codable {
+struct LocationData: Codable, Identifiable {
+    let id = UUID()
     var timestamp: String
     var latitude: Double?
     var longitude: Double?
@@ -17,12 +18,14 @@ struct LocationData: Codable {
         var container = encoder.container(keyedBy: CodingKeys.self)
         
         // encode the timestamp
+        try container.encode(id, forKey: .id)
         try container.encode(timestamp, forKey: .timestamp)
         try container.encode(latitude, forKey: .latitude)
         try container.encode(longitude, forKey: .longitude)
     }
     
     enum CodingKeys: String, CodingKey {
+        case id
         case timestamp
         case latitude
         case longitude
