@@ -57,19 +57,7 @@ struct LogbookDetail: View {
             }
             
             Section("Data Charts") {
-//                TimeSeriesView(
-//                    x: convertISO8601DatesToDateArray(dateStrings: combinedData?.submersion.values.timestamp ?? [timeStampFormatter.ISO8601Format(Date.now)]),
-//                    y: combinedData?.submersion.values.temperature ?? [0.1],
-//                    yVariable: "Temperature",
-//                    yUnit: "° C"
-//                )
-//                    
-//                TimeSeriesView(
-//                    x: convertISO8601DatesToDateArray(dateStrings: combinedData?.submersion.values.timestamp ?? []),
-//                    y: combinedData?.submersion.values.depth ?? [],
-//                    yVariable: "Depth",
-//                    yUnit: "meters"
-//                )
+                SubmersionChart(submersionData: submersionData)
             }
             
             Section("Data Tables") {
@@ -117,18 +105,6 @@ struct LogbookDetail: View {
         .onAppear {
             self.JSONName = timeStampFormatter.exportNameFormat(entry.startDatetime ?? Date.now )+"_AWUData.json"
         }
-    }
-    
-    // change array of string dates to a date array
-    private func convertISO8601DatesToDateArray(dateStrings: [String]) -> [Date] {
-        var dateArray: [Date] = []
-        
-        for dateString in dateStrings {
-            if let date = timeStampFormatter.ISO8601StringtoDate(dateString) {
-                dateArray.append(date)
-            }
-        }
-        return dateArray
     }
 }
 

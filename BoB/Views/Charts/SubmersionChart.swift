@@ -8,81 +8,120 @@
 import SwiftUI
 import Charts
 
-//struct Point: Identifiable {
-//    let id = UUID()
-//    let x: Date
-//    let y: Double
-//}
-
 struct SubmersionChart: View {
-    let data: WaterSubmersionArrays
+    let submersionData: [WaterSubmersionData]
+    
+    @State private var isTimeSeries: Bool = true
+
+    var body: some View {
+        if submersionData.isEmpty {
+            VStack(alignment: .leading) {
+                HStack {
+                    Text("No submersion data to plot.")
+                    Spacer()
+                }
+                Spacer()
+            }
+            .padding(.leading, 20)
+        } else {
+            VStack {
+                if isTimeSeries {
+                    timeSeries(submersionData: submersionData)
+                } else {
+                    temperatureDepth(submersionData: submersionData)
+                }
+                
+                Picker("View your preferred plot", selection: $isTimeSeries) {
+                    Text("Time Series").tag(true)
+                    Text("Vertical Profile").tag(false)
+                }
+                .pickerStyle(.segmented)
+            }
+        }
+    }
+}
+
+
+struct timeSeries: View {
+    let submersionData: [WaterSubmersionData]
     let timeStampManager = TimeStampManager()
     
-    private var tempPoints: [Point] {
-        return mapTimeSeriesToPoint(data.timestamp, data.temperature)
+    var body: some View {
+        VStack {
+            Chart(submersionData) { item in
+                LineMark(
+                    x: .value("Date", timeStampManager.ISO8601StringtoDate(item.timestamp) ?? Date()),
+                    y: .value("Depth", item.depth ?? Double.nan)
+                )
+                .foregroundStyle(.blue)
+                .interpolationMethod(.linear)
+                .symbol(Circle())
+                .accessibilityLabel("Depth versus Time")
+                .accessibilityValue("Depth: \(item.depth ?? Double.nan) meters")
+            }
+            .chartYAxisLabel("Depth [m]")
+            .frame(height: 200)
+            .padding()
+            
+            Chart(submersionData) { item in
+                LineMark(
+                    x: .value("Date", timeStampManager.ISO8601StringtoDate(item.timestamp) ?? Date()),
+                    y: .value("Temperature", item.temperature ?? Double.nan)
+                )
+                .foregroundStyle(.blue)
+                .interpolationMethod(.linear)
+                .symbol(Circle())
+                .accessibilityLabel("Temperature versus Time")
+                .accessibilityValue("Temperature: \(item.temperature ?? Double.nan) degrees Celsius")
+            }
+            .chartYAxisLabel("Temperature [°C]")
+            .frame(height: 200)
+            .padding()
+        }
     }
-    private var depthPoints: [Point] {
-        return mapTimeSeriesToPoint(data.timestamp, data.depth)
-    }
+}
+
+struct temperatureDepth: View {
+    let submersionData: [WaterSubmersionData]
     
     var body: some View {
-        Chart(tempPoints) { item in
+        Chart(submersionData) { item in
             LineMark(
-                x: .value("Date", item.x),
-                y: .value("Temperature in Celsius", item.y)
+                x: .value("Temperature", item.temperature ?? Double.nan),
+                y: .value("Depth", -1*(item.depth ?? Double.nan))
             )
             .foregroundStyle(.blue)
             .interpolationMethod(.linear)
             .symbol(Circle())
-            .accessibilityLabel("Temperature versus Date")
-            .accessibilityValue("Temperature: \(item.x) degrees Celsius")
+            .accessibilityLabel("Temperature versus Depth")
+            .accessibilityValue("Temperature: \(item.temperature ?? Double.nan) degrees Celsius")
         }
-        .chartYAxisLabel("Temperature [°C]")
-        .chartYAxis {
-            AxisMarks(position: .leading)
-        }
-        .frame(height: 200)
-        .padding()
-        
-        
-        Chart(depthPoints) {item in
-            LineMark(
-                x: .value("Date", item.x),
-                y: .value("Depth in meters", -1*item.y)
-            )
-            .foregroundStyle(.blue)
-            .interpolationMethod(.linear)
-            .symbol(Circle())
-            .accessibilityLabel("Depth versus Date")
-            .accessibilityValue("Depth: \(item.x) meters")
-        }
+        .chartXAxisLabel("Temperature [°C]")
         .chartYAxisLabel("Depth [m]")
-        .chartYAxis {
-            AxisMarks(position: .leading)
-        }
-        .frame(height: 200)
+        .frame(height: 430)
         .padding()
     }
     
-    // Convert the arrays into something that can be use by the chart
-    private func mapTimeSeriesToPoint(_ x: [String], _ y: [Double]) -> [Point] {
-        var xArray: [Date] = []
-        for xx in x  {
-            xArray.append(timeStampManager.ISO8601StringtoDate(xx) ?? Date())
+    func reversedTightRange(for values: [Double]) -> ClosedRange<Double> {
+        guard let min = values.min(), let max = values.max() else {
+            return 0...1
         }
-        let yArray = y
-        let dataPoints: [Point] = zip(xArray, yArray).map {Point(x: $0, y: $1) }
-        
-        return dataPoints
+        return max...min
     }
 }
 
 #Preview {
-    let submersionData = WaterSubmersionArrays(
-        timestamp:  ["2024-10-08T20:12:00Z","2024-10-08T20:13:00Z","2024-10-08T20:14:00Z","2024-10-08T20:15:00Z"],
-        depth: [0.124,0.124,0.131,0.131],
-        temperature: [18,19,20,19.5]
-    )
+    let sampleSubmersionData = [
+        WaterSubmersionData(timestamp: "2025-05-05T23:25:47.008Z", depth: 0.0, temperature: 14.7),
+        WaterSubmersionData(timestamp: "2025-05-05T23:25:50.020Z", depth: 1.1, temperature: 14.6),
+        WaterSubmersionData(timestamp: "2025-05-05T23:25:53.872Z", depth: 2.1, temperature: 14.2),
+        WaterSubmersionData(timestamp: "2025-05-05T23:25:56.877Z", depth: 3.2, temperature: 10.4),
+        WaterSubmersionData(timestamp: "2025-05-05T23:25:59.882Z", depth: 3.5, temperature: 6.4),
+        WaterSubmersionData(timestamp: "2025-05-05T23:26:03.887Z", depth: 4.3, temperature: 3.0),
+        WaterSubmersionData(timestamp: "2025-05-05T23:26:06.872Z", depth: 5.3, temperature: 2.1),
+        WaterSubmersionData(timestamp: "2025-05-05T23:26:09.872Z", depth: 7.2, temperature: 2.0),
+        WaterSubmersionData(timestamp: "2025-05-05T23:26:13.827Z", depth: 9.0, temperature: 1.9)
+    ]
     
-    SubmersionChart(data: submersionData)
+    SubmersionChart(submersionData: sampleSubmersionData)
 }

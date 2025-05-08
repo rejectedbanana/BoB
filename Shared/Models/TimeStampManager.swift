@@ -41,6 +41,10 @@ class TimeStampManager: ObservableObject {
     // Change the ISO string back to a date
     func ISO8601StringtoDate(_ isoString: String) -> Date? {
         let formatter = ISO8601DateFormatter()
+        formatter.formatOptions = [
+            .withInternetDateTime,
+            .withFractionalSeconds
+        ]
         return formatter.date(from: isoString)
     }
     
