@@ -25,17 +25,17 @@ struct SubmersionChart: View {
             .padding(.leading, 20)
         } else {
             VStack {
-                if isTimeSeries {
-                    timeSeries(submersionData: submersionData)
-                } else {
-                    temperatureDepth(submersionData: submersionData)
-                }
-                
                 Picker("View your preferred plot", selection: $isTimeSeries) {
                     Text("Time Series").tag(true)
                     Text("Vertical Profile").tag(false)
                 }
                 .pickerStyle(.segmented)
+                
+                if isTimeSeries {
+                    timeSeries(submersionData: submersionData)
+                } else {
+                    temperatureDepth(submersionData: submersionData)
+                }
             }
         }
     }

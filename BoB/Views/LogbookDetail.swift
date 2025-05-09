@@ -15,10 +15,14 @@ struct LogbookDetail: View {
     }
     
     // Toggles to preview data
-    @State private var showMotionJSON = false
-    @State private var showLocationJSON = false
-    @State private var showSubmersionJSON = false
-    @State private var showSubmersionPlot = false
+    @State private var showSummary: Bool = false
+    @State private var showMotionChart: Bool = false
+    @State private var showSubmersionChart: Bool = false
+
+    @State private var showMotionTable = false
+    @State private var showLocationTable = false
+    @State private var showSubmersionTable = false
+
     
     // Strings to store exported name and data
     private var locationData: [LocationData] {
@@ -46,7 +50,7 @@ struct LogbookDetail: View {
                     .listRowInsets(EdgeInsets())
             }
             
-            Section("Deployment Summary") {
+            Section {
                 DetailRow(header: "Start Time", content: timeStampFormatter.viewFormat(entry.startDatetime ?? Date(timeIntervalSince1970: 0)))
                 DetailRow(header: "End Time", content: timeStampFormatter.viewFormat(entry.stopDatetime ?? Date(timeIntervalSince1970: 0)))
                 DetailRow(header: "Samples", content: "\(entry.getMotionDataCount())")
@@ -54,32 +58,44 @@ struct LogbookDetail: View {
                 DetailRow(header: "Min Temp", content: entry.getMinimumTemperature().isNaN ? "no submersion data" : String(format: "%.1f °C", entry.getMinimumTemperature()) )
                 DetailRow(header: "Max Depth", content: entry.getMaximumDepth().isNaN ? "no submersion data" : String(format: "%.1f m", entry.getMaximumDepth()))
                 DetailRow(header: "Source", content: entry.deviceName ?? "Unknown")
+            } header: {
+                Text("Deployment Summary")
             }
             
-            Section("Data Charts") {
+            Section(isExpanded: $showMotionChart) {
+                MotionChart(motionData: motionData)
+            } header: {
+                Text( "Motion Chart")
+                    .font(.title)
+            }
+            
+            
+            Section(isExpanded: $showSubmersionChart) {
                 SubmersionChart(submersionData: submersionData)
+            } header: {
+                Text( "Submersion Chart")
             }
             
             Section("Data Tables") {
                 // Buttons for viewing JSON data
                 Button("View Location Data") {
-                    showLocationJSON.toggle()
+                    showLocationTable.toggle()
                 }
-                .sheet(isPresented: $showLocationJSON) {
+                .sheet(isPresented: $showLocationTable) {
                     LocationTable(locationData: locationData)
                 }
                 
                 Button("View Motion Data") {
-                    showMotionJSON.toggle()
+                    showMotionTable.toggle()
                 }
-                .sheet(isPresented: $showMotionJSON) {
+                .sheet(isPresented: $showMotionTable) {
                     MotionTable(motionData: motionData)
                 }
                 
                 Button("View Submersion Data") {
-                    showSubmersionJSON.toggle()
+                    showSubmersionTable.toggle()
                 }
-                .sheet(isPresented: $showSubmersionJSON) {
+                .sheet(isPresented: $showSubmersionTable) {
                     SubmersionTable(submersionData: submersionData)
                 }
             }
