@@ -14,15 +14,9 @@ struct SubmersionChart: View {
     @State private var isTimeSeries: Bool = true
 
     var body: some View {
+        // If there is no data, don't plot anything
         if submersionData.isEmpty {
-            VStack(alignment: .leading) {
-                HStack {
-                    Text("No submersion data to plot.")
-                    Spacer()
-                }
-                Spacer()
-            }
-            .padding(.leading, 20)
+                Text("No submersion data to plot.")
         } else {
             VStack {
                 Picker("View your preferred plot", selection: $isTimeSeries) {
@@ -41,7 +35,8 @@ struct SubmersionChart: View {
     }
 }
 
-
+// make individual views for each type of submersion plot
+// Time Series of Temperature and Pressure
 struct timeSeries: View {
     let submersionData: [WaterSubmersionData]
     let timeStampManager = TimeStampManager()
@@ -80,7 +75,7 @@ struct timeSeries: View {
         }
     }
 }
-
+// Vertical profile of temperature agaist depth
 struct temperatureDepth: View {
     let submersionData: [WaterSubmersionData]
     
@@ -101,13 +96,6 @@ struct temperatureDepth: View {
         .frame(height: 430)
         .padding()
     }
-    
-    func reversedTightRange(for values: [Double]) -> ClosedRange<Double> {
-        guard let min = values.min(), let max = values.max() else {
-            return 0...1
-        }
-        return max...min
-    }
 }
 
 #Preview {
@@ -123,5 +111,5 @@ struct temperatureDepth: View {
         WaterSubmersionData(timestamp: "2025-05-05T23:26:13.827Z", depth: 9.0, temperature: 1.9)
     ]
     
-    SubmersionChart(submersionData: sampleSubmersionData)
+    SubmersionChart(submersionData: [])
 }

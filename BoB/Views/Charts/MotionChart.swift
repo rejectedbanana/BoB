@@ -8,6 +8,7 @@
 import SwiftUI
 import Charts
 
+// Define structures so you can put three different lines on one chart
 struct XYZData: Identifiable {
     let id = UUID()
     let date: Date
@@ -15,6 +16,7 @@ struct XYZData: Identifiable {
     let axis: AxisType
 }
 
+// Define colors for X, Y and Z
 enum AxisType: String, CaseIterable, Identifiable {
     case x = "X"
     case y = "Y"
@@ -35,6 +37,7 @@ struct MotionChart: View {
     let motionData: [MotionData]
     let timeStampManager = TimeStampManager()
     
+    // Transform the Accelerometer data for plotting
     var accData: [XYZData] {
             return motionData.flatMap { data -> [XYZData] in
                 guard let date = timeStampManager.ISO8601StringtoDate(data.timestamp) else { return [] }
@@ -53,11 +56,11 @@ struct MotionChart: View {
                 return entries
             }
         }
-    
     var maxAbsAcceleration: Double {
         accData.map { abs($0.value) }.max() ?? 1.0
     }
     
+    // Transform the Gyroscope data for plotting
     var gyrData: [XYZData] {
             return motionData.flatMap { data -> [XYZData] in
                 guard let date = timeStampManager.ISO8601StringtoDate(data.timestamp) else { return [] }
@@ -76,11 +79,11 @@ struct MotionChart: View {
                 return entries
             }
         }
-    
     var maxAbsAngularVelocity: Double {
         gyrData.map { abs($0.value) }.max() ?? 1.0
     }
 
+    // Transform the Magnetic Field Data for plotting
     var magData: [XYZData] {
             return motionData.flatMap { data -> [XYZData] in
                 guard let date = timeStampManager.ISO8601StringtoDate(data.timestamp) else { return [] }
@@ -99,12 +102,9 @@ struct MotionChart: View {
                 return entries
             }
         }
-    
     var maxAbsMagneticField: Double {
         magData.map { abs($0.value) }.max() ?? 1.0
     }
-
-    
 
     var body: some View {
         VStack {
@@ -164,7 +164,7 @@ struct MotionChart: View {
             .chartYScale(domain: -maxAbsAngularVelocity ... maxAbsAngularVelocity)
             .chartYAxisLabel("Angular Velocity [m/s]")
             
-            //  Magnetic FieldPlot
+            //  Magnetic Field Plot
             Chart {
                 ForEach(magData) { entry in
                     LineMark(

@@ -22,6 +22,8 @@ struct LogbookDetail: View {
     @State private var showMotionTable = false
     @State private var showLocationTable = false
     @State private var showSubmersionTable = false
+    
+    @State private var showDeviceDetails = false
 
     
     // Strings to store exported name and data
@@ -74,6 +76,7 @@ struct LogbookDetail: View {
                 SubmersionChart(submersionData: submersionData)
             } header: {
                 Text( "Submersion Chart")
+                    .font(.title)
             }
             
             Section("Data Tables") {
@@ -100,12 +103,14 @@ struct LogbookDetail: View {
                 }
             }
             
-            Section("Device Details") {
+            Section(isExpanded: $showDeviceDetails) {
                 DetailRow(header: "Name", content: entry.deviceName ?? "Unknown")
                 DetailRow(header: "Manufacturer", content: entry.deviceManufacturer ?? "Unknown")
                 DetailRow(header: "Model", content: entry.deviceModel ?? "Unknown")
                 DetailRow(header: "Hardware Version", content: entry.deviceLocalizedModel ?? "Unknown")
                 DetailRow(header: "Software Version", content: entry.deviceSystemVersion ?? "Unknown")
+            } header: {
+                Text("Device Details")
             }
         }
         .listStyle(.sidebar)
@@ -128,6 +133,7 @@ struct LogbookDetail: View {
 //    LogbookDetail()
 //}
 
+// Make a unified view for the rows in the sections
 struct DetailRow: View {
     let header: String
     let content: String
