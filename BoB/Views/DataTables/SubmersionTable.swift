@@ -52,5 +52,5 @@ struct SubmersionTable: View {
         WaterSubmersionData(timestamp: "2025-05-05T23:25:56.877Z", depth: 3.2, temperature: 10.4),
     ]
     
-    SubmersionTable(submersionData: [])
+    SubmersionTable(submersionData: sampleSubmersionData)
 }

@@ -111,5 +111,5 @@ struct temperatureDepth: View {
         WaterSubmersionData(timestamp: "2025-05-05T23:26:13.827Z", depth: 9.0, temperature: 1.9)
     ]
     
-    SubmersionChart(submersionData: [])
+    SubmersionChart(submersionData: sampleSubmersionData)
 }
