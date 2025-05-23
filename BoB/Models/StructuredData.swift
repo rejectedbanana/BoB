@@ -18,9 +18,9 @@ struct FormattedLocationData: Codable {
     let description: String
     let labels: [String]
     let units: [String]
-    let values: LocationData
+    let values: LocationArrays
     
-    init( values: LocationData ) {
+    init( values: LocationArrays ) {
         self.sensor_id = "location"
         self.description = "Geographical location from L1 and L5 GPS, GLONASS, Galileo, QZSS, or BeiDou"
         self.labels = ["timestamp,latitude,longitude"]
@@ -34,9 +34,9 @@ struct FormattedMotionData: Codable {
     let description: String
     let labels: [String]
     let units: [String]
-    let values: MotionData
+    let values: MotionArrays
     
-    init( values: MotionData ) {
+    init( values: MotionArrays ) {
         self.sensor_id = "motion"
         self.description = "3-axis acceleration, angular velocity, and magnetic field from motion sensors"
         self.labels = ["timestamp,accelerationX,accelerationY,accelerationZ,angularVelocityX,angularVelocityY,angularVelocityZ,magneticFieldX,magneticFieldY,magneticFieldZ"]
@@ -50,9 +50,9 @@ struct FormattedSubmersionData: Codable {
     let description: String
     let labels: [String]
     let units: [String]
-    let values: WaterSubmersionData
+    let values: WaterSubmersionArrays
     
-    init( values: WaterSubmersionData ) {
+    init( values: WaterSubmersionArrays ) {
         self.description = "Submersion data from water depth and water temperature sensors"
         self.sensor_id = "submersion"
         self.labels = ["timestamp,depth,temperature"]

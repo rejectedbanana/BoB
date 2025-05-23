@@ -17,7 +17,9 @@ class WaterSubmersionManager: NSObject, ObservableObject {
     @Published var measurement: CMWaterSubmersionMeasurement? = nil
     @Published var temperature: CMWaterTemperature? = nil
     @Published var diveSessionRunning: Bool = false
-    @Published var waterSubmersionData: WaterSubmersionData = WaterSubmersionData(timestamp: [], depth: [], temperature: [])
+    
+    // make data to fill in
+    @Published var waterSubmersionData: [WaterSubmersionData] = []
     
     // load timestamp formatter
     let timeStampFormatter = TimeStampManager()
@@ -70,9 +72,7 @@ class WaterSubmersionManager: NSObject, ObservableObject {
         isSubmerged = false
         measurement = nil
         temperature = nil
-        waterSubmersionData.timestamp.removeAll()
-        waterSubmersionData.depth.removeAll()
-        waterSubmersionData.temperature.removeAll()
+        waterSubmersionData.removeAll()
     }
     
     @MainActor
@@ -108,10 +108,16 @@ class WaterSubmersionManager: NSObject, ObservableObject {
             return
         }
         
-        // append the data
-        waterSubmersionData.timestamp.append(timeStampFormatter.ISO8601Format(ptimestamp))
-        waterSubmersionData.depth.append(depth)
-        waterSubmersionData.temperature.append(temperature)
+
+        // put the data into a structure
+        let sampledSubmersion = WaterSubmersionData(
+            timestamp: timeStampFormatter.ISO8601Format(ptimestamp),
+            depth: depth,
+            temperature: temperature
+        )
+        
+        // append the array
+        waterSubmersionData.append(sampledSubmersion)
         
     }
     
@@ -192,7 +198,7 @@ class WaterSubmersionManager: NSObject, ObservableObject {
     }
     
     func convertArrayToJSONString() -> String? {
-        guard !waterSubmersionData.timestamp.isEmpty else {
+        guard !waterSubmersionData.isEmpty else {
             debugPrint("No submersion data to serialize.")
             return nil
         }

@@ -10,73 +10,115 @@ import SwiftUI
 struct LogbookDetail: View {
     let entry: SampleSet
     
-    // Toggles to preview data
-    @State private var showMotionJSON = false
-    @State private var showLocationJSON = false
-    @State private var showSubmersionJSON = false
-    
-    // Strings to store exported name and data
-    @State private var JSONName = ""
-    private var combinedData: StructuredData? {
-        return combineJSONsIntoStructuredData()
+    private var jsonExportManager: JSONExportManager {
+        return JSONExportManager(entry)
     }
     
-    // encoders and decosers for JSON output
-    let encoder = JSONEncoder()
-    let decoder = JSONDecoder()
+    // Toggles to preview data
+    @State private var showSummary: Bool = false
+    @State private var showMotionChart: Bool = false
+    @State private var showSubmersionChart: Bool = false
+
+    @State private var showMotionTable = false
+    @State private var showLocationTable = false
+    @State private var showSubmersionTable = false
+    
+    @State private var showDeviceDetails = false
+
+    
+    // Strings to store exported name and data
+    private var locationData: [LocationData] {
+        return jsonExportManager.locationData
+    }
+    private var motionData: [MotionData] {
+        return jsonExportManager.motionData
+    }
+    private var submersionData: [WaterSubmersionData] {
+        return jsonExportManager.submersionData
+    }
+    private var combinedData: StructuredData? {
+        return jsonExportManager.exportableData
+    }
+    @State private var JSONName = ""
     
     // time stamp formatter
     let timeStampFormatter = TimeStampManager()
     
     var body: some View {
         List {
-            Section("Deployment Details") {
+            Section("Deployment Map") {
+                DataMap(locationData: locationData)
+                    .frame(height: 250)
+                    .listRowInsets(EdgeInsets())
+            }
+            
+            Section {
                 DetailRow(header: "Start Time", content: timeStampFormatter.viewFormat(entry.startDatetime ?? Date(timeIntervalSince1970: 0)))
                 DetailRow(header: "End Time", content: timeStampFormatter.viewFormat(entry.stopDatetime ?? Date(timeIntervalSince1970: 0)))
                 DetailRow(header: "Samples", content: "\(entry.getMotionDataCount())")
-                DetailRow(header: "Sampling Frequency", content: "10 Hz")
+                DetailRow(header: "Sampling Frequency", content: "4 Hz")
                 DetailRow(header: "Min Temp", content: entry.getMinimumTemperature().isNaN ? "no submersion data" : String(format: "%.1f °C", entry.getMinimumTemperature()) )
                 DetailRow(header: "Max Depth", content: entry.getMaximumDepth().isNaN ? "no submersion data" : String(format: "%.1f m", entry.getMaximumDepth()))
                 DetailRow(header: "Source", content: entry.deviceName ?? "Unknown")
+            } header: {
+                Text("Deployment Summary")
             }
             
-            Section("Data Viewer") {
+            Section(isExpanded: $showMotionChart) {
+                MotionChart(motionData: motionData)
+            } header: {
+                Text( "Motion Chart")
+                    .font(.title)
+            }
+            
+            
+            Section(isExpanded: $showSubmersionChart) {
+                SubmersionChart(submersionData: submersionData)
+            } header: {
+                Text( "Submersion Chart")
+                    .font(.title)
+            }
+            
+            Section("Data Tables") {
                 // Buttons for viewing JSON data
                 Button("View Location Data") {
-                    showLocationJSON.toggle()
+                    showLocationTable.toggle()
                 }
-                .sheet(isPresented: $showLocationJSON) {
-                    DataView(combinedData: combinedData, sensorType: "location")
+                .sheet(isPresented: $showLocationTable) {
+                    LocationTable(locationData: locationData)
                 }
                 
                 Button("View Motion Data") {
-                    showMotionJSON.toggle()
+                    showMotionTable.toggle()
                 }
-                .sheet(isPresented: $showMotionJSON) {
-                    DataView(combinedData: combinedData, sensorType: "motion")
+                .sheet(isPresented: $showMotionTable) {
+                    MotionTable(motionData: motionData)
                 }
                 
                 Button("View Submersion Data") {
-                    showSubmersionJSON.toggle()
+                    showSubmersionTable.toggle()
                 }
-                .sheet(isPresented: $showSubmersionJSON) {
-                    DataView(combinedData: combinedData, sensorType: "submersion")
+                .sheet(isPresented: $showSubmersionTable) {
+                    SubmersionTable(submersionData: submersionData)
                 }
             }
             
-            Section("Device Details") {
+            Section(isExpanded: $showDeviceDetails) {
                 DetailRow(header: "Name", content: entry.deviceName ?? "Unknown")
                 DetailRow(header: "Manufacturer", content: entry.deviceManufacturer ?? "Unknown")
                 DetailRow(header: "Model", content: entry.deviceModel ?? "Unknown")
                 DetailRow(header: "Hardware Version", content: entry.deviceLocalizedModel ?? "Unknown")
                 DetailRow(header: "Software Version", content: entry.deviceSystemVersion ?? "Unknown")
+            } header: {
+                Text("Device Details")
             }
         }
+        .listStyle(.sidebar)
         .navigationBarTitleDisplayMode(.inline)
         .navigationTitle("Details")
         .toolbar {
-            if let combinedJSONString = convertCombinedDataToJSONString() {
-                ShareLink(item: exportCombinedJSON(fileName: JSONName, content: combinedJSONString))
+            if let combinedJSONString = jsonExportManager.convertStructuredDataToJSONString(combinedData) {
+                ShareLink(item: jsonExportManager.exportJSON(fileName: JSONName, content: combinedJSONString))
             } else {
                 Text("No data to share")
             }
@@ -85,84 +127,13 @@ struct LogbookDetail: View {
             self.JSONName = timeStampFormatter.exportNameFormat(entry.startDatetime ?? Date.now )+"_AWUData.json"
         }
     }
-
-    // Combine the data from all the sensors into one encodable structure
-    private func combineJSONsIntoStructuredData() -> StructuredData? {
-        // Grab the JSON strings from CoreData
-        guard let motionJSON = entry.motionJSON, let locationJSON = entry.locationJSON else {
-            print("No motionJSON or locationJSON found")
-            return nil
-        }
-        let submersionJSON = entry.waterSubmersionJSON ?? "[]"
-        
-        // Turn JSON strings into data
-        let locationData = Data(locationJSON.utf8)
-        let locationDecoded = try? decoder.decode( LocationData.self, from: locationData)
-        
-        
-        let motionData = Data(motionJSON.utf8)
-        let motionDecoded = try? decoder.decode( MotionData.self, from: motionData)
-        
-        let submersionData = Data(submersionJSON.utf8)
-        let submersionDecoded = try? decoder.decode( WaterSubmersionData.self, from: submersionData)
-        
-        do {
-            // extract location data
-            let locationArrays = LocationData(timestamp: locationDecoded?.timestamp ?? [], latitude: locationDecoded?.latitude ?? [], longitude: locationDecoded?.longitude ?? [])
-            let formattedLocationData = FormattedLocationData(values: locationArrays)
-            
-            // extract motion data
-            let motionArrays = MotionData(timestamp: motionDecoded?.timestamp ?? [], accelerationX: motionDecoded?.accelerationX ?? [], accelerationY: motionDecoded?.accelerationY ?? [], accelerationZ: motionDecoded?.accelerationZ ?? [], angularVelocityX: motionDecoded?.angularVelocityX ?? [], angularVelocityY: motionDecoded?.angularVelocityY ?? [], angularVelocityZ: motionDecoded?.angularVelocityZ ?? [], magneticFieldX: motionDecoded?.magneticFieldX ?? [], magneticFieldY: motionDecoded?.magneticFieldY ?? [], magneticFieldZ: motionDecoded?.magneticFieldZ ?? [])
-            let formattedMotionData = FormattedMotionData(values: motionArrays)
-            
-            // extract the submersion data
-            let submersionArrays = WaterSubmersionData(timestamp: submersionDecoded?.timestamp ?? [], depth: submersionDecoded?.depth ?? [], temperature: submersionDecoded?.temperature ?? [])
-            let formattedSubmersionData = FormattedSubmersionData(values: submersionArrays)
-            
-            // Combine the data
-            let structuredData = StructuredData(location: formattedLocationData, motion: formattedMotionData, submersion: formattedSubmersionData )
-            
-            return structuredData
-        } catch {
-            print("Error parsing or combining JSON: \(error)")
-            return nil
-        }
-    }
-
-    // Convert combined data to a string
-    private func convertCombinedDataToJSONString() -> String? {
-        guard let combinedData = combinedData else { return nil }
-        
-        encoder.outputFormatting = [.sortedKeys, .withoutEscapingSlashes]
-        do {
-            let jsonData = try encoder.encode(combinedData)
-            let jsonString = String(data: jsonData, encoding: .utf8)
-            return jsonString
-        } catch {
-            print("Error converting combined JSON to string: \(error)")
-            return nil
-        }
-    }
-    
-    // Temporarily save the CombinedJSON to document storage for export
-    func exportCombinedJSON(fileName: String, content: String) -> URL {
-        let documentsDirectory = URL.documentsDirectory
-        let fileURL = documentsDirectory.appending(path: fileName)
-        
-        do {
-            try content.write(to: fileURL, atomically: true, encoding: .utf8)
-        } catch {
-            print("Failed to write combined JSON: \(error.localizedDescription)")
-        }
-        
-        return fileURL
-    }
 }
 
 //#Preview {
 //    LogbookDetail()
 //}
 
+// Make a unified view for the rows in the sections
 struct DetailRow: View {
     let header: String
     let content: String

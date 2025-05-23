@@ -7,7 +7,54 @@
 
 import Foundation
 
-struct MotionData: Codable {
+// Motion structure to use inside swift
+struct MotionData: Codable, Identifiable {
+    let id = UUID()
+    var timestamp: String
+    var accelerationX: Double?
+    var accelerationY: Double?
+    var accelerationZ: Double?
+    var angularVelocityX: Double?
+    var angularVelocityY: Double?
+    var angularVelocityZ: Double?
+    var magneticFieldX: Double?
+    var magneticFieldY: Double?
+    var magneticFieldZ: Double?
+    
+    func encode(to encoder: any Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        
+        // encode the timestamp
+        try container.encode(timestamp, forKey: .timestamp)
+        
+        // encode the motion
+        try container.encode(accelerationX, forKey: .accelerationX)
+        try container.encode(accelerationY, forKey: .accelerationY)
+        try container.encode(accelerationZ, forKey: .accelerationZ)
+        try container.encode(angularVelocityX, forKey: .angularVelocityX)
+        try container.encode(angularVelocityY, forKey: .angularVelocityY)
+        try container.encode(angularVelocityZ, forKey: .angularVelocityZ)
+        try container.encode(magneticFieldX, forKey: .magneticFieldX)
+        try container.encode(magneticFieldY, forKey: .magneticFieldY)
+        try container.encode(magneticFieldZ, forKey: .magneticFieldZ)
+    }
+    
+    enum CodingKeys: String, CodingKey {
+        case timestamp
+        case accelerationX
+        case accelerationY
+        case accelerationZ
+        case angularVelocityX
+        case angularVelocityY
+        case angularVelocityZ
+        case magneticFieldX
+        case magneticFieldY
+        case magneticFieldZ
+    }
+}
+
+// Motion structure for use to export as JSON
+struct MotionArrays: Codable {
     var timestamp: [String?]
     var accelerationX: [Double?]
     var accelerationY: [Double?]

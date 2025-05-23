@@ -89,9 +89,9 @@ extension SampleSet {
     func getMinimumTemperature() -> Double {
         guard let json = waterSubmersionJSON, let data = json.data(using: .utf8) else { return Double.nan }
         do {
-            let temperatureData = try JSONDecoder().decode(WaterSubmersionData.self, from: data)
-            let temperatures = temperatureData.temperature
-            return temperatures.min() ?? Double.nan
+            let temperatureData = try JSONDecoder().decode([WaterSubmersionData].self, from: data)
+            let minTemp = temperatureData.map({ $0.temperature ?? Double.nan }).min()
+            return minTemp ?? Double.nan
         } catch {
             print("Error parsing submersion JSON for temperature: \(error)")
             return Double.nan
@@ -101,9 +101,9 @@ extension SampleSet {
     func getMaximumDepth() -> Double {
         guard let json = waterSubmersionJSON, let data = json.data(using: .utf8) else { return Double.nan }
         do {
-            let depthData = try JSONDecoder().decode(WaterSubmersionData.self, from: data)
-            let depths = depthData.depth
-            return depths.max() ?? Double.nan
+            let depthData = try JSONDecoder().decode([WaterSubmersionData].self, from: data)
+            let maxDepth = depthData.map( { $0.depth ?? Double.nan } ).max()
+            return maxDepth ?? Double.nan
         } catch {
             print("Error parsing submersion JSON for depth: \(error)")
             return Double.nan
@@ -113,9 +113,8 @@ extension SampleSet {
     func getMotionDataCount() -> Int {
         guard let json = motionJSON, let data = json.data(using: .utf8) else { return 0 }
         do {
-            let motionData = try JSONDecoder().decode(MotionData.self, from: data)
-            let accelerationX = motionData.accelerationX
-            return accelerationX.count
+            let motionData = try JSONDecoder().decode([MotionData].self, from: data)
+            return motionData.count
         } catch {
             print("Error parsing motion JSON for data count: \(error)")
             return 0

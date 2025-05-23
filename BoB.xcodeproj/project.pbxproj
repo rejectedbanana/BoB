@@ -3,14 +3,16 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 56;
+	objectVersion = 70;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		210CB8262CAC8D700060DECA /* StructuredData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 210CB8252CAC8D700060DECA /* StructuredData.swift */; };
 		2111BCA92CC0315B00AD6965 /* StartSamplingMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2111BCA82CC0315B00AD6965 /* StartSamplingMessageView.swift */; };
+		2116A8A12D920F3900B1D36C /* DataMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2116A8A02D920F3900B1D36C /* DataMap.swift */; };
+		2121D2A52D9C917A00512A36 /* TimeSeriesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2121D2A42D9C917A00512A36 /* TimeSeriesView.swift */; };
 		2132F3B02CDE8DF00041C5A3 /* WaterlockInstructionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2132F3AF2CDE8DF00041C5A3 /* WaterlockInstructionsView.swift */; };
-		21355A2B2CB9A70700323D86 /* DataView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21355A2A2CB9A70700323D86 /* DataView.swift */; };
+		21A14E252DC278FD002883E0 /* JSONExportManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21A14E242DC278FD002883E0 /* JSONExportManager.swift */; };
 		21BBC6792CB05DCA0082B0F3 /* MotionData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97FC9EE52C1CFA1D0076F30E /* MotionData.swift */; };
 		21BBC67A2CB0922E0082B0F3 /* WaterSubmersionData.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCBA60C82C6D3F4200E01B1F /* WaterSubmersionData.swift */; };
 		21D1B4E72CC0563900489182 /* StopSamplingMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21D1B4E62CC0563900489182 /* StopSamplingMessageView.swift */; };
@@ -79,8 +81,10 @@
 /* Begin PBXFileReference section */
 		210CB8252CAC8D700060DECA /* StructuredData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StructuredData.swift; sourceTree = "<group>"; };
 		2111BCA82CC0315B00AD6965 /* StartSamplingMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartSamplingMessageView.swift; sourceTree = "<group>"; };
+		2116A8A02D920F3900B1D36C /* DataMap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataMap.swift; sourceTree = "<group>"; };
+		2121D2A42D9C917A00512A36 /* TimeSeriesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeSeriesView.swift; sourceTree = "<group>"; };
 		2132F3AF2CDE8DF00041C5A3 /* WaterlockInstructionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaterlockInstructionsView.swift; sourceTree = "<group>"; };
-		21355A2A2CB9A70700323D86 /* DataView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataView.swift; sourceTree = "<group>"; };
+		21A14E242DC278FD002883E0 /* JSONExportManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONExportManager.swift; sourceTree = "<group>"; };
 		21D1B4E62CC0563900489182 /* StopSamplingMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StopSamplingMessageView.swift; sourceTree = "<group>"; };
 		3001E6F92B8426E0003B09B1 /* MetadataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetadataManager.swift; sourceTree = "<group>"; };
 		97349CEA2AF1679300021CA3 /* RawMotionRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RawMotionRow.swift; sourceTree = "<group>"; };
@@ -118,6 +122,11 @@
 		FCBA60C42C6BC20300E01B1F /* WaterSubmersionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaterSubmersionManager.swift; sourceTree = "<group>"; };
 		FCBA60C82C6D3F4200E01B1F /* WaterSubmersionData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaterSubmersionData.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		218581972DCBF9BE000A3361 /* Charts */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Charts; sourceTree = "<group>"; };
+		218581982DCBF9D9000A3361 /* DataTables */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = DataTables; sourceTree = "<group>"; };
+/* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		97DF8E922AE195FA00A33A80 /* Frameworks */ = {
@@ -162,7 +171,10 @@
 			children = (
 				97E505822B472F9700334D6F /* LogbookDetail.swift */,
 				9794676E2BEE8A0D00DF6E0B /* ListRow.swift */,
-				21355A2A2CB9A70700323D86 /* DataView.swift */,
+				2116A8A02D920F3900B1D36C /* DataMap.swift */,
+				2121D2A42D9C917A00512A36 /* TimeSeriesView.swift */,
+				218581972DCBF9BE000A3361 /* Charts */,
+				218581982DCBF9D9000A3361 /* DataTables */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -171,6 +183,7 @@
 			isa = PBXGroup;
 			children = (
 				210CB8252CAC8D700060DECA /* StructuredData.swift */,
+				21A14E242DC278FD002883E0 /* JSONExportManager.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -360,6 +373,10 @@
 			dependencies = (
 				97DF8EB62AE1968600A33A80 /* PBXTargetDependency */,
 			);
+			fileSystemSynchronizedGroups = (
+				218581972DCBF9BE000A3361 /* Charts */,
+				218581982DCBF9D9000A3361 /* DataTables */,
+			);
 			name = BoB;
 			productName = BoB;
 			productReference = 97DF8E952AE195FA00A33A80 /* BoB.app */;
@@ -454,10 +471,12 @@
 				97E505832B472F9700334D6F /* LogbookDetail.swift in Sources */,
 				21BBC6792CB05DCA0082B0F3 /* MotionData.swift in Sources */,
 				977E74CC2BE9895D009A36AD /* Bob.xcdatamodeld in Sources */,
+				2121D2A52D9C917A00512A36 /* TimeSeriesView.swift in Sources */,
 				97DF8E9B2AE195FA00A33A80 /* ContentView.swift in Sources */,
-				21355A2B2CB9A70700323D86 /* DataView.swift in Sources */,
 				210CB8262CAC8D700060DECA /* StructuredData.swift in Sources */,
 				97DF8E992AE195FA00A33A80 /* BoBApp.swift in Sources */,
+				21A14E252DC278FD002883E0 /* JSONExportManager.swift in Sources */,
+				2116A8A12D920F3900B1D36C /* DataMap.swift in Sources */,
 				9794676F2BEE8A0D00DF6E0B /* ListRow.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
