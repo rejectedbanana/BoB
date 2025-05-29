@@ -15,11 +15,10 @@ struct LogbookDetail: View {
     }
     
     // Toggles to preview data
-    @State private var showMotionChart: Bool = true
-    @State private var showSubmersionChart: Bool = true
-    @State private var showSummary: Bool = false
+    @State private var showSummary = false
     @State private var showDeviceDetails = false
 
+    @State private var showDataTables = false
     @State private var showMotionTable = false
     @State private var showLocationTable = false
     @State private var showSubmersionTable = false
@@ -51,13 +50,13 @@ struct LogbookDetail: View {
                     .listRowInsets(EdgeInsets())
             }
             
-            Section(isExpanded: $showSubmersionChart) {
+            Section {
                 SubmersionChart(submersionData: submersionData)
             } header: {
                 Text( "Submersion Chart")
             }
             
-            Section(isExpanded: $showMotionChart) {
+            Section {
                 MotionChart(motionData: motionData)
             } header: {
                 Text( "Motion Chart")
@@ -85,7 +84,7 @@ struct LogbookDetail: View {
                 Text("Device Details")
             }
             
-            Section("Data Tables") {
+            Section(isExpanded: $showDataTables) {
                 // Buttons for viewing JSON data
                 Button("View Location Data") {
                     showLocationTable.toggle()
@@ -107,6 +106,8 @@ struct LogbookDetail: View {
                 .sheet(isPresented: $showSubmersionTable) {
                     SubmersionTable(submersionData: submersionData)
                 }
+            } header: {
+                Text("Data Tables")
             }
         }
         .listStyle(.sidebar)
