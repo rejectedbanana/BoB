@@ -15,15 +15,14 @@ struct LogbookDetail: View {
     }
     
     // Toggles to preview data
+    @State private var showMotionChart: Bool = true
+    @State private var showSubmersionChart: Bool = true
     @State private var showSummary: Bool = false
-    @State private var showMotionChart: Bool = false
-    @State private var showSubmersionChart: Bool = false
+    @State private var showDeviceDetails = false
 
     @State private var showMotionTable = false
     @State private var showLocationTable = false
     @State private var showSubmersionTable = false
-    
-    @State private var showDeviceDetails = false
 
     
     // Strings to store exported name and data
@@ -52,7 +51,19 @@ struct LogbookDetail: View {
                     .listRowInsets(EdgeInsets())
             }
             
-            Section {
+            Section(isExpanded: $showSubmersionChart) {
+                SubmersionChart(submersionData: submersionData)
+            } header: {
+                Text( "Submersion Chart")
+            }
+            
+            Section(isExpanded: $showMotionChart) {
+                MotionChart(motionData: motionData)
+            } header: {
+                Text( "Motion Chart")
+            }
+            
+            Section(isExpanded: $showSummary) {
                 DetailRow(header: "Start Time", content: timeStampFormatter.viewFormat(entry.startDatetime ?? Date(timeIntervalSince1970: 0)))
                 DetailRow(header: "End Time", content: timeStampFormatter.viewFormat(entry.stopDatetime ?? Date(timeIntervalSince1970: 0)))
                 DetailRow(header: "Samples", content: "\(entry.getMotionDataCount())")
@@ -64,19 +75,14 @@ struct LogbookDetail: View {
                 Text("Deployment Summary")
             }
             
-            Section(isExpanded: $showMotionChart) {
-                MotionChart(motionData: motionData)
+            Section(isExpanded: $showDeviceDetails) {
+                DetailRow(header: "Name", content: entry.deviceName ?? "Unknown")
+                DetailRow(header: "Manufacturer", content: entry.deviceManufacturer ?? "Unknown")
+                DetailRow(header: "Model", content: entry.deviceModel ?? "Unknown")
+                DetailRow(header: "Hardware Version", content: entry.deviceLocalizedModel ?? "Unknown")
+                DetailRow(header: "Software Version", content: entry.deviceSystemVersion ?? "Unknown")
             } header: {
-                Text( "Motion Chart")
-                    .font(.title)
-            }
-            
-            
-            Section(isExpanded: $showSubmersionChart) {
-                SubmersionChart(submersionData: submersionData)
-            } header: {
-                Text( "Submersion Chart")
-                    .font(.title)
+                Text("Device Details")
             }
             
             Section("Data Tables") {
@@ -101,16 +107,6 @@ struct LogbookDetail: View {
                 .sheet(isPresented: $showSubmersionTable) {
                     SubmersionTable(submersionData: submersionData)
                 }
-            }
-            
-            Section(isExpanded: $showDeviceDetails) {
-                DetailRow(header: "Name", content: entry.deviceName ?? "Unknown")
-                DetailRow(header: "Manufacturer", content: entry.deviceManufacturer ?? "Unknown")
-                DetailRow(header: "Model", content: entry.deviceModel ?? "Unknown")
-                DetailRow(header: "Hardware Version", content: entry.deviceLocalizedModel ?? "Unknown")
-                DetailRow(header: "Software Version", content: entry.deviceSystemVersion ?? "Unknown")
-            } header: {
-                Text("Device Details")
             }
         }
         .listStyle(.sidebar)
