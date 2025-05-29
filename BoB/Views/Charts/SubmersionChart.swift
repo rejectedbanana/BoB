@@ -50,13 +50,17 @@ struct timeSeries: View {
                 )
                 .foregroundStyle(.blue)
                 .interpolationMethod(.linear)
-                .symbol(Circle())
+                
+                PointMark(
+                    x: .value("Date", timeStampManager.ISO8601StringtoDate(item.timestamp) ?? Date()),
+                    y: .value("Depth", item.depth ?? Double.nan)
+                )
+                .symbolSize(10)
                 .accessibilityLabel("Depth versus Time")
                 .accessibilityValue("Depth: \(item.depth ?? Double.nan) meters")
             }
             .chartYAxisLabel("Depth [m]")
-            .frame(height: 200)
-            .padding()
+            .frame(height: 140)
             
             Chart(submersionData) { item in
                 LineMark(
@@ -65,14 +69,18 @@ struct timeSeries: View {
                 )
                 .foregroundStyle(.blue)
                 .interpolationMethod(.linear)
-                .symbol(Circle())
+                
+                PointMark(
+                    x: .value("Date", timeStampManager.ISO8601StringtoDate(item.timestamp) ?? Date()),
+                    y: .value("Acceleration", item.temperature ?? Double.nan)
+                )
+                .symbolSize(10)
                 .accessibilityLabel("Temperature versus Time")
                 .accessibilityValue("Temperature: \(item.temperature ?? Double.nan) degrees Celsius")
             }
             .chartYAxisLabel("Temperature [°C]")
-            .frame(height: 200)
-            .padding()
         }
+        .frame(height: 300)
     }
 }
 // Vertical profile of temperature agaist depth
@@ -87,14 +95,19 @@ struct temperatureDepth: View {
             )
             .foregroundStyle(.blue)
             .interpolationMethod(.linear)
-            .symbol(Circle())
+
+            
+            PointMark(
+                x: .value("Temperature", item.temperature ?? Double.nan),
+                y: .value("Depth", -1*(item.depth ?? Double.nan))
+            )
+            .symbolSize(10)
             .accessibilityLabel("Temperature versus Depth")
             .accessibilityValue("Temperature: \(item.temperature ?? Double.nan) degrees Celsius")
         }
         .chartXAxisLabel("Temperature [°C]")
         .chartYAxisLabel("Depth [m]")
-        .frame(height: 430)
-        .padding()
+        .frame(height: 300)
     }
 }
 
