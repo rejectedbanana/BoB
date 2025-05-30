@@ -12,6 +12,14 @@ struct SubmersionChart: View {
     let submersionData: [WaterSubmersionData]
     
     @State private var isTimeSeries: Bool = true
+    
+    // pull out the minimum and maximum temperatures
+    private var minTemperature: Double {
+        submersionData.map{ $0.temperature ?? -2.0 }.min() ?? -2.0
+    }
+    private var maxTemperature: Double {
+        submersionData.map{ $0.temperature ?? 150.0 }.max() ?? 150.0
+    }
 
     var body: some View {
         // If there is no data, don't plot anything
@@ -26,9 +34,9 @@ struct SubmersionChart: View {
                 .pickerStyle(.segmented)
                 
                 if isTimeSeries {
-                    timeSeries(submersionData: submersionData)
+                    timeSeries(submersionData: submersionData, minTemperature: minTemperature, maxTemperature: maxTemperature)
                 } else {
-                    temperatureDepth(submersionData: submersionData)
+                    verticalProfile(submersionData: submersionData, minTemperature: minTemperature, maxTemperature: maxTemperature)
                 }
             }
         }
@@ -39,6 +47,8 @@ struct SubmersionChart: View {
 // Time Series of Temperature and Pressure
 struct timeSeries: View {
     let submersionData: [WaterSubmersionData]
+    let minTemperature: Double
+    let maxTemperature: Double
     let timeStampManager = TimeStampManager()
     
     var body: some View {
@@ -46,17 +56,20 @@ struct timeSeries: View {
             Chart(submersionData) { item in
                 LineMark(
                     x: .value("Date", timeStampManager.ISO8601StringtoDate(item.timestamp) ?? Date()),
-                    y: .value("Depth", item.depth ?? Double.nan)
+                    y: .value("Depth", -1*(item.depth ?? Double.nan))
                 )
                 .foregroundStyle(.blue)
                 .interpolationMethod(.linear)
-                .symbol(Circle())
+                
+                PointMark(
+                    x: .value("Date", timeStampManager.ISO8601StringtoDate(item.timestamp) ?? Date()),
+                    y: .value("Depth", -1.0*(item.depth ?? Double.nan) )
+                )
+                .symbolSize(10)
                 .accessibilityLabel("Depth versus Time")
                 .accessibilityValue("Depth: \(item.depth ?? Double.nan) meters")
             }
             .chartYAxisLabel("Depth [m]")
-            .frame(height: 200)
-            .padding()
             
             Chart(submersionData) { item in
                 LineMark(
@@ -65,19 +78,26 @@ struct timeSeries: View {
                 )
                 .foregroundStyle(.blue)
                 .interpolationMethod(.linear)
-                .symbol(Circle())
+                
+                PointMark(
+                    x: .value("Date", timeStampManager.ISO8601StringtoDate(item.timestamp) ?? Date()),
+                    y: .value("Acceleration", item.temperature ?? Double.nan)
+                )
+                .symbolSize(10)
                 .accessibilityLabel("Temperature versus Time")
                 .accessibilityValue("Temperature: \(item.temperature ?? Double.nan) degrees Celsius")
             }
+            .chartYScale(domain: minTemperature...maxTemperature)
             .chartYAxisLabel("Temperature [°C]")
-            .frame(height: 200)
-            .padding()
         }
+        .frame(height: 300)
     }
 }
 // Vertical profile of temperature agaist depth
-struct temperatureDepth: View {
+struct verticalProfile: View {
     let submersionData: [WaterSubmersionData]
+    let minTemperature: Double
+    let maxTemperature: Double
     
     var body: some View {
         Chart(submersionData) { item in
@@ -87,14 +107,20 @@ struct temperatureDepth: View {
             )
             .foregroundStyle(.blue)
             .interpolationMethod(.linear)
-            .symbol(Circle())
+
+            
+            PointMark(
+                x: .value("Temperature", item.temperature ?? Double.nan),
+                y: .value("Depth", -1*(item.depth ?? Double.nan))
+            )
+            .symbolSize(10)
             .accessibilityLabel("Temperature versus Depth")
             .accessibilityValue("Temperature: \(item.temperature ?? Double.nan) degrees Celsius")
         }
+        .chartXScale(domain: minTemperature...maxTemperature)
         .chartXAxisLabel("Temperature [°C]")
         .chartYAxisLabel("Depth [m]")
-        .frame(height: 430)
-        .padding()
+        .frame(height: 300)
     }
 }
 

@@ -17,8 +17,9 @@ struct ListRow: View {
         HStack {
             Image(systemName: "mappin.and.ellipse")
                 .resizable()
+                .scaledToFit()
                 .foregroundColor(.fandango)
-                .frame(width: 30, height: 30)
+                .frame(width: 30, height: 28)
             VStack(alignment: .leading) {
                 Text(timeStampFormatter.viewFormat( entry.startDatetime ?? Date(timeIntervalSince1970: 0) )) // change this unwrap to something else when I figure out how
                 Text(String(format: "%0.3f", entry.startLatitude)+" N, "+String(format: "%0.3f", entry.startLongitude)+" E")
