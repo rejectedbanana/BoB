@@ -135,7 +135,8 @@ struct MotionChart: View {
             ])
             .chartYScale(domain: -maxAbsAcceleration ... maxAbsAcceleration)
             .chartYAxisLabel("Acceleration [m/s^2]")
-            .chartLegend(.hidden)
+            .chartLegend(position: .top, alignment: .leading)
+            .frame(height: 220)
             
             // Anuglar Velocity Plot
             Chart {
@@ -165,6 +166,7 @@ struct MotionChart: View {
             .chartYScale(domain: -maxAbsAngularVelocity ... maxAbsAngularVelocity)
             .chartYAxisLabel("Angular Velocity [m/s]")
             .chartLegend(.hidden)
+            .frame(height: 200)
             
             //  Magnetic Field Plot
             Chart {
@@ -193,10 +195,10 @@ struct MotionChart: View {
             ])
             .chartYScale(domain: -maxAbsMagneticField ... maxAbsMagneticField)
             .chartYAxisLabel("Magnetic Field [uT]")
-//            .chartLegend(.hidden)
+            .chartLegend(.hidden)
+            .frame(height: 200)
             
         }
-        .frame(height: 430)
     }
 }
 

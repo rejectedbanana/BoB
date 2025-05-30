@@ -46,20 +46,20 @@ struct LogbookDetail: View {
         List {
             Section("Deployment Map") {
                 DataMap(locationData: locationData)
-                    .frame(height: 250)
+                    .frame(height: 180)
                     .listRowInsets(EdgeInsets())
             }
             
             Section {
                 SubmersionChart(submersionData: submersionData)
             } header: {
-                Text( "Submersion Chart")
+                Text( "Submersion Data")
             }
             
             Section {
                 MotionChart(motionData: motionData)
             } header: {
-                Text( "Motion Chart")
+                Text( "Motion Data")
             }
             
             Section(isExpanded: $showSummary) {
