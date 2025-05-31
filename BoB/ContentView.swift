@@ -51,9 +51,9 @@ struct ContentView: View {
                                 .foregroundColor(.blue)
                         }
                         .alert("Reasons why your data might not be syncing", isPresented: $showAlert) {
-                            Button("OK, patience is a virtue 😊", role: .cancel) { }
-                            Button("I still need help 🙁") {
-                                let subject = "Help! Bob is behaving badly. 🙁"
+                            Button("OK", role: .cancel) { }
+                            Button("Help!") {
+                                let subject = "Help! Bob is behaving badly 🙁"
                                 let encodedSubject = subject.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
                                 if let url = URL(string: "mailto:waves@tiniscientific.com?subject=\(encodedSubject)") {
                                     UIApplication.shared.open(url)
