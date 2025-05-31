@@ -8,6 +8,7 @@
 import Foundation
 
 struct StructuredData: Codable {
+    let metadata: watchMetadata
     let location: FormattedLocationData
     let motion: FormattedMotionData
     let submersion: FormattedSubmersionData

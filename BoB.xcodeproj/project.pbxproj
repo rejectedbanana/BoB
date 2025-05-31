@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		210A4ED62DEB3E9600ADF94A /* watchMetadata.swift in Sources */ = {isa = PBXBuildFile; fileRef = 210A4ED52DEB3E9600ADF94A /* watchMetadata.swift */; };
 		210CB8262CAC8D700060DECA /* StructuredData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 210CB8252CAC8D700060DECA /* StructuredData.swift */; };
 		2111BCA92CC0315B00AD6965 /* StartSamplingMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2111BCA82CC0315B00AD6965 /* StartSamplingMessageView.swift */; };
 		2116A8A12D920F3900B1D36C /* DataMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2116A8A02D920F3900B1D36C /* DataMap.swift */; };
@@ -79,6 +80,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		210A4ED52DEB3E9600ADF94A /* watchMetadata.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = watchMetadata.swift; sourceTree = "<group>"; };
 		210CB8252CAC8D700060DECA /* StructuredData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StructuredData.swift; sourceTree = "<group>"; };
 		2111BCA82CC0315B00AD6965 /* StartSamplingMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartSamplingMessageView.swift; sourceTree = "<group>"; };
 		2116A8A02D920F3900B1D36C /* DataMap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataMap.swift; sourceTree = "<group>"; };
@@ -184,6 +186,7 @@
 			children = (
 				210CB8252CAC8D700060DECA /* StructuredData.swift */,
 				21A14E242DC278FD002883E0 /* JSONExportManager.swift */,
+				210A4ED52DEB3E9600ADF94A /* watchMetadata.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -473,6 +476,7 @@
 				977E74CC2BE9895D009A36AD /* Bob.xcdatamodeld in Sources */,
 				2121D2A52D9C917A00512A36 /* TimeSeriesView.swift in Sources */,
 				97DF8E9B2AE195FA00A33A80 /* ContentView.swift in Sources */,
+				210A4ED62DEB3E9600ADF94A /* watchMetadata.swift in Sources */,
 				210CB8262CAC8D700060DECA /* StructuredData.swift in Sources */,
 				97DF8E992AE195FA00A33A80 /* BoBApp.swift in Sources */,
 				21A14E252DC278FD002883E0 /* JSONExportManager.swift in Sources */,

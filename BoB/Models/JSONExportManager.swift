@@ -21,6 +21,9 @@ class JSONExportManager: ObservableObject {
     let decoder = JSONDecoder()
     
     // compute the other properties
+    var metaData: watchMetadata {
+        return entryToMetaData(entry)
+    }
     var locationData: [LocationData] {
         return entryToLocationData(entry)
     }
@@ -31,10 +34,22 @@ class JSONExportManager: ObservableObject {
         return entryToSubmersionData(entry)
     }
     var exportableData: StructuredData? {
-        return combineDataIntoStructuredData(locationDecoded: locationData, motionDecoded: motionData, submersionDecoded: submersionData) ?? nil
+        return combineDataIntoStructuredData(metadata: metaData, locationDecoded: locationData, motionDecoded: motionData, submersionDecoded: submersionData) ?? nil
     }
     
     // class methods
+    func entryToMetaData(_ entry: SampleSet) -> watchMetadata {
+       return watchMetadata(
+            fileID: entry.name ?? "unknown",
+            filename: entry.name ?? "unknown",
+            deviceName: entry.deviceName ?? "unknown",
+            deviceManufacturer: entry.deviceManufacturer ?? "unknown",
+            deviceModel: entry.deviceModel ?? "unknown",
+            deviceHardwareVersion: entry.deviceLocalizedModel ?? "unknown",
+            deviceOperatingSystemVersion: entry.deviceSystemVersion ?? "unknown"
+        )
+    }
+    
     func entryToLocationData(_ entry: SampleSet) -> [LocationData] {
         guard let locationJSON = entry.locationJSON else {
             print("No location JSON found in Core Data entry")
@@ -83,7 +98,7 @@ class JSONExportManager: ObservableObject {
         }
     }
     
-    func combineDataIntoStructuredData(locationDecoded: [LocationData], motionDecoded: [MotionData], submersionDecoded: [WaterSubmersionData]) -> StructuredData? {
+    func combineDataIntoStructuredData(metadata: watchMetadata, locationDecoded: [LocationData], motionDecoded: [MotionData], submersionDecoded: [WaterSubmersionData]) -> StructuredData? {
         
         // Make the structures to fill
         var structuredData: StructuredData?
@@ -122,7 +137,7 @@ class JSONExportManager: ObservableObject {
         let formattedMotionData = FormattedMotionData(values: motionArray)
         let formattedSubmersionData = FormattedSubmersionData(values: submersionArray)
         
-        structuredData = StructuredData(location: formattedLocationData, motion: formattedMotionData, submersion: formattedSubmersionData )
+        structuredData = StructuredData(metadata: metadata,location: formattedLocationData, motion: formattedMotionData, submersion: formattedSubmersionData )
         
         // Combine the data
         if let outputData = structuredData {
@@ -134,7 +149,7 @@ class JSONExportManager: ObservableObject {
     }
     
     func convertStructuredDataToJSONString(_ structuredData: StructuredData?) -> String? {
-        encoder.outputFormatting = [.sortedKeys, .withoutEscapingSlashes]
+        encoder.outputFormatting = [.prettyPrinted, .sortedKeys, .withoutEscapingSlashes]
         
         do {
             let jsonData = try encoder.encode(structuredData)

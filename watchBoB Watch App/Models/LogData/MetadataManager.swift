@@ -24,7 +24,6 @@ class MetadataManager: NSObject, ObservableObject, CLLocationManagerDelegate {
     var stopDatetime: Date?
     var stopLatitude: Double = 0.0
     var stopLongitude: Double = 0.0
-    
     // Device Info
     var deviceName: String = "Unknown"
     var deviceModel: String = "Unknown"
