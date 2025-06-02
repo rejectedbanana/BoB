@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="23231" systemVersion="24A348" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithCloudKit="YES" usedWithSwiftData="YES" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="23788" systemVersion="24F74" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithCloudKit="YES" usedWithSwiftData="YES" userDefinedModelVersionIdentifier="">
     <entity name="SampleSet" representedClassName="SampleSet" syncable="YES">
         <attribute name="deviceLocalizedModel" optional="YES" attributeType="String"/>
         <attribute name="deviceManufacturer" optional="YES" attributeType="String"/>
         <attribute name="deviceModel" optional="YES" attributeType="String"/>
         <attribute name="deviceName" optional="YES" attributeType="String"/>
         <attribute name="deviceSystemVersion" optional="YES" attributeType="String"/>
+        <attribute name="filename" optional="YES" attributeType="String"/>
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="locationJSON" optional="YES" attributeType="String"/>
         <attribute name="motionJSON" optional="YES" attributeType="String"/>

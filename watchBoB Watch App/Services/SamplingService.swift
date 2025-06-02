@@ -42,6 +42,7 @@ class SamplingService {
         newEntry.startDatetime = metadataManager.startDatetime
         newEntry.stopDatetime = metadataManager.stopDatetime
         newEntry.name = metadataManager.name
+        newEntry.filename = metadataManager.name // adjust me
         newEntry.startLatitude = metadataManager.startLatitude
         newEntry.startLongitude = metadataManager.startLongitude
         newEntry.stopLatitude = metadataManager.stopLatitude
