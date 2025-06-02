@@ -17,7 +17,7 @@ extension SampleSet {
     }
 
     @NSManaged public var id: UUID?
-    @NSManaged public var name: String?
+    @NSManaged public var fileID: String?
     @NSManaged public var filename: String?
     @NSManaged public var startDatetime: Date?
     @NSManaged public var startLatitude: Double
@@ -57,7 +57,7 @@ extension SampleSet : Identifiable {
 extension SampleSet: Codable {
     enum CodingKeys: CodingKey {
         case id
-        case name
+        case fileID
         case filename
         case startDatetime
         case startLatitude

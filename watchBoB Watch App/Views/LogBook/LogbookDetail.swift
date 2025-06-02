@@ -16,7 +16,7 @@ struct LogbookDetail: View {
     var body: some View {
         ScrollView {
             VStack(alignment: .leading) {
-                DetailRow(header: "name", content: record.name ?? "Name Unknown")
+                DetailRow(header: "FileID", content: record.fileID ?? "Unknown")
                 DetailRow(header: "Filename", content: record.filename ?? "Unknown")
                 DetailRow(header: "Min Temp", content: record.getMinimumTemperature().isNaN ? "no submersion data" : String(format: "%.1f °C", record.getMinimumTemperature()) )
                 DetailRow(header: "Max Depth", content: record.getMaximumDepth().isNaN ? "no submersion data" : String(format: "%.1f m", record.getMaximumDepth()))
