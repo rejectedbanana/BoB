@@ -168,7 +168,7 @@ class JSONExportManager: ObservableObject {
     }
     
     func convertStructuredDataToJSONString(_ structuredData: StructuredData?) -> String? {
-        encoder.outputFormatting = [.prettyPrinted, .sortedKeys, .withoutEscapingSlashes]
+        encoder.outputFormatting = [.sortedKeys, .withoutEscapingSlashes]
         
         do {
             let jsonData = try encoder.encode(structuredData)
