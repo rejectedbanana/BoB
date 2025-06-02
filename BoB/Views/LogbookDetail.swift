@@ -44,6 +44,11 @@ struct LogbookDetail: View {
     
     var body: some View {
         List {
+            Section{
+                DetailRow(header: "File Name", content: entry.filename ?? "Unknown")
+                DetailRow(header: "File ID", content: entry.fileID ?? "Unknown")
+            }
+            
             Section("Deployment Map") {
                 DataMap(locationData: locationData)
                     .frame(height: 180)
