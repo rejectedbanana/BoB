@@ -58,7 +58,7 @@ class JSONExportManager: ObservableObject {
         
        return watchMetadata(
             fileID: entry.fileID ?? "unknown",
-            fileName: entry.filename ?? "unknown",
+            fileName: entry.fileName ?? "unknown",
             deviceName: entry.deviceName ?? "unknown",
             deviceManufacturer: entry.deviceManufacturer ?? "unknown",
             deviceModel: entry.deviceModel ?? "unknown",

@@ -7,7 +7,7 @@
         <attribute name="deviceName" optional="YES" attributeType="String"/>
         <attribute name="deviceSystemVersion" optional="YES" attributeType="String"/>
         <attribute name="fileID" optional="YES" attributeType="String"/>
-        <attribute name="filename" optional="YES" attributeType="String"/>
+        <attribute name="fileName" optional="YES" attributeType="String"/>
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="locationJSON" optional="YES" attributeType="String"/>
         <attribute name="motionJSON" optional="YES" attributeType="String"/>
