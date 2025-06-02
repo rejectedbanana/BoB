@@ -20,7 +20,13 @@ class JSONExportManager: ObservableObject {
     let encoder = JSONEncoder()
     let decoder = JSONDecoder()
     
+    // load in a timestamp manager
+    let timeStampFormatter = TimeStampManager()
+    
     // compute the other properties
+    var metaData: watchMetadata {
+        return entryToMetaData(entry)
+    }
     var locationData: [LocationData] {
         return entryToLocationData(entry)
     }
@@ -31,10 +37,38 @@ class JSONExportManager: ObservableObject {
         return entryToSubmersionData(entry)
     }
     var exportableData: StructuredData? {
-        return combineDataIntoStructuredData(locationDecoded: locationData, motionDecoded: motionData, submersionDecoded: submersionData) ?? nil
+        return combineDataIntoStructuredData(metadata: metaData, locationDecoded: locationData, motionDecoded: motionData, submersionDecoded: submersionData) ?? nil
     }
     
     // class methods
+    func entryToMetaData(_ entry: SampleSet) -> watchMetadata {
+        let samplingStart = SamplingInfo(
+            description: "Metadata taken immediately before sampling is started and the watch starts continuously taking data. (Default = Jan 1, 1970 at 12:00 AM)",
+            datetime: timeStampFormatter.ISO8601Format(entry.startDatetime ?? Date(timeIntervalSince1970: 0)),
+            latitude: entry.startLatitude,
+            longitude: entry.startLatitude
+            )
+        
+        let samplingStop = SamplingInfo(
+            description: "Metadata taken immediately after sampling is canceled and the watch stops continuously taking data. (Default = Jan 1, 1970 at 12:00 AM)",
+            datetime: timeStampFormatter.ISO8601Format(entry.startDatetime ?? Date(timeIntervalSince1970: 0)),
+            latitude: entry.startLatitude,
+            longitude: entry.startLatitude
+            )
+        
+       return watchMetadata(
+            fileID: entry.name ?? "unknown",
+            filename: entry.name ?? "unknown",
+            deviceName: entry.deviceName ?? "unknown",
+            deviceManufacturer: entry.deviceManufacturer ?? "unknown",
+            deviceModel: entry.deviceModel ?? "unknown",
+            deviceHardwareVersion: entry.deviceLocalizedModel ?? "unknown",
+            deviceOperatingSystemVersion: entry.deviceSystemVersion ?? "unknown",
+            samplingStart: samplingStart,
+            samplingStop: samplingStop
+        )
+    }
+    
     func entryToLocationData(_ entry: SampleSet) -> [LocationData] {
         guard let locationJSON = entry.locationJSON else {
             print("No location JSON found in Core Data entry")
@@ -83,7 +117,7 @@ class JSONExportManager: ObservableObject {
         }
     }
     
-    func combineDataIntoStructuredData(locationDecoded: [LocationData], motionDecoded: [MotionData], submersionDecoded: [WaterSubmersionData]) -> StructuredData? {
+    func combineDataIntoStructuredData(metadata: watchMetadata, locationDecoded: [LocationData], motionDecoded: [MotionData], submersionDecoded: [WaterSubmersionData]) -> StructuredData? {
         
         // Make the structures to fill
         var structuredData: StructuredData?
@@ -122,7 +156,7 @@ class JSONExportManager: ObservableObject {
         let formattedMotionData = FormattedMotionData(values: motionArray)
         let formattedSubmersionData = FormattedSubmersionData(values: submersionArray)
         
-        structuredData = StructuredData(location: formattedLocationData, motion: formattedMotionData, submersion: formattedSubmersionData )
+        structuredData = StructuredData(metadata: metadata,location: formattedLocationData, motion: formattedMotionData, submersion: formattedSubmersionData )
         
         // Combine the data
         if let outputData = structuredData {

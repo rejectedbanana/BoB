@@ -51,16 +51,16 @@ struct ContentView: View {
                                 .foregroundColor(.blue)
                         }
                         .alert("Reasons why your data might not be syncing", isPresented: $showAlert) {
-                            Button("Fine...patience is a virtue", role: .cancel) { }
-                            Button("I still need help") {
-                                let subject = "Help! Bob is behaving badly. 🙁"
+                            Button("OK", role: .cancel) { }
+                            Button("Help!") {
+                                let subject = "Help! Bob is behaving badly 🙁"
                                 let encodedSubject = subject.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
                                 if let url = URL(string: "mailto:waves@tiniscientific.com?subject=\(encodedSubject)") {
                                     UIApplication.shared.open(url)
                                 }
                             }
                         } message: {
-                            Text("1) Internet connectivity is poor. Be patient. \n 2) iCloud storage is full. Check your settings. \n 3) Time series longer than 1 hour take a while to sync. We are working on that. ")
+                            Text("1) Internet connectivity is poor. Be patient. 2) iCloud storage is full. Check your settings. 3) Time series longer than 1 hour take a while to sync. We are working on that.")
                         }
                     }
                     
