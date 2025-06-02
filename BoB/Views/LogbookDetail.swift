@@ -44,11 +44,6 @@ struct LogbookDetail: View {
     
     var body: some View {
         List {
-            Section{
-                DetailRow(header: "File Name", content: entry.fileName ?? "Unknown")
-                DetailRow(header: "File ID", content: entry.fileID ?? "Unknown")
-            }
-            
             Section("Deployment Map") {
                 DataMap(locationData: locationData)
                     .frame(height: 180)
@@ -74,6 +69,8 @@ struct LogbookDetail: View {
                 DetailRow(header: "Sampling Frequency", content: "4 Hz")
                 DetailRow(header: "Min Temp", content: entry.getMinimumTemperature().isNaN ? "no submersion data" : String(format: "%.1f °C", entry.getMinimumTemperature()) )
                 DetailRow(header: "Max Depth", content: entry.getMaximumDepth().isNaN ? "no submersion data" : String(format: "%.1f m", entry.getMaximumDepth()))
+                DetailRow(header: "File Name", content: entry.fileName ?? "Unknown")
+                DetailRow(header: "File ID", content: entry.fileID ?? "Unknown")
                 DetailRow(header: "Source", content: entry.deviceName ?? "Unknown")
             } header: {
                 Text("Deployment Summary")
