@@ -18,12 +18,10 @@ struct watchMetadata: Codable {
     var deviceModel: String
     var deviceHardwareVersion: String
     var deviceOperatingSystemVersion: String
-//    
-//    // start date and location
-//    let samplingStart: SamplingStart
-//    
-//    // end date and location
-//    let samplingStop: SamplingStop
+    
+    // start and end sampling
+    var samplingStart: SamplingInfo
+    var samplingStop: SamplingInfo
     
 }
 
@@ -46,38 +44,3 @@ struct SamplingInfo: Codable {
 }
 
 
-struct SamplingStart: Codable {
-    let description: String
-    let units: [String]
-    let labels: [String]
-    var datetime: String
-    var latitude: String
-    var longitude: String
-    
-    init(datetime: String, latitude: String, longitude: String) {
-        self.description = "Metadata taken immediately before sampling is started and the watch starts continuously taking data."
-        self.labels = ["timestamp","latitude","longitude"]
-        self.units = ["ISO8601","degreesNorth","degreesEast"]
-        self.datetime = datetime
-        self.latitude = latitude
-        self.longitude = longitude
-    }
-}
-
-struct SamplingStop: Codable {
-    let description: String
-    let units: [String]
-    let labels: [String]
-    var datetime: String
-    var latitude: String
-    var longitude: String
-    
-    init(datetime: String, latitude: String, longitude: String) {
-        self.description = "Metadata taken immediately after sampling is canceled and the watch stops continuously taking data."
-        self.labels = ["timestamp","latitude","longitude"]
-        self.units = ["ISO8601","degreesNorth","degreesEast"]
-        self.datetime = datetime
-        self.latitude = latitude
-        self.longitude = longitude
-    }
-}

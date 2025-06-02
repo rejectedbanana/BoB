@@ -20,6 +20,9 @@ class JSONExportManager: ObservableObject {
     let encoder = JSONEncoder()
     let decoder = JSONDecoder()
     
+    // load in a timestamp manager
+    let timeStampFormatter = TimeStampManager()
+    
     // compute the other properties
     var metaData: watchMetadata {
         return entryToMetaData(entry)
@@ -39,6 +42,20 @@ class JSONExportManager: ObservableObject {
     
     // class methods
     func entryToMetaData(_ entry: SampleSet) -> watchMetadata {
+        let samplingStart = SamplingInfo(
+            description: "Metadata taken immediately before sampling is started and the watch starts continuously taking data. (Default = Jan 1, 1970 at 12:00 AM)",
+            datetime: timeStampFormatter.ISO8601Format(entry.startDatetime ?? Date(timeIntervalSince1970: 0)),
+            latitude: entry.startLatitude,
+            longitude: entry.startLatitude
+            )
+        
+        let samplingStop = SamplingInfo(
+            description: "Metadata taken immediately after sampling is canceled and the watch stops continuously taking data. (Default = Jan 1, 1970 at 12:00 AM)",
+            datetime: timeStampFormatter.ISO8601Format(entry.startDatetime ?? Date(timeIntervalSince1970: 0)),
+            latitude: entry.startLatitude,
+            longitude: entry.startLatitude
+            )
+        
        return watchMetadata(
             fileID: entry.name ?? "unknown",
             filename: entry.name ?? "unknown",
@@ -46,7 +63,9 @@ class JSONExportManager: ObservableObject {
             deviceManufacturer: entry.deviceManufacturer ?? "unknown",
             deviceModel: entry.deviceModel ?? "unknown",
             deviceHardwareVersion: entry.deviceLocalizedModel ?? "unknown",
-            deviceOperatingSystemVersion: entry.deviceSystemVersion ?? "unknown"
+            deviceOperatingSystemVersion: entry.deviceSystemVersion ?? "unknown",
+            samplingStart: samplingStart,
+            samplingStop: samplingStop
         )
     }
     
