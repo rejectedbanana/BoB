@@ -10,7 +10,7 @@ import Foundation
 struct watchMetadata: Codable {
     // file details
     var fileID: String
-    var filename: String
+    var fileName: String
     
     // device details
     var deviceName: String

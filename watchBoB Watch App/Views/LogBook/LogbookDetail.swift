@@ -24,6 +24,7 @@ struct LogbookDetail: View {
                 DetailRow(header: "End Coordinates", content: String(format: "%0.3f", record.stopLatitude)+" N,"+String(format: "%0.3f", record.stopLongitude)+" E")
                 DetailRow(header: "Samples", content: "\(record.getMotionDataCount())")
                 DetailRow(header: "Sampling Frequency", content: "4 Hz")
+                DetailRow(header: "FileID", content: record.fileID ?? "Unknown")
             }
         }
     }

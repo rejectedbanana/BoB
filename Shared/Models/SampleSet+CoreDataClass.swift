@@ -21,7 +21,8 @@ public class SampleSet: NSManagedObject {
 
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.id = try container.decode(UUID.self, forKey: .id)
-        self.name = try container.decode(String.self, forKey: .name)
+        self.fileID = try container.decode(String.self, forKey: .fileID)
+        self.fileName = try container.decode(String.self, forKey: .fileName)
         self.startDatetime = try container.decode(Date.self, forKey: .startDatetime)
         self.startLatitude = try container.decode(Double.self, forKey: .startLatitude)
         self.startLongitude = try container.decode(Double.self, forKey: .startLongitude)
@@ -43,7 +44,8 @@ public class SampleSet: NSManagedObject {
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(id, forKey: .id)
-        try container.encode(name, forKey: .name)
+        try container.encode(fileID, forKey: .fileID)
+        try container.encode(fileName, forKey: .fileName)
         try container.encode(startDatetime, forKey: .startDatetime)
         try container.encode(startLatitude, forKey: .startLatitude)
         try container.encode(startLongitude, forKey: .startLongitude)

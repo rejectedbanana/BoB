@@ -15,7 +15,8 @@ class MetadataManager: NSObject, ObservableObject, CLLocationManagerDelegate {
     
     // define an ID for the metadata
     var sessionID: UUID?
-    var name: String? = "TBD"
+    var fileID: String? = "TBD"
+    var fileName: String? = "TBD"
     // define the start data
     var startDatetime: Date?
     var startLatitude: Double = 0.0
@@ -49,7 +50,8 @@ class MetadataManager: NSObject, ObservableObject, CLLocationManagerDelegate {
 
     func startLogging() {
         sessionID = UUID()
-        name = timeStampFormatter.exportNameFormat(Date.now)
+        fileID = timeStampFormatter.exportNameFormat(Date.now)
+        fileName = fileID
         startDatetime = Date()
         (startLatitude, startLongitude) = getCurrentLocation()
         isLogging = true
