@@ -21,6 +21,7 @@ struct ListRow: View {
                 .foregroundColor(.fandango)
                 .frame(width: 30, height: 28)
             VStack(alignment: .leading) {
+                Text(entry.fileName ?? "unknown")
                 Text(timeStampFormatter.viewFormat( entry.startDatetime ?? Date(timeIntervalSince1970: 0) )) // change this unwrap to something else when I figure out how
                 Text(String(format: "%0.3f", entry.startLatitude)+" N, "+String(format: "%0.3f", entry.startLongitude)+" E")
                     .foregroundStyle(.silver)

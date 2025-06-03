@@ -25,7 +25,6 @@ struct LogbookDetail: View {
                 DetailRow(header: "Samples", content: "\(record.getMotionDataCount())")
                 DetailRow(header: "Sampling Frequency", content: "4 Hz")
                 DetailRow(header: "FileID", content: record.fileID ?? "Unknown")
-                DetailRow(header: "Filename", content: record.fileName ?? "Unknown")
             }
         }
     }

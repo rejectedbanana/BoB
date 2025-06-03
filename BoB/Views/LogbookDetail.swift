@@ -8,7 +8,11 @@
 import SwiftUI
 
 struct LogbookDetail: View {
-    let entry: SampleSet
+    @Environment(\.managedObjectContext) private var moc
+    @ObservedObject var entry: SampleSet
+
+    
+//    let entry: SampleSet
     
     private var jsonExportManager: JSONExportManager {
         return JSONExportManager(entry)
@@ -22,6 +26,10 @@ struct LogbookDetail: View {
     @State private var showMotionTable = false
     @State private var showLocationTable = false
     @State private var showSubmersionTable = false
+    
+    @State private var showFileNameEditor: Bool = false
+    @State private var updatedFileName: String = ""
+    @FocusState var showKeyboard: Bool
 
     
     // Strings to store exported name and data
@@ -44,6 +52,48 @@ struct LogbookDetail: View {
     
     var body: some View {
         List {
+            Section("Filename") {
+                if showFileNameEditor == true {
+                    HStack {
+                        TextField("Enter new file name", text: $updatedFileName)
+                            .focused($showKeyboard)
+                        Spacer()
+                        Button {
+                            entry.fileName = updatedFileName
+                            do {
+                                try moc.save()
+                            } catch {
+                                print("File name change failed: \(error.localizedDescription)")
+                            }
+                            
+                            showFileNameEditor.toggle()
+                            
+                        } label: {
+                            Image(systemName: "square.and.arrow.down")
+                                .foregroundStyle(.blue)
+                        }
+                    }
+                    .onAppear{
+                        showKeyboard = true
+                    }
+                } else {
+                    HStack {
+                        Text(entry.fileName ?? "unknown")
+                            .font(.headline)
+                        Spacer()
+                        Button {
+                            showFileNameEditor.toggle()
+                        } label: {
+                            Image(systemName: "pencil")
+                                .foregroundStyle(.blue)
+                        }
+                    }
+                    .onAppear{
+                        showKeyboard = false
+                    }
+                }
+            }
+            
             Section("Deployment Map") {
                 DataMap(locationData: locationData)
                     .frame(height: 180)
