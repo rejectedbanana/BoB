@@ -11,7 +11,7 @@ import WatchConnectivity
 
 struct ContentView: View {
     // Get a reference to the managed object context from the environment
-    @Environment(\.managedObjectContext) private var moc
+    @Environment(\.managedObjectContext) var moc
     // Fetch data from Core Data
     @FetchRequest(sortDescriptors: [SortDescriptor(\.startDatetime, order: .reverse)]) var logBookRecords: FetchedResults<SampleSet>
     @Environment(\.dismiss) var dismiss
