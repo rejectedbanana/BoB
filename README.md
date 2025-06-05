@@ -3,6 +3,8 @@
 
 This is an app that turns your watch into a scientific instrument, gathering environmental data from anyone, anytime, anywhere.
 
+[![DOI](https://zenodo.org/badge/739093324.svg)](https://doi.org/10.5281/zenodo.15604059)
+
 ## Project Description
 This app uses the sensors on your Apple Watch to log location, motion, and submersion data for environmental monitoring
 
@@ -65,5 +67,4 @@ And to our alpha testers Virginia Schutte and Michelle Weirathmueller.
 ## License
 See MIT License tab above.
 
-[![DOI](https://zenodo.org/badge/739093324.svg)](https://doi.org/10.5281/zenodo.15604059)
 
