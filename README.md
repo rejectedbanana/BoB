@@ -64,3 +64,6 @@ And to our alpha testers Virginia Schutte and Michelle Weirathmueller.
 
 ## License
 See MIT License tab above.
+
+[![DOI](https://zenodo.org/badge/739093324.svg)](https://doi.org/10.5281/zenodo.15604059)
+
