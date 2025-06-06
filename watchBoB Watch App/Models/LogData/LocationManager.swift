@@ -29,7 +29,6 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
     }
     
     func startSamplingGPS(_ sampleInterval: Double) {
-        locationManager.requestWhenInUseAuthorization()
         locationManager.allowsBackgroundLocationUpdates = true
         samplingTimer = Timer.scheduledTimer(withTimeInterval: sampleInterval, repeats: true) { _ in
             self.locationManager.requestLocation()

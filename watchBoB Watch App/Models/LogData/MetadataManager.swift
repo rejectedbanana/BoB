@@ -9,7 +9,7 @@ import Foundation
 import CoreData
 import WatchKit
 
-class MetadataManager: NSObject, ObservableObject, CLLocationManagerDelegate {
+class MetadataManager: NSObject, ObservableObject {
     // time stamp formatter
     let timeStampFormatter = TimeStampManager()
     
@@ -33,10 +33,11 @@ class MetadataManager: NSObject, ObservableObject, CLLocationManagerDelegate {
     var deviceManufacturer: String = "Unknown"
     
     var isLogging = false
+    
+    // bring in the location manager
+    private let locationManager: LocationManager = LocationManager()
 
     func getCurrentLocation() -> (latitude: Double, longitude: Double) {
-        let locationManager = LocationManager()
-        
         guard let location = locationManager.locationManager.location else {
             debugPrint("Location data is unavailable.")
             return (Double.nan, Double.nan)
@@ -55,18 +56,16 @@ class MetadataManager: NSObject, ObservableObject, CLLocationManagerDelegate {
         startDatetime = Date()
         (startLatitude, startLongitude) = getCurrentLocation()
         isLogging = true
-        
     }
 
     func stopLogging() {
         stopDatetime = Date()
         (stopLatitude, stopLongitude) = getCurrentLocation()
-
         isLogging = false
-        
     }
     
  }
+
 extension Double {
     /// Rounds the double to 'places' decimal places.
     func rounded(toPlaces places: Int) -> Double {

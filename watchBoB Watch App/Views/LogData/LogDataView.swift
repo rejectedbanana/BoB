@@ -152,6 +152,7 @@ struct LogDataView: View {
         .onAppear {
             motionManager.clear()
             locationManager.clear()
+//            locationManager.locationManagerDidChangeAuthorization(locationManager.locationManager)
             waterSubmersionManager.clear()
         }
         .onDisappear {
@@ -160,9 +161,6 @@ struct LogDataView: View {
             waterSubmersionManager.clear()
         }
         .navigationBarBackButtonHidden(isLoggingData)
-//        .border(Color.yellow)
-//        .padding(.top, 10)
-
     }
     
     private func isBigScreen() -> Bool {
