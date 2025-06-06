@@ -12,9 +12,9 @@
 		<string>processing</string>
 		<string>remote-notification</string>
 	</array>
-    <key>WKBackgroundModes</key>
-    <array>
-        <string>underwater-depth</string>
-    </array>
+	<key>WKBackgroundModes</key>
+	<array>
+		<string>underwater-depth</string>
+	</array>
 </dict>
 </plist>
