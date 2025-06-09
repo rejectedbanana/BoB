@@ -148,7 +148,7 @@ class JSONExportManager: ObservableObject {
         for submersion in submersionDecoded {
             submersionArray.timestamp.append(submersion.timestamp)
             submersionArray.depth.append(submersion.depth)
-            submersionArray.temperature.append(submersion.temperature ?? Double.nan)
+            submersionArray.temperature.append(submersion.temperature)
         }
         
         // Reformat for saving as a compact JSON

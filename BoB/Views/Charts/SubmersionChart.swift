@@ -15,10 +15,10 @@ struct SubmersionChart: View {
     
     // pull out the minimum and maximum temperatures
     private var minTemperature: Double {
-        submersionData.map{ $0.temperature ?? -2.0 }.min() ?? -2.0
+        submersionData.map{ $0.temperature }.min() ?? -2.0
     }
     private var maxTemperature: Double {
-        submersionData.map{ $0.temperature ?? 150.0 }.max() ?? 150.0
+        submersionData.map{ $0.temperature }.max() ?? 150.0
     }
 
     var body: some View {
@@ -74,18 +74,18 @@ struct timeSeries: View {
             Chart(submersionData) { item in
                 LineMark(
                     x: .value("Date", timeStampManager.ISO8601StringtoDate(item.timestamp) ?? Date()),
-                    y: .value("Temperature", item.temperature ?? Double.nan)
+                    y: .value("Temperature", item.temperature)
                 )
                 .foregroundStyle(.blue)
                 .interpolationMethod(.linear)
                 
                 PointMark(
                     x: .value("Date", timeStampManager.ISO8601StringtoDate(item.timestamp) ?? Date()),
-                    y: .value("Acceleration", item.temperature ?? Double.nan)
+                    y: .value("Acceleration", item.temperature)
                 )
                 .symbolSize(10)
                 .accessibilityLabel("Temperature versus Time")
-                .accessibilityValue("Temperature: \(item.temperature ?? Double.nan) degrees Celsius")
+                .accessibilityValue("Temperature: \(item.temperature) degrees Celsius")
             }
             .chartYScale(domain: minTemperature...maxTemperature)
             .chartYAxisLabel("Temperature [°C]")
@@ -102,7 +102,7 @@ struct verticalProfile: View {
     var body: some View {
         Chart(submersionData) { item in
             LineMark(
-                x: .value("Temperature", item.temperature ?? Double.nan),
+                x: .value("Temperature", item.temperature),
                 y: .value("Depth", -1*(item.depth))
             )
             .foregroundStyle(.blue)
@@ -110,12 +110,12 @@ struct verticalProfile: View {
 
             
             PointMark(
-                x: .value("Temperature", item.temperature ?? Double.nan),
+                x: .value("Temperature", item.temperature),
                 y: .value("Depth", -1*(item.depth))
             )
             .symbolSize(10)
             .accessibilityLabel("Temperature versus Depth")
-            .accessibilityValue("Temperature: \(item.temperature ?? Double.nan) degrees Celsius")
+            .accessibilityValue("Temperature: \(item.temperature) degrees Celsius")
         }
         .chartXScale(domain: minTemperature...maxTemperature)
         .chartXAxisLabel("Temperature [°C]")
