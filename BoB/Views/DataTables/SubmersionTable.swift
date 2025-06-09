@@ -29,7 +29,7 @@ struct SubmersionTable: View {
                             Text(data.timestamp)
                                 .font(.subheadline)
                             HStack {
-                                Text( String(format: "%0.2f", data.depth ?? Double.nan )+" m, " )
+                                Text( String(format: "%0.2f", data.depth )+" m, " )
                                 Text( String(format: "%0.1f", data.temperature ?? Double.nan)+" °C")
                             }
                             .font(.body)

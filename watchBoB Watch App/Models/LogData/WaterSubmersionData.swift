@@ -11,7 +11,7 @@ import Foundation
 struct WaterSubmersionData: Codable, Identifiable {
     let id = UUID()
     var timestamp: String
-    var depth: Double?
+    var depth: Double
     var temperature: Double?
     
     func encode(to encoder: any Encoder) throws {

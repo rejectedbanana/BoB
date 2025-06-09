@@ -56,18 +56,18 @@ struct timeSeries: View {
             Chart(submersionData) { item in
                 LineMark(
                     x: .value("Date", timeStampManager.ISO8601StringtoDate(item.timestamp) ?? Date()),
-                    y: .value("Depth", -1*(item.depth ?? Double.nan))
+                    y: .value("Depth", -1*(item.depth))
                 )
                 .foregroundStyle(.blue)
                 .interpolationMethod(.linear)
                 
                 PointMark(
                     x: .value("Date", timeStampManager.ISO8601StringtoDate(item.timestamp) ?? Date()),
-                    y: .value("Depth", -1.0*(item.depth ?? Double.nan) )
+                    y: .value("Depth", -1.0*(item.depth) )
                 )
                 .symbolSize(10)
                 .accessibilityLabel("Depth versus Time")
-                .accessibilityValue("Depth: \(item.depth ?? Double.nan) meters")
+                .accessibilityValue("Depth: \(item.depth) meters")
             }
             .chartYAxisLabel("Depth [m]")
             
@@ -103,7 +103,7 @@ struct verticalProfile: View {
         Chart(submersionData) { item in
             LineMark(
                 x: .value("Temperature", item.temperature ?? Double.nan),
-                y: .value("Depth", -1*(item.depth ?? Double.nan))
+                y: .value("Depth", -1*(item.depth))
             )
             .foregroundStyle(.blue)
             .interpolationMethod(.linear)
@@ -111,7 +111,7 @@ struct verticalProfile: View {
             
             PointMark(
                 x: .value("Temperature", item.temperature ?? Double.nan),
-                y: .value("Depth", -1*(item.depth ?? Double.nan))
+                y: .value("Depth", -1*(item.depth))
             )
             .symbolSize(10)
             .accessibilityLabel("Temperature versus Depth")
