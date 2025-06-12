@@ -99,6 +99,10 @@ struct verticalProfile: View {
     let minTemperature: Double
     let maxTemperature: Double
     
+    // Zoom state for X and Y axes
+    @State private var xScale: CGFloat = 1.0
+    @State private var yScale: CGFloat = 1.0
+    
     var body: some View {
         Chart(submersionData) { item in
             LineMark(
@@ -117,10 +121,41 @@ struct verticalProfile: View {
             .accessibilityLabel("Temperature versus Depth")
             .accessibilityValue("Temperature: \(item.temperature) degrees Celsius")
         }
-        .chartXScale(domain: minTemperature...maxTemperature)
+//        .chartXScale(domain: minTemperature...maxTemperature)
+        .chartXScale(domain: xDomain())
+        .chartYScale(domain: yDomain())
         .chartXAxisLabel("Temperature [°C]")
         .chartYAxisLabel("Depth [m]")
         .frame(height: 300)
+        .gesture(
+            MagnificationGesture()
+                .onChanged { value in
+                    let clamped = max(1.0, min(value, 10.0))
+                    xScale = clamped
+                    yScale = clamped
+                }
+        )
+    }
+    
+    func xDomain() -> ClosedRange<Double> {
+        let temps = submersionData.map { $0.temperature }
+        guard let minT = temps.min(), let maxT = temps.max() else {
+            return 0...1
+        }
+        let center = (minT + maxT) / 2
+        let range = (maxT - minT) / xScale
+        return (center-range / 2)...(center+range / 2)
+        
+    }
+    
+    func yDomain() -> ClosedRange<Double> {
+        let depths = submersionData.map { $0.depth * -1 }
+        guard let minD = depths.min(), let maxD = depths.max() else {
+            return 0...1
+        }
+        let center = (minD + maxD) / 2
+        let range = (maxD - minD) / yScale
+        return (center-range / 2)...(center+range / 2)
     }
 }
 
