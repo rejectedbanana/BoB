@@ -127,6 +127,8 @@ struct verticalProfile: View {
         .chartXAxisLabel("Temperature [°C]")
         .chartYAxisLabel("Depth [m]")
         .frame(height: 300)
+        .contentShape(Rectangle())
+        .clipped()
         .gesture(
             MagnificationGesture()
                 .onChanged { value in
@@ -149,7 +151,7 @@ struct verticalProfile: View {
     }
     
     func yDomain() -> ClosedRange<Double> {
-        let depths = submersionData.map { $0.depth * -1 }
+        let depths = submersionData.map { -1.0 * $0.depth }
         guard let minD = depths.min(), let maxD = depths.max() else {
             return 0...1
         }
