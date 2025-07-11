@@ -122,6 +122,32 @@ struct LogbookDetail: View {
                     Text( "Motion Data")
                 }
                 
+                Section(isExpanded: $showDataTables) {
+                    // Buttons for viewing JSON data
+                    Button("View Location Data") {
+                        showLocationTable.toggle()
+                    }
+                    .sheet(isPresented: $showLocationTable) {
+                        LocationTable(locationData: locationData)
+                    }
+                    
+                    Button("View Submersion Data") {
+                        showSubmersionTable.toggle()
+                    }
+                    .sheet(isPresented: $showSubmersionTable) {
+                        SubmersionTable(submersionData: submersionData)
+                    }
+                    
+                    Button("View Motion Data") {
+                        showMotionTable.toggle()
+                    }
+                    .sheet(isPresented: $showMotionTable) {
+                        MotionTable(motionData: motionData)
+                    }
+                } header: {
+                    Text("Data Tables")
+                }
+                
                 Section(isExpanded: $showSummary) {
                     DetailRow(header: "Start Time", content: timeStampFormatter.viewFormat(entry.startDatetime ?? Date(timeIntervalSince1970: 0)))
                     DetailRow(header: "End Time", content: timeStampFormatter.viewFormat(entry.stopDatetime ?? Date(timeIntervalSince1970: 0)))
@@ -144,32 +170,6 @@ struct LogbookDetail: View {
                     DetailRow(header: "Software Version", content: entry.deviceSystemVersion ?? "Unknown")
                 } header: {
                     Text("Device Details")
-                }
-                
-                Section(isExpanded: $showDataTables) {
-                    // Buttons for viewing JSON data
-                    Button("View Location Data") {
-                        showLocationTable.toggle()
-                    }
-                    .sheet(isPresented: $showLocationTable) {
-                        LocationTable(locationData: locationData)
-                    }
-                    
-                    Button("View Motion Data") {
-                        showMotionTable.toggle()
-                    }
-                    .sheet(isPresented: $showMotionTable) {
-                        MotionTable(motionData: motionData)
-                    }
-                    
-                    Button("View Submersion Data") {
-                        showSubmersionTable.toggle()
-                    }
-                    .sheet(isPresented: $showSubmersionTable) {
-                        SubmersionTable(submersionData: submersionData)
-                    }
-                } header: {
-                    Text("Data Tables")
                 }
             }
             .listStyle(.sidebar)
