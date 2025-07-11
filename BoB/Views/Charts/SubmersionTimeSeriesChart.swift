@@ -45,7 +45,7 @@ struct SubmersionTimeSeriesChart: View {
                 .accessibilityValue("Depth: \(item.depth) meters")
             }
             .chartYAxisLabel("Depth [m]")
-            .chartOverlay {proxy in
+            .chartOverlay { proxy in
                 GeometryReader { geometry in
                     Rectangle()
                         .foregroundStyle(.fandango)
@@ -64,7 +64,7 @@ struct SubmersionTimeSeriesChart: View {
                             .foregroundStyle(.white.gradient)
                         }
                         .opacity(showSelectionBar ? 1.0 : 0.0)
-                        .offset(x: offsetX - 30, y: offsetY - 30)
+                        .offset(x: offsetX - 30, y: offsetY - 13)
                     
                     Rectangle()
                         .fill(.clear)
@@ -94,7 +94,7 @@ struct SubmersionTimeSeriesChart: View {
                                         }
                                     }
                                 }
-                                .onEnded( {_ in
+                                .onEnded( { _ in
                                     showSelectionBar = false
                                 })
                         )
