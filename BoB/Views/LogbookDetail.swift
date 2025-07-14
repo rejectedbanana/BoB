@@ -29,7 +29,6 @@ struct LogbookDetail: View {
     @State private var updatedFileName: String = ""
     @FocusState var showKeyboard: Bool
 
-    
     // Strings to store exported name and data
     private var locationData: [LocationData] {
         return jsonExportManager.locationData
@@ -40,13 +39,10 @@ struct LogbookDetail: View {
     private var submersionData: [WaterSubmersionData] {
         return jsonExportManager.submersionData
     }
-    private var combinedData: StructuredData? {
-        return jsonExportManager.exportableData
-    }
     
-    private var JSONName: String {
-        return (entry.fileName ?? "untitled")+"_AWUData.json"
-    }
+    // for exporting
+    @State private var fileURL: URL?
+    @State private var isWriting = false
     
     // time stamp formatter
     let timeStampFormatter = TimeStampManager()
@@ -179,20 +175,43 @@ struct LogbookDetail: View {
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .confirmationAction) {
-                    if let combinedJSONString = jsonExportManager.convertStructuredDataToJSONString(combinedData) {
-                        if let fileURL = jsonExportManager.exportJSON(fileName: JSONName, content: combinedJSONString) {
-                            ShareLink(item: fileURL)
-                        }
+                    if let url = fileURL {
+                        ShareLink(item: url)
                     } else {
-                        Text("No data to share")
+                        Text(isWriting ? "Writing to JSON..." :"Finding data...")
+                            .foregroundStyle(.blue)
+                            .font(.subheadline)
                     }
                 }
             }
+            .task(id: updatedFileName) {await prepareFile()}
             .onAppear {
                 self.updatedFileName = entry.fileName ?? ""
             }
         }
     }
+    
+    @MainActor
+    private func prepareFile() async {
+            isWriting = true
+            let fileName = updatedFileName+"_AWUData.json"
+
+            // Encode + write in the background
+            let url = await withCheckedContinuation { cont in
+                DispatchQueue.global(qos: .utility).async {
+                    if let combinedJSONString = jsonExportManager.convertStructuredDataToJSONString(jsonExportManager.exportableData) {
+                        let url = jsonExportManager.exportJSON(fileName: fileName, content: combinedJSONString)
+                        cont.resume(returning: url)
+                    } else {
+                        cont.resume(returning: nil)
+                    }
+                }
+            }
+
+            // Hop back to the main actor for UI update
+            fileURL = url
+            isWriting = false
+        }
 }
 
 //#Preview {
