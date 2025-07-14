@@ -10,7 +10,6 @@ import SwiftUI
 struct LogbookDetail: View {
     @Environment(\.managedObjectContext) private var moc
     @ObservedObject var entry: SampleSet
-//    let entry: SampleSet
     
     private var jsonExportManager: JSONExportManager {
         return JSONExportManager(entry)
@@ -44,7 +43,10 @@ struct LogbookDetail: View {
     private var combinedData: StructuredData? {
         return jsonExportManager.exportableData
     }
-    @State private var JSONName = ""
+    
+    private var JSONName: String {
+        return (entry.fileName ?? "untitled")+"_AWUData.json"
+    }
     
     // time stamp formatter
     let timeStampFormatter = TimeStampManager()
@@ -178,14 +180,15 @@ struct LogbookDetail: View {
             .toolbar {
                 ToolbarItem(placement: .confirmationAction) {
                     if let combinedJSONString = jsonExportManager.convertStructuredDataToJSONString(combinedData) {
-                        ShareLink(item: jsonExportManager.exportJSON(fileName: JSONName, content: combinedJSONString))
+                        if let fileURL = jsonExportManager.exportJSON(fileName: JSONName, content: combinedJSONString) {
+                            ShareLink(item: fileURL)
+                        }
                     } else {
                         Text("No data to share")
                     }
                 }
             }
             .onAppear {
-                self.JSONName = timeStampFormatter.exportNameFormat(entry.startDatetime ?? Date.now )+"_AWUData.json"
                 self.updatedFileName = entry.fileName ?? ""
             }
         }
