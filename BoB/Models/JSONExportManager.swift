@@ -23,23 +23,6 @@ class JSONExportManager: ObservableObject {
     // load in a timestamp manager
     let timeStampFormatter = TimeStampManager()
     
-    // compute the other properties
-    var metaData: watchMetadata {
-        return entryToMetaData(entry)
-    }
-    var locationData: [LocationData] {
-        return entryToLocationData(entry)
-    }
-    var motionData: [MotionData] {
-        return entryToMotionData(entry)
-    }
-    var submersionData: [WaterSubmersionData] {
-        return entryToSubmersionData(entry)
-    }
-    var exportableData: StructuredData? {
-        return combineDataIntoStructuredData(metadata: metaData, locationDecoded: locationData, motionDecoded: motionData, submersionDecoded: submersionData) ?? nil
-    }
-    
     // class methods
     func entryToMetaData(_ entry: SampleSet) -> watchMetadata {
         let samplingStart = SamplingInfo(
@@ -117,7 +100,11 @@ class JSONExportManager: ObservableObject {
         }
     }
     
-    func combineDataIntoStructuredData(metadata: watchMetadata, locationDecoded: [LocationData], motionDecoded: [MotionData], submersionDecoded: [WaterSubmersionData]) -> StructuredData? {
+    func combineDataIntoStructuredData(_ entry: SampleSet) -> StructuredData? {
+        let metadata = entryToMetaData(entry)
+        let locationDecoded = entryToLocationData(entry)
+        let motionDecoded = entryToMotionData(entry)
+        let submersionDecoded = entryToSubmersionData(entry)
         
         // Make the structures to fill
         var structuredData: StructuredData?
@@ -164,7 +151,7 @@ class JSONExportManager: ObservableObject {
         } else {
             return nil
         }
-
+        
     }
     
     func convertStructuredDataToJSONString(_ structuredData: StructuredData?) -> String? {
@@ -180,17 +167,34 @@ class JSONExportManager: ObservableObject {
         }
     }
     
-    func exportJSON(fileName: String, content: String) -> URL {
-        let documentsDirectory = URL.documentsDirectory
-        let fileURL = documentsDirectory.appending(path: fileName)
-        
+    func exportJSON(fileName: String, content: String) -> URL? {
+        let tempDir = FileManager.default.temporaryDirectory
+        let fileURL = tempDir.appendingPathComponent(fileName)
+
+        // Sanity check: file name should not be a directory
+        guard fileURL.pathExtension != "" else {
+            print("Filename must include an extension (e.g. .json)")
+            return nil
+        }
+
+        // Remove existing file if needed
+        if FileManager.default.fileExists(atPath: fileURL.path) {
+            do {
+                try FileManager.default.removeItem(at: fileURL)
+            } catch {
+                print("Failed to remove existing file:", error.localizedDescription)
+                return nil
+            }
+        }
+
+        // Try writing the content
         do {
             try content.write(to: fileURL, atomically: true, encoding: .utf8)
+            return fileURL
         } catch {
-            print("Failed to write combined JSON: \(error.localizedDescription)")
+            print("Failed to write JSON:", error.localizedDescription)
+            return nil
         }
-        
-        return fileURL
     }
     
 }

@@ -10,7 +10,6 @@ import SwiftUI
 struct LogbookDetail: View {
     @Environment(\.managedObjectContext) private var moc
     @ObservedObject var entry: SampleSet
-//    let entry: SampleSet
     
     private var jsonExportManager: JSONExportManager {
         return JSONExportManager(entry)
@@ -19,7 +18,6 @@ struct LogbookDetail: View {
     // Toggles to preview data
     @State private var showSummary = false
     @State private var showDeviceDetails = false
-
     @State private var showDataTables = false
     @State private var showMotionTable = false
     @State private var showLocationTable = false
@@ -29,22 +27,6 @@ struct LogbookDetail: View {
     @State private var showFileNameEditor: Bool = false
     @State private var updatedFileName: String = ""
     @FocusState var showKeyboard: Bool
-
-    
-    // Strings to store exported name and data
-    private var locationData: [LocationData] {
-        return jsonExportManager.locationData
-    }
-    private var motionData: [MotionData] {
-        return jsonExportManager.motionData
-    }
-    private var submersionData: [WaterSubmersionData] {
-        return jsonExportManager.submersionData
-    }
-    private var combinedData: StructuredData? {
-        return jsonExportManager.exportableData
-    }
-    @State private var JSONName = ""
     
     // time stamp formatter
     let timeStampFormatter = TimeStampManager()
@@ -103,7 +85,7 @@ struct LogbookDetail: View {
                 }
                 
                 Section {
-                    DataMap(locationData: locationData)
+                    DataMap(locationData: jsonExportManager.entryToLocationData(entry))
                         .frame(height: 180)
                         .listRowInsets(EdgeInsets())
                 } header: {
@@ -111,13 +93,13 @@ struct LogbookDetail: View {
                 }
                 
                 Section {
-                    SubmersionChart(submersionData: submersionData)
+                    SubmersionChart(submersionData: jsonExportManager.entryToSubmersionData(entry))
                 } header: {
                     Text( "Submersion Data")
                 }
                 
                 Section {
-                    MotionChart(motionData: motionData)
+                    MotionChart(motionData: jsonExportManager.entryToMotionData(entry))
                 } header: {
                     Text( "Motion Data")
                 }
@@ -128,21 +110,21 @@ struct LogbookDetail: View {
                         showLocationTable.toggle()
                     }
                     .sheet(isPresented: $showLocationTable) {
-                        LocationTable(locationData: locationData)
+                        LocationTable(locationData: jsonExportManager.entryToLocationData(entry))
                     }
                     
                     Button("View Submersion Data") {
                         showSubmersionTable.toggle()
                     }
                     .sheet(isPresented: $showSubmersionTable) {
-                        SubmersionTable(submersionData: submersionData)
+                        SubmersionTable(submersionData: jsonExportManager.entryToSubmersionData(entry))
                     }
                     
                     Button("View Motion Data") {
                         showMotionTable.toggle()
                     }
                     .sheet(isPresented: $showMotionTable) {
-                        MotionTable(motionData: motionData)
+                        MotionTable(motionData: jsonExportManager.entryToMotionData(entry))
                     }
                 } header: {
                     Text("Data Tables")
@@ -177,16 +159,25 @@ struct LogbookDetail: View {
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .confirmationAction) {
-                    if let combinedJSONString = jsonExportManager.convertStructuredDataToJSONString(combinedData) {
-                        ShareLink(item: jsonExportManager.exportJSON(fileName: JSONName, content: combinedJSONString))
+                    let fileName = updatedFileName+"_AWUData.json"
+                    
+                    let exportableData = jsonExportManager.combineDataIntoStructuredData(entry)
+                    
+                    if let combinedJSONString = jsonExportManager.convertStructuredDataToJSONString(exportableData) {
+                        let fileURL = jsonExportManager.exportJSON(fileName: fileName, content: combinedJSONString)
+                        
+                        if let url = fileURL {
+                            ShareLink(item: url) {
+                                Label("Share JSON", systemImage: "square.and.arrow.up" )
+                            }
+                        }
                     } else {
-                        Text("No data to share")
+                        Text("No data to share.")
                     }
                 }
             }
             .onAppear {
-                self.JSONName = timeStampFormatter.exportNameFormat(entry.startDatetime ?? Date.now )+"_AWUData.json"
-                self.updatedFileName = entry.fileName ?? ""
+                updatedFileName = entry.fileName ?? ""
             }
         }
     }
