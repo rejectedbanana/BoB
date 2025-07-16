@@ -18,7 +18,6 @@ struct LogbookDetail: View {
     // Toggles to preview data
     @State private var showSummary = false
     @State private var showDeviceDetails = false
-
     @State private var showDataTables = false
     @State private var showMotionTable = false
     @State private var showLocationTable = false
@@ -28,21 +27,6 @@ struct LogbookDetail: View {
     @State private var showFileNameEditor: Bool = false
     @State private var updatedFileName: String = ""
     @FocusState var showKeyboard: Bool
-
-    // Strings to store exported name and data
-    private var locationData: [LocationData] {
-        return jsonExportManager.locationData
-    }
-    private var motionData: [MotionData] {
-        return jsonExportManager.motionData
-    }
-    private var submersionData: [WaterSubmersionData] {
-        return jsonExportManager.submersionData
-    }
-    
-    // for exporting
-    @State private var fileURL: URL?
-    @State private var isWriting = false
     
     // time stamp formatter
     let timeStampFormatter = TimeStampManager()
@@ -101,7 +85,7 @@ struct LogbookDetail: View {
                 }
                 
                 Section {
-                    DataMap(locationData: locationData)
+                    DataMap(locationData: jsonExportManager.entryToLocationData(entry))
                         .frame(height: 180)
                         .listRowInsets(EdgeInsets())
                 } header: {
@@ -109,13 +93,13 @@ struct LogbookDetail: View {
                 }
                 
                 Section {
-                    SubmersionChart(submersionData: submersionData)
+                    SubmersionChart(submersionData: jsonExportManager.entryToSubmersionData(entry))
                 } header: {
                     Text( "Submersion Data")
                 }
                 
                 Section {
-                    MotionChart(motionData: motionData)
+                    MotionChart(motionData: jsonExportManager.entryToMotionData(entry))
                 } header: {
                     Text( "Motion Data")
                 }
@@ -126,21 +110,21 @@ struct LogbookDetail: View {
                         showLocationTable.toggle()
                     }
                     .sheet(isPresented: $showLocationTable) {
-                        LocationTable(locationData: locationData)
+                        LocationTable(locationData: jsonExportManager.entryToLocationData(entry))
                     }
                     
                     Button("View Submersion Data") {
                         showSubmersionTable.toggle()
                     }
                     .sheet(isPresented: $showSubmersionTable) {
-                        SubmersionTable(submersionData: submersionData)
+                        SubmersionTable(submersionData: jsonExportManager.entryToSubmersionData(entry))
                     }
                     
                     Button("View Motion Data") {
                         showMotionTable.toggle()
                     }
                     .sheet(isPresented: $showMotionTable) {
-                        MotionTable(motionData: motionData)
+                        MotionTable(motionData: jsonExportManager.entryToMotionData(entry))
                     }
                 } header: {
                     Text("Data Tables")
@@ -175,43 +159,28 @@ struct LogbookDetail: View {
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .confirmationAction) {
-                    if let url = fileURL {
-                        ShareLink(item: url)
+                    let fileName = updatedFileName+"_AWUData.json"
+                    
+                    let exportableData = jsonExportManager.combineDataIntoStructuredData(entry)
+                    
+                    if let combinedJSONString = jsonExportManager.convertStructuredDataToJSONString(exportableData) {
+                        let fileURL = jsonExportManager.exportJSON(fileName: fileName, content: combinedJSONString)
+                        
+                        if let url = fileURL {
+                            ShareLink(item: url) {
+                                Label("Share JSON", systemImage: "square.and.arrow.up" )
+                            }
+                        }
                     } else {
-                        Text(isWriting ? "Writing to JSON..." :"Finding data...")
-                            .foregroundStyle(.blue)
-                            .font(.subheadline)
+                        Text("No data to share.")
                     }
                 }
             }
-            .task(id: updatedFileName) {await prepareFile()}
             .onAppear {
-                self.updatedFileName = entry.fileName ?? ""
+                updatedFileName = entry.fileName ?? ""
             }
         }
     }
-    
-    @MainActor
-    private func prepareFile() async {
-            isWriting = true
-            let fileName = updatedFileName+"_AWUData.json"
-
-            // Encode + write in the background
-            let url = await withCheckedContinuation { cont in
-                DispatchQueue.global(qos: .utility).async {
-                    if let combinedJSONString = jsonExportManager.convertStructuredDataToJSONString(jsonExportManager.exportableData) {
-                        let url = jsonExportManager.exportJSON(fileName: fileName, content: combinedJSONString)
-                        cont.resume(returning: url)
-                    } else {
-                        cont.resume(returning: nil)
-                    }
-                }
-            }
-
-            // Hop back to the main actor for UI update
-            fileURL = url
-            isWriting = false
-        }
 }
 
 //#Preview {

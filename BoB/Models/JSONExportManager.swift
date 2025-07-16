@@ -23,23 +23,6 @@ class JSONExportManager: ObservableObject {
     // load in a timestamp manager
     let timeStampFormatter = TimeStampManager()
     
-    // compute the other properties
-    var metaData: watchMetadata {
-        return entryToMetaData(entry)
-    }
-    var locationData: [LocationData] {
-        return entryToLocationData(entry)
-    }
-    var motionData: [MotionData] {
-        return entryToMotionData(entry)
-    }
-    var submersionData: [WaterSubmersionData] {
-        return entryToSubmersionData(entry)
-    }
-    var exportableData: StructuredData? {
-        return combineDataIntoStructuredData(metadata: metaData, locationDecoded: locationData, motionDecoded: motionData, submersionDecoded: submersionData) ?? nil
-    }
-    
     // class methods
     func entryToMetaData(_ entry: SampleSet) -> watchMetadata {
         let samplingStart = SamplingInfo(
@@ -117,7 +100,11 @@ class JSONExportManager: ObservableObject {
         }
     }
     
-    func combineDataIntoStructuredData(metadata: watchMetadata, locationDecoded: [LocationData], motionDecoded: [MotionData], submersionDecoded: [WaterSubmersionData]) -> StructuredData? {
+    func combineDataIntoStructuredData(_ entry: SampleSet) -> StructuredData? {
+        let metadata = entryToMetaData(entry)
+        let locationDecoded = entryToLocationData(entry)
+        let motionDecoded = entryToMotionData(entry)
+        let submersionDecoded = entryToSubmersionData(entry)
         
         // Make the structures to fill
         var structuredData: StructuredData?
@@ -164,7 +151,7 @@ class JSONExportManager: ObservableObject {
         } else {
             return nil
         }
-
+        
     }
     
     func convertStructuredDataToJSONString(_ structuredData: StructuredData?) -> String? {
