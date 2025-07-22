@@ -17,7 +17,7 @@ struct ContentView: View {
     @Environment(\.dismiss) var dismiss
     
     // Info popup
-    @State private var showAlert = false
+    @State private var showHelpAlert = false
     
     var body: some View {
         NavigationStack {
@@ -39,12 +39,12 @@ struct ContentView: View {
                 
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button {
-                        showAlert = true
+                        showHelpAlert = true
                     } label: {
                         Image(systemName: "exclamationmark.icloud.fill")
                             .foregroundColor(.blue)
                     }
-                    .alert("Reasons why your data might not be syncing", isPresented: $showAlert) {
+                    .alert("Reasons why your data might not be syncing", isPresented: $showHelpAlert) {
                         Button("OK", role: .cancel) { }
                         Button("Help!") {
                             let subject = "Help! Bob is behaving badly 🙁"
@@ -65,7 +65,7 @@ struct ContentView: View {
                 await refreshDataFromCloud()
             }
             .onAppear {
-                showAlert = false
+                showHelpAlert = false
             }
         }
     }
