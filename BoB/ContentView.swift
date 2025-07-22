@@ -16,56 +16,56 @@ struct ContentView: View {
     @FetchRequest(sortDescriptors: [SortDescriptor(\.startDatetime, order: .reverse)]) var logBookRecords: FetchedResults<SampleSet>
     @Environment(\.dismiss) var dismiss
     
-    // Cloudkit sync trigger
-    @State private var isRefreshing = false
-    
     // Info popup
     @State private var showAlert = false
     
     var body: some View {
         NavigationStack {
-            ZStack {
-                List {
-                    ForEach(logBookRecords) { logBookRecord in
-                        NavigationLink {
-                            LogbookDetail(entry: logBookRecord)
-                        } label: {
-                            ListRow(entry: logBookRecord)
-                        }
+            List {
+                ForEach(logBookRecords) { logBookRecord in
+                    NavigationLink {
+                        LogbookDetail(entry: logBookRecord)
+                    } label: {
+                        ListRow(entry: logBookRecord)
                     }
-                    .onDelete(perform: delete)
                 }
-                .refreshable {
-                    await refreshDataFromCloud()
+                .onDelete(perform: delete)
+            }
+
+            .toolbar {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    EditButton()
                 }
-                .toolbar {
-                    ToolbarItem(placement: .navigationBarTrailing) {
-                        EditButton()
+                
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Button {
+                        showAlert = true
+                    } label: {
+                        Image(systemName: "exclamationmark.icloud.fill")
+                            .foregroundColor(.blue)
                     }
-                    
-                    ToolbarItem(placement: .navigationBarLeading) {
-                        Button {
-                            showAlert = true
-                        } label: {
-                            Image(systemName: "exclamationmark.icloud.fill")
-                                .foregroundColor(.blue)
-                        }
-                        .alert("Reasons why your data might not be syncing", isPresented: $showAlert) {
-                            Button("OK", role: .cancel) { }
-                            Button("Help!") {
-                                let subject = "🛟Help!🛟 Bob is behaving badly 🙁"
-                                let encodedSubject = subject.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
-                                if let url = URL(string: "mailto:lifesaver@tiniscientific.com?subject=\(encodedSubject)") {
-                                    UIApplication.shared.open(url)
-                                }
+                    .alert("Reasons why your data might not be syncing", isPresented: $showAlert) {
+                        Button("OK", role: .cancel) { }
+                        Button("Help!") {
+                            let subject = "Help! Bob is behaving badly 🙁"
+                            let encodedSubject = subject.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
+                            if let url = URL(string: "mailto:lifesaver@tiniscientific.com?subject=\(encodedSubject)") {
+                                UIApplication.shared.open(url)
                             }
-                        } message: {
-                            Text("1) Internet connectivity is poor. Be patient. 2) iCloud storage is full. Check your settings. 3) Time series longer than 1 hour take a while to sync. We are working on that.")
                         }
+                    } message: {
+                        Text("1) Internet connectivity is poor. Be patient. 2) iCloud storage is full. Check your settings. 3) Time series longer than 1 hour take a while to sync. We are working on that.")
                     }
-                    
                 }
-                .navigationTitle("Logbook")
+                
+            }
+            
+            .navigationTitle("Logbook")
+            .refreshable {
+                await refreshDataFromCloud()
+            }
+            .onAppear {
+                showAlert = false
             }
         }
     }
@@ -85,9 +85,6 @@ struct ContentView: View {
     
     // function to refresh Core Data
     private func refreshDataFromCloud() async {
-        // Set refreshing state
-        isRefreshing = true
-    
         // Action to refresh data
         debugPrint( "Refreshing data from CloudKit...")
         // reloading doesn't work, but it looks like it's doing something!
@@ -96,12 +93,10 @@ struct ContentView: View {
         // wait 1 second before reverting view
         try? await Task.sleep(for: .seconds(2))
         
-        // End refreshing state
-        isRefreshing = false
     }
     
 }
 
-#Preview {
-    ContentView()
-}
+//#Preview {
+//    ContentView()
+//}
