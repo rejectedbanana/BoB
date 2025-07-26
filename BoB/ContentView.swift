@@ -17,7 +17,7 @@ struct ContentView: View {
     @Environment(\.dismiss) var dismiss
     
     // Info popup
-    @State private var showHelpAlert = false
+    @AppStorage("showHelpAlert") private var showHelpAlert: Bool = false
     
     var body: some View {
         NavigationStack {
