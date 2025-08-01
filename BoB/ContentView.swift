@@ -64,9 +64,6 @@ struct ContentView: View {
             .refreshable {
                 await refreshDataFromCloud()
             }
-            .onAppear {
-                showHelpAlert = false
-            }
         }
     }
     
