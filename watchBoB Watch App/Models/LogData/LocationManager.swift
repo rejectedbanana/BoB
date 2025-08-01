@@ -26,6 +26,18 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
     override init() {
         super.init()
         locationManager.delegate = self
+        
+        // Check current status before requesting
+        switch locationManager.authorizationStatus {
+        case .notDetermined:
+            locationManager.requestWhenInUseAuthorization()
+        case .authorizedWhenInUse, .authorizedAlways:
+            // Already authorized, can start location updates
+            break
+        default:
+            // Handle denied/restricted cases
+            break
+        }
     }
     
     func startSamplingGPS(_ sampleInterval: Double) {
