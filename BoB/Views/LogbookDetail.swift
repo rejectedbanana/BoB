@@ -11,9 +11,8 @@ struct LogbookDetail: View {
     @Environment(\.managedObjectContext) private var moc
     @ObservedObject var entry: SampleSet
     
-    private var jsonExportManager: JSONExportManager {
-        return JSONExportManager(entry)
-    }
+    // Cache the JSONExportManager to avoid recreating it
+    @State private var jsonExportManager: JSONExportManager?
     
     // Toggles to preview data
     @State private var showSummary = false
@@ -26,7 +25,11 @@ struct LogbookDetail: View {
     // Toggles to edit filename
     @State private var showFileNameEditor: Bool = false
     @State private var updatedFileName: String = ""
+    @State private var localFileName: String = ""
     @FocusState var showKeyboard: Bool
+    
+    // Add state for export data - computed only when needed
+    @State private var exportData: (url: URL, fileName: String)?
     
     // time stamp formatter
     let timeStampFormatter = TimeStampManager()
@@ -35,34 +38,21 @@ struct LogbookDetail: View {
         NavigationStack{
             List {
                 Section {
-                    if showFileNameEditor == true {
-                        HStack {
-                            TextField("Tap done to save new filename", text: $updatedFileName)
-                                .focused($showKeyboard)
-                                .onSubmit {
-                                    entry.fileName = updatedFileName
-                                    do {
-                                        try moc.save()
-                                    } catch {
-                                        print("File name change failed: \(error.localizedDescription)")
-                                    }
-                                    
-                                    showFileNameEditor.toggle()
+                    if showFileNameEditor {
+                        FilenameEditor(
+                            isEditing: $showFileNameEditor,
+                            filename: .constant(entry.fileName ?? ""),
+                            onSave: { newName in
+                                entry.fileName = newName
+                                do {
+                                    try moc.save()
+                                    // Regenerate export data after successful save
+                                    generateExportData()
+                                } catch {
+                                    print("File name change failed: \(error.localizedDescription)")
                                 }
-                                .submitLabel(.done)
-                            
-                            Spacer()
-                            
-                            Button {
-                                showFileNameEditor.toggle()
-                            } label: {
-                                Text("Cancel")
-                                    .foregroundStyle(.blue)
                             }
-                        }
-                        .onAppear{
-                            showKeyboard = true
-                        }
+                        )
                     } else {
                         Button {
                             showFileNameEditor.toggle()
@@ -76,55 +66,62 @@ struct LogbookDetail: View {
                                     .frame(width: 30, height: 30)
                             }
                         }
-                        .onAppear{
-                            showKeyboard = false
-                        }
                     }
                 } header: {
                     Text("Filename")
                 }
                 
                 Section {
-                    DataMap(locationData: jsonExportManager.entryToLocationData(entry))
-                        .frame(height: 180)
-                        .listRowInsets(EdgeInsets())
+                    if let manager = jsonExportManager {
+                        DataMap(locationData: manager.entryToLocationData(entry))
+                            .frame(height: 180)
+                            .listRowInsets(EdgeInsets())
+                            .id("datamap")
+                    }
                 } header: {
                     Text("Deployment Map")
                 }
                 
                 Section {
-                    SubmersionChart(submersionData: jsonExportManager.entryToSubmersionData(entry))
+                    if let manager = jsonExportManager {
+                        SubmersionChart(submersionData: manager.entryToSubmersionData(entry))
+                    }
+                    
                 } header: {
                     Text( "Submersion Data")
                 }
                 
                 Section {
-                    MotionChart(motionData: jsonExportManager.entryToMotionData(entry))
+                    if let manager = jsonExportManager{
+                        MotionChart(motionData: manager.entryToMotionData(entry))
+                    }
                 } header: {
                     Text( "Motion Data")
                 }
                 
                 Section(isExpanded: $showDataTables) {
-                    // Buttons for viewing JSON data
-                    Button("View Location Data") {
-                        showLocationTable.toggle()
-                    }
-                    .sheet(isPresented: $showLocationTable) {
-                        LocationTable(locationData: jsonExportManager.entryToLocationData(entry))
-                    }
-                    
-                    Button("View Submersion Data") {
-                        showSubmersionTable.toggle()
-                    }
-                    .sheet(isPresented: $showSubmersionTable) {
-                        SubmersionTable(submersionData: jsonExportManager.entryToSubmersionData(entry))
-                    }
-                    
-                    Button("View Motion Data") {
-                        showMotionTable.toggle()
-                    }
-                    .sheet(isPresented: $showMotionTable) {
-                        MotionTable(motionData: jsonExportManager.entryToMotionData(entry))
+                    if let manager = jsonExportManager {
+                        // Buttons for viewing JSON data
+                        Button("View Location Data") {
+                            showLocationTable.toggle()
+                        }
+                        .sheet(isPresented: $showLocationTable) {
+                            LocationTable(locationData: manager.entryToLocationData(entry))
+                        }
+                        
+                        Button("View Submersion Data") {
+                            showSubmersionTable.toggle()
+                        }
+                        .sheet(isPresented: $showSubmersionTable) {
+                            SubmersionTable(submersionData: manager.entryToSubmersionData(entry))
+                        }
+                        
+                        Button("View Motion Data") {
+                            showMotionTable.toggle()
+                        }
+                        .sheet(isPresented: $showMotionTable) {
+                            MotionTable(motionData: manager.entryToMotionData(entry))
+                        }
                     }
                 } header: {
                     Text("Data Tables")
@@ -159,25 +156,45 @@ struct LogbookDetail: View {
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .confirmationAction) {
-                    let fileName = updatedFileName+"_AWUData.json"
-                    
-                    let exportableData = jsonExportManager.combineDataIntoStructuredData(entry)
-                    
-                    if let combinedJSONString = jsonExportManager.convertStructuredDataToJSONString(exportableData) {
-                        let fileURL = jsonExportManager.exportJSON(fileName: fileName, content: combinedJSONString)
-                        
-                        if let url = fileURL {
-                            ShareLink(item: url) {
-                                Label("Share JSON", systemImage: "square.and.arrow.up" )
-                            }
+                    // Only show ShareLink if export daa is available
+                    if let exportData = exportData {
+                        ShareLink(item: exportData.url) {
+                            Label("Share JSON", systemImage: "square.and.arrow.up" )
                         }
                     } else {
-                        Text("No data to share.")
+                        Text("Preparing...")
+                            .foregroundColor(.secondary)
                     }
                 }
             }
             .onAppear {
                 updatedFileName = entry.fileName ?? ""
+                // Initialize the JSON export manager once
+                jsonExportManager = JSONExportManager(entry)
+                // Generate export data once on appear
+                generateExportData()
+                
+            }
+        }
+    }
+    
+    // Function to generate export data only when needed
+    private func generateExportData() {
+        guard let manager = jsonExportManager else { return }
+        
+        // Use a background queue for expensive operations
+        DispatchQueue.global(qos: .userInitiated).async {
+            let fileName = (entry.fileName ?? "unknown") + "_AWUData.json"
+            debugPrint(fileName)
+            
+            let exportableData = manager.combineDataIntoStructuredData(entry)
+            
+            if let combinedJSONString = manager.convertStructuredDataToJSONString(exportableData) {
+                if let fileURL = manager.exportJSON(fileName: fileName, content: combinedJSONString) {
+                    DispatchQueue.main.async {
+                        self.exportData = (url: fileURL, fileName: fileName)
+                    }
+                }
             }
         }
     }
