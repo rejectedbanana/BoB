@@ -13,6 +13,7 @@
 		2116A8A12D920F3900B1D36C /* DataMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2116A8A02D920F3900B1D36C /* DataMap.swift */; };
 		2121D2A52D9C917A00512A36 /* TimeSeriesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2121D2A42D9C917A00512A36 /* TimeSeriesView.swift */; };
 		2132F3B02CDE8DF00041C5A3 /* WaterlockInstructionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2132F3AF2CDE8DF00041C5A3 /* WaterlockInstructionsView.swift */; };
+		2194BFBE2E3D5FA9006DB1F9 /* FilenameEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2194BFBD2E3D5FA9006DB1F9 /* FilenameEditor.swift */; };
 		21A14E252DC278FD002883E0 /* JSONExportManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21A14E242DC278FD002883E0 /* JSONExportManager.swift */; };
 		21BBC6792CB05DCA0082B0F3 /* MotionData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97FC9EE52C1CFA1D0076F30E /* MotionData.swift */; };
 		21BBC67A2CB0922E0082B0F3 /* WaterSubmersionData.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCBA60C82C6D3F4200E01B1F /* WaterSubmersionData.swift */; };
@@ -86,6 +87,7 @@
 		2116A8A02D920F3900B1D36C /* DataMap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataMap.swift; sourceTree = "<group>"; };
 		2121D2A42D9C917A00512A36 /* TimeSeriesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeSeriesView.swift; sourceTree = "<group>"; };
 		2132F3AF2CDE8DF00041C5A3 /* WaterlockInstructionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaterlockInstructionsView.swift; sourceTree = "<group>"; };
+		2194BFBD2E3D5FA9006DB1F9 /* FilenameEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilenameEditor.swift; sourceTree = "<group>"; };
 		21A14E242DC278FD002883E0 /* JSONExportManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONExportManager.swift; sourceTree = "<group>"; };
 		21D1B4E62CC0563900489182 /* StopSamplingMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StopSamplingMessageView.swift; sourceTree = "<group>"; };
 		3001E6F92B8426E0003B09B1 /* MetadataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetadataManager.swift; sourceTree = "<group>"; };
@@ -177,6 +179,7 @@
 				2121D2A42D9C917A00512A36 /* TimeSeriesView.swift */,
 				218581972DCBF9BE000A3361 /* Charts */,
 				218581982DCBF9D9000A3361 /* DataTables */,
+				2194BFBD2E3D5FA9006DB1F9 /* FilenameEditor.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -481,6 +484,7 @@
 				97DF8E992AE195FA00A33A80 /* BoBApp.swift in Sources */,
 				21A14E252DC278FD002883E0 /* JSONExportManager.swift in Sources */,
 				2116A8A12D920F3900B1D36C /* DataMap.swift in Sources */,
+				2194BFBE2E3D5FA9006DB1F9 /* FilenameEditor.swift in Sources */,
 				9794676F2BEE8A0D00DF6E0B /* ListRow.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
