@@ -24,8 +24,8 @@ struct FormattedLocationData: Codable {
     init( values: LocationArrays ) {
         self.sensor_id = "location"
         self.description = "Geographical location from L1 and L5 GPS, GLONASS, Galileo, QZSS, or BeiDou"
-        self.labels = ["timestamp,latitude,longitude"]
-        self.units = ["ISO8601,degreesNorth,degreesEast"]
+        self.labels = ["timestamp","latitude","longitude"]
+        self.units = ["ISO8601","degreesNorth","degreesEast"]
         self.values = values
     }
 }
@@ -40,8 +40,8 @@ struct FormattedMotionData: Codable {
     init( values: MotionArrays ) {
         self.sensor_id = "motion"
         self.description = "3-axis acceleration, angular velocity, and magnetic field from motion sensors"
-        self.labels = ["timestamp,accelerationX,accelerationY,accelerationZ,angularVelocityX,angularVelocityY,angularVelocityZ,magneticFieldX,magneticFieldY,magneticFieldZ"]
-        self.units = ["ISO8601,m/s²,m/s²,m/s²,rad/s,rad/s,rad/s,µT,µT,µT"]
+        self.labels = ["timestamp","accelerationX","accelerationY","accelerationZ","angularVelocityX","angularVelocityY","angularVelocityZ","magneticFieldX","magneticFieldY","magneticFieldZ"]
+        self.units = ["ISO8601","m/s²","m/s²","m/s²","rad/s","rad/s","rad/s","µT","µT","µT"]
         self.values = values
     }
 }
@@ -56,8 +56,8 @@ struct FormattedSubmersionData: Codable {
     init( values: WaterSubmersionArrays ) {
         self.description = "Submersion data from water depth and water temperature sensors"
         self.sensor_id = "submersion"
-        self.labels = ["timestamp,depth,temperature"]
-        self.units = ["ISO8601,meters,°C"]
+        self.labels = ["timestamp","depth","temperature"]
+        self.units = ["ISO8601","meters","°C"]
         self.values = values
     }
 }
