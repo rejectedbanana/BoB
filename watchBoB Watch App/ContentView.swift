@@ -56,6 +56,19 @@ struct ContentView: View {
                         .padding(.bottom, 80)
                     }
                     .listItemTint(.lightRed)
+                    
+                    // Settings
+                    NavigationLink(destination: WatchSettingsView() ) {
+                        HStack {
+                            Text("Settings")
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                                .font(.headline)
+                            Image(systemName: "gear")
+                        }
+                        .padding(.top, 10)
+                        .padding(.bottom, 80)
+                    }
+                    .listItemTint(.federalBlue)
                 }
                 .listStyle(CarouselListStyle())
             }

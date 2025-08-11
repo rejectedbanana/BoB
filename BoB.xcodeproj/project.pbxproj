@@ -13,6 +13,9 @@
 		2116A8A12D920F3900B1D36C /* DataMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2116A8A02D920F3900B1D36C /* DataMap.swift */; };
 		2121D2A52D9C917A00512A36 /* TimeSeriesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2121D2A42D9C917A00512A36 /* TimeSeriesView.swift */; };
 		2132F3B02CDE8DF00041C5A3 /* WaterlockInstructionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2132F3AF2CDE8DF00041C5A3 /* WaterlockInstructionsView.swift */; };
+		2146CD502E46AA8700C38E33 /* WatchSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2146CD4F2E46AA8700C38E33 /* WatchSettingsView.swift */; };
+		2146CD522E46B10E00C38E33 /* UnitsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2146CD512E46B10E00C38E33 /* UnitsManager.swift */; };
+		2146CD532E46B10E00C38E33 /* UnitsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2146CD512E46B10E00C38E33 /* UnitsManager.swift */; };
 		2194BFBE2E3D5FA9006DB1F9 /* FilenameEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2194BFBD2E3D5FA9006DB1F9 /* FilenameEditor.swift */; };
 		21A14E252DC278FD002883E0 /* JSONExportManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21A14E242DC278FD002883E0 /* JSONExportManager.swift */; };
 		21BBC6792CB05DCA0082B0F3 /* MotionData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97FC9EE52C1CFA1D0076F30E /* MotionData.swift */; };
@@ -87,6 +90,8 @@
 		2116A8A02D920F3900B1D36C /* DataMap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataMap.swift; sourceTree = "<group>"; };
 		2121D2A42D9C917A00512A36 /* TimeSeriesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeSeriesView.swift; sourceTree = "<group>"; };
 		2132F3AF2CDE8DF00041C5A3 /* WaterlockInstructionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaterlockInstructionsView.swift; sourceTree = "<group>"; };
+		2146CD4F2E46AA8700C38E33 /* WatchSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchSettingsView.swift; sourceTree = "<group>"; };
+		2146CD512E46B10E00C38E33 /* UnitsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnitsManager.swift; sourceTree = "<group>"; };
 		2194BFBD2E3D5FA9006DB1F9 /* FilenameEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilenameEditor.swift; sourceTree = "<group>"; };
 		21A14E242DC278FD002883E0 /* JSONExportManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONExportManager.swift; sourceTree = "<group>"; };
 		21D1B4E62CC0563900489182 /* StopSamplingMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StopSamplingMessageView.swift; sourceTree = "<group>"; };
@@ -162,10 +167,11 @@
 			isa = PBXGroup;
 			children = (
 				9797363F2AEB1AB4009BCFF0 /* CoreDataController.swift */,
-				97B1CED72C22041D00F771FB /* TimeStampManager.swift */,
 				97FAC8492BD850A4003E65E7 /* SampleSet+CoreDataClass.swift */,
 				97FAC84A2BD850A4003E65E7 /* SampleSet+CoreDataProperties.swift */,
 				9797363C2AEB15B8009BCFF0 /* Bob.xcdatamodeld */,
+				97B1CED72C22041D00F771FB /* TimeStampManager.swift */,
+				2146CD512E46B10E00C38E33 /* UnitsManager.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -323,6 +329,7 @@
 			children = (
 				97DF8EC12AE1EBBF00A33A80 /* LogData */,
 				978D10642AE3044F00310B26 /* LogBook */,
+				2146CD4F2E46AA8700C38E33 /* WatchSettingsView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -479,6 +486,7 @@
 				977E74CC2BE9895D009A36AD /* Bob.xcdatamodeld in Sources */,
 				2121D2A52D9C917A00512A36 /* TimeSeriesView.swift in Sources */,
 				97DF8E9B2AE195FA00A33A80 /* ContentView.swift in Sources */,
+				2146CD522E46B10E00C38E33 /* UnitsManager.swift in Sources */,
 				210A4ED62DEB3E9600ADF94A /* watchMetadata.swift in Sources */,
 				210CB8262CAC8D700060DECA /* StructuredData.swift in Sources */,
 				97DF8E992AE195FA00A33A80 /* BoBApp.swift in Sources */,
@@ -508,6 +516,7 @@
 				97B104AA2AE9771700FE81DC /* MotionManager.swift in Sources */,
 				97FC9EE62C1CFA1D0076F30E /* MotionData.swift in Sources */,
 				9797363E2AEB15B8009BCFF0 /* Bob.xcdatamodeld in Sources */,
+				2146CD532E46B10E00C38E33 /* UnitsManager.swift in Sources */,
 				97FAC84D2BD850A4003E65E7 /* SampleSet+CoreDataClass.swift in Sources */,
 				FCBA60C12C65490400E01B1F /* LocationData.swift in Sources */,
 				97FAC84E2BD850A4003E65E7 /* SampleSet+CoreDataProperties.swift in Sources */,
@@ -516,6 +525,7 @@
 				979736402AEB1AB4009BCFF0 /* CoreDataController.swift in Sources */,
 				978D107A2AE70F8F00310B26 /* LogbookRow.swift in Sources */,
 				2132F3B02CDE8DF00041C5A3 /* WaterlockInstructionsView.swift in Sources */,
+				2146CD502E46AA8700C38E33 /* WatchSettingsView.swift in Sources */,
 				3001E6FA2B8426E0003B09B1 /* MetadataManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
