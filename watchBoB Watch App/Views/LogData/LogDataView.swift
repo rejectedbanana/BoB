@@ -68,7 +68,7 @@ struct LogDataView: View {
             }
             
             // Static motion header
-            Text("Motion: x, y, z")
+            Text(unitsManager.motionCoordinateSystem == .earth ? "Motion: North, East, Up" : "Motion: x, y, z")
                 .foregroundColor(.silver)
             
             // Dynamic motion data

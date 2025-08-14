@@ -155,6 +155,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		211DB8B32E4AA810003BA7D6 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				2146CD4F2E46AA8700C38E33 /* WatchSettingsView.swift */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
 		9728898B2BE2E8FD00BB9A14 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
@@ -329,7 +337,7 @@
 			children = (
 				97DF8EC12AE1EBBF00A33A80 /* LogData */,
 				978D10642AE3044F00310B26 /* LogBook */,
-				2146CD4F2E46AA8700C38E33 /* WatchSettingsView.swift */,
+				211DB8B32E4AA810003BA7D6 /* Settings */,
 			);
 			path = Views;
 			sourceTree = "<group>";

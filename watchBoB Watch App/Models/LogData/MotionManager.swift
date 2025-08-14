@@ -29,22 +29,77 @@ class MotionManager: NSObject, ObservableObject {
     @Published var elapsedTime = "00:00"
     var timer = Timer()
     var startTime = Date()
+    
+    // Units manager for coordinate system preferences
+    private let unitsManager = UnitsManager()
 
     @objc private func sampleSensors() {
+        var finalAccX = 0.0, finalAccY = 0.0, finalAccZ = 0.0
+        var finalGyrX = 0.0, finalGyrY = 0.0, finalGyrZ = 0.0
+        var finalMagX = 0.0, finalMagY = 0.0, finalMagZ = 0.0
+        
         // grab the motion data
-        if let data = motionManager?.accelerometerData {
-            accX = data.acceleration.x
-            accY = data.acceleration.y
-            accZ = data.acceleration.z
+        if let deviceMotion = motionManager?.deviceMotion {
+            let acceleration = deviceMotion.userAcceleration
+            let rotationRate = deviceMotion.rotationRate
+            let magneticField = deviceMotion.magneticField.field
+            
+            // Apply coordinate transformation based on setting
+            if unitsManager.motionCoordinateSystem == .earth {
+                // Transform to earth coordinates using device attitude
+                let attitude = deviceMotion.attitude
+                
+                // Transform acceleration
+                let earthAccel = transformToEarthCoordinates(
+                    x: acceleration.x, y: acceleration.y, z: acceleration.z,
+                    attitude: attitude
+                )
+                finalAccX = earthAccel.x
+                finalAccY = earthAccel.y
+                finalAccZ = earthAccel.z
+                
+                // Transform rotation rate
+                let earthRotation = transformToEarthCoordinates(
+                    x: rotationRate.x, y: rotationRate.y, z: rotationRate.z,
+                    attitude: attitude
+                )
+                finalGyrX = earthRotation.x
+                finalGyrY = earthRotation.y
+                finalGyrZ = earthRotation.z
+                
+                // Transform magnetic field
+                let earthMagnetic = transformToEarthCoordinates(
+                    x: magneticField.x, y: magneticField.y, z: magneticField.z,
+                    attitude: attitude
+                )
+                finalMagX = earthMagnetic.x
+                finalMagY = earthMagnetic.y
+                finalMagZ = earthMagnetic.z
+            } else {
+                // Use device coordinates (original behavior)
+                finalAccX = acceleration.x
+                finalAccY = acceleration.y
+                finalAccZ = acceleration.z
+                finalGyrX = rotationRate.x
+                finalGyrY = rotationRate.y
+                finalGyrZ = rotationRate.z
+                finalMagX = magneticField.x
+                finalMagY = magneticField.y
+                finalMagZ = magneticField.z
+            }
         }
-        if let data = motionManager?.deviceMotion {
-            gyrX = data.rotationRate.x
-            gyrY = data.rotationRate.y
-            gyrZ = data.rotationRate.z
-            magX = data.magneticField.field.x
-            magY = data.magneticField.field.y
-            magZ = data.magneticField.field.z
-        }
+        
+        // Update published properties for UI display
+        accX = finalAccX
+        accY = finalAccY
+        accZ = finalAccZ
+        gyrX = finalGyrX
+        gyrY = finalGyrY
+        gyrZ = finalGyrZ
+        magX = finalMagX
+        magY = finalMagY
+        magZ = finalMagZ
+        
         // grab the timestamps
         timeStamp = Date()
         elapsedTime = String(format: "%.1f", Date().timeIntervalSince(startTime))
@@ -52,15 +107,15 @@ class MotionManager: NSObject, ObservableObject {
         // grab the data
         let sampledMotion = MotionData(
             timestamp: timeStampFormatter.ISO8601Format(timeStamp),
-            accelerationX: accX,
-            accelerationY: accY,
-            accelerationZ: accZ,
-            angularVelocityX: gyrX,
-            angularVelocityY: gyrY,
-            angularVelocityZ: gyrZ,
-            magneticFieldX: magX,
-            magneticFieldY: magY,
-            magneticFieldZ: magZ
+            accelerationX: finalAccX,
+            accelerationY: finalAccY,
+            accelerationZ: finalAccZ,
+            angularVelocityX: finalGyrX,
+            angularVelocityY: finalGyrY,
+            angularVelocityZ: finalGyrZ,
+            magneticFieldX: finalMagX,
+            magneticFieldY: finalMagY,
+            magneticFieldZ: finalMagZ
         )
         
         // append the array
@@ -86,6 +141,19 @@ class MotionManager: NSObject, ObservableObject {
         if motionManager!.isDeviceMotionActive {
             motionManager?.stopDeviceMotionUpdates()
         }
+    }
+    
+    // Transform device coordinates to earth coordinates using device attitude
+    private func transformToEarthCoordinates(x: Double, y: Double, z: Double, attitude: CMAttitude) -> (x: Double, y: Double, z: Double) {
+        // Get the rotation matrix from device to earth coordinates
+        let rotationMatrix = attitude.rotationMatrix
+        
+        // Apply the rotation matrix transformation
+        let earthX = rotationMatrix.m11 * x + rotationMatrix.m12 * y + rotationMatrix.m13 * z
+        let earthY = rotationMatrix.m21 * x + rotationMatrix.m22 * y + rotationMatrix.m23 * z
+        let earthZ = rotationMatrix.m31 * x + rotationMatrix.m32 * y + rotationMatrix.m33 * z
+        
+        return (x: earthX, y: earthY, z: earthZ)
     }
 
     func convertArrayToJSONString() -> String? {

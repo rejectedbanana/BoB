@@ -33,6 +33,18 @@ enum SubmersionUnits: String, CaseIterable {
     }
 }
 
+enum MotionCoordinateSystem: String, CaseIterable {
+    case device = "device"
+    case earth = "earth"
+    
+    var displayName: String {
+        switch self {
+        case .device: return "Device (x,y,z)"
+        case .earth: return "Earth (N/S,E/W,Up/Down)"
+        }
+    }
+}
+
 class UnitsManager: ObservableObject {
     @Published var submersionUnits: SubmersionUnits {
         didSet {
@@ -40,9 +52,18 @@ class UnitsManager: ObservableObject {
         }
     }
     
+    @Published var motionCoordinateSystem: MotionCoordinateSystem {
+        didSet {
+            UserDefaults.standard.set(motionCoordinateSystem.rawValue, forKey: "motionCoordinateSystem")
+        }
+    }
+    
     init() {
         let savedUnits = UserDefaults.standard.string(forKey: "submersionUnits") ?? SubmersionUnits.metric.rawValue
         self.submersionUnits = SubmersionUnits(rawValue: savedUnits) ?? .metric
+        
+        let savedCoordinateSystem = UserDefaults.standard.string(forKey: "motionCoordinateSystem") ?? MotionCoordinateSystem.device.rawValue
+        self.motionCoordinateSystem = MotionCoordinateSystem(rawValue: savedCoordinateSystem) ?? .device
     }
     
     func convertDepth(_ metersValue: Double) -> Measurement<UnitLength> {
