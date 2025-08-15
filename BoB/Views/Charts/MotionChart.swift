@@ -35,7 +35,13 @@ enum AxisType: String, CaseIterable, Identifiable {
 
 struct MotionChart: View {
     let motionData: [MotionData]
+    let coordinateSystem: String
     let timeStampManager = TimeStampManager()
+    
+    // Helper computed properties for coordinate system labels
+    private var xLabel: String { coordinateSystem == "earth" ? "North" : "X" }
+    private var yLabel: String { coordinateSystem == "earth" ? "East" : "Y" }
+    private var zLabel: String { coordinateSystem == "earth" ? "Up" : "Z" }
     
     // Transform the Accelerometer data for plotting
     var accData: [XYZData] {
@@ -114,24 +120,30 @@ struct MotionChart: View {
                     LineMark(
                         x: .value("Time", entry.date),
                         y: .value("Acceleration", entry.value),
-                        series: .value("Direction", entry.axis.rawValue)
+//                        series: .value("Direction", entry.axis.rawValue)
+                        series: .value("Direction", entry.axis == .x ? xLabel : entry.axis == .y ? yLabel : zLabel)
                     )
-                    .foregroundStyle(by: .value("Axis", entry.axis.rawValue))
+//                    .foregroundStyle(by: .value("Axis", entry.axis.rawValue))
+                    .foregroundStyle(by: .value("Axis", entry.axis == .x ? xLabel : entry.axis == .y ? yLabel : zLabel))
                     
                     PointMark(
                         x: .value("Time", entry.date),
                         y: .value("Acceleration", entry.value)
                     )
-                    .foregroundStyle(by: .value("Axis", entry.axis.rawValue))
+//                    .foregroundStyle(by: .value("Axis", entry.axis.rawValue))
+                    .foregroundStyle(by: .value("Axis", entry.axis == .x ? xLabel : entry.axis == .y ? yLabel : zLabel))
                     .symbolSize(10)
                     .accessibilityLabel("\(entry.axis) axis at \(timeStampManager.viewFormat(entry.date))")
                     .accessibilityValue("\(String(format: "%.3f", entry.value))")
                 }
             }
             .chartForegroundStyleScale([
-                "X": AxisType.x.color,
-                "Y": AxisType.y.color,
-                "Z": AxisType.z.color
+//                "X": AxisType.x.color,
+//                "Y": AxisType.y.color,
+//                "Z": AxisType.z.color
+                xLabel: AxisType.x.color,
+                yLabel: AxisType.y.color,
+                zLabel: AxisType.z.color
             ])
             .chartYScale(domain: -maxAbsAcceleration ... maxAbsAcceleration)
             .chartYAxisLabel("Acceleration [m/s^2]")
@@ -144,24 +156,30 @@ struct MotionChart: View {
                     LineMark(
                         x: .value("Time", entry.date),
                         y: .value("Angular Velocity", entry.value),
-                        series: .value("Direction", entry.axis.rawValue)
+//                        series: .value("Direction", entry.axis.rawValue)
+                        series: .value("Direction", entry.axis == .x ? xLabel : entry.axis == .y ? yLabel : zLabel)
                     )
-                    .foregroundStyle(by: .value("Axis", entry.axis.rawValue))
+//                    .foregroundStyle(by: .value("Axis", entry.axis.rawValue))
+                    .foregroundStyle(by: .value("Axis", entry.axis == .x ? xLabel : entry.axis == .y ? yLabel : zLabel))
                     
                     PointMark(
                         x: .value("Time", entry.date),
                         y: .value("Angular Velocity", entry.value)
                     )
-                    .foregroundStyle(by: .value("Axis", entry.axis.rawValue))
+//                    .foregroundStyle(by: .value("Axis", entry.axis.rawValue))
+                    .foregroundStyle(by: .value("Axis", entry.axis == .x ? xLabel : entry.axis == .y ? yLabel : zLabel))
                     .symbolSize(10)
                     .accessibilityLabel("\(entry.axis) axis at \(timeStampManager.viewFormat(entry.date))")
                     .accessibilityValue("\(String(format: "%.3f", entry.value))")
                 }
             }
             .chartForegroundStyleScale([
-                "X": AxisType.x.color,
-                "Y": AxisType.y.color,
-                "Z": AxisType.z.color
+//                "X": AxisType.x.color,
+//                "Y": AxisType.y.color,
+//                "Z": AxisType.z.color
+                xLabel: AxisType.x.color,
+                yLabel: AxisType.y.color,
+                zLabel: AxisType.z.color
             ])
             .chartYScale(domain: -maxAbsAngularVelocity ... maxAbsAngularVelocity)
             .chartYAxisLabel("Angular Velocity [m/s]")
@@ -174,24 +192,30 @@ struct MotionChart: View {
                     LineMark(
                         x: .value("Time", entry.date),
                         y: .value("Magnetic Field", entry.value),
-                        series: .value("Direction", entry.axis.rawValue)
+//                        series: .value("Direction", entry.axis.rawValue)
+                        series: .value("Direction", entry.axis == .x ? xLabel : entry.axis == .y ? yLabel : zLabel)
                     )
-                    .foregroundStyle(by: .value("Axis", entry.axis.rawValue))
+//                    .foregroundStyle(by: .value("Axis", entry.axis.rawValue))
+                    .foregroundStyle(by: .value("Axis", entry.axis == .x ? xLabel : entry.axis == .y ? yLabel : zLabel))
                     
                     PointMark(
                         x: .value("Time", entry.date),
                         y: .value("Magmetic Field", entry.value)
                     )
-                    .foregroundStyle(by: .value("Axis", entry.axis.rawValue))
+//                    .foregroundStyle(by: .value("Axis", entry.axis.rawValue))
+                    .foregroundStyle(by: .value("Axis", entry.axis == .x ? xLabel : entry.axis == .y ? yLabel : zLabel))
                     .symbolSize(10)
                     .accessibilityLabel("\(entry.axis) axis at \(timeStampManager.viewFormat(entry.date))")
                     .accessibilityValue("\(String(format: "%.3f", entry.value))")
                 }
             }
             .chartForegroundStyleScale([
-                "X": AxisType.x.color,
-                "Y": AxisType.y.color,
-                "Z": AxisType.z.color
+//                "X": AxisType.x.color,
+//                "Y": AxisType.y.color,
+//                "Z": AxisType.z.color
+                xLabel: AxisType.x.color,
+                yLabel: AxisType.y.color,
+                zLabel: AxisType.z.color
             ])
             .chartYScale(domain: -maxAbsMagneticField ... maxAbsMagneticField)
             .chartYAxisLabel("Magnetic Field [uT]")
@@ -209,5 +233,5 @@ struct MotionChart: View {
         MotionData(timestamp: "2025-05-05T23:27:51.410Z", accelerationX:  -0.027241, accelerationY: -0.2, accelerationZ: -0.832413 , angularVelocityX: -0.018896 , angularVelocityY: 0.016209 , angularVelocityZ: -0.003137, magneticFieldX: -10.579, magneticFieldY: -25.273, magneticFieldZ: -16.473 ),
         MotionData(timestamp: "2025-05-05T23:28:51.610Z", accelerationX:  -0.004601, accelerationY: -0.537521 , accelerationZ: -0.843903 , angularVelocityX: 0 , angularVelocityY: 0.003899 , angularVelocityZ: 0.002769, magneticFieldX: -10.656, magneticFieldY: -25.29, magneticFieldZ: -16.579 )
     ]
-    MotionChart(motionData: sampleMotionData)
+    MotionChart(motionData: sampleMotionData, coordinateSystem: "earth")
 }

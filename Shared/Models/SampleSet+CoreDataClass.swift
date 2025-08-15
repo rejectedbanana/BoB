@@ -39,6 +39,7 @@ public class SampleSet: NSManagedObject {
         self.deviceManufacturer = try container.decode(String.self, forKey: .deviceManufacturer)
         self.deviceSystemVersion = try container.decode(String.self, forKey: .deviceSystemVersion)
         self.deviceLocalizedModel = try container.decode(String.self, forKey: .deviceLocalizedModel)
+        self.motionCoordinateSystem = try container.decode(String.self, forKey: .motionCoordinateSystem)
     }
     
     public func encode(to encoder: Encoder) throws {
@@ -62,5 +63,6 @@ public class SampleSet: NSManagedObject {
         try container.encode(deviceManufacturer, forKey: .deviceManufacturer)
         try container.encode(deviceSystemVersion, forKey: .deviceSystemVersion)
         try container.encode(deviceLocalizedModel, forKey: .deviceLocalizedModel)
+        try container.encode(motionCoordinateSystem, forKey: .motionCoordinateSystem)
     }
 }

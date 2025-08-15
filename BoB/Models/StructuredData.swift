@@ -37,10 +37,18 @@ struct FormattedMotionData: Codable {
     let units: [String]
     let values: MotionArrays
     
-    init( values: MotionArrays ) {
+    init( values: MotionArrays, coordinateSystem: String = "device" ) {
         self.sensor_id = "motion"
-        self.description = "3-axis acceleration, angular velocity, and magnetic field from motion sensors"
-        self.labels = ["timestamp","accelerationX","accelerationY","accelerationZ","angularVelocityX","angularVelocityY","angularVelocityZ","magneticFieldX","magneticFieldY","magneticFieldZ"]
+        
+        
+        if coordinateSystem == "earth" {
+            self.description = "3-axis acceleration, angular velocity, and magnetic field from motion sensors in earth-based coordinates (North/South, East/West, Up/Down)"
+            self.labels = ["timestamp","accelerationNorth","accelerationEast","accelerationUp","angularVelocityNorth","angularVelocityEast","angularVelocityUp","magneticFieldNorth","magneticFieldEast","magneticFieldUp"]
+        } else {
+            self.description = "3-axis acceleration, angular velocity, and magnetic field from motion sensors in watch-based cartesian coordinates (X, Y, Z)"
+            self.labels = ["timestamp","accelerationX","accelerationY","accelerationZ","angularVelocityX","angularVelocityY","angularVelocityZ","magneticFieldX","magneticFieldY","magneticFieldZ"]
+        }
+        
         self.units = ["ISO8601","m/s²","m/s²","m/s²","rad/s","rad/s","rad/s","µT","µT","µT"]
         self.values = values
     }

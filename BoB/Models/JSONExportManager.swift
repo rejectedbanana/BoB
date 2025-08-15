@@ -47,6 +47,7 @@ class JSONExportManager: ObservableObject {
             deviceModel: entry.deviceModel ?? "unknown",
             deviceHardwareVersion: entry.deviceLocalizedModel ?? "unknown",
             deviceOperatingSystemVersion: entry.deviceSystemVersion ?? "unknown",
+            motionCoordinateSystem: entry.motionCoordinateSystem ?? "device",
             samplingStart: samplingStart,
             samplingStop: samplingStop
         )
@@ -140,7 +141,7 @@ class JSONExportManager: ObservableObject {
         
         // Reformat for saving as a compact JSON
         let formattedLocationData = FormattedLocationData(values: locationArray)
-        let formattedMotionData = FormattedMotionData(values: motionArray)
+        let formattedMotionData = FormattedMotionData(values: motionArray, coordinateSystem: entry.motionCoordinateSystem ?? "device")
         let formattedSubmersionData = FormattedSubmersionData(values: submersionArray)
         
         structuredData = StructuredData(metadata: metadata,location: formattedLocationData, motion: formattedMotionData, submersion: formattedSubmersionData )

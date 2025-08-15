@@ -28,6 +28,10 @@ class SamplingService {
         metadataManager.deviceSystemVersion = device.systemVersion
         metadataManager.deviceManufacturer = "Apple Inc."
         
+        // Capture current coordinate system setting
+        let unitsManager = UnitsManager()
+        metadataManager.motionCoordinateSystem = unitsManager.motionCoordinateSystem.rawValue
+        
         debugPrint("[Sampling Service] Start sampling...")
     }
 
@@ -53,6 +57,7 @@ class SamplingService {
         newEntry.deviceLocalizedModel = metadataManager.deviceLocalizedModel
         newEntry.deviceSystemVersion = metadataManager.deviceSystemVersion
         newEntry.deviceManufacturer = metadataManager.deviceManufacturer
+        newEntry.motionCoordinateSystem = metadataManager.motionCoordinateSystem
         
         newEntry.motionJSON = motionManager.convertArrayToJSONString()
         newEntry.locationJSON = locationManager.convertArrayToJSONString()

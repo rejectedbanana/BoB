@@ -18,6 +18,7 @@ struct watchMetadata: Codable {
     var deviceModel: String
     var deviceHardwareVersion: String
     var deviceOperatingSystemVersion: String
+    var motionCoordinateSystem: String
     
     // start and end sampling
     var samplingStart: SamplingInfo

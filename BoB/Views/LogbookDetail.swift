@@ -93,7 +93,7 @@ struct LogbookDetail: View {
                 
                 Section {
                     if let manager = jsonExportManager{
-                        MotionChart(motionData: manager.entryToMotionData(entry))
+                        MotionChart(motionData: manager.entryToMotionData(entry), coordinateSystem: entry.motionCoordinateSystem ?? "device")
                     }
                 } header: {
                     Text( "Motion Data")
