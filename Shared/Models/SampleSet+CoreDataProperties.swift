@@ -36,6 +36,7 @@ extension SampleSet {
     @NSManaged public var deviceLocalizedModel: String?
     @NSManaged public var deviceSystemVersion: String?
     @NSManaged public var deviceManufacturer: String?
+    @NSManaged public var motionCoordinateSystem: String?
 
 }
 
@@ -74,6 +75,7 @@ extension SampleSet: Codable {
         case deviceLocalizedModel
         case deviceSystemVersion
         case deviceManufacturer
+        case motionCoordinateSystem
     }
     
 }

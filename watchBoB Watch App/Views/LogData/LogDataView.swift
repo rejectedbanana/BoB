@@ -20,6 +20,7 @@ struct LogDataView: View {
     @StateObject var locationManager = LocationManager()
     @ObservedObject var motionManager = MotionManager()
     @ObservedObject var waterSubmersionManager = WaterSubmersionManager.shared
+    @StateObject private var unitsManager = UnitsManager()
     
     // Toggle to show start sampling message
     @State private var showStartSamplingMessage: Bool = false
@@ -67,7 +68,7 @@ struct LogDataView: View {
             }
             
             // Static motion header
-            Text("Motion: x, y, z")
+            Text(unitsManager.motionCoordinateSystem == .earth ? "Motion: North, East, Up" : "Motion: x, y, z")
                 .foregroundColor(.silver)
             
             // Dynamic motion data
@@ -84,11 +85,13 @@ struct LogDataView: View {
                 // Dynamic water data
                 if !waterSubmersionManager.waterSubmersionData.isEmpty {
                     HStack {
-                        let depthString = String(format: "%.3f", waterSubmersionManager.waterSubmersionData.last?.depth ?? 0.0)
-                        Text("\(depthString) m")
+                        let depth = waterSubmersionManager.waterSubmersionData.last?.depth ?? 0.0
+                        let depthString = String(format: "%.2f", unitsManager.convertDepth(depth).value)
+                        Text("\(depthString) \(unitsManager.depthUnitSymbol)")
                         Spacer()
-                        let temperatureString = String(format: "%.2f", waterSubmersionManager.waterSubmersionData.last?.temperature ?? 0.0)
-                        Text("\(temperatureString) \(degree())C")
+                        let temperature = waterSubmersionManager.waterSubmersionData.last?.temperature ?? 0.0
+                        let temperatureString = String(format: "%.1f", unitsManager.convertTemperature(temperature).value)
+                        Text("\(temperatureString) \(unitsManager.temperatureUnitSymbol)")
                     }
                 } else {
                     Text("No data.")

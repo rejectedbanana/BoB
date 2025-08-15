@@ -31,6 +31,7 @@ class MetadataManager: NSObject, ObservableObject {
     var deviceLocalizedModel: String = "Unknown"
     var deviceSystemVersion: String = "Unknown"
     var deviceManufacturer: String = "Unknown"
+    var motionCoordinateSystem: String = "device"
     
     var isLogging = false
     
